@@ -1,0 +1,2 @@
+../../rtl/cores/picorv32.v
+../../sim/verilog/testbench.v
