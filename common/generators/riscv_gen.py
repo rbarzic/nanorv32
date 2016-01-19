@@ -41,12 +41,13 @@ def verilog_inst_field(dic_inst_format):
                     for _, d in dic_inst_format.items()]) + '\n'
 
 
-def get_decode_fields(spec,dic_inst_format):
+def get_decode_fields(spec,dic_inst_format,cpu='nanorv32',inst_group='rv32i'):
     "return a dictionnary indexed by instruction containing fields (and values) needed to decode the instruction"
     decode_fields = {key: value for key, value in dic_inst_format.items() if 'decode' in value}
+
     res = defaultdict(list)
-    for inst,inst_data in spec['cpu']['inst'].items():
-        for k,v in inst_data['desc'].items():
+    for inst,inst_data in spec[cpu][inst_group].items():
+        for k,v in inst_data['desc']['decode'].items():
             if k in decode_fields:
                 res[inst].append({
                         'offset' : decode_fields[k]['offset'],
@@ -56,7 +57,26 @@ def get_decode_fields(spec,dic_inst_format):
     return res
 
 
+def build_decode_string(list_of_fields,prefix,word_size,dont_care = '?'):
+    """Build a set of decode string from a dictionary returned from get_decode_field """
 
+    result = dict()
+    # we build the string with the msb on the left first
+    for inst,fields in list_of_fields.items():
+        bit_array = dont_care*word_size
+        print("========= " + inst + " =========="  )
+        for field in fields:
+            pp.pprint(field)
+            size = field['size']
+            value = field['value']
+            offset = field['offset']
+            text = bin(value)[2:].zfill(size)
+            text = text[::-1] # reverse
+            bit_array = bit_array[:offset] + text + bit_array[offset+size:]
+            print("bit_array : " + bit_array)
+        bit_array = bit_array[::-1] # reverse string
+        result[inst] = prefix + bit_array
+    return result
 
 def write_to_file(path, filename, text):
     full_filename = path + '/' + filename

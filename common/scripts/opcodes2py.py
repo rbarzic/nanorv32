@@ -23,7 +23,7 @@ inst_types_rv32i = {
 
 
 tpl_r_type = """
-spec['nanorv32']['rv32i']['{inst_name}']['spec'] = {{
+spec['nanorv32']['rv32i']['{inst_name}']['desc'] = {{
     'inst_type' : 'R-type',
     'decode' : {{
         'opcode1' : '{opcode1}',
@@ -33,7 +33,7 @@ spec['nanorv32']['rv32i']['{inst_name}']['spec'] = {{
 }}"""
 
 tpl_i_type = """
-spec['nanorv32']['rv32i']['{inst_name}']['spec'] = {{
+spec['nanorv32']['rv32i']['{inst_name}']['desc'] = {{
     'inst_type' : 'I-type',
     'decode' : {{
         'opcode1' : '{opcode1}',
@@ -43,7 +43,7 @@ spec['nanorv32']['rv32i']['{inst_name}']['spec'] = {{
 
 
 tpl_u_type = """
-spec['nanorv32']['rv32i']['{inst_name}']['spec'] = {{
+spec['nanorv32']['rv32i']['{inst_name}']['desc'] = {{
     'inst_type' : 'U-type',
     'decode' : {{
         'opcode1' : '{opcode1}'
@@ -51,7 +51,7 @@ spec['nanorv32']['rv32i']['{inst_name}']['spec'] = {{
 }}"""
 
 tpl_uj_type = """
-spec['nanorv32']['rv32i']['{inst_name}']['spec'] = {{
+spec['nanorv32']['rv32i']['{inst_name}']['desc'] = {{
     'inst_type' : 'UJ-type',
     'decode' : {{
         'opcode1' : '{opcode1}'
@@ -59,7 +59,7 @@ spec['nanorv32']['rv32i']['{inst_name}']['spec'] = {{
 }}"""
 
 tpl_s_type = """
-spec['nanorv32']['rv32i']['{inst_name}']['spec'] = {{
+spec['nanorv32']['rv32i']['{inst_name}']['desc'] = {{
     'inst_type' : 'S-type',
     'decode' : {{
         'opcode1' : '{opcode1}',
@@ -68,7 +68,7 @@ spec['nanorv32']['rv32i']['{inst_name}']['spec'] = {{
 }}"""
 
 tpl_sb_type = """
-spec['nanorv32']['rv32i']['{inst_name}']['spec'] = {{
+spec['nanorv32']['rv32i']['{inst_name}']['desc'] = {{
     'inst_type' : 'SB-type',
     'decode' : {{
         'opcode1' : '{opcode1}',
