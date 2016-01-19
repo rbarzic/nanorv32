@@ -53,13 +53,13 @@ spec['nanorv32']['inst_type']['U-type']['format'] = \
     {'opcode1': {'size': 7, 'offset': 0, 'decode': True},
      'rd': {'size': 5, 'offset': 7},
      'imm20': {'size': 20,
-               'offset': 12}}  # Field is used for decoding
+               'offset': 12}}
 
 spec['nanorv32']['inst_type']['UJ-type']['format'] = \
     {'opcode1': {'size': 7, 'offset': 0, 'decode': True},
      'rd': {'size': 5, 'offset': 7},
      'imm2uj': {'size': 20,
-                'offset': 12}}  # Field is used for decoding
+                'offset': 12}}
 
 # ALU shift format
 
@@ -93,31 +93,3 @@ spec['nanorv32']['inst_type']['SYS-type']['format'] = {
     'func3': {'size': 12, 'offset': 3, 'decode': True},
     'func12': {'size': 12, 'offset': 20, 'decode': True},
     }
-
-
-spec['nanorv32']['rv32i']['lui']['spec'] = {
-    'inst_type' : 'U-type',
-    'description' : "",
-    'syntax' : "LUI rd,imm"
-    'decode' : {
-        'opcode1' : '0b0110111'
-    }
-}
-
-spec['nanorv32']['rv32i']['auipc']['spec'] = {
-    'inst_type' : 'U-type',
-    'description' : "",
-    'syntax' : "AUIPC rd,imm"
-    'decode' : {
-        'opcode10b' : '0010111'
-    }
-}
-
-spec['nanorv32']['rv32i']['']['spec'] = {
-    'inst_type' : '-type',
-    'description' : "",
-    'syntax' : ""
-    'decode' : {
-        'opcode1' : '0010111'
-    }
-}
