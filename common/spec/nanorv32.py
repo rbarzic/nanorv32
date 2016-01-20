@@ -107,8 +107,8 @@ spec['nanorv32']['inst_type']['SYS-type']['format'] = {
 spec['nanorv32']['rv32i']['beq']['desc'] = {
     'inst_type' : 'SB-type',
     'decode' : {
-        'opcode1' : '0b1100011',
-        'func3'   : '0b0'
+        'opcode1' : 0b1100011,
+        'func3'   : 0b0
     }
 }
 #-I inst : bne of type SB-type
@@ -117,8 +117,8 @@ spec['nanorv32']['rv32i']['beq']['desc'] = {
 spec['nanorv32']['rv32i']['bne']['desc'] = {
     'inst_type' : 'SB-type',
     'decode' : {
-        'opcode1' : '0b1100011',
-        'func3'   : '0b1'
+        'opcode1' : 0b1100011,
+        'func3'   : 0b1
     }
 }
 #-I inst : blt of type SB-type
@@ -127,8 +127,8 @@ spec['nanorv32']['rv32i']['bne']['desc'] = {
 spec['nanorv32']['rv32i']['blt']['desc'] = {
     'inst_type' : 'SB-type',
     'decode' : {
-        'opcode1' : '0b1100011',
-        'func3'   : '0b100'
+        'opcode1' : 0b1100011,
+        'func3'   : 0b100
     }
 }
 #-I inst : bge of type SB-type
@@ -137,8 +137,8 @@ spec['nanorv32']['rv32i']['blt']['desc'] = {
 spec['nanorv32']['rv32i']['bge']['desc'] = {
     'inst_type' : 'SB-type',
     'decode' : {
-        'opcode1' : '0b1100011',
-        'func3'   : '0b101'
+        'opcode1' : 0b1100011,
+        'func3'   : 0b101
     }
 }
 #-I inst : bltu of type SB-type
@@ -147,8 +147,8 @@ spec['nanorv32']['rv32i']['bge']['desc'] = {
 spec['nanorv32']['rv32i']['bltu']['desc'] = {
     'inst_type' : 'SB-type',
     'decode' : {
-        'opcode1' : '0b1100011',
-        'func3'   : '0b110'
+        'opcode1' : 0b1100011,
+        'func3'   : 0b110
     }
 }
 #-I inst : bgeu of type SB-type
@@ -157,8 +157,8 @@ spec['nanorv32']['rv32i']['bltu']['desc'] = {
 spec['nanorv32']['rv32i']['bgeu']['desc'] = {
     'inst_type' : 'SB-type',
     'decode' : {
-        'opcode1' : '0b1100011',
-        'func3'   : '0b111'
+        'opcode1' : 0b1100011,
+        'func3'   : 0b111
     }
 }
 #-I inst : jalr of type I-type
@@ -167,8 +167,8 @@ spec['nanorv32']['rv32i']['bgeu']['desc'] = {
 spec['nanorv32']['rv32i']['jalr']['desc'] = {
     'inst_type' : 'I-type',
     'decode' : {
-        'opcode1' : '0b1100111',
-        'func3'   : '0b0'
+        'opcode1' : 0b1100111,
+        'func3'   : 0b0
     }
 }
 #-I inst : jal of type UJ-type
@@ -177,7 +177,7 @@ spec['nanorv32']['rv32i']['jalr']['desc'] = {
 spec['nanorv32']['rv32i']['jal']['desc'] = {
     'inst_type' : 'UJ-type',
     'decode' : {
-        'opcode1' : '0b1101111'
+        'opcode1' : 0b1101111
     }
 }
 #-I inst : lui of type U-type
@@ -186,7 +186,7 @@ spec['nanorv32']['rv32i']['jal']['desc'] = {
 spec['nanorv32']['rv32i']['lui']['desc'] = {
     'inst_type' : 'U-type',
     'decode' : {
-        'opcode1' : '0b110111'
+        'opcode1' : 0b110111
     }
 }
 #-I inst : auipc of type U-type
@@ -195,7 +195,7 @@ spec['nanorv32']['rv32i']['lui']['desc'] = {
 spec['nanorv32']['rv32i']['auipc']['desc'] = {
     'inst_type' : 'U-type',
     'decode' : {
-        'opcode1' : '0b10111'
+        'opcode1' : 0b10111
     }
 }
 #-I inst : addi of type I-type
@@ -204,8 +204,8 @@ spec['nanorv32']['rv32i']['auipc']['desc'] = {
 spec['nanorv32']['rv32i']['addi']['desc'] = {
     'inst_type' : 'I-type',
     'decode' : {
-        'opcode1' : '0b10011',
-        'func3'   : '0b0'
+        'opcode1' : 0b10011,
+        'func3'   : 0b0
     }
 }
 #-I inst : slli of type AS-type
@@ -216,8 +216,8 @@ spec['nanorv32']['rv32i']['addi']['desc'] = {
 spec['nanorv32']['rv32i']['slti']['desc'] = {
     'inst_type' : 'I-type',
     'decode' : {
-        'opcode1' : '0b10011',
-        'func3'   : '0b10'
+        'opcode1' : 0b10011,
+        'func3'   : 0b10
     }
 }
 #-I inst : sltiu of type I-type
@@ -226,8 +226,8 @@ spec['nanorv32']['rv32i']['slti']['desc'] = {
 spec['nanorv32']['rv32i']['sltiu']['desc'] = {
     'inst_type' : 'I-type',
     'decode' : {
-        'opcode1' : '0b10011',
-        'func3'   : '0b11'
+        'opcode1' : 0b10011,
+        'func3'   : 0b11
     }
 }
 #-I inst : xori of type I-type
@@ -236,8 +236,8 @@ spec['nanorv32']['rv32i']['sltiu']['desc'] = {
 spec['nanorv32']['rv32i']['xori']['desc'] = {
     'inst_type' : 'I-type',
     'decode' : {
-        'opcode1' : '0b10011',
-        'func3'   : '0b100'
+        'opcode1' : 0b10011,
+        'func3'   : 0b100
     }
 }
 #-I inst : srli of type AS-type
@@ -250,8 +250,8 @@ spec['nanorv32']['rv32i']['xori']['desc'] = {
 spec['nanorv32']['rv32i']['ori']['desc'] = {
     'inst_type' : 'I-type',
     'decode' : {
-        'opcode1' : '0b10011',
-        'func3'   : '0b110'
+        'opcode1' : 0b10011,
+        'func3'   : 0b110
     }
 }
 #-I inst : andi of type I-type
@@ -260,8 +260,8 @@ spec['nanorv32']['rv32i']['ori']['desc'] = {
 spec['nanorv32']['rv32i']['andi']['desc'] = {
     'inst_type' : 'I-type',
     'decode' : {
-        'opcode1' : '0b10011',
-        'func3'   : '0b111'
+        'opcode1' : 0b10011,
+        'func3'   : 0b111
     }
 }
 #-I inst : add of type R-type
@@ -270,9 +270,9 @@ spec['nanorv32']['rv32i']['andi']['desc'] = {
 spec['nanorv32']['rv32i']['add']['desc'] = {
     'inst_type' : 'R-type',
     'decode' : {
-        'opcode1' : '0b110011',
-        'func3'   : '0b0',
-        'func7'   : '0b0'
+        'opcode1' : 0b110011,
+        'func3'   : 0b0,
+        'func7'   : 0b0
     }
 }
 #-I inst : sub of type R-type
@@ -281,9 +281,9 @@ spec['nanorv32']['rv32i']['add']['desc'] = {
 spec['nanorv32']['rv32i']['sub']['desc'] = {
     'inst_type' : 'R-type',
     'decode' : {
-        'opcode1' : '0b110011',
-        'func3'   : '0b0',
-        'func7'   : '0b100000'
+        'opcode1' : 0b110011,
+        'func3'   : 0b0,
+        'func7'   : 0b100000
     }
 }
 #-I inst : sll of type R-type
@@ -292,9 +292,9 @@ spec['nanorv32']['rv32i']['sub']['desc'] = {
 spec['nanorv32']['rv32i']['sll']['desc'] = {
     'inst_type' : 'R-type',
     'decode' : {
-        'opcode1' : '0b110011',
-        'func3'   : '0b1',
-        'func7'   : '0b0'
+        'opcode1' : 0b110011,
+        'func3'   : 0b1,
+        'func7'   : 0b0
     }
 }
 #-I inst : slt of type R-type
@@ -303,9 +303,9 @@ spec['nanorv32']['rv32i']['sll']['desc'] = {
 spec['nanorv32']['rv32i']['slt']['desc'] = {
     'inst_type' : 'R-type',
     'decode' : {
-        'opcode1' : '0b110011',
-        'func3'   : '0b10',
-        'func7'   : '0b0'
+        'opcode1' : 0b110011,
+        'func3'   : 0b10,
+        'func7'   : 0b0
     }
 }
 #-I inst : sltu of type R-type
@@ -314,9 +314,9 @@ spec['nanorv32']['rv32i']['slt']['desc'] = {
 spec['nanorv32']['rv32i']['sltu']['desc'] = {
     'inst_type' : 'R-type',
     'decode' : {
-        'opcode1' : '0b110011',
-        'func3'   : '0b11',
-        'func7'   : '0b0'
+        'opcode1' : 0b110011,
+        'func3'   : 0b11,
+        'func7'   : 0b0
     }
 }
 #-I inst : xor of type R-type
@@ -325,9 +325,9 @@ spec['nanorv32']['rv32i']['sltu']['desc'] = {
 spec['nanorv32']['rv32i']['xor']['desc'] = {
     'inst_type' : 'R-type',
     'decode' : {
-        'opcode1' : '0b110011',
-        'func3'   : '0b100',
-        'func7'   : '0b0'
+        'opcode1' : 0b110011,
+        'func3'   : 0b100,
+        'func7'   : 0b0
     }
 }
 #-I inst : srl of type R-type
@@ -336,9 +336,9 @@ spec['nanorv32']['rv32i']['xor']['desc'] = {
 spec['nanorv32']['rv32i']['srl']['desc'] = {
     'inst_type' : 'R-type',
     'decode' : {
-        'opcode1' : '0b110011',
-        'func3'   : '0b101',
-        'func7'   : '0b0'
+        'opcode1' : 0b110011,
+        'func3'   : 0b101,
+        'func7'   : 0b0
     }
 }
 #-I inst : sra of type R-type
@@ -347,9 +347,9 @@ spec['nanorv32']['rv32i']['srl']['desc'] = {
 spec['nanorv32']['rv32i']['sra']['desc'] = {
     'inst_type' : 'R-type',
     'decode' : {
-        'opcode1' : '0b110011',
-        'func3'   : '0b101',
-        'func7'   : '0b100000'
+        'opcode1' : 0b110011,
+        'func3'   : 0b101,
+        'func7'   : 0b100000
     }
 }
 #-I inst : or of type R-type
@@ -358,9 +358,9 @@ spec['nanorv32']['rv32i']['sra']['desc'] = {
 spec['nanorv32']['rv32i']['or']['desc'] = {
     'inst_type' : 'R-type',
     'decode' : {
-        'opcode1' : '0b110011',
-        'func3'   : '0b110',
-        'func7'   : '0b0'
+        'opcode1' : 0b110011,
+        'func3'   : 0b110,
+        'func7'   : 0b0
     }
 }
 #-I inst : and of type R-type
@@ -369,9 +369,9 @@ spec['nanorv32']['rv32i']['or']['desc'] = {
 spec['nanorv32']['rv32i']['and']['desc'] = {
     'inst_type' : 'R-type',
     'decode' : {
-        'opcode1' : '0b110011',
-        'func3'   : '0b111',
-        'func7'   : '0b0'
+        'opcode1' : 0b110011,
+        'func3'   : 0b111,
+        'func7'   : 0b0
     }
 }
 #-I inst : lb of type I-type
@@ -380,8 +380,8 @@ spec['nanorv32']['rv32i']['and']['desc'] = {
 spec['nanorv32']['rv32i']['lb']['desc'] = {
     'inst_type' : 'I-type',
     'decode' : {
-        'opcode1' : '0b11',
-        'func3'   : '0b0'
+        'opcode1' : 0b11,
+        'func3'   : 0b0
     }
 }
 #-I inst : lw of type I-type
@@ -390,8 +390,8 @@ spec['nanorv32']['rv32i']['lb']['desc'] = {
 spec['nanorv32']['rv32i']['lw']['desc'] = {
     'inst_type' : 'I-type',
     'decode' : {
-        'opcode1' : '0b11',
-        'func3'   : '0b10'
+        'opcode1' : 0b11,
+        'func3'   : 0b10
     }
 }
 #-I inst : ld of type I-type
@@ -400,8 +400,8 @@ spec['nanorv32']['rv32i']['lw']['desc'] = {
 spec['nanorv32']['rv32i']['ld']['desc'] = {
     'inst_type' : 'I-type',
     'decode' : {
-        'opcode1' : '0b11',
-        'func3'   : '0b11'
+        'opcode1' : 0b11,
+        'func3'   : 0b11
     }
 }
 #-I inst : lbu of type I-type
@@ -410,8 +410,8 @@ spec['nanorv32']['rv32i']['ld']['desc'] = {
 spec['nanorv32']['rv32i']['lbu']['desc'] = {
     'inst_type' : 'I-type',
     'decode' : {
-        'opcode1' : '0b11',
-        'func3'   : '0b100'
+        'opcode1' : 0b11,
+        'func3'   : 0b100
     }
 }
 #-I inst : lhu of type I-type
@@ -420,8 +420,8 @@ spec['nanorv32']['rv32i']['lbu']['desc'] = {
 spec['nanorv32']['rv32i']['lhu']['desc'] = {
     'inst_type' : 'I-type',
     'decode' : {
-        'opcode1' : '0b11',
-        'func3'   : '0b101'
+        'opcode1' : 0b11,
+        'func3'   : 0b101
     }
 }
 #-I inst : lwu of type I-type
@@ -430,8 +430,8 @@ spec['nanorv32']['rv32i']['lhu']['desc'] = {
 spec['nanorv32']['rv32i']['lwu']['desc'] = {
     'inst_type' : 'I-type',
     'decode' : {
-        'opcode1' : '0b11',
-        'func3'   : '0b110'
+        'opcode1' : 0b11,
+        'func3'   : 0b110
     }
 }
 #-I inst : sb of type S-type
@@ -440,8 +440,8 @@ spec['nanorv32']['rv32i']['lwu']['desc'] = {
 spec['nanorv32']['rv32i']['sb']['desc'] = {
     'inst_type' : 'S-type',
     'decode' : {
-        'opcode1' : '0b100011',
-        'func3'   : '0b0'
+        'opcode1' : 0b100011,
+        'func3'   : 0b0
     }
 }
 #-I inst : sh of type S-type
@@ -450,8 +450,8 @@ spec['nanorv32']['rv32i']['sb']['desc'] = {
 spec['nanorv32']['rv32i']['sh']['desc'] = {
     'inst_type' : 'S-type',
     'decode' : {
-        'opcode1' : '0b100011',
-        'func3'   : '0b1'
+        'opcode1' : 0b100011,
+        'func3'   : 0b1
     }
 }
 #-I inst : sw of type S-type
@@ -460,8 +460,8 @@ spec['nanorv32']['rv32i']['sh']['desc'] = {
 spec['nanorv32']['rv32i']['sw']['desc'] = {
     'inst_type' : 'S-type',
     'decode' : {
-        'opcode1' : '0b100011',
-        'func3'   : '0b10'
+        'opcode1' : 0b100011,
+        'func3'   : 0b10
     }
 }
 #-I inst : sd of type S-type
@@ -470,13 +470,11 @@ spec['nanorv32']['rv32i']['sw']['desc'] = {
 spec['nanorv32']['rv32i']['sd']['desc'] = {
     'inst_type' : 'S-type',
     'decode' : {
-        'opcode1' : '0b100011',
-        'func3'   : '0b11'
+        'opcode1' : 0b100011,
+        'func3'   : 0b11
     }
 }
 #-I inst : fence of type F-type
 #-I inst : fence.i of type F-type
 #-I inst : scall of type SYS-type
 #-I inst : sbreak of type SYS-type
-{}
-None

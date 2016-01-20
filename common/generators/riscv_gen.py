@@ -67,9 +67,9 @@ def build_decode_string(list_of_fields,prefix,word_size,dont_care = '?'):
         print("========= " + inst + " =========="  )
         for field in fields:
             pp.pprint(field)
-            size = field['size']
-            value = field['value']
-            offset = field['offset']
+            size = field ['size']
+            value = field ['value']
+            offset = field ['offset']
             text = bin(value)[2:].zfill(size)
             text = text[::-1] # reverse
             bit_array = bit_array[:offset] + text + bit_array[offset+size:]
@@ -77,6 +77,18 @@ def build_decode_string(list_of_fields,prefix,word_size,dont_care = '?'):
         bit_array = bit_array[::-1] # reverse string
         result[inst] = prefix + bit_array
     return result
+
+def verilog_decode_definition(decode_dic):
+    """Return decode string definition for each instruction using dictionary returned by build_decode_string"""
+    res = ""
+    for k, v in decode_dic.items():
+        d = dict()
+        d['inst_uc'] = k.upper()
+        d['val'] = v
+        res += vt.decode_def.format(**d)
+    return res
+
+
 
 def write_to_file(path, filename, text):
     full_filename = path + '/' + filename

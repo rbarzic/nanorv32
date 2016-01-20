@@ -20,8 +20,12 @@ if True:
                      rg.verilog_inst_field(dic_inst_format))
 
     decode_fields = rg.get_decode_fields(nanorv32.spec, dic_inst_format)
-    decode_dic = rg.build_decode_string(decode_fields, "32'b", 32)
     pp.pprint(decode_fields)
+    decode_dic = rg.build_decode_string(decode_fields, "32'b", 32)
+
     pp.pprint(decode_dic)
+
+    rg.write_to_file("../../generated", "inst_decode_definitions.generated.v",
+                     rg.verilog_decode_definition(decode_dic))
 
     pass
