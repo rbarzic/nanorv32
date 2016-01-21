@@ -8,6 +8,7 @@ sys.path.append('../generators')
 
 import riscv_gen as rg
 import nanorv32
+import nanorv32_impl as impl
 
 # if __name__ == '__main__':
 if True:
@@ -27,5 +28,8 @@ if True:
 
     rg.write_to_file("../../generated", "inst_decode_definitions.generated.v",
                      rg.verilog_decode_definition(decode_dic))
-
+    print "="*80
+    merged_impl = rg.merge_inst_impl(nanorv32.spec, impl.spec)
+    print "*"*80
+    pp.pprint(merged_impl)
     pass

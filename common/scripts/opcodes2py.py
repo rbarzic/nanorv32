@@ -26,9 +26,9 @@ tpl_r_type = """
 spec['nanorv32']['rv32i']['{inst_name}']['desc'] = {{
     'inst_type' : 'R-type',
     'decode' : {{
-        'opcode1' : '{opcode1}',
-        'func3'   : '{func3}',
-        'func7'   : '{func7}'
+        'opcode1' : {opcode1},
+        'func3'   : {func3},
+        'func7'   : {func7}
     }}
 }}"""
 
@@ -36,8 +36,8 @@ tpl_i_type = """
 spec['nanorv32']['rv32i']['{inst_name}']['desc'] = {{
     'inst_type' : 'I-type',
     'decode' : {{
-        'opcode1' : '{opcode1}',
-        'func3'   : '{func3}'
+        'opcode1' : {opcode1},
+        'func3'   : {func3}
     }}
 }}"""
 
@@ -46,7 +46,7 @@ tpl_u_type = """
 spec['nanorv32']['rv32i']['{inst_name}']['desc'] = {{
     'inst_type' : 'U-type',
     'decode' : {{
-        'opcode1' : '{opcode1}'
+        'opcode1' : {opcode1}
     }}
 }}"""
 
@@ -54,7 +54,7 @@ tpl_uj_type = """
 spec['nanorv32']['rv32i']['{inst_name}']['desc'] = {{
     'inst_type' : 'UJ-type',
     'decode' : {{
-        'opcode1' : '{opcode1}'
+        'opcode1' : {opcode1}
     }}
 }}"""
 
@@ -62,8 +62,8 @@ tpl_s_type = """
 spec['nanorv32']['rv32i']['{inst_name}']['desc'] = {{
     'inst_type' : 'S-type',
     'decode' : {{
-        'opcode1' : '{opcode1}',
-        'func3'   : '{func3}'
+        'opcode1' : {opcode1},
+        'func3'   : {func3}
     }}
 }}"""
 
@@ -71,8 +71,18 @@ tpl_sb_type = """
 spec['nanorv32']['rv32i']['{inst_name}']['desc'] = {{
     'inst_type' : 'SB-type',
     'decode' : {{
-        'opcode1' : '{opcode1}',
-        'func3'   : '{func3}'
+        'opcode1' : {opcode1},
+        'func3'   : {func3}
+    }}
+}}"""
+
+tpl_as_type = """
+spec['nanorv32']['rv32i']['{inst_name}']['desc'] = {{
+    'inst_type' : 'AS-type',
+    'decode' : {{
+        'opcode1' : {opcode1},
+        'func3'   : {func3},
+        'func7'   : {func7}
     }}
 }}"""
 
@@ -215,7 +225,17 @@ def as_type_opcode_parse(matchObj):
     d = dict()
     if matchObj:
         print "# -I-        AS-type  match found " + matchObj.group(1) + " " + matchObj.group(2) + " " + matchObj.group(3) + " " + matchObj.group(4) + " " + matchObj.group(5)
-
+        opcode1 = int(matchObj.group(4),0)*4 + int(matchObj.group(5),0)
+        func3   = int(matchObj.group(3),0)
+        func7   = int(matchObj.group(2),0)
+        d['opcode1'] = bin(opcode1)
+        d['func3'] = bin(func3)
+        d['func7'] = bin(func7)
+        d['inst_name'] = matchObj.group(1)
+        # pp.pprint(d)
+        return d
+    else:
+        return None
 
 
 
@@ -294,7 +314,9 @@ if __name__ == '__main__':
                         print(txt)
                     m = as_type_opcode(line)
                     if m:
-                        as_type_opcode_parse(m)
+                        d = as_type_opcode_parse(m)
+                        txt = tpl_as_type.format(**d)
+                        print(txt)
 
 
 

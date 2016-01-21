@@ -58,7 +58,7 @@ spec['nanorv32']['inst_type']['U-type']['format'] = \
 spec['nanorv32']['inst_type']['UJ-type']['format'] = \
     {'opcode1': {'size': 7, 'offset': 0, 'decode': True},
      'rd': {'size': 5, 'offset': 7},
-     'imm2uj': {'size': 20,
+     'imm20uj': {'size': 20,
                 'offset': 12}}
 
 # ALU shift format
@@ -78,10 +78,9 @@ spec['nanorv32']['inst_type']['AS-type']['format'] = {
 spec['nanorv32']['inst_type']['F-type']['format'] = {
     'opcode1': {'size': 7, 'offset': 0, 'decode': True},
     'rd': {'size': 5, 'offset': 7},
-    'rs1': {'size': 5, 'offset': 15},
-    'shamt': {'size': 5, 'offset': 10},
+    'rs1': {'size': 5, 'offset': 15, 'decode': True},
     'func3': {'size': 12, 'offset': 3, 'decode': True},
-    'func7': {'size': 7, 'offset': 25, 'decode': True},
+    'func4': {'size': 4, 'offset': 28, 'decode': True},
     }
 
 # System format
@@ -89,10 +88,54 @@ spec['nanorv32']['inst_type']['F-type']['format'] = {
 spec['nanorv32']['inst_type']['SYS-type']['format'] = {
     'opcode1': {'size': 7, 'offset': 0, 'decode': True},
     'rd': {'size': 5, 'offset': 7},
-    'rs1': {'size': 5, 'offset': 15},
+    'rs1': {'size': 5, 'offset': 15, 'decode': True},
     'func3': {'size': 12, 'offset': 3, 'decode': True},
     'func12': {'size': 12, 'offset': 20, 'decode': True},
     }
+
+################################################################
+#   Instruction decoding description
+################################################################
+
+spec['nanorv32']['rv32i']['fence']['desc'] = {
+    'inst_type' : 'F-type',
+    'decode' : {
+        'opcode1' : 0b0001111,
+        'rs1'     : 0b000,
+        'func3'   : 0b000,
+        'func4'   : 0b0000
+    }
+}
+spec['nanorv32']['rv32i']['fence.i']['desc'] = {
+    'inst_type' : 'F-type',
+    'decode' : {
+        'opcode1' : 0b0001111,
+        'rs1'     : 0b000,
+        'func3'   : 0b001,
+        'func4'   : 0b0000
+    }
+}
+
+spec['nanorv32']['rv32i']['scall']['desc'] = {
+    'inst_type' : 'SYS-type',
+    'decode' : {
+        'opcode1' : 0b1110011,
+        'rs1'     : 0b000,
+        'func3'   : 0b000,
+        'func12'   : 0b000000000000
+    }
+}
+
+spec['nanorv32']['rv32i']['sbreak']['desc'] = {
+    'inst_type' : 'SYS-type',
+    'decode' : {
+        'opcode1' : 0b1110011,
+        'rs1'     : 0b000,
+        'func3'   : 0b000,
+        'func12'   : 0b000000000001
+    }
+}
+
 
 
 
@@ -100,7 +143,8 @@ spec['nanorv32']['inst_type']['SYS-type']['format'] = {
 # using the opcodes2py.py script (under common/scripts)
 # You can run it with the following command :
 # ./opcodes2py.py --opcodes=../../riscv-opcodes/opcodes
-
+#-I inst : beq of type SB-type
+# -I-        SB-type  match found beq 0 0x18 3
 #-I inst : beq of type SB-type
 # -I-        SB-type  match found beq 0 0x18 3
 
@@ -210,6 +254,15 @@ spec['nanorv32']['rv32i']['addi']['desc'] = {
 }
 #-I inst : slli of type AS-type
 # -I-        AS-type  match found slli 0 1 0x04 3
+
+spec['nanorv32']['rv32i']['slli']['desc'] = {
+    'inst_type' : 'AS-type',
+    'decode' : {
+        'opcode1' : 0b10011,
+        'func3'   : 0b1,
+        'func7'   : 0b0
+    }
+}
 #-I inst : slti of type AS-type
 # -I-        I-type  match found slti 2 0x04 3
 
@@ -242,8 +295,26 @@ spec['nanorv32']['rv32i']['xori']['desc'] = {
 }
 #-I inst : srli of type AS-type
 # -I-        AS-type  match found srli 0 5 0x04 3
+
+spec['nanorv32']['rv32i']['srli']['desc'] = {
+    'inst_type' : 'AS-type',
+    'decode' : {
+        'opcode1' : 0b10011,
+        'func3'   : 0b101,
+        'func7'   : 0b0
+    }
+}
 #-I inst : srai of type AS-type
 # -I-        AS-type  match found srai 16 5 0x04 3
+
+spec['nanorv32']['rv32i']['srai']['desc'] = {
+    'inst_type' : 'AS-type',
+    'decode' : {
+        'opcode1' : 0b10011,
+        'func3'   : 0b101,
+        'func7'   : 0b10000
+    }
+}
 #-I inst : ori of type I-type
 # -I-        I-type  match found ori 6 0x04 3
 

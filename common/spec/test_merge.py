@@ -8,7 +8,7 @@ def merge_dict(a, b, path=None):
     for key in b:
         if key in a:
             if isinstance(a[key], dict) and isinstance(b[key], dict):
-                merge(a[key], b[key], path + [str(key)])
+                merge_dict(a[key], b[key], path + [str(key)])
             elif a[key] == b[key]:
                 pass # same leaf value
             else:
@@ -26,7 +26,7 @@ print "="*80
 pp.pprint(d2)
 
 d3 = d1.copy()
-merge(d3,d2)
+merge_dict(d3,d2)
 
 print "="*80
 pp.pprint(d3)

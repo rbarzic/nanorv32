@@ -1,6 +1,7 @@
 import AutoVivification as av
 import VerilogTemplates as vt
 import math
+import copy
 
 import pprint as pp
 from collections import defaultdict
@@ -95,3 +96,63 @@ def write_to_file(path, filename, text):
     with open(full_filename, 'w') as fh:
         fh.write(text)
         fh.close()
+
+
+# from http://stackoverflow.com/questions/7204805/dictionaries-of-dictionaries-merge/7205107#7205107
+def merge_dict(a, b, path=None):
+    "merges b into a"
+    if path is None: path = []
+    for key in b:
+        if key in a:
+            if isinstance(a[key], dict) and isinstance(b[key], dict):
+                merge_dict(a[key], b[key], path + [str(key)])
+            elif a[key] == b[key]:
+                pass # same leaf value
+            else:
+                raise Exception('Conflict at %s' % '.'.join(path + [str(key)]))
+        else:
+            a[key] = b[key]
+    return a
+
+def merge_dict2(a, b, path=None):
+    "merges b into a, with override"
+    if path is None: path = []
+    for key in b:
+        if key in a:
+            if isinstance(a[key], dict) and isinstance(b[key], dict):
+                merge_dict2(a[key], b[key], path + [str(key)])
+            elif a[key] == b[key]:
+                pass # same leaf value
+            else:
+                a[key] = b[key]
+                #raise Exception('Conflict at %s' % '.'.join(path + [str(key)]))
+        else:
+            a[key] = b[key]
+    return a
+
+
+
+def merge_inst_impl(spec,impl_spec):
+    """Merge instruction type description with instruction specific implementation"""
+    res = dict()
+    for inst_name, inst_data in impl_spec['nanorv32']['rv32i']['impl']['inst'].items():
+        d1 = dict()
+        d2 = dict()
+        d3 = dict()
+        d4 = dict()
+        print "inst_name : " + inst_name
+        # d2 = inst_data.copy()
+        inst_type = spec['nanorv32']['rv32i'][inst_name]['desc']['inst_type']
+        print "Instruction type : " + inst_type
+        d1 = copy.deepcopy(impl_spec['nanorv32']['rv32i']['impl']['inst_type'][inst_type])
+        d2 = copy.deepcopy(inst_data)
+        print '-'*20
+        pp.pprint(d1)
+        print '-'*20
+        pp.pprint(d2)
+        print '-'*20
+        d3 = merge_dict2(d1,d2)
+        pp.pprint(d2)
+        print '-'*20
+        res[inst_name] = copy.deepcopy(d3)
+    return res
