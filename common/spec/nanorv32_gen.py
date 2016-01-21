@@ -28,8 +28,28 @@ if True:
 
     rg.write_to_file("../../generated", "inst_decode_definitions.generated.v",
                      rg.verilog_decode_definition(decode_dic))
-    print "="*80
+    #print "="*80
     merged_impl = rg.merge_inst_impl(nanorv32.spec, impl.spec)
-    print "*"*80
+    #print "*"*80
     pp.pprint(merged_impl)
-    pass
+    #pass
+    sel_val = rg.get_selectors_per_inst(merged_impl, ["pc", "alu", "datamem", "regfile"])
+
+    sel_value_dic = rg.get_selector_values(sel_val)
+
+    pp.pprint(sel_value_dic)
+
+    rg.write_to_file("../../generated", "mux_select_definitions.generated.v",
+                     rg.verilog_selector_definition(sel_value_dic))
+
+    rg.write_to_file("../../generated", "mux_select_declarations.generated.v",
+                     rg.verilog_selector_declaration(sel_value_dic))
+
+    rg.write_to_file("../../generated", "mux_template.v",
+                     rg.verilog_selector_template(sel_value_dic))
+
+    rg.write_to_file("../../generated", "instruction_decoder.generated.v",
+                     rg.verilog_decode_logic(sel_val))
+
+
+    print("-I Done")

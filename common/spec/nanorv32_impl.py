@@ -176,7 +176,7 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['F-type'] = {
 }
 
 # SYS-type : scall, sbreak
-spec['nanorv32']['rv32i']['impl']['inst_type']['F-type'] = {
+spec['nanorv32']['rv32i']['impl']['inst_type']['SYS-type'] = {
     'pc' : {
         'next' : 'plus4'
     },
