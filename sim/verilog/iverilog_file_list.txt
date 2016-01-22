@@ -1,2 +1,7 @@
-../../rtl/cores/picorv32.v
-../../sim/verilog/testbench.v
++incdir+../../rtl/cores/
+../../rtl/cores/nanorv32_alu.v
+../../rtl/cores/nanorv32_regfile.v
+../../rtl/cores/nanorv32.v
+../../rtl/ips/bytewrite_ram_32bits.v
+../../rtl/chips/nanorv32_simple.v
+../../sim/verilog/tb_nanorv32.v

@@ -56,7 +56,7 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['S-type'] = {
     },
     'alu' : {
         'porta' : 'rs1',
-        'portb' : 'imm12',
+        'portb' : 'imm12hilo',
     },
     'regfile' : {
         'write' : 'no',
@@ -98,7 +98,7 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['U-type'] = {
     },
     'alu' : {
         'porta' : 'pc',
-        'portb' : 'imm20', # ALU op will be 'portb' or add
+        'portb' : 'imm20u', # ALU op will be 'portb' or add
     },
     'regfile' : {
         'write' : 'yes',
@@ -207,7 +207,7 @@ spec['nanorv32']['rv32i']['impl']['inst']['jalr'] = {
 
 spec['nanorv32']['rv32i']['impl']['inst']['addi'] = {
      'alu' : {
-        'op' : 'addi',
+        'op' : 'add',
     },
 }
 
@@ -292,7 +292,7 @@ spec['nanorv32']['rv32i']['impl']['inst']['fence'] = {
 }
 
 
-spec['nanorv32']['rv32i']['impl']['inst']['fence.i'] = {
+spec['nanorv32']['rv32i']['impl']['inst']['fence_i'] = {
 
 }
 

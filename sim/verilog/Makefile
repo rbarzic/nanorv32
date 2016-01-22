@@ -37,3 +37,7 @@ run_rv32ui: ../../riscv-tests/isa/rv32ui/$(TEST).S
 	hexdump -v -e '"@%08.8_ax  " 1/1 "%02x " "\n"' $(TEST).bin > $(TEST).vmem # iverilog
 	python3 ./makehex.py $(TEST).bin 16384 > $(TEST).hex2
 	vvp -N testbench.exe  +vcd
+
+regen:
+	make -C $(TOP)/common/spec gen_files
+	make -C $(TOP)/common/spec extract insert

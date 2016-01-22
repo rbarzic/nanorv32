@@ -106,7 +106,7 @@ spec['nanorv32']['rv32i']['fence']['desc'] = {
         'func4'   : 0b0000
     }
 }
-spec['nanorv32']['rv32i']['fence.i']['desc'] = {
+spec['nanorv32']['rv32i']['fence_i']['desc'] = {
     'inst_type' : 'F-type',
     'decode' : {
         'opcode1' : 0b0001111,

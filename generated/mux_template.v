@@ -34,25 +34,25 @@
         NANORV32_MUX_SEL_ALU_OP_OR: begin
             alu_op <= ;
         end
-        NANORV32_MUX_SEL_ALU_OP_ADDI: begin
-            alu_op <= ;
-        end
 //========================================
 
     case(alu_portb)
-        NANORV32_MUX_SEL_ALU_PORTB_IMM20: begin
-            alu_portb <= ;
-        end
         NANORV32_MUX_SEL_ALU_PORTB_SHAMT: begin
             alu_portb <= ;
         end
         NANORV32_MUX_SEL_ALU_PORTB_IMM12: begin
             alu_portb <= ;
         end
-        NANORV32_MUX_SEL_ALU_PORTB_RS2: begin
+        NANORV32_MUX_SEL_ALU_PORTB_IMM12HILO: begin
+            alu_portb <= ;
+        end
+        NANORV32_MUX_SEL_ALU_PORTB_IMM20U: begin
             alu_portb <= ;
         end
         NANORV32_MUX_SEL_ALU_PORTB_IMM20UJ: begin
+            alu_portb <= ;
+        end
+        NANORV32_MUX_SEL_ALU_PORTB_RS2: begin
             alu_portb <= ;
         end
 //========================================
