@@ -31,19 +31,21 @@
 module tb_nanorv32;
 
    `include "nanorv32_parameters.v"
-   parameter ROM_ADDRESS_SIZE  = NRV32_ADDR_SIZE-1; // Rom is half of the address space
+   parameter ROM_ADDRESS_SIZE  = NANORV32_ADDR_SIZE-1; // Rom is half of the address space
 
 
    /*AUTOREG*/
    /*AUTOWIRE*/
    // Beginning of automatic wires (for undeclared instantiated-module outputs)
+   wire                 alu_cond;               // From U_DUT of nanorv32.v
+   wire [NANORV32_DATA_MSB:0] alu_res;          // From U_DUT of nanorv32.v
    wire                 clk;                    // From U_CLOCK_GEN of clock_gen.v
-   wire [NRV32_ADDR_MSB:0] cpu_codemem_addr;    // From U_DUT of nanorv32.v
+   wire [NANORV32_ADDR_MSB:0] cpu_codemem_addr; // From U_DUT of nanorv32.v
    wire                 cpu_codemem_valid;      // From U_DUT of nanorv32.v
-   wire [NRV32_ADDR_MSB:0] cpu_datamem_addr;    // From U_DUT of nanorv32.v
+   wire [NANORV32_ADDR_MSB:0] cpu_datamem_addr; // From U_DUT of nanorv32.v
    wire [3:0]           cpu_datamem_bytesel;    // From U_DUT of nanorv32.v
    wire                 cpu_datamem_valid;      // From U_DUT of nanorv32.v
-   wire [NRV32_DATA_MSB:0] cpu_datamem_wdata;   // From U_DUT of nanorv32.v
+   wire [NANORV32_DATA_MSB:0] cpu_datamem_wdata;// From U_DUT of nanorv32.v
    wire                 rst_n;                  // From U_RESET_GEN of reset_gen.v
    // End of automatics
 
@@ -53,19 +55,27 @@ module tb_nanorv32;
    nanorv32 U_DUT (
                            /*AUTOINST*/
                    // Outputs
-                   .cpu_codemem_addr    (cpu_codemem_addr[NRV32_ADDR_MSB:0]),
+                   .cpu_codemem_addr    (cpu_codemem_addr[NANORV32_ADDR_MSB:0]),
                    .cpu_codemem_valid   (cpu_codemem_valid),
-                   .cpu_datamem_addr    (cpu_datamem_addr[NRV32_ADDR_MSB:0]),
-                   .cpu_datamem_wdata   (cpu_datamem_wdata[NRV32_DATA_MSB:0]),
+                   .cpu_datamem_addr    (cpu_datamem_addr[NANORV32_ADDR_MSB:0]),
+                   .cpu_datamem_wdata   (cpu_datamem_wdata[NANORV32_DATA_MSB:0]),
                    .cpu_datamem_bytesel (cpu_datamem_bytesel[3:0]),
                    .cpu_datamem_valid   (cpu_datamem_valid),
+                   .alu_cond            (alu_cond),
+                   .alu_res             (alu_res[NANORV32_DATA_MSB:0]),
                    // Inputs
-                   .codemem_cpu_rdata   (codemem_cpu_rdata[NRV32_DATA_MSB:0]),
+                   .codemem_cpu_rdata   (codemem_cpu_rdata[NANORV32_DATA_MSB:0]),
                    .codemem_cpu_ready   (codemem_cpu_ready),
-                   .datamem_cpu_rdata   (datamem_cpu_rdata[NRV32_DATA_MSB:0]),
+                   .datamem_cpu_rdata   (datamem_cpu_rdata[NANORV32_DATA_MSB:0]),
                    .datamem_cpu_ready   (datamem_cpu_ready),
                    .rst_n               (rst_n),
-                   .clk                 (clk));
+                   .clk                 (clk),
+                   .alu_porta           (alu_porta[NANORV32_DATA_MSB:0]),
+                   .alu_portb           (alu_portb[NANORV32_DATA_MSB:0]),
+                   .rd                  (rd[NANORV32_DATA_MSB:0]),
+                   .sel_porta           (sel_porta[NANORV32_RF_PORTA_MSB:0]),
+                   .sel_portb           (sel_portb[NANORV32_RF_PORTB_MSB:0]),
+                   .sel_rd              (sel_rd[NANORV32_RF_PORTRD_MSB:0]));
 
 
 
