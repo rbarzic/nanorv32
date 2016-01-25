@@ -32,16 +32,16 @@ module nanorv32_alu (/*AUTOARG*/
    // Outputs
    alu_res, alu_cond,
    // Inputs
-   alu_porta, alu_portb, alu_op_sel, alu_cond_sel
+   alu_porta, alu_portb, alu_op_sel
    );
 
    `include "nanorv32_parameters.v"
-   input [NANORV32_WORD_MSB:0] alu_porta;
-   input [NANORV32_WORD_MSB:0] alu_portb;
+   input [NANORV32_DATA_MSB:0] alu_porta;
+   input [NANORV32_DATA_MSB:0] alu_portb;
    input [NANORV32_MUX_SEL_ALU_OP_MSB:0] alu_op_sel;
-   input [NANORV32_MUX_SEL_ALU_COND_MSB:0] alu_cond_sel;
+   //input [NANORV32_MUX_SEL_ALU_COND_MSB:0] alu_cond_sel;
 
-   output [NANORV32_WORD_MSB:0]            alu_res;
+   output [NANORV32_DATA_MSB:0]            alu_res;
    output                          alu_cond;
 
 
@@ -53,7 +53,7 @@ module nanorv32_alu (/*AUTOARG*/
    /*AUTOREG*/
    // Beginning of automatic regs (for this module's undeclared outputs)
    reg                  alu_cond;
-   reg [NANORV32_WORD_MSB:0]  alu_res;
+   reg [NANORV32_DATA_MSB:0] alu_res;
    // End of automatics
    /*AUTOWIRE*/
    // port a is tos most of the time, port b is nos
@@ -87,13 +87,13 @@ module nanorv32_alu (/*AUTOARG*/
            alu_res <= alu_porta |  alu_portb;
         end
         NANORV32_MUX_SEL_ALU_OP_INFERIOR: begin
-           alu_res <= {NANORV32_WORD_SIZE{(alu_portb < alu_porta)}};
+           alu_res <= {NANORV32_DATA_SIZE{(alu_portb < alu_porta)}};
         end
         NANORV32_MUX_SEL_ALU_OP_INFERIOR_UNSIGNED: begin
-           alu_res <= {NANORV32_WORD_SIZE{($signed(alu_portb) < $signed(alu_porta))}};
+           alu_res <= {NANORV32_DATA_SIZE{($signed(alu_portb) < $signed(alu_porta))}};
         end
         NANORV32_MUX_SEL_ALU_OP_EQUAL: begin
-           alu_res <= {NANORV32_WORD_SIZE{(alu_portb == alu_porta)}};
+           alu_res <= {NANORV32_DATA_SIZE{(alu_portb == alu_porta)}};
         end
       endcase // case (alu_op_sel)
    end // always@ *

@@ -30,11 +30,27 @@
 
 
 
-parameter NRV32_ADDR_SIZE=16; // 64K
-parameter NRV32_ADDR_MSB = NRV32_ADDR_SIZE-1;
+parameter NANORV32_ADDR_SIZE=16; // 64K
+parameter NANORV32_ADDR_MSB = NANORV32_ADDR_SIZE-1;
 
-parameter NRV32_DATA_SIZE=32;
-parameter NRV32_DATA_MSB = NRV32_DATA_SIZE-1;
+parameter NANORV32_DATA_SIZE=32;
+parameter NANORV32_DATA_MSB = NANORV32_DATA_SIZE-1;
+
+// 32-bit instruction only for now
+parameter NANORV32_INSTRUCTION_SIZE = 32;
+parameter NANORV32_INSTRUCTION_MSB = NANORV32_INSTRUCTION_SIZE -1;
+
+
+
+// Regidter file selector size
+// 32 registers
+parameter NANORV32_RF_PORTA_SIZE = 5;
+parameter NANORV32_RF_PORTA_MSB = NANORV32_RF_PORTA_SIZE-1;
+parameter NANORV32_RF_PORTB_SIZE = 5;
+parameter NANORV32_RF_PORTB_MSB = NANORV32_RF_PORTB_SIZE-1;
+parameter NANORV32_RF_PORTRD_SIZE = 5;
+parameter NANORV32_RF_PORTRD_MSB = NANORV32_RF_PORTRD_SIZE-1;
+
 
 
 //@begin[instruction_format]
@@ -45,3 +61,6 @@ parameter NRV32_DATA_MSB = NRV32_DATA_SIZE-1;
 
 //@begin[mux_select_definitions]
 //@end[mux_select_definitions]
+
+// For the ALU shift amount (inputed on ALU port B)
+parameter NANORV32_SHAMT_FILL = NRV32_DATA_SIZE-NANORV32_INST_FORMAT_SHAMT_SIZE;

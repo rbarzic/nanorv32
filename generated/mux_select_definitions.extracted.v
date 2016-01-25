@@ -21,7 +21,6 @@ parameter NANORV32_MUX_SEL_ALU_OP_COMP = 3;
 parameter NANORV32_MUX_SEL_ALU_OP_ADD = 4;
 parameter NANORV32_MUX_SEL_ALU_OP_NOOP = 5;
 parameter NANORV32_MUX_SEL_ALU_OP_OR = 6;
-parameter NANORV32_MUX_SEL_ALU_OP_ADDI = 7;
 //  alu_portb
 
 parameter NANORV32_MUX_SEL_ALU_PORTB_SIZE = 3;

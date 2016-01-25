@@ -352,7 +352,7 @@
     end
     NANORV32_DECODE_ADDI: begin
         pc_next_sel = NANORV32_MUX_SEL_PC_NEXT_PLUS4;
-        alu_op_sel = NANORV32_MUX_SEL_ALU_OP_ADDI;
+        alu_op_sel = NANORV32_MUX_SEL_ALU_OP_ADD;
         alu_portb_sel = NANORV32_MUX_SEL_ALU_PORTB_IMM12;
         alu_porta_sel = NANORV32_MUX_SEL_ALU_PORTA_RS1;
         datamem_write_sel = NANORV32_MUX_SEL_DATAMEM_WRITE_NO;

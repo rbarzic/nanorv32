@@ -41,3 +41,6 @@ run_rv32ui: ../../riscv-tests/isa/rv32ui/$(TEST).S
 regen:
 	make -C $(TOP)/common/spec gen_files
 	make -C $(TOP)/common/spec extract insert
+
+check-syntax:
+	iverilog -f  iverilog_file_list.txt -o /dev/null

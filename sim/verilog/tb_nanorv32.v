@@ -71,6 +71,7 @@ module tb_nanorv32;
 
 
 
+
     /* reset_gen AUTO_TEMPLATE(
      .reset_n              (rst_n));
      ); */
@@ -118,12 +119,6 @@ module tb_nanorv32;
          end
       end
    endtask // load_program_memory
-
-
-
-
-
-
 
 
 endmodule // tb_nanorv32

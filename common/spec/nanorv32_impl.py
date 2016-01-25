@@ -260,16 +260,20 @@ spec['nanorv32']['rv32i']['impl']['inst']['lb'] = {
 
 
 spec['nanorv32']['rv32i']['impl']['inst']['lw'] = {
-
-}
-
-
-spec['nanorv32']['rv32i']['impl']['inst']['ld'] = {
     'datamem' : {
         'write' : 'no',
         'read' : 'yes',
     },
+
 }
+
+
+# spec['nanorv32']['rv32i']['impl']['inst']['ld'] = {
+#     'datamem' : {
+#         'write' : 'no',
+#         'read' : 'yes',
+#     },
+# }
 
 
 spec['nanorv32']['rv32i']['impl']['inst']['lbu'] = {
@@ -441,23 +445,33 @@ spec['nanorv32']['rv32i']['impl']['inst']['sbreak'] = {
 
 
 spec['nanorv32']['rv32i']['impl']['inst']['sb'] = {
-
+     'datamem' : {
+        'write' : 'yes',
+        'read' : 'no',
+    },
 }
 
 
 spec['nanorv32']['rv32i']['impl']['inst']['sh'] = {
+     'datamem' : {
+        'write' : 'yes',
+        'read' : 'no',
+    },
 
 }
 
 
 spec['nanorv32']['rv32i']['impl']['inst']['sw'] = {
-
+     'datamem' : {
+        'write' : 'yes',
+        'read' : 'no',
+    },
 }
 
 
-spec['nanorv32']['rv32i']['impl']['inst']['sd'] = {
-
-}
+#spec['nanorv32']['rv32i']['impl']['inst']['sd'] = {
+#
+#}
 
 
 spec['nanorv32']['rv32i']['impl']['inst']['jal'] = {

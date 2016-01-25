@@ -68,6 +68,9 @@
 //========================================
 
     case(datamem_write)
+        NANORV32_MUX_SEL_DATAMEM_WRITE_YES: begin
+            datamem_write <= ;
+        end
         NANORV32_MUX_SEL_DATAMEM_WRITE_WORD: begin
             datamem_write <= ;
         end

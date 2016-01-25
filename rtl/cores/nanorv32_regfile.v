@@ -38,29 +38,29 @@ module nanorv32_regfile (/*AUTOARG*/
    sel_porta, sel_portb, sel_rd, rd, write_rd, clk, rst_n
    );
 
-  parameter NUM_REGS=32;
+   parameter NUM_REGS=32;
 `include "nanorv32_parameters.v"
 
   // Selection
-  input  [NANORV32_PORTA_MSB:0] sel_porta;
-  input [NANORV32_RD_OR_PORTB_MSB:0]  sel_portb;
-  input [NANORV32_RD_OR_PORTB_MSB:0]   sel_rd;
-  // Data ports
-  output [NANORV32_WORD_MSB:0] porta;
-  output [NANORV32_WORD_MSB:0] portb;
-  input [NANORV32_WORD_MSB:0]  rd;
-  input                    write_rd;
-  input                    clk;
-  input                    rst_n;
+   input  [NANORV32_RF_PORTA_MSB:0] sel_porta;
+   input [NANORV32_RF_PORTB_MSB:0]  sel_portb;
+   input [NANORV32_RF_PORTRD_MSB:0] sel_rd;
+   // Data ports
+   output [NANORV32_DATA_MSB:0]     porta;
+   output [NANORV32_DATA_MSB:0]     portb;
+   input [NANORV32_DATA_MSB:0]      rd;
+   input                            write_rd;
+   input                            clk;
+   input                            rst_n;
 
-  /*AUTOINPUT*/
+   /*AUTOINPUT*/
 
   /*AUTOOUTPUT*/
 
   /*AUTOREG*/
   // Beginning of automatic regs (for this module's undeclared outputs)
-  reg [NANORV32_WORD_MSB:0] porta;
-  reg [NANORV32_WORD_MSB:0] portb;
+  reg [NANORV32_DATA_MSB:0] porta;
+  reg [NANORV32_DATA_MSB:0] portb;
   // End of automatics
 
   /*AUTOWIRE*/
@@ -68,7 +68,7 @@ module nanorv32_regfile (/*AUTOARG*/
 
 
 
-  reg [NANORV32_WORD_MSB:0] regfile [0:NUM_REGS-1];
+  reg [NANORV32_DATA_MSB:0] regfile [0:NUM_REGS-1];
 
   always @(sel_porta)  begin
     if(sel_porta != 0) begin
