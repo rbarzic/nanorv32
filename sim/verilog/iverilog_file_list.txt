@@ -4,4 +4,6 @@
 ../../rtl/cores/nanorv32.v
 ../../rtl/ips/bytewrite_ram_32bits.v
 ../../rtl/chips/nanorv32_simple.v
+../../sim/verilog/reset_gen.v
+../../sim/verilog/clock_gen.v
 ../../sim/verilog/tb_nanorv32.v

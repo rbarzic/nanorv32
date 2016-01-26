@@ -37,45 +37,25 @@ module tb_nanorv32;
    /*AUTOREG*/
    /*AUTOWIRE*/
    // Beginning of automatic wires (for undeclared instantiated-module outputs)
-   wire                 alu_cond;               // From U_DUT of nanorv32.v
-   wire [NANORV32_DATA_MSB:0] alu_res;          // From U_DUT of nanorv32.v
    wire                 clk;                    // From U_CLOCK_GEN of clock_gen.v
-   wire [NANORV32_ADDR_MSB:0] cpu_codemem_addr; // From U_DUT of nanorv32.v
-   wire                 cpu_codemem_valid;      // From U_DUT of nanorv32.v
-   wire [NANORV32_ADDR_MSB:0] cpu_datamem_addr; // From U_DUT of nanorv32.v
-   wire [3:0]           cpu_datamem_bytesel;    // From U_DUT of nanorv32.v
-   wire                 cpu_datamem_valid;      // From U_DUT of nanorv32.v
-   wire [NANORV32_DATA_MSB:0] cpu_datamem_wdata;// From U_DUT of nanorv32.v
+   wire                 cpu_codemem_valid;      // From U_DUT of nanorv32_simple.v
+   wire [3:0]           cpu_datamem_bytesel;    // From U_DUT of nanorv32_simple.v
    wire                 rst_n;                  // From U_RESET_GEN of reset_gen.v
    // End of automatics
 
 
     /* nanorv32 AUTO_TEMPLATE(
      ); */
-   nanorv32 U_DUT (
+   nanorv32_simple U_DUT (
                            /*AUTOINST*/
-                   // Outputs
-                   .cpu_codemem_addr    (cpu_codemem_addr[NANORV32_ADDR_MSB:0]),
-                   .cpu_codemem_valid   (cpu_codemem_valid),
-                   .cpu_datamem_addr    (cpu_datamem_addr[NANORV32_ADDR_MSB:0]),
-                   .cpu_datamem_wdata   (cpu_datamem_wdata[NANORV32_DATA_MSB:0]),
-                   .cpu_datamem_bytesel (cpu_datamem_bytesel[3:0]),
-                   .cpu_datamem_valid   (cpu_datamem_valid),
-                   .alu_cond            (alu_cond),
-                   .alu_res             (alu_res[NANORV32_DATA_MSB:0]),
-                   // Inputs
-                   .codemem_cpu_rdata   (codemem_cpu_rdata[NANORV32_DATA_MSB:0]),
-                   .codemem_cpu_ready   (codemem_cpu_ready),
-                   .datamem_cpu_rdata   (datamem_cpu_rdata[NANORV32_DATA_MSB:0]),
-                   .datamem_cpu_ready   (datamem_cpu_ready),
-                   .rst_n               (rst_n),
-                   .clk                 (clk),
-                   .alu_porta           (alu_porta[NANORV32_DATA_MSB:0]),
-                   .alu_portb           (alu_portb[NANORV32_DATA_MSB:0]),
-                   .rd                  (rd[NANORV32_DATA_MSB:0]),
-                   .sel_porta           (sel_porta[NANORV32_RF_PORTA_MSB:0]),
-                   .sel_portb           (sel_portb[NANORV32_RF_PORTB_MSB:0]),
-                   .sel_rd              (sel_rd[NANORV32_RF_PORTRD_MSB:0]));
+                          // Outputs
+                          .cpu_codemem_valid    (cpu_codemem_valid),
+                          .cpu_datamem_bytesel  (cpu_datamem_bytesel[3:0]),
+                          // Inputs
+                          .clk                  (clk),
+                          .codemem_cpu_ready    (codemem_cpu_ready),
+                          .datamem_cpu_ready    (datamem_cpu_ready),
+                          .rst_n                (rst_n));
 
 
 
@@ -137,6 +117,7 @@ endmodule // tb_nanorv32
  verilog-library-directories:(
  "."
  "../../rtl/cores"
+ "../../rtl/chips"
  )
  End:
  */

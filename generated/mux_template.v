@@ -8,6 +8,9 @@
         end
         NANORV32_MUX_SEL_PC_NEXT_PLUS4: begin
             pc_next <= ;
+        end
+        NANORV32_MUX_SEL_PC_NEXT_ALU_RES: begin
+            pc_next <= ;
         end// Mux definitions for alu
 
 //========================================
@@ -22,7 +25,22 @@
         NANORV32_MUX_SEL_ALU_OP_SUB: begin
             alu_op <= ;
         end
-        NANORV32_MUX_SEL_ALU_OP_COMP: begin
+        NANORV32_MUX_SEL_ALU_OP_LT_SIGNED: begin
+            alu_op <= ;
+        end
+        NANORV32_MUX_SEL_ALU_OP_GE_UNSIGNED: begin
+            alu_op <= ;
+        end
+        NANORV32_MUX_SEL_ALU_OP_NOP: begin
+            alu_op <= ;
+        end
+        NANORV32_MUX_SEL_ALU_OP_ARSHIFT: begin
+            alu_op <= ;
+        end
+        NANORV32_MUX_SEL_ALU_OP_GE_SIGNED: begin
+            alu_op <= ;
+        end
+        NANORV32_MUX_SEL_ALU_OP_LT_UNSIGNED: begin
             alu_op <= ;
         end
         NANORV32_MUX_SEL_ALU_OP_ADD: begin
@@ -31,7 +49,19 @@
         NANORV32_MUX_SEL_ALU_OP_NOOP: begin
             alu_op <= ;
         end
+        NANORV32_MUX_SEL_ALU_OP_LSHIFT: begin
+            alu_op <= ;
+        end
+        NANORV32_MUX_SEL_ALU_OP_RSHIFT: begin
+            alu_op <= ;
+        end
+        NANORV32_MUX_SEL_ALU_OP_EQ: begin
+            alu_op <= ;
+        end
         NANORV32_MUX_SEL_ALU_OP_OR: begin
+            alu_op <= ;
+        end
+        NANORV32_MUX_SEL_ALU_OP_NEQ: begin
             alu_op <= ;
         end
 //========================================
@@ -58,7 +88,7 @@
 //========================================
 
     case(alu_porta)
-        NANORV32_MUX_SEL_ALU_PORTA_PC: begin
+        NANORV32_MUX_SEL_ALU_PORTA_PC_EXE: begin
             alu_porta <= ;
         end
         NANORV32_MUX_SEL_ALU_PORTA_RS1: begin
@@ -90,7 +120,7 @@
 //========================================
 
     case(regfile_source)
-        NANORV32_MUX_SEL_REGFILE_SOURCE_NEXT_PC: begin
+        NANORV32_MUX_SEL_REGFILE_SOURCE_PC_NEXT: begin
             regfile_source <= ;
         end
         NANORV32_MUX_SEL_REGFILE_SOURCE_ALU: begin

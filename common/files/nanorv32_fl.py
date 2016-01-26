@@ -40,7 +40,13 @@ def nanor32_fl():
     # Testbench
     l.append({
         'file': "{top}/sim/verilog/reset_gen.v",
+        'targets': 'sim_rtl'
+    })
+    l.append({
         'file': "{top}/sim/verilog/clock_gen.v",
+        'targets': 'sim_rtl'
+    })
+    l.append({
         'file': "{top}/sim/verilog/tb_nanorv32.v",
         'targets': 'sim_rtl'
     })

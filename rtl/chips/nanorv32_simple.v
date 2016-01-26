@@ -34,7 +34,7 @@
 
 module nanorv32_simple (/*AUTOARG*/
    // Outputs
-   cpu_datamem_valid, cpu_datamem_bytesel, cpu_codemem_valid,
+   cpu_datamem_bytesel, cpu_codemem_valid,
    // Inputs
    rst_n, datamem_cpu_ready, codemem_cpu_ready, clk
    );
@@ -56,36 +56,34 @@ module nanorv32_simple (/*AUTOARG*/
    // Beginning of automatic outputs (from unused autoinst outputs)
    output               cpu_codemem_valid;      // From U_CPU of nanorv32.v
    output [3:0]         cpu_datamem_bytesel;    // From U_CPU of nanorv32.v
-   output               cpu_datamem_valid;      // From U_CPU of nanorv32.v
    // End of automatics
 
    /*AUTOREG*/
    /*AUTOWIRE*/
    // Beginning of automatic wires (for undeclared instantiated-module outputs)
-   wire [NRV32_DATA_MSB:0] codemem_cpu_rdata;   // From U_CODE_MEM of bytewrite_ram_32bits.v
-   wire [NRV32_ADDR_MSB:0] cpu_codemem_addr;    // From U_CPU of nanorv32.v
-   wire [NRV32_ADDR_MSB:0] cpu_datamem_addr;    // From U_CPU of nanorv32.v
-   wire [NRV32_DATA_MSB:0] cpu_datamem_wdata;   // From U_CPU of nanorv32.v
-   wire [NRV32_DATA_MSB:0] datamem_cpu_rdata;   // From U_DATA_MEM of bytewrite_ram_32bits.v
+   wire [NANORV32_DATA_MSB:0] codemem_cpu_rdata;// From U_CODE_MEM of bytewrite_ram_32bits.v
+   wire [NANORV32_ADDR_MSB:0] cpu_codemem_addr; // From U_CPU of nanorv32.v
+   wire [NANORV32_ADDR_MSB:0] cpu_datamem_addr; // From U_CPU of nanorv32.v
+   wire [NANORV32_DATA_MSB:0] cpu_datamem_wdata;// From U_CPU of nanorv32.v
+   wire [NANORV32_DATA_MSB:0] datamem_cpu_rdata;// From U_DATA_MEM of bytewrite_ram_32bits.v
    // End of automatics
 
 
     /* nanorv32 AUTO_TEMPLATE(
      ); */
    nanorv32 U_CPU (
-                   .cpu_datamem_valid   (),
+                   .cpu_datamem_valid   (cpu_datamem_valid),
                            /*AUTOINST*/
                    // Outputs
-                   .cpu_codemem_addr    (cpu_codemem_addr[NRV32_ADDR_MSB:0]),
+                   .cpu_codemem_addr    (cpu_codemem_addr[NANORV32_ADDR_MSB:0]),
                    .cpu_codemem_valid   (cpu_codemem_valid),
-                   .cpu_datamem_addr    (cpu_datamem_addr[NRV32_ADDR_MSB:0]),
-                   .cpu_datamem_wdata   (cpu_datamem_wdata[NRV32_DATA_MSB:0]),
+                   .cpu_datamem_addr    (cpu_datamem_addr[NANORV32_ADDR_MSB:0]),
+                   .cpu_datamem_wdata   (cpu_datamem_wdata[NANORV32_DATA_MSB:0]),
                    .cpu_datamem_bytesel (cpu_datamem_bytesel[3:0]),
-
                    // Inputs
-                   .codemem_cpu_rdata   (codemem_cpu_rdata[NRV32_DATA_MSB:0]),
+                   .codemem_cpu_rdata   (codemem_cpu_rdata[NANORV32_DATA_MSB:0]),
                    .codemem_cpu_ready   (codemem_cpu_ready),
-                   .datamem_cpu_rdata   (datamem_cpu_rdata[NRV32_DATA_MSB:0]),
+                   .datamem_cpu_rdata   (datamem_cpu_rdata[NANORV32_DATA_MSB:0]),
                    .datamem_cpu_ready   (datamem_cpu_ready),
                    .rst_n               (rst_n),
                    .clk                 (clk));
@@ -95,20 +93,20 @@ module nanorv32_simple (/*AUTOARG*/
 
      /* bytewrite_ram_32bits AUTO_TEMPLATE(
       .din                (32'b0),
-      .dout              (codemem_cpu_rdata[NRV32_DATA_MSB:0]),
-      .addr               (cpu_codemem_addr[NRV32_ADDR_MSB-1:0]),
+      .dout              (codemem_cpu_rdata[NANORV32_DATA_MSB:0]),
+      .addr               (cpu_codemem_addr[NANORV32_ADDR_MSB-1:0]),
       .we                (4'b0),
      ); */
    bytewrite_ram_32bits #(.SIZE(1<<(AW-2)),.ADDR_WIDTH(AW-2))
    U_CODE_MEM (
                /*AUTOINST*/
                // Outputs
-               .dout               (codemem_cpu_rdata[NRV32_DATA_MSB:0]), // Templated
+               .dout                    (codemem_cpu_rdata[NANORV32_DATA_MSB:0]), // Templated
                // Inputs
-               .clk                (clk),
-               .we                 (4'b0),          // Templated
-               .addr               (cpu_codemem_addr[NRV32_ADDR_MSB-1:0]), // Templated
-               .din                (32'b0));         // Templated
+               .clk                     (clk),
+               .we                      (4'b0),                  // Templated
+               .addr                    (cpu_codemem_addr[NANORV32_ADDR_MSB-1:0]), // Templated
+               .din                     (32'b0));                 // Templated
 
 
    wire [3:0] we_datamem;
@@ -117,9 +115,9 @@ module nanorv32_simple (/*AUTOARG*/
 
 
     /* bytewrite_ram_32bits AUTO_TEMPLATE(
-     .din                (cpu_datamem_wdata[NRV32_DATA_MSB:0]),
-     .dout              (datamem_cpu_rdata[NRV32_DATA_MSB:0]),
-     .addr               (cpu_datamem_addr[NRV32_ADDR_MSB-1:0]),
+     .din                (cpu_datamem_wdata[NANORV32_DATA_MSB:0]),
+     .dout              (datamem_cpu_rdata[NANORV32_DATA_MSB:0]),
+     .addr               (cpu_datamem_addr[NANORV32_ADDR_MSB-1:0]),
      .we                (4'b0),
     ); */
    bytewrite_ram_32bits #(.SIZE(1<<(AW-2)),.ADDR_WIDTH(AW-2))
@@ -127,11 +125,11 @@ module nanorv32_simple (/*AUTOARG*/
                .we                 (we_datamem),
                /*AUTOINST*/
                // Outputs
-               .dout                 (datamem_cpu_rdata[NRV32_DATA_MSB:0]), // Templated
+               .dout                    (datamem_cpu_rdata[NANORV32_DATA_MSB:0]), // Templated
                // Inputs
-               .clk                  (clk),
-               .addr                 (cpu_datamem_addr[NRV32_ADDR_MSB-1:0]), // Templated
-               .din                  (cpu_datamem_wdata[NRV32_DATA_MSB:0])); // Templated
+               .clk                     (clk),
+               .addr                    (cpu_datamem_addr[NANORV32_ADDR_MSB-1:0]), // Templated
+               .din                     (cpu_datamem_wdata[NANORV32_DATA_MSB:0])); // Templated
 
 
 endmodule // nanorv32_simple

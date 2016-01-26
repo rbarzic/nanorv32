@@ -10,7 +10,7 @@ decode_case = "    NANORV32_DECODE_{inst_uc}: begin\n"
 decode_line = "        {port}_sel = NANORV32_MUX_SEL_{port_uc}_{port_val};\n"
 decode_end = "    end\n"
 decode_inst_field = """
-    wire [NANORV32_INST_FORMAT_{name_uc}_MSB:0] dec_{name_lc}  = instruction[NANORV32_INST_FORMAT_{name_uc}_OFFSET +: NANORV32_INST_FORMAT_{name_uc}_SIZE];"""
+    wire [NANORV32_INST_FORMAT_{name_uc}_MSB:0] dec_{name_lc}  = instruction_r[NANORV32_INST_FORMAT_{name_uc}_OFFSET +: NANORV32_INST_FORMAT_{name_uc}_SIZE];"""
 
 
 mux_constant_width ="""

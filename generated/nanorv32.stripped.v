@@ -104,9 +104,19 @@ module nanorv32 (/*AUTOARG*/
 
    reg [NANORV32_DATA_MSB:0]                instruction_r;
 
+   wire [NANORV32_DATA_MSB:0]               rf_porta;
+   wire [NANORV32_DATA_MSB:0]               rf_portb;
+
+   wire [NANORV32_DATA_MSB:0]               pc_next;
+   wire [NANORV32_DATA_MSB:0]               pc_fetch_r;
+   wire [NANORV32_DATA_MSB:0]               pc_exe_r;  // Fixme - we track the PC for the exe stage explicitly
+                                                       // this may not be optimal in term of size
 
 
+
+   //===========================================================================
    // Immediate value reconstruction
+   //===========================================================================
 
    wire [NANORV32_DATA_MSB:0]                   imm12_sext;
    wire [NANORV32_DATA_MSB:0]                   imm12hilo_sext;
@@ -135,8 +145,10 @@ module nanorv32 (/*AUTOARG*/
 
 
 
+   //===========================================================================
+   // Instruction register / decoding
+   //===========================================================================
 
-   // Instruction register
    always @(posedge clk or negedge rst_n) begin
       if(rst_n == 1'b0) begin
          /*AUTORESET*/
@@ -256,6 +268,42 @@ module nanorv32 (/*AUTOARG*/
 
 
 
+   //===========================================================================
+   // PC management
+   //===========================================================================
+   always @* begin
+      case(pc_next)
+        NANORV32_MUX_SEL_PC_NEXT_COND_PC_PLUS_IMMSB: begin
+           pc_next <= alu_cond ? (pc_exe + imm12sb_sext) : (pc_fetch_r + 4);
+        end
+        NANORV32_MUX_SEL_PC_NEXT_PLUS4: begin
+           pc_next <= pc_fetch_r + 4; // Only 32-bit instruction for now
+        end
+        NANORV32_MUX_SEL_PC_NEXT_ALU_RES: begin
+           pc_next <= alu_res;
+        end// Mux definitions for alu
+        // default:
+      endcase
+   end
+
+   always @(posedge clk or negedge rst_n) begin
+      if(rst_n == 1'b0) begin
+         /*AUTORESET*/
+         // Beginning of autoreset for uninitialized flops
+         pc_exe_r <= {(1+(NANORV32_DATA_MSB)){1'b0}};
+         pc_fetch_r <= {(1+(NANORV32_DATA_MSB)){1'b0}};
+         // End of automatics
+      end
+      else begin
+         pc_fetch_r <= pc_next;
+         pc_exe_r  <= pc_fetch_r;
+      end
+   end
+
+
+
+
+
     /* nanorv32_regfile AUTO_TEMPLATE(
      ); */
    nanorv32_regfile #(.NUM_REGS(32))
@@ -264,9 +312,9 @@ module nanorv32 (/*AUTOARG*/
                .portb          (rf_portb[NANORV32_DATA_MSB:0]),
                /*AUTOINST*/
                // Inputs
-               .sel_porta               (dec_rs1[NANORV32_RF_PORTA_MSB:0]), // for now dec_rs1 directly
-               .sel_portb               (dec_rs2[NANORV32_RF_PORTB_MSB:0]),
-               .sel_rd                  (dec_rd[NANORV32_RF_PORTRD_MSB:0]),
+               .sel_porta               (sel_porta[NANORV32_RF_PORTA_MSB:0]),
+               .sel_portb               (sel_portb[NANORV32_RF_PORTB_MSB:0]),
+               .sel_rd                  (sel_rd[NANORV32_RF_PORTRD_MSB:0]),
                .rd                      (rd[NANORV32_DATA_MSB:0]),
                .write_rd                (write_rd),
                .clk                     (clk),

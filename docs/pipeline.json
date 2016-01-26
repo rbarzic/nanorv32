@@ -1,0 +1,17 @@
+{signal: [
+  {name: 'CLK',   wave: 'p........', node: '..abc'},
+  {name: 'ROM_ADDR',  wave: 'x345x', data: ['@A', '@B','@C'], phase: 1.0},
+  {name: 'ROM_DATA',  wave: 'x.345x', data: ['A', 'B','C'], phase: 2.0},
+  {name: 'Inst (EXE)',  wave: 'x.345x', data: ['InstA', 'InstB','InstC']},
+  {},
+  {name: 'pc_next',  wave: 'x345x', data: ['@A', '@B','@C'], phase: 1.0},
+  {name: 'pc_fetch',  wave: 'x.345x', data: ['@A', '@B','@C'], phase: 2.0},
+  {name: 'pc_exe',  wave: 'x.345x', data: ['@A', '@B','@C']},
+ 
+  
+  
+],
+  config: { hscale: 3}
+  
+  }
+

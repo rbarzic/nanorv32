@@ -97,7 +97,7 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['U-type'] = {
         'next' : 'plus4'
     },
     'alu' : {
-        'porta' : 'pc',
+        'porta' : 'pc_exe',
         'portb' : 'imm20u', # ALU op will be 'portb' or add
     },
     'regfile' : {
@@ -114,19 +114,19 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['U-type'] = {
 # UJ-Type : jal
 spec['nanorv32']['rv32i']['impl']['inst_type']['UJ-type'] = {
     'pc' : {
-        'next' : 'plus4'
+        'next' : 'alu_res'
     },
     'alu' : {
-        'porta' : 'pc',
+        'porta' : 'pc_exe',
         'portb' : 'imm20uj',
         'op'    : 'add',
     },
     'regfile' : {
         'write' : 'yes',
-        'source' : 'next_pc',
+        'source' : 'pc_next',
     },
     'datamem' : {
-        'write' : 'word',
+        'write' : 'no',
         'read' : 'no',
     },
 
@@ -183,7 +183,7 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['SYS-type'] = {
     'alu' : {
         'porta' : 'rs1',
         'portb' : 'rs2',
-        'op'    : 'noop',
+        'op'    : 'nop',
     },
     'regfile' : {
         'write' : 'no',
@@ -201,7 +201,21 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['SYS-type'] = {
 
 
 spec['nanorv32']['rv32i']['impl']['inst']['jalr'] = {
-
+    'pc' : {
+        'next' : 'alu_res'
+    },
+    'alu' : {
+        'porta' : 'rs1',
+        'portb' : 'imm12',
+    },
+    'regfile' : {
+        'write' : 'yes',
+        'source' : 'alu',
+    },
+    'datamem' : {
+        'write' : 'no',
+        'read' : 'no',
+    },
 }
 
 
@@ -213,17 +227,29 @@ spec['nanorv32']['rv32i']['impl']['inst']['addi'] = {
 
 
 spec['nanorv32']['rv32i']['impl']['inst']['slli'] = {
-
+     'alu' : {
+        'porta' : 'rs1',
+        'portb' : 'shamt',
+         'op'    : 'lshift',
+    },
 }
 
 
 spec['nanorv32']['rv32i']['impl']['inst']['slti'] = {
-
+    'alu' : {
+        'porta' : 'rs1',
+        'portb' : 'imm12',
+        'op'    : 'lt_signed',
+    },
 }
 
 
 spec['nanorv32']['rv32i']['impl']['inst']['sltiu'] = {
-
+    'alu' : {
+        'porta' : 'rs1',
+        'portb' : 'imm12',
+        'op'    : 'lt_unsigned',
+    },
 }
 
 
@@ -235,12 +261,20 @@ spec['nanorv32']['rv32i']['impl']['inst']['xori'] = {
 
 
 spec['nanorv32']['rv32i']['impl']['inst']['srli'] = {
-
+    'alu' : {
+        'porta' : 'rs1',
+        'portb' : 'shamt',
+        'op'    : 'rshift',
+    },
 }
 
 
 spec['nanorv32']['rv32i']['impl']['inst']['srai'] = {
-
+    'alu' : {
+        'porta' : 'rs1',
+        'portb' : 'shamt',
+        'op'    : 'arshift', # Arithmetic right shift
+    },
 }
 
 
@@ -301,29 +335,10 @@ spec['nanorv32']['rv32i']['impl']['inst']['fence_i'] = {
 }
 
 
-spec['nanorv32']['rv32i']['impl']['inst']['slli'] = {
-
-}
-
-
-spec['nanorv32']['rv32i']['impl']['inst']['slti'] = {
-
-}
-
-
-spec['nanorv32']['rv32i']['impl']['inst']['srli'] = {
-
-}
-
-
-spec['nanorv32']['rv32i']['impl']['inst']['srai'] = {
-
-}
-
 
 spec['nanorv32']['rv32i']['impl']['inst']['beq'] = {
     'alu' : {
-        'op' : 'comp',
+        'op' : 'eq',
     },
     'pc' : {
         'next' : 'cond_pc_plus_immsb'
@@ -332,27 +347,53 @@ spec['nanorv32']['rv32i']['impl']['inst']['beq'] = {
 
 
 spec['nanorv32']['rv32i']['impl']['inst']['bne'] = {
-
+    'alu' : {
+        'op' : 'neq',
+    },
+    'pc' : {
+        'next' : 'cond_pc_plus_immsb'
+    },
 }
 
 
 spec['nanorv32']['rv32i']['impl']['inst']['blt'] = {
+    'alu' : {
+        'op' : 'lt_signed',
+    },
+    'pc' : {
+        'next' : 'cond_pc_plus_immsb'
+    },
 
 }
 
 
 spec['nanorv32']['rv32i']['impl']['inst']['bge'] = {
-
+    'alu' : {
+        'op' : 'ge_signed', # Greater or equal (signed)
+    },
+    'pc' : {
+        'next' : 'cond_pc_plus_immsb'
+    },
 }
 
 
 spec['nanorv32']['rv32i']['impl']['inst']['bltu'] = {
-
+    'alu' : {
+        'op' : 'lt_unsigned',
+    },
+    'pc' : {
+        'next' : 'cond_pc_plus_immsb'
+    },
 }
 
 
 spec['nanorv32']['rv32i']['impl']['inst']['bgeu'] = {
-
+    'alu' : {
+        'op' : 'ge_unsigned', # Greater or equal (unsigned)
+    },
+    'pc' : {
+        'next' : 'cond_pc_plus_immsb'
+    },
 }
 
 
@@ -389,17 +430,29 @@ spec['nanorv32']['rv32i']['impl']['inst']['sub'] = {
 
 
 spec['nanorv32']['rv32i']['impl']['inst']['sll'] = {
-
+    'alu' : {
+        'porta' : 'rs1',
+        'portb' : 'rs2',
+        'op'    : 'lshift',
+    },
 }
 
 
 spec['nanorv32']['rv32i']['impl']['inst']['slt'] = {
-
+     'alu' : {
+        'porta' : 'rs1',
+        'portb' : 'rs2',
+        'op'    : 'lt_signed',
+    },
 }
 
 
 spec['nanorv32']['rv32i']['impl']['inst']['sltu'] = {
-
+         'alu' : {
+        'porta' : 'rs1',
+        'portb' : 'rs2',
+        'op'    : 'lt_unsigned',
+    },
 }
 
 
@@ -411,12 +464,20 @@ spec['nanorv32']['rv32i']['impl']['inst']['xor'] = {
 
 
 spec['nanorv32']['rv32i']['impl']['inst']['srl'] = {
-
+    'alu' : {
+        'porta' : 'rs1',
+        'portb' : 'rs2',
+        'op'    : 'rshift',
+    },
 }
 
 
 spec['nanorv32']['rv32i']['impl']['inst']['sra'] = {
-
+    'alu' : {
+        'porta' : 'rs1',
+        'portb' : 'rs2',
+        'op'    : 'arshift', # Arithmetic right shift
+    },
 }
 
 
@@ -475,5 +536,5 @@ spec['nanorv32']['rv32i']['impl']['inst']['sw'] = {
 
 
 spec['nanorv32']['rv32i']['impl']['inst']['jal'] = {
-
+    # See UJ-type description
 }
