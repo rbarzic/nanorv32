@@ -111,6 +111,12 @@ module tb_nanorv32;
    endtask // load_program_memory
 
 
+   initial begin
+      #1;
+      load_program_memory();
+   end
+
+
 endmodule // tb_nanorv32
 /*
  Local Variables:
