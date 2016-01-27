@@ -110,7 +110,7 @@ module nanorv32 (/*AUTOARG*/
    reg                                       datamem_read;
    reg                                       datamem_write;
 
-   reg [NANORV32_DATA_MSB:0]                pc_exe;
+
    reg [NANORV32_DATA_MSB:0]                next_pc;
 
    reg [NANORV32_DATA_MSB:0]                instruction_r;
@@ -154,7 +154,7 @@ module nanorv32 (/*AUTOARG*/
    // Fixme - incomplete/wrong
 
 
-   assign imm20u_sext = {dec_imm20uj[19:0],20'b0};
+   assign imm20u_sext = {dec_imm20uj[19:0],12'b0};
 
    assign imm20uj_sext = {{12{dec_imm20uj[19]}},
                         dec_imm20uj[19],
@@ -239,7 +239,7 @@ module nanorv32 (/*AUTOARG*/
     end
     NANORV32_DECODE_XOR: begin
         pc_next_sel = NANORV32_MUX_SEL_PC_NEXT_PLUS4;
-        alu_op_sel = NANORV32_MUX_SEL_ALU_OP_OR;
+        alu_op_sel = NANORV32_MUX_SEL_ALU_OP_XOR;
         alu_portb_sel = NANORV32_MUX_SEL_ALU_PORTB_RS2;
         alu_porta_sel = NANORV32_MUX_SEL_ALU_PORTA_RS1;
         datamem_write_sel = NANORV32_MUX_SEL_DATAMEM_WRITE_NO;
@@ -354,8 +354,9 @@ module nanorv32 (/*AUTOARG*/
     end
     NANORV32_DECODE_LUI: begin
         pc_next_sel = NANORV32_MUX_SEL_PC_NEXT_PLUS4;
+        alu_op_sel = NANORV32_MUX_SEL_ALU_OP_NOP;
         alu_portb_sel = NANORV32_MUX_SEL_ALU_PORTB_IMM20U;
-        alu_porta_sel = NANORV32_MUX_SEL_ALU_PORTA_PC_EXE;
+        alu_porta_sel = NANORV32_MUX_SEL_ALU_PORTA_RS1;
         datamem_write_sel = NANORV32_MUX_SEL_DATAMEM_WRITE_WORD;
         datamem_read_sel = NANORV32_MUX_SEL_DATAMEM_READ_NO;
         regfile_source_sel = NANORV32_MUX_SEL_REGFILE_SOURCE_ALU;
@@ -548,7 +549,6 @@ module nanorv32 (/*AUTOARG*/
         regfile_write_sel = NANORV32_MUX_SEL_REGFILE_WRITE_YES;
     end
     NANORV32_DECODE_ADDI: begin
-       -> evt_dbg1;
         pc_next_sel = NANORV32_MUX_SEL_PC_NEXT_PLUS4;
         alu_op_sel = NANORV32_MUX_SEL_ALU_OP_ADD;
         alu_portb_sel = NANORV32_MUX_SEL_ALU_PORTB_IMM12;
@@ -717,7 +717,7 @@ module nanorv32 (/*AUTOARG*/
       branch_taken = 0;
       case(pc_next_sel)
         NANORV32_MUX_SEL_PC_NEXT_COND_PC_PLUS_IMMSB: begin
-           pc_next = (alu_cond & inst_valid_exe_r) ? (pc_exe + imm12sb_sext) : (pc_fetch_r + 4);
+           pc_next = (alu_cond & inst_valid_exe_r) ? (pc_exe_r + imm12sb_sext) : (pc_fetch_r + 4);
            branch_taken = alu_cond & inst_valid_exe_r;
         end
         NANORV32_MUX_SEL_PC_NEXT_PLUS4: begin

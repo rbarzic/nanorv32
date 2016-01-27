@@ -398,7 +398,11 @@ spec['nanorv32']['rv32i']['impl']['inst']['bgeu'] = {
 
 
 spec['nanorv32']['rv32i']['impl']['inst']['lui'] = {
-
+    'alu' : {
+        'porta' : 'rs1',
+        'portb' : 'imm20u', # ALU op will be 'portb' or add
+        'op' : 'nop', # ALU op will be 'portb' or add
+    },
 }
 
 
@@ -458,7 +462,7 @@ spec['nanorv32']['rv32i']['impl']['inst']['sltu'] = {
 
 spec['nanorv32']['rv32i']['impl']['inst']['xor'] = {
     'alu' : {
-        'op' : 'or',
+        'op' : 'xor',
     },
 }
 

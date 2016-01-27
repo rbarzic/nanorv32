@@ -1509,4 +1509,5 @@ module picorv32_axi_adapter (
 	 end
       end
    end
+
 endmodule

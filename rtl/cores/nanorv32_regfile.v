@@ -70,7 +70,7 @@ module nanorv32_regfile (/*AUTOARG*/
 
   reg [NANORV32_DATA_MSB:0] regfile [0:NUM_REGS-1];
 
-  always @(sel_porta)  begin
+  always @(sel_porta or regfile[sel_porta])  begin
     if(sel_porta != 0) begin
       porta <= regfile[sel_porta];
     end
@@ -80,7 +80,7 @@ module nanorv32_regfile (/*AUTOARG*/
   end
 
 
-  always @(sel_portb)  begin
+  always @(sel_portb or regfile[sel_portb])  begin
     if(sel_portb != 0) begin
       portb <= regfile[sel_portb];
     end
@@ -166,6 +166,9 @@ wire  [31:0] x31;
    wire [31:0] t2;
    wire [31:0] t3;
    wire [31:0] t4;
+   wire [31:0] t5;
+   wire [31:0] t6;
+   wire [31:0] tp;
    wire [31:0] gp;
 
 
@@ -209,37 +212,37 @@ assign     x31 = 	regfile[31];
 
 
    assign     ra = 	regfile[1];
-   assign     s0 = 	regfile[2];
-   assign     fp = 	regfile[2];
-   assign     s1 = 	regfile[3];
-   assign     s2 = 	regfile[4];
-   assign     s3 = 	regfile[5];
-   assign     s4 = 	regfile[6];
-   assign     s5 = 	regfile[7];
-   assign     s6 = 	regfile[8];
-   assign     s7 = 	regfile[9];
-   assign     s8 = 	regfile[10];
-   assign     s9 = 	regfile[11];
-   assign     s10 = 	regfile[12];
-   assign     s11 = 	regfile[13];
-   assign     sp = 	regfile[14];
-   assign     tp = 	regfile[15];
-   assign     v0 = 	regfile[16];
-   assign     v1 = 	regfile[17];
-   assign     a0 = 	regfile[18];
-   assign     a1 = 	regfile[19];
-   assign     a2 = 	regfile[20];
-   assign     a3 = 	regfile[21];
-   assign     a4 = 	regfile[22];
-   assign     a5 = 	regfile[23];
-   assign     a6 = 	regfile[24];
-   assign     a7 = 	regfile[25];
-   assign     t0 = 	regfile[26];
-   assign     t1 = 	regfile[27];
-   assign     t2 = 	regfile[28];
-   assign     t3 = 	regfile[29];
-   assign     t4 = 	regfile[30];
-   assign     gp = 	regfile[31];
+   assign     sp = 	regfile[2];
+   assign     gp = 	regfile[3];
+   assign     tp = 	regfile[4];
+   assign     t0 = 	regfile[5];
+   assign     t1 = 	regfile[6];
+   assign     t2 = 	regfile[7];
+   assign     s0 = 	regfile[8];
+   assign     fp = 	regfile[8];
+   assign     s1 = 	regfile[9];
+   assign     a0 = 	regfile[10];
+   assign     a1 = 	regfile[11];
+   assign     a2 = 	regfile[12];
+   assign     a3 = 	regfile[13];
+   assign     a4 = 	regfile[14];
+   assign     a5 = 	regfile[15];
+   assign     a6 = 	regfile[16];
+   assign     a7 = 	regfile[17];
+   assign     s2 = 	regfile[18];
+   assign     s3 = 	regfile[19];
+   assign     s4 = 	regfile[20];
+   assign     s5 = 	regfile[21];
+   assign     s6 = 	regfile[22];
+   assign     s7 = 	regfile[23];
+   assign     s8 = 	regfile[24];
+   assign     s9 = 	regfile[25];
+   assign     s10 = 	regfile[26];
+   assign     s11= 	regfile[27];
+   assign     t3 = 	regfile[28];
+   assign     t4 = 	regfile[29];
+   assign     t5 = 	regfile[30];
+   assign     t6 = 	regfile[31];
 
 
 

@@ -38,12 +38,12 @@ initial begin
 `ifndef IVERILOG
    $readmemh(filename,RAM);
 `endif
-   #10;
-   // Just for debugging readmemh in case it does not work as expected
-   for(_i=0;_i<6;_i=_i+1) begin
-      $display("idx : %d data : %x",_i,RAM[_i]);
-   end
-   $display("======================");
+//   #10;
+//   // Just for debugging readmemh in case it does not work as expected
+//   for(_i=0;_i<6;_i=_i+1) begin
+//      $display("idx : %d data : %x",_i,RAM[_i]);
+//   end
+//   $display("======================");
 end
 
 

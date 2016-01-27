@@ -117,10 +117,37 @@ module tb_nanorv32;
       #1;
       load_program_memory();
       vcd_dump();
-      #10000;
+      #1000000;
       $display("-E- Timeout !");
-      $finish(0);
+      $finish(3);
 
+   end
+
+
+   // PC monitoring
+   wire [NANORV32_DATA_MSB:0] pc;
+   wire [NANORV32_DATA_MSB:0] x10_a0; // return value register
+
+   assign pc = U_DUT.U_CPU.pc_exe_r;
+   assign x10_a0 = U_DUT.U_CPU.U_REG_FILE.regfile[10];
+
+   always @(posedge clk) begin
+      if(pc === 32'h00000100) begin
+         if(x10_a0 === 32'hCAFFE000) begin
+            $display("-I- TEST OK");
+            $finish(0);
+         end
+         else
+           if(x10_a0 === 32'h0DEAD0000) begin
+              $display("-I- TEST FAILED");
+              $finish(1);
+           end
+           else begin
+              $display("-I- TEST FAILED (unknown reason)");
+              $finish(2);
+
+           end
+      end
    end
 
 

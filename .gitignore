@@ -32,3 +32,9 @@
 *.dSYM/
 *.pyc
 *.pyc
+/sim/verilog/*.bin
+/sim/verilog/*.vmem
+/sim/verilog/*.vmem32
+/sim/verilog/*.lst
+/sim/verilog/*.hex
+/sim/verilog/*.hex2

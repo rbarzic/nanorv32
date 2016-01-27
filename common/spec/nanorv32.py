@@ -15,7 +15,7 @@ spec['nanorv32']['inst_type']['R-type']['format'] = {
     'opcode1': {'size': 7, 'offset': 0, 'decode': True},
     'rd': {'size': 5, 'offset': 7},
     'rs1': {'size': 5, 'offset': 15},
-    'rs2': {'size': 5, 'offset': 10},
+    'rs2': {'size': 5, 'offset': 20},
     'func3': {'size': 12, 'offset': 3, 'decode': True},
     'func7': {'size': 7, 'offset': 25, 'decode': True},
     }
@@ -34,7 +34,7 @@ spec['nanorv32']['inst_type']['S-type']['format'] = {
     'opcode1': {'size': 7, 'offset': 0, 'decode': True},
     'imm12lo': {'size': 5, 'offset': 7},
     'rs1': {'size': 5, 'offset': 15},
-    'rs2': {'size': 5, 'offset': 10},
+    'rs2': {'size': 5, 'offset': 20},
     'func3': {'size': 3, 'offset': 12, 'decode': True},
     'imm12hi': {'size': 7, 'offset': 25},
     }
@@ -44,7 +44,7 @@ spec['nanorv32']['inst_type']['SB-type']['format'] = {
     'opcode1': {'size': 7, 'offset': 0, 'decode': True},
     'immsb1': {'size': 5, 'offset': 7},
     'rs1': {'size': 5, 'offset': 15},
-    'rs2': {'size': 5, 'offset': 10},
+    'rs2': {'size': 5, 'offset': 20},
     'func3': {'size': 3, 'offset': 12, 'decode': True},
     'immsb2': {'size': 7, 'offset': 25},
     }

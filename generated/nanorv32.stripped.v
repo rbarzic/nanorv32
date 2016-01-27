@@ -84,7 +84,7 @@ module nanorv32 (/*AUTOARG*/
    reg                                       datamem_read;
    reg                                       datamem_write;
 
-   reg [NANORV32_DATA_MSB:0]                pc_exe;
+
    reg [NANORV32_DATA_MSB:0]                next_pc;
 
    reg [NANORV32_DATA_MSB:0]                instruction_r;
@@ -128,7 +128,7 @@ module nanorv32 (/*AUTOARG*/
    // Fixme - incomplete/wrong
 
 
-   assign imm20u_sext = {dec_imm20uj[19:0],20'b0};
+   assign imm20u_sext = {dec_imm20uj[19:0],12'b0};
 
    assign imm20uj_sext = {{12{dec_imm20uj[19]}},
                         dec_imm20uj[19],
@@ -157,6 +157,7 @@ module nanorv32 (/*AUTOARG*/
       end
    end
 
+   event evt_dbg1;
 
 
    always @* begin
@@ -181,7 +182,7 @@ module nanorv32 (/*AUTOARG*/
    // ALU input selection
    //===========================================================================
    always @* begin
-      case(alu_portb)
+      case(alu_portb_sel)
         NANORV32_MUX_SEL_ALU_PORTB_IMM20U: begin
            alu_portb = imm20u_sext;
         end
@@ -207,7 +208,7 @@ module nanorv32 (/*AUTOARG*/
    end
 
    always @* begin
-      case(alu_porta)
+      case(alu_porta_sel)
         NANORV32_MUX_SEL_ALU_PORTA_PC_EXE: begin
            alu_porta = pc_exe_r;
         end
@@ -292,7 +293,7 @@ module nanorv32 (/*AUTOARG*/
       branch_taken = 0;
       case(pc_next_sel)
         NANORV32_MUX_SEL_PC_NEXT_COND_PC_PLUS_IMMSB: begin
-           pc_next = (alu_cond & inst_valid_exe_r) ? (pc_exe + imm12sb_sext) : (pc_fetch_r + 4);
+           pc_next = (alu_cond & inst_valid_exe_r) ? (pc_exe_r + imm12sb_sext) : (pc_fetch_r + 4);
            branch_taken = alu_cond & inst_valid_exe_r;
         end
         NANORV32_MUX_SEL_PC_NEXT_PLUS4: begin

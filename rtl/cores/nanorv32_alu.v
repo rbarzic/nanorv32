@@ -59,7 +59,7 @@ module nanorv32_alu (/*AUTOARG*/
    always@* begin
       case(alu_op_sel)
         NANORV32_MUX_SEL_ALU_OP_NOP: begin
-           alu_res = alu_porta;
+           alu_res = alu_portb;
         end
         NANORV32_MUX_SEL_ALU_OP_OR: begin
            alu_res = alu_porta |  alu_portb;
