@@ -63,3 +63,7 @@ regen:
 
 check-syntax:
 	iverilog -f  iverilog_file_list.txt -o /dev/null
+
+
+regression:
+	find ../../riscv-tests/isa/rv32ui -name "*.S" | xargs -n1 basename --suffix=.S | xargs -n1 -iXXX make run_rv32ui TEST=XXX | grep '\-I\- TEST'
