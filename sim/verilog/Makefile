@@ -38,6 +38,25 @@ run_rv32ui: ../../riscv-tests/isa/rv32ui/$(TEST).S
 	python3 ./makehex.py $(TEST).bin 16384 > $(TEST).hex2
 	vvp -N testbench.exe  +vcd +program_memory=$(TEST).vmem
 
+
+debug: TEST=debug
+debug:
+	$(GNU_GCC)  $(GNU_CC_FLAGS) $(TEST_FLAGS) \
+	-L $(LINKER_SCRIPT_PATH) \
+	-T $(LINKER_SCRIPT_ROM_SRAM) \
+	debug.S  -o $(TEST).elf
+	$(GNU_OBJCOPY) -O binary $(TEST).elf $(TEST).bin
+	$(GNU_OBJDUMP) -d $(TEST).elf > $(TEST).lst
+	$(GNU_OBJCOPY) -S $(TEST).elf -O verilog $(TEST).hex
+	hexdump -v -e ' 1/4 "%08x " "\n"' $(TEST).bin > $(TEST).vmem32 # Xilinx
+	hexdump -v -e '"@%08.8_ax  " 1/1 "%02x " "\n"' $(TEST).bin > $(TEST).vmem # iverilog
+	python3 ./makehex.py $(TEST).bin 16384 > $(TEST).hex2
+	vvp -N testbench.exe  +vcd +program_memory=$(TEST).vmem
+
+
+wave:
+	gtkwave tb_nanorv32.vcd
+
 regen:
 	make -C $(TOP)/common/spec gen_files
 	make -C $(TOP)/common/spec extract insert

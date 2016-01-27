@@ -64,3 +64,16 @@ parameter NANORV32_RF_PORTRD_MSB = NANORV32_RF_PORTRD_SIZE-1;
 
 // For the ALU shift amount (inputed on ALU port B)
 parameter NANORV32_SHAMT_FILL = NANORV32_DATA_SIZE-NANORV32_INST_FORMAT_SHAMT_SIZE;
+
+
+
+// state machine for the "pipeline" (fetch + executuion stages)
+
+parameter NANORV32_PSTATE_BITS = 2;
+parameter NANORV32_PSTATE_MSB = NANORV32_PSTATE_BITS - 1;
+
+parameter NANORV32_PSTATE_RESET=0;
+parameter NANORV32_PSTATE_CONT=1;
+parameter NANORV32_PSTATE_BRANCH=2;
+
+parameter NANORV32_J0_INSTRUCTION = 32'b00000000_00000000_00000000_01101111;

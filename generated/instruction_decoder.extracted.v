@@ -117,7 +117,7 @@
     NANORV32_DECODE_JAL: begin
         pc_next_sel = NANORV32_MUX_SEL_PC_NEXT_ALU_RES;
         alu_op_sel = NANORV32_MUX_SEL_ALU_OP_ADD;
-        alu_portb_sel = NANORV32_MUX_SEL_ALU_PORTB_IMM20UI;
+        alu_portb_sel = NANORV32_MUX_SEL_ALU_PORTB_IMM20UJ;
         alu_porta_sel = NANORV32_MUX_SEL_ALU_PORTA_PC_EXE;
         datamem_write_sel = NANORV32_MUX_SEL_DATAMEM_WRITE_NO;
         datamem_read_sel = NANORV32_MUX_SEL_DATAMEM_READ_NO;

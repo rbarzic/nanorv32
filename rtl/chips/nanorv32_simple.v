@@ -33,10 +33,8 @@
 
 
 module nanorv32_simple (/*AUTOARG*/
-   // Outputs
-   cpu_datamem_bytesel, cpu_codemem_valid,
    // Inputs
-   rst_n, datamem_cpu_ready, codemem_cpu_ready, clk
+   rst_n, clk
    );
 
 `include "nanorv32_parameters.v"
@@ -48,15 +46,9 @@ module nanorv32_simple (/*AUTOARG*/
    /*AUTOINPUT*/
    // Beginning of automatic inputs (from unused autoinst inputs)
    input                clk;                    // To U_CPU of nanorv32.v, ...
-   input                codemem_cpu_ready;      // To U_CPU of nanorv32.v
-   input                datamem_cpu_ready;      // To U_CPU of nanorv32.v
    input                rst_n;                  // To U_CPU of nanorv32.v
    // End of automatics
    /*AUTOOUTPUT*/
-   // Beginning of automatic outputs (from unused autoinst outputs)
-   output               cpu_codemem_valid;      // From U_CPU of nanorv32.v
-   output [3:0]         cpu_datamem_bytesel;    // From U_CPU of nanorv32.v
-   // End of automatics
 
    /*AUTOREG*/
    /*AUTOWIRE*/
@@ -68,23 +60,42 @@ module nanorv32_simple (/*AUTOARG*/
    wire [NANORV32_DATA_MSB:0] datamem_cpu_rdata;// From U_DATA_MEM of bytewrite_ram_32bits.v
    // End of automatics
 
+   wire [3:0]                 cpu_datamem_bytesel;
+
+   reg                        codemem_cpu_ack;
+
+   always @(posedge clk or negedge rst_n) begin
+      if(rst_n == 1'b0) begin
+         /*AUTORESET*/
+         // Beginning of autoreset for uninitialized flops
+         codemem_cpu_ack <= 1'h0;
+         // End of automatics
+      end
+      else begin
+         codemem_cpu_ack <= cpu_codemem_req;
+      end
+   end
+
+
+   assign datamem_cpu_ack = cpu_datamem_req;
 
     /* nanorv32 AUTO_TEMPLATE(
      ); */
    nanorv32 U_CPU (
-                   .cpu_datamem_valid   (cpu_datamem_valid),
+
+                   .cpu_datamem_bytesel (cpu_datamem_bytesel[3:0]),
+                   .cpu_datamem_req     (cpu_datamem_req),
+                   .cpu_codemem_req     (cpu_codemem_req),
+                   .codemem_cpu_ack     (codemem_cpu_ack),
+                   .datamem_cpu_ack     (datamem_cpu_ack),
                            /*AUTOINST*/
                    // Outputs
                    .cpu_codemem_addr    (cpu_codemem_addr[NANORV32_ADDR_MSB:0]),
-                   .cpu_codemem_valid   (cpu_codemem_valid),
                    .cpu_datamem_addr    (cpu_datamem_addr[NANORV32_ADDR_MSB:0]),
                    .cpu_datamem_wdata   (cpu_datamem_wdata[NANORV32_DATA_MSB:0]),
-                   .cpu_datamem_bytesel (cpu_datamem_bytesel[3:0]),
                    // Inputs
                    .codemem_cpu_rdata   (codemem_cpu_rdata[NANORV32_DATA_MSB:0]),
-                   .codemem_cpu_ready   (codemem_cpu_ready),
                    .datamem_cpu_rdata   (datamem_cpu_rdata[NANORV32_DATA_MSB:0]),
-                   .datamem_cpu_ready   (datamem_cpu_ready),
                    .rst_n               (rst_n),
                    .clk                 (clk));
 
@@ -94,7 +105,7 @@ module nanorv32_simple (/*AUTOARG*/
      /* bytewrite_ram_32bits AUTO_TEMPLATE(
       .din                (32'b0),
       .dout              (codemem_cpu_rdata[NANORV32_DATA_MSB:0]),
-      .addr               (cpu_codemem_addr[NANORV32_ADDR_MSB-1:0]),
+      .addr               (cpu_codemem_addr[NANORV32_ADDR_MSB-1:2]),
       .we                (4'b0),
      ); */
    bytewrite_ram_32bits #(.SIZE(1<<(AW-2)),.ADDR_WIDTH(AW-2))
@@ -105,12 +116,12 @@ module nanorv32_simple (/*AUTOARG*/
                // Inputs
                .clk                     (clk),
                .we                      (4'b0),                  // Templated
-               .addr                    (cpu_codemem_addr[NANORV32_ADDR_MSB-1:0]), // Templated
+               .addr                    (cpu_codemem_addr[NANORV32_ADDR_MSB-1:2]), // Templated
                .din                     (32'b0));                 // Templated
 
 
    wire [3:0] we_datamem;
-   assign we_datamem = cpu_datamem_bytesel & {4{cpu_datamem_valid}};
+   assign we_datamem = cpu_datamem_bytesel & {4{cpu_datamem_req}};
 
 
 

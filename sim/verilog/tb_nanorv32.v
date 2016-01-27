@@ -27,6 +27,7 @@
 //
 //
 //****************************************************************************/
+`timescale 1ns/1ps
 
 module tb_nanorv32;
 
@@ -38,8 +39,6 @@ module tb_nanorv32;
    /*AUTOWIRE*/
    // Beginning of automatic wires (for undeclared instantiated-module outputs)
    wire                 clk;                    // From U_CLOCK_GEN of clock_gen.v
-   wire                 cpu_codemem_valid;      // From U_DUT of nanorv32_simple.v
-   wire [3:0]           cpu_datamem_bytesel;    // From U_DUT of nanorv32_simple.v
    wire                 rst_n;                  // From U_RESET_GEN of reset_gen.v
    // End of automatics
 
@@ -48,13 +47,8 @@ module tb_nanorv32;
      ); */
    nanorv32_simple U_DUT (
                            /*AUTOINST*/
-                          // Outputs
-                          .cpu_codemem_valid    (cpu_codemem_valid),
-                          .cpu_datamem_bytesel  (cpu_datamem_bytesel[3:0]),
                           // Inputs
                           .clk                  (clk),
-                          .codemem_cpu_ready    (codemem_cpu_ready),
-                          .datamem_cpu_ready    (datamem_cpu_ready),
                           .rst_n                (rst_n));
 
 
@@ -110,10 +104,23 @@ module tb_nanorv32;
       end
    endtask // load_program_memory
 
+   task vcd_dump;
+      begin
+         if ($test$plusargs("vcd")) begin
+	    $dumpfile("tb_nanorv32.vcd");
+	    $dumpvars(0, tb_nanorv32);
+	 end
+      end
+   endtask // if
 
    initial begin
       #1;
       load_program_memory();
+      vcd_dump();
+      #10000;
+      $display("-E- Timeout !");
+      $finish(0);
+
    end
 
 

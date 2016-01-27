@@ -30,7 +30,7 @@
 //
 //********************************************************************
 
-
+`timescale 1ns/1ps
 module reset_gen (/*AUTOARG*/
   // Outputs
   reset_n

@@ -7,6 +7,7 @@
 //
 // bytewrite_ram_32bits.v
 //
+`timescale 1ns/1ps
 
 module bytewrite_ram_32bits (clk, we, addr, din, dout);
 
@@ -25,12 +26,14 @@ input	clk;
 input	[NB_COL-1:0]	we;
 input	[ADDR_WIDTH-1:0]	addr;
 input	[NB_COL*COL_WIDTH-1:0] din;
-output reg [NB_COL*COL_WIDTH-1:0] dout;
+output  [NB_COL*COL_WIDTH-1:0] dout;
 
 reg	[NB_COL*COL_WIDTH-1:0] RAM [SIZE-1:0];
 
    integer                     _i;
 
+   wire [ADDR_WIDTH-1:0]      addr_dly;
+   reg  [NB_COL*COL_WIDTH-1:0] dout_int;
 initial begin
 `ifndef IVERILOG
    $readmemh(filename,RAM);
@@ -44,10 +47,16 @@ initial begin
 end
 
 
+
+
 always @(posedge clk)
-begin
-    dout <= RAM[addr];
+  begin
+    dout_int <= RAM[addr];
+     // $display("%t -D- reading code rom : addr %x ",$realtime,addr);
 end
+
+   assign #60 dout = dout_int;
+
 
 // Remove the original generate statement to ease Xilinx memory bitstream patching
 always @(posedge clk) begin
