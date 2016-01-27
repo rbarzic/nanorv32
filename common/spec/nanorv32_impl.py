@@ -279,12 +279,16 @@ spec['nanorv32']['rv32i']['impl']['inst']['srai'] = {
 
 
 spec['nanorv32']['rv32i']['impl']['inst']['ori'] = {
-
+    'alu' : {
+        'op' : 'or',
+    },
 }
 
 
 spec['nanorv32']['rv32i']['impl']['inst']['andi'] = {
-
+    'alu' : {
+        'op' : 'and',
+    },
 }
 
 
