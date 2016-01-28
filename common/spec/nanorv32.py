@@ -66,9 +66,9 @@ spec['nanorv32']['inst_type']['UJ-type']['format'] = \
 spec['nanorv32']['inst_type']['AS-type']['format'] = {
     'opcode1': {'size': 7, 'offset': 0, 'decode': True},
     'rd': {'size': 5, 'offset': 7},
-    'rs1': {'size': 5, 'offset': 15},
-    'shamt': {'size': 5, 'offset': 10},
     'func3': {'size': 3, 'offset': 12, 'decode': True},
+    'rs1': {'size': 5, 'offset': 15},
+    'shamt': {'size': 5, 'offset': 20},
     'func7': {'size': 7, 'offset': 25, 'decode': True},
     }
 
@@ -312,7 +312,7 @@ spec['nanorv32']['rv32i']['srai']['desc'] = {
     'decode' : {
         'opcode1' : 0b10011,
         'func3'   : 0b101,
-        'func7'   : 0b10000
+        'func7'   : 0b0100000
     }
 }
 #-I inst : ori of type I-type

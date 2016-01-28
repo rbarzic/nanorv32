@@ -95,11 +95,11 @@ module nanorv32_alu (/*AUTOARG*/
         end
         // It is faster/more compact to swap the operands and drop GE code ?
         NANORV32_MUX_SEL_ALU_OP_GE_SIGNED: begin // "Greater or equal"
-           alu_res = {{NANORV32_DATA_MSB{1'b0}},($signed(alu_porta) < $signed(alu_portb))};
+           alu_res = {{NANORV32_DATA_MSB{1'b0}},($signed(alu_porta) >= $signed(alu_portb))};
         end
 
         NANORV32_MUX_SEL_ALU_OP_GE_UNSIGNED: begin // "Greater or equal"
-           alu_res = {{NANORV32_DATA_MSB{1'b0}},(alu_porta < alu_portb)};
+           alu_res = {{NANORV32_DATA_MSB{1'b0}},(alu_porta >= alu_portb)};
         end
 
         // This also could probably optimized

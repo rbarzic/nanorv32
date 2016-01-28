@@ -137,6 +137,8 @@ module nanorv32 (/*AUTOARG*/
 
    wire                                                          alu_cond;
 
+   reg                                                           illegal_instruction;
+
    //===========================================================================
    // Immediate value reconstruction
    //===========================================================================
@@ -187,6 +189,7 @@ module nanorv32 (/*AUTOARG*/
 
 
    always @* begin
+      illegal_instruction = 0;
       casez(instruction_r[NANORV32_INSTRUCTION_MSB:0])
         //@begin[instruction_decoder]
     NANORV32_DECODE_AND: begin
@@ -591,6 +594,8 @@ module nanorv32 (/*AUTOARG*/
     end
         //@end[instruction_decoder]
         default begin
+           illegal_instruction = 1;
+
            pc_next_sel = NANORV32_MUX_SEL_PC_NEXT_PLUS4;
            alu_op_sel = NANORV32_MUX_SEL_ALU_OP_NOP;
            alu_portb_sel = NANORV32_MUX_SEL_ALU_PORTB_RS2;

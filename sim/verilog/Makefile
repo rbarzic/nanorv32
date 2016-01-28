@@ -71,10 +71,10 @@ check-syntax:
 rv32ui.regression.txt:
 	find ../../riscv-tests/isa/rv32ui -name "*.S" | xargs -n1 basename --suffix=.S > rv32ui.regression.txt
 
-regression: rv32ui.regression.txt
+regression: rv32ui.regression.txt compile
 	rm -f logs/*
 	@cat rv32ui.regression.txt | xargs -n1 -IXXX make -C . run_rv32ui TEST=XXX
 
-regression_p: rv32ui.regression.txt
+regression_p: rv32ui.regression.txt compile
 	rm -f logs/*
 	@cat rv32ui.regression.txt | parallel -n1 -IXXX make -C . run_rv32ui TEST=XXX
