@@ -26,17 +26,18 @@ TEST_FLAGS += -I$(TOP)/common/include
 TEST_FLAGS += -ffreestanding -nostdlib
 
 run_rv32ui: ../../riscv-tests/isa/rv32ui/$(TEST).S
-	$(GNU_GCC)  $(GNU_CC_FLAGS) $(TEST_FLAGS) \
+	mkdir -p logs
+	($(GNU_GCC)  $(GNU_CC_FLAGS) $(TEST_FLAGS) \
 	-L $(LINKER_SCRIPT_PATH) \
 	-T $(LINKER_SCRIPT_ROM_SRAM) \
-	$< $(STARTUP_CODE) -o $(TEST).elf
+	$< $(STARTUP_CODE) -o $(TEST).elf  || echo "-I- TEST FAILED (gcc compilation)" >> logs/$(TEST).run.log) | tee  logs/$(TEST).run.log
 	$(GNU_OBJCOPY) -O binary $(TEST).elf $(TEST).bin
 	$(GNU_OBJDUMP) -d $(TEST).elf > $(TEST).lst
 	$(GNU_OBJCOPY) -S $(TEST).elf -O verilog $(TEST).hex
 	hexdump -v -e ' 1/4 "%08x " "\n"' $(TEST).bin > $(TEST).vmem32 # Xilinx
 	hexdump -v -e '"@%08.8_ax  " 1/1 "%02x " "\n"' $(TEST).bin > $(TEST).vmem # iverilog
 	python3 ./makehex.py $(TEST).bin 16384 > $(TEST).hex2
-	vvp -N testbench.exe  +vcd +program_memory=$(TEST).vmem
+	vvp -N testbench.exe  +vcd +program_memory=$(TEST).vmem | tee -a logs/$(TEST).run.log
 
 
 debug: TEST=debug
@@ -65,5 +66,15 @@ check-syntax:
 	iverilog -f  iverilog_file_list.txt -o /dev/null
 
 
-regression:
-	find ../../riscv-tests/isa/rv32ui -name "*.S" | xargs -n1 basename --suffix=.S | xargs -n1 -iXXX make run_rv32ui TEST=XXX | grep '\-I\- TEST'
+
+
+rv32ui.regression.txt:
+	find ../../riscv-tests/isa/rv32ui -name "*.S" | xargs -n1 basename --suffix=.S > rv32ui.regression.txt
+
+regression: rv32ui.regression.txt
+	rm -f logs/*
+	@cat rv32ui.regression.txt | xargs -n1 -IXXX make -C . run_rv32ui TEST=XXX
+
+regression_p: rv32ui.regression.txt
+	rm -f logs/*
+	@cat rv32ui.regression.txt | parallel -n1 -IXXX make -C . run_rv32ui TEST=XXX

@@ -38,3 +38,4 @@
 /sim/verilog/*.lst
 /sim/verilog/*.hex
 /sim/verilog/*.hex2
+/sim/verilog/*.log
