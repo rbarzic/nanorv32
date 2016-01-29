@@ -64,13 +64,6 @@ module nanorv32 (/*AUTOARG*/
    /*AUTOOUTPUT*/
 
    /*AUTOREG*/
-   // Beginning of automatic regs (for this module's undeclared outputs)
-   wire                      cpu_codemem_req;
-   reg [NANORV32_ADDR_MSB:0] cpu_datamem_addr;
-   reg [3:0]            cpu_datamem_bytesel;
-   reg                  cpu_datamem_req;
-   reg [NANORV32_DATA_MSB:0] cpu_datamem_wdata;
-   // End of automatics
    /*AUTOWIRE*/
 
 
@@ -138,6 +131,9 @@ module nanorv32 (/*AUTOARG*/
    wire                                                          alu_cond;
 
    reg                                                           illegal_instruction;
+
+   wire  [NANORV32_DATA_MSB:0]                                                        mem2regfile;
+
 
    //===========================================================================
    // Immediate value reconstruction
@@ -276,7 +272,7 @@ module nanorv32 (/*AUTOARG*/
         alu_porta_sel = NANORV32_MUX_SEL_ALU_PORTA_RS1;
         datamem_write_sel = NANORV32_MUX_SEL_DATAMEM_WRITE_NO;
         datamem_read_sel = NANORV32_MUX_SEL_DATAMEM_READ_NO;
-        regfile_source_sel = NANORV32_MUX_SEL_REGFILE_SOURCE_ALU;
+        regfile_source_sel = NANORV32_MUX_SEL_REGFILE_SOURCE_PC_EXE_PLUS_4;
         regfile_write_sel = NANORV32_MUX_SEL_REGFILE_WRITE_YES;
     end
     NANORV32_DECODE_BLT: begin
@@ -316,7 +312,7 @@ module nanorv32 (/*AUTOARG*/
         alu_porta_sel = NANORV32_MUX_SEL_ALU_PORTA_PC_EXE;
         datamem_write_sel = NANORV32_MUX_SEL_DATAMEM_WRITE_NO;
         datamem_read_sel = NANORV32_MUX_SEL_DATAMEM_READ_NO;
-        regfile_source_sel = NANORV32_MUX_SEL_REGFILE_SOURCE_PC_NEXT;
+        regfile_source_sel = NANORV32_MUX_SEL_REGFILE_SOURCE_PC_EXE_PLUS_4;
         regfile_write_sel = NANORV32_MUX_SEL_REGFILE_WRITE_YES;
     end
     NANORV32_DECODE_LWU: begin
@@ -334,7 +330,7 @@ module nanorv32 (/*AUTOARG*/
         alu_porta_sel = NANORV32_MUX_SEL_ALU_PORTA_RS1;
         datamem_write_sel = NANORV32_MUX_SEL_DATAMEM_WRITE_NO;
         datamem_read_sel = NANORV32_MUX_SEL_DATAMEM_READ_YES;
-        regfile_source_sel = NANORV32_MUX_SEL_REGFILE_SOURCE_ALU;
+        regfile_source_sel = NANORV32_MUX_SEL_REGFILE_SOURCE_DATAMEM;
         regfile_write_sel = NANORV32_MUX_SEL_REGFILE_WRITE_YES;
     end
     NANORV32_DECODE_ADD: begin
@@ -349,6 +345,7 @@ module nanorv32 (/*AUTOARG*/
     end
     NANORV32_DECODE_AUIPC: begin
         pc_next_sel = NANORV32_MUX_SEL_PC_NEXT_PLUS4;
+        alu_op_sel = NANORV32_MUX_SEL_ALU_OP_ADD;
         alu_portb_sel = NANORV32_MUX_SEL_ALU_PORTB_IMM20U;
         alu_porta_sel = NANORV32_MUX_SEL_ALU_PORTA_PC_EXE;
         datamem_write_sel = NANORV32_MUX_SEL_DATAMEM_WRITE_WORD;
@@ -657,13 +654,18 @@ module nanorv32 (/*AUTOARG*/
    //===========================================================================
    always @* begin
       case(regfile_source_sel)
-        NANORV32_MUX_SEL_REGFILE_SOURCE_PC_NEXT: begin
-           rd <= pc_next;
+        NANORV32_MUX_SEL_REGFILE_SOURCE_PC_EXE_PLUS_4:begin
+           rd <= pc_exe_r + 4;
         end
         NANORV32_MUX_SEL_REGFILE_SOURCE_ALU: begin
            rd <= alu_res;
         end
-        // default:
+        NANORV32_MUX_SEL_REGFILE_SOURCE_DATAMEM: begin
+           rd <= mem2regfile ;
+        end
+        default begin
+           rd <= alu_res;
+        end
       endcase
    end // always @ *
 
@@ -690,10 +692,10 @@ module nanorv32 (/*AUTOARG*/
    always @* begin
       case(datamem_read_sel)
         NANORV32_MUX_SEL_DATAMEM_READ_YES: begin
-           datamem_read = 1'b0;
+           datamem_read = inst_valid_exe_r;
         end
         NANORV32_MUX_SEL_DATAMEM_READ_NO: begin
-           datamem_read = inst_valid_exe_r;
+           datamem_read = 1'b0;
         end
         default begin
            datamem_read = 1'b0;
@@ -704,10 +706,10 @@ module nanorv32 (/*AUTOARG*/
    always @* begin
       case(datamem_write_sel)
         NANORV32_MUX_SEL_DATAMEM_WRITE_YES: begin
-           datamem_write = 1'b0;
+           datamem_write = inst_valid_exe_r;
         end
         NANORV32_MUX_SEL_DATAMEM_WRITE_NO: begin
-           datamem_write = inst_valid_exe_r;
+           datamem_write = 0;
         end
         default begin
            datamem_write = 1'b0;
@@ -733,7 +735,13 @@ module nanorv32 (/*AUTOARG*/
 
         end
         NANORV32_MUX_SEL_PC_NEXT_ALU_RES: begin
-           pc_next = alu_res;
+           // The first cycle of a branch instruction, we need to output the
+           // pc - but once we have fetch the new instruction, we need to start
+           // fetching  the n+1 instruction
+           // Fixme - this may not be valid if there is some wait-state
+           pc_next = inst_valid_exe_r ? alu_res & 32'hFFFFFFFE : (pc_fetch_r + 4);
+
+
            branch_taken = inst_valid_exe_r;
         end// Mux definitions for alu
         default begin
@@ -760,7 +768,10 @@ module nanorv32 (/*AUTOARG*/
    //===========================================================================
    // Flow management
    //===========================================================================
+   reg stall;
+
    always @* begin
+      stall = 0;
       inst_valid_fetch = 0;
       pstate_next =  NANORV32_PSTATE_CONT;
       case(pstate_r)
@@ -773,11 +784,18 @@ module nanorv32 (/*AUTOARG*/
               inst_valid_fetch = 0;
               pstate_next =  NANORV32_PSTATE_BRANCH;
            end
+           else if(cpu_datamem_req & !datamem_cpu_ack)
+             begin
+                inst_valid_fetch = 0;
+                pstate_next =  NANORV32_PSTATE_STALL;
+                stall = 1;
+             end
            else begin
-              inst_valid_fetch = codemem_cpu_ack;
-              pstate_next =  NANORV32_PSTATE_CONT;
+                 inst_valid_fetch = codemem_cpu_ack;
+                 pstate_next =  NANORV32_PSTATE_CONT;
            end
         end
+
         NANORV32_PSTATE_BRANCH: begin
            if (codemem_cpu_ack) begin
               inst_valid_fetch = 1'b1;
@@ -788,20 +806,30 @@ module nanorv32 (/*AUTOARG*/
               pstate_next =  NANORV32_PSTATE_BRANCH;
            end
         end
+        NANORV32_PSTATE_STALL: begin
+           if (cpu_datamem_req & !datamem_cpu_ack)
+             begin
+              inst_valid_fetch = 1'b0;
+              pstate_next =  NANORV32_PSTATE_STALL;
+           end
+           else begin
+              inst_valid_fetch = 1'b1;
+              pstate_next =  NANORV32_PSTATE_CONT;
+           end
+        end
      endcase // case (pstate_r)
    end // always @ *
 
    always @(posedge clk or negedge rst_n) begin
       if(rst_n == 1'b0) begin
          pstate_r <= NANORV32_PSTATE_RESET;
+         inst_valid_exe_r <= 1'h1; // The first instruction is the reset value of
+         // instruction_r - so it must be valid
          /*AUTORESET*/
-         // Beginning of autoreset for uninitialized flops
-         inst_valid_exe_r <= 1'h0;
-         // End of automatics
       end
       else begin
          pstate_r <= pstate_next;
-         inst_valid_exe_r <= inst_valid_fetch;
+         inst_valid_exe_r <= inst_valid_fetch | stall; // if we stall, the instruction is valid
       end
    end
 
@@ -832,8 +860,16 @@ module nanorv32 (/*AUTOARG*/
                        .alu_portb       (alu_portb[NANORV32_DATA_MSB:0]));
 
 
+   // Code memory interface
    assign cpu_codemem_addr = pc_next;
    assign cpu_codemem_req = 1'b1;
+   // data memory interface
+   assign cpu_datamem_addr = alu_res;
+   assign cpu_datamem_req = datamem_write || datamem_read;
+   assign cpu_datamem_bytesel = {4{datamem_write}};
+
+   assign mem2regfile = datamem_cpu_rdata;
+   assign cpu_datamem_wdata = rf_portb;
 
 
 endmodule // nanorv32

@@ -120,10 +120,13 @@
 //========================================
 
     case(regfile_source)
-        NANORV32_MUX_SEL_REGFILE_SOURCE_PC_NEXT: begin
+        NANORV32_MUX_SEL_REGFILE_SOURCE_PC_EXE_PLUS_4: begin
             regfile_source <= ;
         end
         NANORV32_MUX_SEL_REGFILE_SOURCE_ALU: begin
+            regfile_source <= ;
+        end
+        NANORV32_MUX_SEL_REGFILE_SOURCE_DATAMEM: begin
             regfile_source <= ;
         end
 //========================================

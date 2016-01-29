@@ -60,8 +60,10 @@ end
 
 // Remove the original generate statement to ease Xilinx memory bitstream patching
 always @(posedge clk) begin
-   if (we[0])
+   if (we[0]) begin
      RAM[addr][(0+1)*COL_WIDTH-1:0*COL_WIDTH] <= din[(0+1)*COL_WIDTH-1:0*COL_WIDTH];
+      $display("-I Write to address %x (%t)",addr,$realtime);
+   end
 end
 
 

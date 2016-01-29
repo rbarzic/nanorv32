@@ -1,0 +1,153 @@
+[*]
+[*] GTKWave Analyzer v3.3.64 (w)1999-2014 BSI
+[*] Fri Jan 29 19:32:30 2016
+[*]
+[dumpfile] "/home/ronan/perso/github/nanorv32/sim/verilog/tb_nanorv32.vcd"
+[dumpfile_mtime] "Fri Jan 29 19:31:33 2016"
+[dumpfile_size] 13843
+[savefile] "/home/ronan/perso/github/nanorv32/sim/verilog/nanorv32_simple.tcl.gtkw"
+[timestart] 1000
+[size] 1600 851
+[pos] -1 -1
+*-18.310080 6050000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] tb_nanorv32.
+[treeopen] tb_nanorv32.U_DUT.
+[treeopen] tb_nanorv32.U_DUT.U_CPU.
+[sst_width] 201
+[signals_width] 206
+[sst_expanded] 1
+[sst_vpaned_height] 243
+@28
+tb_nanorv32.U_DUT.U_CPU.clk
+@22
+tb_nanorv32.U_DUT.U_CPU.pc_fetch_r[31:0]
+tb_nanorv32.U_DUT.U_CPU.pc_exe_r[31:0]
+tb_nanorv32.U_DUT.U_CPU.pc_next[31:0]
+@28
+tb_nanorv32.U_DUT.U_CPU.inst_valid_fetch
+@22
+tb_nanorv32.U_DUT.U_CPU.instruction_r[31:0]
+@28
+tb_nanorv32.U_DUT.U_CPU.branch_taken
+tb_nanorv32.U_DUT.U_CPU.inst_valid_exe_r
+tb_nanorv32.U_DUT.U_CPU.pstate_r[1:0]
+tb_nanorv32.U_DUT.U_CPU.pstate_next[1:0]
+tb_nanorv32.U_DUT.U_CPU.pc_next_sel[1:0]
+@800201
+-DataMem
+@23
+tb_nanorv32.U_DUT.U_DATA_MEM.addr[12:0]
+@29
+tb_nanorv32.U_DUT.U_DATA_MEM.clk
+@23
+tb_nanorv32.U_DUT.U_DATA_MEM.din[31:0]
+tb_nanorv32.U_DUT.U_DATA_MEM.dout[31:0]
+tb_nanorv32.U_DUT.U_DATA_MEM.dout_int[31:0]
+tb_nanorv32.U_DUT.U_DATA_MEM.we[3:0]
+@1000201
+-DataMem
+@c00200
+-RegFileRaw
+@22
+tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.x1[31:0]
+tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.x2[31:0]
+tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.x3[31:0]
+tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.x4[31:0]
+tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.x5[31:0]
+tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.x6[31:0]
+tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.x7[31:0]
+tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.x8[31:0]
+tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.x9[31:0]
+tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.x10[31:0]
+@1401200
+-RegFileRaw
+@c00200
+-RegFileABI
+@22
+tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.a0[31:0]
+tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.fp[31:0]
+tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.gp[31:0]
+tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.tp[31:0]
+tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.s11[31:0]
+tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.ra[31:0]
+tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.t3[31:0]
+tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.t4[31:0]
+tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.sp[31:0]
+@1401200
+-RegFileABI
+@c00200
+-RegFileCtrl
+@22
+tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.porta[31:0]
+tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.portb[31:0]
+tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.ra[31:0]
+tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.rd[31:0]
+tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.sel_porta[4:0]
+tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.sel_portb[4:0]
+tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.sel_rd[4:0]
+@28
+tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.write_rd
+@1401200
+-RegFileCtrl
+@c00200
+-AluCtrl
+@28
+tb_nanorv32.U_DUT.U_CPU.U_ALU.alu_cond
+@22
+tb_nanorv32.U_DUT.U_CPU.U_ALU.alu_op_sel[3:0]
+tb_nanorv32.U_DUT.U_CPU.U_ALU.alu_porta[31:0]
+tb_nanorv32.U_DUT.U_CPU.U_ALU.alu_portb[31:0]
+tb_nanorv32.U_DUT.U_CPU.U_ALU.alu_res[31:0]
+@1401200
+-AluCtrl
+@c00200
+-Decoding
+@22
+tb_nanorv32.U_DUT.U_CPU.pc_exe_r[31:0]
+tb_nanorv32.U_DUT.U_CPU.dec_opcode1[6:0]
+tb_nanorv32.U_DUT.U_CPU.dec_rs1[4:0]
+tb_nanorv32.U_DUT.U_CPU.dec_rs2[4:0]
+tb_nanorv32.U_DUT.U_CPU.dec_rd[4:0]
+@28
+tb_nanorv32.U_DUT.U_CPU.dec_func3[2:0]
+@22
+tb_nanorv32.U_DUT.U_CPU.dec_func4[3:0]
+tb_nanorv32.U_DUT.U_CPU.dec_func7[6:0]
+tb_nanorv32.U_DUT.U_CPU.dec_func12[11:0]
+tb_nanorv32.U_DUT.U_CPU.dec_imm12[11:0]
+tb_nanorv32.U_DUT.U_CPU.dec_imm12hi[6:0]
+tb_nanorv32.U_DUT.U_CPU.dec_imm12lo[4:0]
+tb_nanorv32.U_DUT.U_CPU.dec_imm20[19:0]
+tb_nanorv32.U_DUT.U_CPU.dec_imm20uj[19:0]
+tb_nanorv32.U_DUT.U_CPU.dec_immsb1[4:0]
+tb_nanorv32.U_DUT.U_CPU.dec_immsb2[6:0]
+tb_nanorv32.U_DUT.U_CPU.dec_shamt[4:0]
+@1401200
+-Decoding
+@c00200
+-ImmSEXT
+@22
+tb_nanorv32.U_DUT.U_CPU.imm12_sext[31:0]
+tb_nanorv32.U_DUT.U_CPU.imm12hilo_sext[31:0]
+tb_nanorv32.U_DUT.U_CPU.imm12sb_sext[31:0]
+tb_nanorv32.U_DUT.U_CPU.imm20u_sext[31:0]
+tb_nanorv32.U_DUT.U_CPU.imm20uj_sext[31:0]
+@1401200
+-ImmSEXT
+@800200
+-MuxSelector
+@22
+tb_nanorv32.U_DUT.U_CPU.pc_exe_r[31:0]
+tb_nanorv32.U_DUT.U_CPU.alu_op_sel[3:0]
+@28
+tb_nanorv32.U_DUT.U_CPU.alu_porta_sel
+tb_nanorv32.U_DUT.U_CPU.alu_portb_sel[2:0]
+tb_nanorv32.U_DUT.U_CPU.datamem_read_sel
+tb_nanorv32.U_DUT.U_CPU.datamem_write_sel[1:0]
+tb_nanorv32.U_DUT.U_CPU.pc_next_sel[1:0]
+tb_nanorv32.U_DUT.U_CPU.regfile_source_sel
+tb_nanorv32.U_DUT.U_CPU.regfile_write_sel
+@1000200
+-MuxSelector
+[pattern_trace] 1
+[pattern_trace] 0

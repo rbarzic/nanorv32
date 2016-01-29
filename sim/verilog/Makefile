@@ -56,7 +56,7 @@ debug:
 
 
 wave:
-	gtkwave tb_nanorv32.vcd
+	gtkwave tb_nanorv32.vcd &
 
 regen:
 	make -C $(TOP)/common/spec gen_files

@@ -147,6 +147,10 @@ module tb_nanorv32;
               $finish(2);
 
            end
+      end // if (pc === 32'h00000100)
+      else if (pc === 32'hxxxxxxxx) begin
+         $display("-I- TEST FAILED (PC is X)");
+         $finish(2);
       end
    end
 

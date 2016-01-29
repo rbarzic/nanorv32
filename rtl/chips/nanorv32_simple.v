@@ -77,7 +77,7 @@ module nanorv32_simple (/*AUTOARG*/
    end
 
 
-   assign datamem_cpu_ack = cpu_datamem_req;
+
 
     /* nanorv32 AUTO_TEMPLATE(
      ); */
@@ -121,7 +121,8 @@ module nanorv32_simple (/*AUTOARG*/
 
 
    wire [3:0] we_datamem;
-   assign we_datamem = cpu_datamem_bytesel & {4{cpu_datamem_req}};
+   wire       write_access = | we_datamem;
+   assign     we_datamem = cpu_datamem_bytesel & {4{cpu_datamem_req}};
 
 
 
@@ -142,6 +143,20 @@ module nanorv32_simple (/*AUTOARG*/
                .addr                    (cpu_datamem_addr[NANORV32_ADDR_MSB-1:0]), // Templated
                .din                     (cpu_datamem_wdata[NANORV32_DATA_MSB:0])); // Templated
 
+   reg        cpu_datamem_req_r;
+
+
+   always @(posedge clk or negedge rst_n) begin
+      if(rst_n == 1'b0) begin
+         /*AUTORESET*/
+      end
+      else begin
+         cpu_datamem_req_r <= cpu_datamem_req & !write_access;
+      end
+   end
+   // simple handshaking
+   // a write is immediate, a read needs to be delayed by one cycle
+   assign datamem_cpu_ack = write_access ? cpu_datamem_req : cpu_datamem_req_r;
 
 endmodule // nanorv32_simple
 /*

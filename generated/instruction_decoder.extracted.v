@@ -82,7 +82,7 @@
         alu_porta_sel = NANORV32_MUX_SEL_ALU_PORTA_RS1;
         datamem_write_sel = NANORV32_MUX_SEL_DATAMEM_WRITE_NO;
         datamem_read_sel = NANORV32_MUX_SEL_DATAMEM_READ_NO;
-        regfile_source_sel = NANORV32_MUX_SEL_REGFILE_SOURCE_ALU;
+        regfile_source_sel = NANORV32_MUX_SEL_REGFILE_SOURCE_PC_EXE_PLUS_4;
         regfile_write_sel = NANORV32_MUX_SEL_REGFILE_WRITE_YES;
     end
     NANORV32_DECODE_BLT: begin
@@ -122,7 +122,7 @@
         alu_porta_sel = NANORV32_MUX_SEL_ALU_PORTA_PC_EXE;
         datamem_write_sel = NANORV32_MUX_SEL_DATAMEM_WRITE_NO;
         datamem_read_sel = NANORV32_MUX_SEL_DATAMEM_READ_NO;
-        regfile_source_sel = NANORV32_MUX_SEL_REGFILE_SOURCE_PC_NEXT;
+        regfile_source_sel = NANORV32_MUX_SEL_REGFILE_SOURCE_PC_EXE_PLUS_4;
         regfile_write_sel = NANORV32_MUX_SEL_REGFILE_WRITE_YES;
     end
     NANORV32_DECODE_LWU: begin
@@ -155,6 +155,7 @@
     end
     NANORV32_DECODE_AUIPC: begin
         pc_next_sel = NANORV32_MUX_SEL_PC_NEXT_PLUS4;
+        alu_op_sel = NANORV32_MUX_SEL_ALU_OP_ADD;
         alu_portb_sel = NANORV32_MUX_SEL_ALU_PORTB_IMM20U;
         alu_porta_sel = NANORV32_MUX_SEL_ALU_PORTA_PC_EXE;
         datamem_write_sel = NANORV32_MUX_SEL_DATAMEM_WRITE_WORD;

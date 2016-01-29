@@ -123,7 +123,7 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['UJ-type'] = {
     },
     'regfile' : {
         'write' : 'yes',
-        'source' : 'pc_next',
+        'source' : 'pc_exe_plus_4',
     },
     'datamem' : {
         'write' : 'no',
@@ -210,7 +210,7 @@ spec['nanorv32']['rv32i']['impl']['inst']['jalr'] = {
     },
     'regfile' : {
         'write' : 'yes',
-        'source' : 'alu',
+        'source' : 'pc_exe_plus_4',
     },
     'datamem' : {
         'write' : 'no',
@@ -298,6 +298,9 @@ spec['nanorv32']['rv32i']['impl']['inst']['lb'] = {
 
 
 spec['nanorv32']['rv32i']['impl']['inst']['lw'] = {
+    'regfile' : {
+        'source' : 'datamem',
+    },
     'datamem' : {
         'write' : 'no',
         'read' : 'yes',
@@ -404,14 +407,16 @@ spec['nanorv32']['rv32i']['impl']['inst']['bgeu'] = {
 spec['nanorv32']['rv32i']['impl']['inst']['lui'] = {
     'alu' : {
         'porta' : 'rs1',
-        'portb' : 'imm20u', # ALU op will be 'portb' or add
-        'op' : 'nop', # ALU op will be 'portb' or add
+        'portb' : 'imm20u',
+        'op' : 'nop',
     },
 }
 
 
 spec['nanorv32']['rv32i']['impl']['inst']['auipc'] = {
-
+    'alu' : {
+        'op' : 'add',
+    },
 }
 
 
