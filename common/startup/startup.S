@@ -1,7 +1,20 @@
         .section .isr_vector
         .global start
         .global exit
+        .global __data_start__
+        .global __data_end__
         .balign 4
+
+        la x1,__etext
+        la x2,__data_start__
+        la x3,__data_end__
+data_loop:
+        lw x4,0(x2)
+        sw x4,0(x2)
+        addi x2,x2,4
+        bne x2,x3, data_loop
+
+
         j start
         .org 0x100
 exit:   nop

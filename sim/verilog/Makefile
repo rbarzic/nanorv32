@@ -33,6 +33,7 @@ run_rv32ui: ../../riscv-tests/isa/rv32ui/$(TEST).S
 	$< $(STARTUP_CODE) -o $(TEST).elf  || echo "-I- TEST FAILED (gcc compilation)" >> logs/$(TEST).run.log) | tee  logs/$(TEST).run.log
 	$(GNU_OBJCOPY) -O binary $(TEST).elf $(TEST).bin
 	$(GNU_OBJDUMP) -d $(TEST).elf > $(TEST).lst
+	$(GNU_OBJDUMP) -t $(TEST).elf > $(TEST).map
 	$(GNU_OBJCOPY) -S $(TEST).elf -O verilog $(TEST).hex
 	hexdump -v -e ' 1/4 "%08x " "\n"' $(TEST).bin > $(TEST).vmem32 # Xilinx
 	hexdump -v -e '"@%08.8_ax  " 1/1 "%02x " "\n"' $(TEST).bin > $(TEST).vmem # iverilog
