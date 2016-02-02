@@ -24,6 +24,7 @@ TEST_FLAGS += -DTEST_FUNC_TXT=$(TEST_FUNC_TXT)
 TEST_FLAGS += -DTEST_FUNC_RET=$(TEST_FUNC_RET)
 TEST_FLAGS += -I$(TOP)/common/include
 TEST_FLAGS += -ffreestanding -nostdlib
+# TEST_FLAGS += -D_STARTUP_DATA_INIT_
 
 run_rv32ui: ../../riscv-tests/isa/rv32ui/$(TEST).S
 	mkdir -p logs

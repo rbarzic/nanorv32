@@ -4,7 +4,7 @@
         .global __data_start__
         .global __data_end__
         .balign 4
-
+#ifdef _STARTUP_DATA_INIT_
         la x1,__etext
         la x2,__data_start__
         la x3,__data_end__
@@ -14,7 +14,7 @@ data_loop:
         addi x2,x2,4
         addi x1,x1,4
         bne x2,x3, data_loop
-
+#endif
 
         j start
         .org 0x100

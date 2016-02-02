@@ -33,29 +33,29 @@
 
 module nanorv32 (/*AUTOARG*/
    // Outputs
-   cpu_codemem_addr, cpu_codemem_req, cpu_datamem_addr,
-   cpu_datamem_wdata, cpu_datamem_bytesel, cpu_datamem_req,
+   cpu_codeif_addr, cpu_codeif_req, cpu_dataif_addr, cpu_dataif_wdata,
+   cpu_dataif_bytesel, cpu_dataif_req,
    // Inputs
-   codemem_cpu_rdata, codemem_cpu_ack, datamem_cpu_rdata,
-   datamem_cpu_ack, rst_n, clk
+   codeif_cpu_rdata, codeif_cpu_ack, dataif_cpu_rdata, dataif_cpu_ack,
+   rst_n, clk
    );
 
 `include "nanorv32_parameters.v"
 
    // Code memory interface
-   output [NANORV32_DATA_MSB:0] cpu_codemem_addr;
-   output                    cpu_codemem_req;
-   input  [NANORV32_DATA_MSB:0] codemem_cpu_rdata;
-   input                     codemem_cpu_ack;
+   output [NANORV32_DATA_MSB:0] cpu_codeif_addr;
+   output                    cpu_codeif_req;
+   input  [NANORV32_DATA_MSB:0] codeif_cpu_rdata;
+   input                     codeif_cpu_ack;
 
    // Data memory interface
 
-   output [NANORV32_DATA_MSB:0] cpu_datamem_addr;
-   output [NANORV32_DATA_MSB:0] cpu_datamem_wdata;
-   output [3:0]              cpu_datamem_bytesel;
-   output                    cpu_datamem_req;
-   input [NANORV32_DATA_MSB:0]  datamem_cpu_rdata;
-   input                     datamem_cpu_ack;
+   output [NANORV32_DATA_MSB:0] cpu_dataif_addr;
+   output [NANORV32_DATA_MSB:0] cpu_dataif_wdata;
+   output [3:0]              cpu_dataif_bytesel;
+   output                    cpu_dataif_req;
+   input [NANORV32_DATA_MSB:0]  dataif_cpu_rdata;
+   input                     dataif_cpu_ack;
 
    input                     rst_n;
    input                     clk;
@@ -177,7 +177,7 @@ module nanorv32 (/*AUTOARG*/
       end
       else begin
          if(inst_valid_fetch)
-           instruction_r <= codemem_cpu_rdata;
+           instruction_r <= codeif_cpu_rdata;
       end
    end
 
@@ -784,20 +784,20 @@ module nanorv32 (/*AUTOARG*/
               inst_valid_fetch = 0;
               pstate_next =  NANORV32_PSTATE_BRANCH;
            end
-           else if(cpu_datamem_req & !datamem_cpu_ack)
+           else if(cpu_dataif_req & !dataif_cpu_ack)
              begin
                 inst_valid_fetch = 0;
                 pstate_next =  NANORV32_PSTATE_STALL;
                 stall = 1;
              end
            else begin
-                 inst_valid_fetch = codemem_cpu_ack;
+                 inst_valid_fetch = codeif_cpu_ack;
                  pstate_next =  NANORV32_PSTATE_CONT;
            end
         end
 
         NANORV32_PSTATE_BRANCH: begin
-           if (codemem_cpu_ack) begin
+           if (codeif_cpu_ack) begin
               inst_valid_fetch = 1'b1;
               pstate_next =  NANORV32_PSTATE_CONT;
            end
@@ -807,7 +807,7 @@ module nanorv32 (/*AUTOARG*/
            end
         end
         NANORV32_PSTATE_STALL: begin
-           if (cpu_datamem_req & !datamem_cpu_ack)
+           if (cpu_dataif_req & !dataif_cpu_ack)
              begin
               inst_valid_fetch = 1'b0;
               pstate_next =  NANORV32_PSTATE_STALL;
@@ -861,15 +861,15 @@ module nanorv32 (/*AUTOARG*/
 
 
    // Code memory interface
-   assign cpu_codemem_addr = pc_next;
-   assign cpu_codemem_req = 1'b1;
+   assign cpu_codeif_addr = pc_next;
+   assign cpu_codeif_req = 1'b1;
    // data memory interface
-   assign cpu_datamem_addr = alu_res;
-   assign cpu_datamem_req = datamem_write || datamem_read;
-   assign cpu_datamem_bytesel = {4{datamem_write}};
+   assign cpu_dataif_addr = alu_res;
+   assign cpu_dataif_req = datamem_write || datamem_read;
+   assign cpu_dataif_bytesel = {4{datamem_write}};
 
-   assign mem2regfile = datamem_cpu_rdata;
-   assign cpu_datamem_wdata = rf_portb;
+   assign mem2regfile = dataif_cpu_rdata;
+   assign cpu_dataif_wdata = rf_portb;
 
 
 endmodule // nanorv32
