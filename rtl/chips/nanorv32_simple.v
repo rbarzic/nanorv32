@@ -54,8 +54,8 @@ module nanorv32_simple (/*AUTOARG*/
    /*AUTOWIRE*/
    // Beginning of automatic wires (for undeclared instantiated-module outputs)
    wire [NANORV32_DATA_MSB:0] codemem_cpu_rdata;// From U_CODE_MEM of bytewrite_ram_32bits.v
-   wire [NANORV32_ADDR_MSB:0] cpu_codemem_addr; // From U_CPU of nanorv32.v
-   wire [NANORV32_ADDR_MSB:0] cpu_datamem_addr; // From U_CPU of nanorv32.v
+   wire [NANORV32_DATA_MSB:0] cpu_codemem_addr; // From U_CPU of nanorv32.v
+   wire [NANORV32_DATA_MSB:0] cpu_datamem_addr; // From U_CPU of nanorv32.v
    wire [NANORV32_DATA_MSB:0] cpu_datamem_wdata;// From U_CPU of nanorv32.v
    wire [NANORV32_DATA_MSB:0] datamem_cpu_rdata;// From U_DATA_MEM of bytewrite_ram_32bits.v
    // End of automatics
@@ -90,8 +90,8 @@ module nanorv32_simple (/*AUTOARG*/
                    .datamem_cpu_ack     (datamem_cpu_ack),
                            /*AUTOINST*/
                    // Outputs
-                   .cpu_codemem_addr    (cpu_codemem_addr[NANORV32_ADDR_MSB:0]),
-                   .cpu_datamem_addr    (cpu_datamem_addr[NANORV32_ADDR_MSB:0]),
+                   .cpu_codemem_addr    (cpu_codemem_addr[NANORV32_DATA_MSB:0]),
+                   .cpu_datamem_addr    (cpu_datamem_addr[NANORV32_DATA_MSB:0]),
                    .cpu_datamem_wdata   (cpu_datamem_wdata[NANORV32_DATA_MSB:0]),
                    // Inputs
                    .codemem_cpu_rdata   (codemem_cpu_rdata[NANORV32_DATA_MSB:0]),
@@ -137,7 +137,7 @@ module nanorv32_simple (/*AUTOARG*/
                .we                 (we_datamem),
                /*AUTOINST*/
                // Outputs
-               .dout                    (datamem_cpu_rdata[NANORV32_DATA_MSB:0]), // Templated
+               .dout                    (), // Templated
                // Inputs
                .clk                     (clk),
                .addr                    (cpu_datamem_addr[NANORV32_ADDR_MSB-1:0]), // Templated
@@ -149,6 +149,9 @@ module nanorv32_simple (/*AUTOARG*/
    always @(posedge clk or negedge rst_n) begin
       if(rst_n == 1'b0) begin
          /*AUTORESET*/
+         // Beginning of autoreset for uninitialized flops
+         cpu_datamem_req_r <= 1'h0;
+         // End of automatics
       end
       else begin
          cpu_datamem_req_r <= cpu_datamem_req & !write_access;
@@ -157,6 +160,93 @@ module nanorv32_simple (/*AUTOARG*/
    // simple handshaking
    // a write is immediate, a read needs to be delayed by one cycle
    assign datamem_cpu_ack = write_access ? cpu_datamem_req : cpu_datamem_req_r;
+
+   reg cpu_data_data_access; // Data access (Load/store) to Data space
+   reg cpu_data_code_access; // Data access (Load/store) to Code space
+   reg cpu_data_periph_access; // Data access (Load/store) to Periph space
+
+   reg cpu_code_data_access; // Code access (Program fetch) to Data space
+   reg cpu_code_code_access; // Code access (Program fetch) to Code space
+   reg cpu_code_periph_access; // Code access (Program fetch) to Periph space (Forbidden ?)
+
+   // Address space decoding
+   always @(*) begin
+      case(cpu_datamem_addr[31:28])
+        4'h0: begin
+           // Code access - not supported yet
+           cpu_data_data_access = 0;
+           cpu_data_code_access = 1;
+           cpu_data_periph_access = 0;
+        end
+        4'h2: begin
+           // Data RAM access
+           cpu_data_data_access = 1;
+           cpu_data_code_access = 0;
+           cpu_data_periph_access = 0;
+        end
+        4'hF: begin
+           // Peripheral access
+           cpu_data_data_access = 0;
+           cpu_data_code_access = 0;
+           cpu_data_periph_access = 1;
+        end
+        default: begin
+           cpu_data_data_access = 0;
+           cpu_data_code_access = 0;
+           cpu_data_periph_access = 0;
+        end
+      endcase
+   end // always @ *
+
+   always @* begin
+      case(cpu_codemem_addr[31:28])
+        4'h0: begin
+           // Code access
+           cpu_code_data_access = 0;
+           cpu_code_code_access = 1;
+           cpu_code_periph_access = 0;
+        end
+        4'h2: begin
+           // Data RAM access
+           cpu_code_data_access = 1;
+           cpu_code_code_access = 0;
+           cpu_code_periph_access = 0;
+        end
+        4'hF: begin
+           // Peripheral access
+           cpu_code_data_access = 0;
+           cpu_code_code_access = 0;
+           cpu_code_periph_access = 1;
+        end
+        default: begin
+           cpu_code_data_access = 0;
+           cpu_code_code_access = 0;
+           cpu_code_periph_access = 0;
+        end
+      endcase
+   end
+
+   // Priority between data and code access
+   // For Code ram
+   always @* begin
+      // default
+      datamem_cpu_rdata[NANORV32_DATA_MSB:0] = dout_datamem[NANORV32_DATA_MSB:0];
+      if(cpu_data_code_access) begin
+         // Data access to code ram
+         datamem_cpu_rdata[NANORV32_DATA_MSB:0] = dout_codemem[NANORV32_DATA_MSB:0];
+
+      end
+      else if(cpu_data_data_access) begin
+         datamem_cpu_rdata[NANORV32_DATA_MSB:0] = dout_datamem[NANORV32_DATA_MSB:0];
+      end
+      else if(cpu_data_periph_access) begin
+         datamem_cpu_rdata[NANORV32_DATA_MSB:0] = periph_rdata[NANORV32_DATA_MSB:0];
+      end
+
+   end
+
+
+
 
 endmodule // nanorv32_simple
 /*

@@ -43,14 +43,14 @@ module nanorv32 (/*AUTOARG*/
 `include "nanorv32_parameters.v"
 
    // Code memory interface
-   output [NANORV32_ADDR_MSB:0] cpu_codemem_addr;
+   output [NANORV32_DATA_MSB:0] cpu_codemem_addr;
    output                    cpu_codemem_req;
    input  [NANORV32_DATA_MSB:0] codemem_cpu_rdata;
    input                     codemem_cpu_ack;
 
    // Data memory interface
 
-   output [NANORV32_ADDR_MSB:0] cpu_datamem_addr;
+   output [NANORV32_DATA_MSB:0] cpu_datamem_addr;
    output [NANORV32_DATA_MSB:0] cpu_datamem_wdata;
    output [3:0]              cpu_datamem_bytesel;
    output                    cpu_datamem_req;

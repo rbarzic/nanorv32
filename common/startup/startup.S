@@ -9,9 +9,10 @@
         la x2,__data_start__
         la x3,__data_end__
 data_loop:
-        lw x4,0(x2)
+        lw x4,0(x1)
         sw x4,0(x2)
         addi x2,x2,4
+        addi x1,x1,4
         bne x2,x3, data_loop
 
 
