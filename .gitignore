@@ -39,3 +39,4 @@
 /sim/verilog/*.hex
 /sim/verilog/*.hex2
 /sim/verilog/*.log
+/sim/verilog/*.map

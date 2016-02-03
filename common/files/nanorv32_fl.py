@@ -10,7 +10,7 @@ def nanor32_fl():
     # Core
     l.append({
         'file': "{top}/rtl/cores/nanorv32_alu.v",
-            'targets': 'synt,sim_rtl'
+        'targets': 'synt,sim_rtl'
     })
     l.append({
         'file': "{top}/rtl/cores/nanorv32_regfile.v",
@@ -28,6 +28,14 @@ def nanor32_fl():
     # Chip top levels
     l.append({
         'file': "{top}/rtl/ips/bytewrite_ram_32bits.v",
+        'targets': 'synt,sim_rtl'
+    })
+    l.append({
+        'file': "{top}/rtl/ips/nanorv32_tcm_ctrl.v",
+        'targets': 'synt,sim_rtl'
+    })
+    l.append({
+        'file': "{top}/rtl/ips/nanorv32_tcm_arbitrer.v",
         'targets': 'synt,sim_rtl'
     })
     l.append({

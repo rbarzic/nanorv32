@@ -36,8 +36,8 @@ module nanorv32 (/*AUTOARG*/
    cpu_codeif_addr, cpu_codeif_req, cpu_dataif_addr, cpu_dataif_wdata,
    cpu_dataif_bytesel, cpu_dataif_req,
    // Inputs
-   codeif_cpu_rdata, codeif_cpu_ack, dataif_cpu_rdata, dataif_cpu_ack,
-   rst_n, clk
+   codeif_cpu_rdata, codeif_cpu_ready, dataif_cpu_rdata,
+   dataif_cpu_ready, rst_n, clk
    );
 
 `include "nanorv32_parameters.v"
@@ -46,7 +46,7 @@ module nanorv32 (/*AUTOARG*/
    output [NANORV32_DATA_MSB:0] cpu_codeif_addr;
    output                    cpu_codeif_req;
    input  [NANORV32_DATA_MSB:0] codeif_cpu_rdata;
-   input                     codeif_cpu_ack;
+   input                     codeif_cpu_ready;
 
    // Data memory interface
 
@@ -55,7 +55,7 @@ module nanorv32 (/*AUTOARG*/
    output [3:0]              cpu_dataif_bytesel;
    output                    cpu_dataif_req;
    input [NANORV32_DATA_MSB:0]  dataif_cpu_rdata;
-   input                     dataif_cpu_ack;
+   input                     dataif_cpu_ready;
 
    input                     rst_n;
    input                     clk;
@@ -784,20 +784,20 @@ module nanorv32 (/*AUTOARG*/
               inst_valid_fetch = 0;
               pstate_next =  NANORV32_PSTATE_BRANCH;
            end
-           else if(cpu_dataif_req & !dataif_cpu_ack)
+           else if(cpu_dataif_req & !dataif_cpu_ready)
              begin
                 inst_valid_fetch = 0;
                 pstate_next =  NANORV32_PSTATE_STALL;
                 stall = 1;
              end
            else begin
-                 inst_valid_fetch = codeif_cpu_ack;
+                 inst_valid_fetch = codeif_cpu_ready;
                  pstate_next =  NANORV32_PSTATE_CONT;
            end
         end
 
         NANORV32_PSTATE_BRANCH: begin
-           if (codeif_cpu_ack) begin
+           if (codeif_cpu_ready) begin
               inst_valid_fetch = 1'b1;
               pstate_next =  NANORV32_PSTATE_CONT;
            end
@@ -807,7 +807,7 @@ module nanorv32 (/*AUTOARG*/
            end
         end
         NANORV32_PSTATE_STALL: begin
-           if (cpu_dataif_req & !dataif_cpu_ack)
+           if (cpu_dataif_req & !dataif_cpu_ready)
              begin
               inst_valid_fetch = 1'b0;
               pstate_next =  NANORV32_PSTATE_STALL;

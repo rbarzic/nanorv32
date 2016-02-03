@@ -97,7 +97,7 @@ module tb_nanorv32;
                tmp[23:16] = memory[i*4+2];
                tmp[31:24] = memory[i*4+3];
 
-               U_DUT.U_CODE_MEM.RAM[i]  = tmp;
+               U_DUT.U_TCM_CODE.U_MEM.RAM[i]  = tmp;
 
             end
          end
