@@ -1,7 +1,7 @@
         .section .isr_vector
         li x1,0x55
         li x5,0xAA
-        li x2,0x100
+        li x2,0x20000000
         nop
         sw x1,20(x2)
         sw x5,30(x2)

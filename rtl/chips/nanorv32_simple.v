@@ -128,6 +128,7 @@ module nanorv32_simple (/*AUTOARG*/
    nanorv32_tcm_ctrl
      #(.SIZE(1<<(AW-2)),.ADDR_WIDTH(AW-2))
      U_TCM_DATA (
+                 .fast_hanshaking(1'b0),
                            /*AUTOINST*/
                  // Outputs
                  .ready_nxt             (tcmdata_ready_nxt),     // Templated
@@ -155,6 +156,7 @@ module nanorv32_simple (/*AUTOARG*/
    nanorv32_tcm_ctrl
      #(.SIZE(1<<(AW-2)),.ADDR_WIDTH(AW-2))
      U_TCM_CODE (
+                 .fast_hanshaking(),
                            /*AUTOINST*/
                  // Outputs
                  .ready_nxt             (tcmcode_ready_nxt),     // Templated

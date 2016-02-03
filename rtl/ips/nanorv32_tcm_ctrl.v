@@ -33,7 +33,7 @@ module nanorv32_tcm_ctrl (/*AUTOARG*/
    // Outputs
    ready_nxt, dout,
    // Inputs
-   clk, rst_n, en, din, addr, bytesel
+   clk, rst_n, en, din, addr, bytesel, fast_hanshaking
    );
    parameter SIZE = 1024;
    parameter ADDR_WIDTH = 12;
@@ -52,6 +52,8 @@ module nanorv32_tcm_ctrl (/*AUTOARG*/
    output [NANORV32_DATA_MSB:0] dout;
    input [ADDR_WIDTH-1:0]         addr;
    input [3:0]             bytesel;
+   input                   fast_hanshaking;
+
 
 
 
@@ -94,10 +96,10 @@ module nanorv32_tcm_ctrl (/*AUTOARG*/
          // End of automatics
       end
       else begin
-         en_r <= en;
+         en_r <= en & !write_access;
       end
    end
-   assign ready_nxt = write_access ? en : en_r;
+   assign ready_nxt = (write_access | fast_hanshaking) ? en : en_r;
 
 endmodule // nanorv32_tcm_ctrl
 /*
