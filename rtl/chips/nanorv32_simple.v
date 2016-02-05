@@ -53,7 +53,9 @@ module nanorv32_simple (/*AUTOARG*/
    /*AUTOWIRE*/
    // Beginning of automatic wires (for undeclared instantiated-module outputs)
    wire                 codeif_cpu_early_ready; // From U_ARBITRER of nanorv32_tcm_arbitrer.v
+   wire                 codeif_cpu_ready_r;     // From U_ARBITRER of nanorv32_tcm_arbitrer.v
    wire                 dataif_cpu_early_ready; // From U_ARBITRER of nanorv32_tcm_arbitrer.v
+   wire                 dataif_cpu_ready_r;     // From U_ARBITRER of nanorv32_tcm_arbitrer.v
    wire [ADDR_WIDTH-1:0] tcmcode_addr;          // From U_ARBITRER of nanorv32_tcm_arbitrer.v
    wire [3:0]           tcmcode_bytesel;        // From U_ARBITRER of nanorv32_tcm_arbitrer.v
    wire [NANORV32_DATA_MSB:0] tcmcode_din;      // From U_ARBITRER of nanorv32_tcm_arbitrer.v
@@ -104,8 +106,10 @@ module nanorv32_simple (/*AUTOARG*/
                    // Inputs
                    .codeif_cpu_rdata    (codeif_cpu_rdata[NANORV32_DATA_MSB:0]),
                    .codeif_cpu_early_ready(codeif_cpu_early_ready),
+                   .codeif_cpu_ready_r  (codeif_cpu_ready_r),
                    .dataif_cpu_rdata    (dataif_cpu_rdata[NANORV32_DATA_MSB:0]),
                    .dataif_cpu_early_ready(dataif_cpu_early_ready),
+                   .dataif_cpu_ready_r  (dataif_cpu_ready_r),
                    .rst_n               (rst_n),
                    .clk                 (clk));
 
@@ -189,9 +193,13 @@ module nanorv32_simple (/*AUTOARG*/
                  .tcmdata_en            (tcmdata_en),
                  .codeif_cpu_rdata      (codeif_cpu_rdata[NANORV32_DATA_MSB:0]),
                  .codeif_cpu_early_ready(codeif_cpu_early_ready),
+                 .codeif_cpu_ready_r    (codeif_cpu_ready_r),
                  .dataif_cpu_rdata      (dataif_cpu_rdata[NANORV32_DATA_MSB:0]),
                  .dataif_cpu_early_ready(dataif_cpu_early_ready),
+                 .dataif_cpu_ready_r    (dataif_cpu_ready_r),
                  // Inputs
+                 .rst_n                 (rst_n),
+                 .clk                   (clk),
                  .tcmcode_dout          (tcmcode_dout[NANORV32_DATA_MSB:0]),
                  .tcmcode_ready_nxt     (tcmcode_ready_nxt),
                  .tcmdata_dout          (tcmdata_dout[NANORV32_DATA_MSB:0]),

@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.64 (w)1999-2014 BSI
-[*] Fri Feb  5 13:16:58 2016
+[*] Fri Feb  5 17:36:59 2016
 [*]
 [dumpfile] "/home/ronan/perso/github/nanorv32/sim/verilog/tb_nanorv32.vcd"
-[dumpfile_mtime] "Fri Feb  5 13:15:47 2016"
-[dumpfile_size] 1888026
+[dumpfile_mtime] "Fri Feb  5 17:36:37 2016"
+[dumpfile_size] 307151
 [savefile] "/home/ronan/perso/github/nanorv32/sim/verilog/nanorv32_simple.tcl.gtkw"
-[timestart] 559900
+[timestart] 1000
 [size] 1600 851
 [pos] -1 -1
-*-17.471088 1050000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-18.471088 1350000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] tb_nanorv32.
 [treeopen] tb_nanorv32.U_DUT.
 [treeopen] tb_nanorv32.U_DUT.U_CPU.
@@ -24,38 +24,68 @@ tb_nanorv32.U_RESET_GEN.reset_n
 tb_nanorv32.U_RESET_GEN.reset_a_n
 @22
 tb_nanorv32.U_DUT.U_CPU.pc_fetch_r[31:0]
+[color] 3
 tb_nanorv32.U_DUT.U_CPU.pc_exe_r[31:0]
 tb_nanorv32.U_DUT.U_CPU.pc_next[31:0]
-tb_nanorv32.U_DUT.U_CPU.instruction_r[31:0]
 @28
-tb_nanorv32.U_DUT.U_CPU.stall
 tb_nanorv32.U_DUT.U_CPU.stall_exe
 tb_nanorv32.U_DUT.U_CPU.stall_fetch
+tb_nanorv32.U_DUT.U_CPU.codeif_cpu_early_ready
+@29
+tb_nanorv32.U_DUT.U_CPU.codeif_cpu_ready_r
+@28
+tb_nanorv32.U_DUT.U_CPU.valid_inst
+tb_nanorv32.U_DUT.U_ARBITRER.swap_dout_a
+tb_nanorv32.U_DUT.U_ARBITRER.swap_dout_r
+@22
+tb_nanorv32.U_DUT.U_ARBITRER.tcmcode_dout[31:0]
+tb_nanorv32.U_DUT.U_ARBITRER.codeif_cpu_rdata[31:0]
+tb_nanorv32.U_DUT.U_CPU.instruction_r[31:0]
+@800200
+-PState
+@2024
+^1 /tmp/../home/ronan/perso/github/nanorv32/sim/verilog/pstate.txt
+tb_nanorv32.U_DUT.U_CPU.pstate_r[2:0]
+^1 /tmp/../home/ronan/perso/github/nanorv32/sim/verilog/pstate.txt
+tb_nanorv32.U_DUT.U_CPU.pstate_next[2:0]
+@1000200
+-PState
+@22
+tb_nanorv32.U_DUT.U_TCM_CODE.U_MEM.addr[10:0]
+@28
+tb_nanorv32.U_DUT.U_CPU.codeif_cpu_early_ready
+tb_nanorv32.U_DUT.U_CPU.dataif_cpu_early_ready
+tb_nanorv32.U_DUT.U_ARBITRER.swap_dout_a
+tb_nanorv32.U_DUT.U_ARBITRER.swap_dout_r
 tb_nanorv32.U_DUT.U_CPU.force_stall_reset
 tb_nanorv32.U_DUT.U_CPU.force_stall_pstate
 tb_nanorv32.U_DUT.U_CPU.branch_taken
 tb_nanorv32.U_DUT.U_CPU.output_new_pc
 @22
 tb_nanorv32.U_DUT.U_TCM_CODE.U_MEM.addr[10:0]
+@28
+tb_nanorv32.U_DUT.U_ARBITRER.cpu_dataif_req
+@22
 tb_nanorv32.U_DUT.U_CPU.codeif_cpu_rdata[31:0]
-@800200
--PState
-@2024
-^1 /tmp/../home/ronan/perso/github/nanorv32/sim/verilog/pstate.txt
-tb_nanorv32.U_DUT.U_CPU.pstate_next[2:0]
-^1 /tmp/../home/ronan/perso/github/nanorv32/sim/verilog/pstate.txt
-tb_nanorv32.U_DUT.U_CPU.pstate_r[2:0]
-@1000200
--PState
+@28
+tb_nanorv32.U_DUT.U_ARBITRER.cpu_code_code_access
+tb_nanorv32.U_DUT.U_ARBITRER.cpu_code_data_access
+tb_nanorv32.U_DUT.U_ARBITRER.cpu_data_code_access
+tb_nanorv32.U_DUT.U_ARBITRER.cpu_data_data_access
+tb_nanorv32.U_DUT.U_CPU.data_access_cycle
+@22
+tb_nanorv32.U_DUT.U_TCM_CODE.addr[12:0]
+tb_nanorv32.U_DUT.U_TCM_CODE.dout[31:0]
+@28
+tb_nanorv32.U_DUT.U_ARBITRER.dataif_cpu_early_ready
 @800200
 -DataMem
 @1000200
 -DataMem
 @28
 tb_nanorv32.U_DUT.U_ARBITRER.cpu_data_code_access
-tb_nanorv32.U_DUT.U_CPU.stall
 tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.write_rd
-@c00200
+@800200
 -CodeTCM
 @22
 tb_nanorv32.U_DUT.U_TCM_CODE.addr[12:0]
@@ -75,31 +105,31 @@ tb_nanorv32.U_DUT.U_TCM_CODE.rst_n
 tb_nanorv32.U_DUT.U_TCM_CODE.we[3:0]
 @28
 tb_nanorv32.U_DUT.U_TCM_CODE.write_access
-@1401200
+@1000200
 -CodeTCM
-@800201
+@c00200
 -DataTCM
-@23
+@22
 tb_nanorv32.U_DUT.U_TCM_DATA.addr[12:0]
 tb_nanorv32.U_DUT.U_TCM_DATA.bytesel[3:0]
-@29
+@28
 tb_nanorv32.U_DUT.U_TCM_DATA.clk
-@23
+@22
 tb_nanorv32.U_DUT.U_TCM_DATA.din[31:0]
 tb_nanorv32.U_DUT.U_TCM_DATA.dout[31:0]
-@29
+@28
 tb_nanorv32.U_DUT.U_TCM_DATA.en
 tb_nanorv32.U_DUT.U_TCM_DATA.en_r
 tb_nanorv32.U_DUT.U_TCM_DATA.fast_hanshaking
 tb_nanorv32.U_DUT.U_TCM_DATA.ready_nxt
 tb_nanorv32.U_DUT.U_TCM_DATA.rst_n
-@23
+@22
 tb_nanorv32.U_DUT.U_TCM_DATA.we[3:0]
-@29
+@28
 tb_nanorv32.U_DUT.U_TCM_DATA.write_access
-@1000201
+@1401200
 -DataTCM
-@800200
+@c00200
 -RegFileRaw
 @22
 tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.x1[31:0]
@@ -112,7 +142,7 @@ tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.x7[31:0]
 tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.x8[31:0]
 tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.x9[31:0]
 tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.x10[31:0]
-@1000200
+@1401200
 -RegFileRaw
 @800200
 -RegFileABI
