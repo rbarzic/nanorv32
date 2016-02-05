@@ -85,3 +85,6 @@ regression: rv32ui.regression.txt compile
 regression_p: rv32ui.regression.txt compile
 	rm -f logs/*
 	@cat rv32ui.regression.txt | parallel -n1 -IXXX make -C . run_rv32ui TEST=XXX
+
+find_failled:
+	find logs/  -name "*.run.log" | xargs  grep "\-I\- TEST" | grep FAILED

@@ -15,7 +15,7 @@ data_loop:
         sw x4,0(x2)
         addi x2,x2,4
         addi x1,x1,4
-        bne x2,x3, data_loop
+        bne      x2,x3, data_loop
 data_loop_done:
 
 #endif

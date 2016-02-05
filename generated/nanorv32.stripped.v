@@ -33,30 +33,32 @@
 
 module nanorv32 (/*AUTOARG*/
    // Outputs
-   cpu_codemem_addr, cpu_codemem_req, cpu_datamem_addr,
-   cpu_datamem_wdata, cpu_datamem_bytesel, cpu_datamem_req,
+   cpu_codeif_addr, cpu_codeif_req, cpu_dataif_addr, cpu_dataif_wdata,
+   cpu_dataif_bytesel, cpu_dataif_req,
    // Inputs
-   codemem_cpu_rdata, codemem_cpu_ack, datamem_cpu_rdata,
-   datamem_cpu_ack, rst_n, clk
+   codeif_cpu_rdata, codeif_cpu_early_ready, codeif_cpu_ready_r,
+   dataif_cpu_rdata, dataif_cpu_early_ready, dataif_cpu_ready_r,
+   rst_n, clk
    );
 
 `include "nanorv32_parameters.v"
 
-   // Code memory interface
-   output [NANORV32_ADDR_MSB:0] cpu_codemem_addr;
-   output                    cpu_codemem_req;
-   input  [NANORV32_DATA_MSB:0] codemem_cpu_rdata;
-   input                     codemem_cpu_ack;
 
+   // Code memory interface
+   output [NANORV32_DATA_MSB:0] cpu_codeif_addr;
+   output                    cpu_codeif_req;
+   input  [NANORV32_DATA_MSB:0] codeif_cpu_rdata;
+   input                     codeif_cpu_early_ready;
+   input                    codeif_cpu_ready_r;     // From U_ARBITRER of nanorv32_tcm_arbitrer.v
    // Data memory interface
 
-   output [NANORV32_ADDR_MSB:0] cpu_datamem_addr;
-   output [NANORV32_DATA_MSB:0] cpu_datamem_wdata;
-   output [3:0]              cpu_datamem_bytesel;
-   output                    cpu_datamem_req;
-   input [NANORV32_DATA_MSB:0]  datamem_cpu_rdata;
-   input                     datamem_cpu_ack;
-
+   output [NANORV32_DATA_MSB:0] cpu_dataif_addr;
+   output [NANORV32_DATA_MSB:0] cpu_dataif_wdata;
+   output [3:0]              cpu_dataif_bytesel;
+   output                    cpu_dataif_req;
+   input [NANORV32_DATA_MSB:0]  dataif_cpu_rdata;
+   input                     dataif_cpu_early_ready;
+   input                     dataif_cpu_ready_r;
    input                     rst_n;
    input                     clk;
 
@@ -95,18 +97,30 @@ module nanorv32 (/*AUTOARG*/
    reg [NANORV32_DATA_MSB:0]               pc_fetch_r;
    reg [NANORV32_DATA_MSB:0]               pc_exe_r;  // Fixme - we track the PC for the exe stage explicitly
                                                        // this may not be optimal in term of size
-   reg [NANORV32_PSTATE_MSB:0]                                    pstate_next;
-   reg [NANORV32_PSTATE_MSB:0]                                    pstate_r;
 
-   reg                                                           branch_taken;
-   reg                                                           inst_valid_fetch;
-   reg                                                           inst_valid_exe_r;
+   reg [NANORV32_PSTATE_MSB:0]             pstate_next;
+   reg [NANORV32_PSTATE_MSB:0]             pstate_r;
 
-   wire                                                          alu_cond;
+   reg                                     branch_taken;
+   reg                                     inst_valid_fetch;
+   reg                                     inst_valid_exe_r;
 
-   reg                                                           illegal_instruction;
+   wire                                    alu_cond;
 
-   wire  [NANORV32_DATA_MSB:0]                                                        mem2regfile;
+   reg                                     illegal_instruction;
+
+   reg [NANORV32_DATA_MSB:0]              mem2regfile;
+
+   wire                                     cpu_dataif_req;
+
+   wire                                     stall_exe;
+   wire                                     stall_fetch;
+   reg                                      force_stall_pstate;
+
+   reg                                      stall_fetch_r;
+   reg                                      output_new_pc;
+   wire                                      cpu_codeif_req;
+   reg                                       valid_inst;
 
 
    //===========================================================================
@@ -150,8 +164,8 @@ module nanorv32 (/*AUTOARG*/
          /*AUTORESET*/
       end
       else begin
-         if(inst_valid_fetch)
-           instruction_r <= codemem_cpu_rdata;
+         if(!(stall_fetch | force_stall_reset))
+           instruction_r <= codeif_cpu_rdata;
       end
    end
 
@@ -236,14 +250,16 @@ module nanorv32 (/*AUTOARG*/
         NANORV32_MUX_SEL_REGFILE_SOURCE_DATAMEM: begin
            rd <= mem2regfile ;
         end
-        // default:
+        default begin
+           rd <= alu_res;
+        end
       endcase
    end // always @ *
 
    always @* begin
       case(regfile_write_sel)
         NANORV32_MUX_SEL_REGFILE_WRITE_YES: begin
-           write_rd = inst_valid_exe_r;
+           write_rd = (!stall_exe);
         end
         NANORV32_MUX_SEL_REGFILE_WRITE_NO: begin
            write_rd = 1'b0;
@@ -263,10 +279,10 @@ module nanorv32 (/*AUTOARG*/
    always @* begin
       case(datamem_read_sel)
         NANORV32_MUX_SEL_DATAMEM_READ_YES: begin
-           datamem_read = 1'b0;
+           datamem_read = valid_inst;
         end
         NANORV32_MUX_SEL_DATAMEM_READ_NO: begin
-           datamem_read = inst_valid_exe_r;
+           datamem_read = 1'b0;
         end
         default begin
            datamem_read = 1'b0;
@@ -277,10 +293,10 @@ module nanorv32 (/*AUTOARG*/
    always @* begin
       case(datamem_write_sel)
         NANORV32_MUX_SEL_DATAMEM_WRITE_YES: begin
-           datamem_write = 1'b0;
+           datamem_write = valid_inst;
         end
         NANORV32_MUX_SEL_DATAMEM_WRITE_NO: begin
-           datamem_write = inst_valid_exe_r;
+           datamem_write = 0;
         end
         default begin
            datamem_write = 1'b0;
@@ -294,15 +310,23 @@ module nanorv32 (/*AUTOARG*/
    // PC management
    //===========================================================================
    always @* begin
-      branch_taken = 0;
+
+
       case(pc_next_sel)
         NANORV32_MUX_SEL_PC_NEXT_COND_PC_PLUS_IMMSB: begin
-           pc_next = (alu_cond & inst_valid_exe_r) ? (pc_exe_r + imm12sb_sext) : (pc_fetch_r + 4);
-           branch_taken = alu_cond & inst_valid_exe_r;
+           pc_next = (alu_cond & output_new_pc ) ? (pc_exe_r + imm12sb_sext) : (pc_fetch_r + 4);
+           // branch_taken = alu_cond & !stall_exe;
+           branch_taken = alu_cond;
         end
         NANORV32_MUX_SEL_PC_NEXT_PLUS4: begin
-           pc_next = pc_fetch_r + 4; // Only 32-bit instruction for now
-           branch_taken = 0;
+           if(!stall_exe & valid_inst) begin
+              pc_next = pc_fetch_r + 4; // Only 32-bit instruction for now
+              branch_taken = 0;
+           end
+           else begin
+              pc_next = pc_exe_r + 4; // Only 32-bit instruction for now
+              branch_taken = 0;
+           end
 
         end
         NANORV32_MUX_SEL_PC_NEXT_ALU_RES: begin
@@ -310,10 +334,10 @@ module nanorv32 (/*AUTOARG*/
            // pc - but once we have fetch the new instruction, we need to start
            // fetching  the n+1 instruction
            // Fixme - this may not be valid if there is some wait-state
-           pc_next = inst_valid_exe_r ? alu_res & 32'hFFFFFFFE : (pc_fetch_r + 4);
+           pc_next = output_new_pc  ? alu_res & 32'hFFFFFFFE : (pc_fetch_r + 4);
 
 
-           branch_taken = inst_valid_exe_r;
+           branch_taken = 1;
         end// Mux definitions for alu
         default begin
            pc_next = pc_fetch_r + 4;
@@ -331,41 +355,117 @@ module nanorv32 (/*AUTOARG*/
          // End of automatics
       end
       else begin
+
          pc_fetch_r <= pc_next;
-         pc_exe_r  <= pc_fetch_r;
+
+         if(!stall_fetch) begin
+
+            pc_exe_r  <= pc_fetch_r;
+         end
       end
    end
 
    //===========================================================================
    // Flow management
    //===========================================================================
+
+   reg force_stall_reset;
+   assign cpu_codeif_req = 1'b1;
+   reg data_access_cycle; // Indicate when it is ok to access data space
+   // (the first cycle normally)
+
    always @* begin
-      inst_valid_fetch = 0;
+
+
       pstate_next =  NANORV32_PSTATE_CONT;
+      force_stall_pstate = 0;
+      force_stall_reset = 0;
+      output_new_pc = 0;
+      valid_inst = 1;
+      data_access_cycle = 0;
+
+
       case(pstate_r)
+
         NANORV32_PSTATE_RESET: begin
-           inst_valid_fetch = 0;
+           force_stall_pstate = 1;
+           force_stall_reset = 1;
            pstate_next =  NANORV32_PSTATE_CONT;
+
         end
         NANORV32_PSTATE_CONT: begin
+           data_access_cycle = 1;
            if(branch_taken) begin
-              inst_valid_fetch = 0;
+              force_stall_pstate = 1;
               pstate_next =  NANORV32_PSTATE_BRANCH;
+              output_new_pc = 1;
            end
-           else begin
-              inst_valid_fetch = codemem_cpu_ack;
-              pstate_next =  NANORV32_PSTATE_CONT;
+           else if(datamem_read)
+             begin
+                // we use an early "ready",
+                // so we move to state WAITLD when the memory is ready
+                if(dataif_cpu_early_ready) begin
+
+                   force_stall_pstate = 1;
+                   pstate_next =  NANORV32_PSTATE_WAITLD;
+                end
+                else begin
+                   force_stall_pstate = 1;
+                   pstate_next =  NANORV32_PSTATE_CONT;
+                end
+
+             end
+           else
+             begin
+                pstate_next =  NANORV32_PSTATE_CONT;
            end
         end
+
         NANORV32_PSTATE_BRANCH: begin
-           if (codemem_cpu_ack) begin
-              inst_valid_fetch = 1'b1;
+           output_new_pc = 0;
+           if (codeif_cpu_early_ready) begin
+              force_stall_pstate = 1'b0;
               pstate_next =  NANORV32_PSTATE_CONT;
            end
            else begin
-              inst_valid_fetch = 1'b0;
+              force_stall_pstate = 1'b1;
               pstate_next =  NANORV32_PSTATE_BRANCH;
            end
+        end
+        NANORV32_PSTATE_STALL: begin
+           valid_inst = 0;
+           if (codeif_cpu_early_ready)
+             begin
+              force_stall_pstate = 1'b0;
+              pstate_next =  NANORV32_PSTATE_CONT ;
+           end
+           else begin
+              force_stall_pstate = 1'b1;
+              pstate_next =  NANORV32_PSTATE_STALL;
+           end
+        end // case: NANORV32_PSTATE_STALL
+        NANORV32_PSTATE_WAITLD: begin
+           //if (!dataif_cpu_early_ready)
+           //  begin
+           //     force_stall_pstate = 1'b1;
+           //     pstate_next =  NANORV32_PSTATE_WAITLD;
+           //  end
+           //else begin
+              force_stall_pstate = 1'b0;
+              if(codeif_cpu_ready_r) begin
+                pstate_next =  NANORV32_PSTATE_CONT;
+              end
+              else begin
+                 pstate_next =  NANORV32_PSTATE_STALL;
+              end
+           // end
+        end // case: NANORV32_PSTATE_WAITLD
+        default begin
+
+           pstate_next =  NANORV32_PSTATE_CONT;
+           force_stall_pstate = 0;
+           force_stall_reset = 0;
+           output_new_pc = 0;
         end
      endcase // case (pstate_r)
    end // always @ *
@@ -376,10 +476,14 @@ module nanorv32 (/*AUTOARG*/
          inst_valid_exe_r <= 1'h1; // The first instruction is the reset value of
          // instruction_r - so it must be valid
          /*AUTORESET*/
+         // Beginning of autoreset for uninitialized flops
+         stall_fetch_r <= 1'h0;
+         // End of automatics
       end
       else begin
          pstate_r <= pstate_next;
-         inst_valid_exe_r <= inst_valid_fetch;
+         if(!force_stall_reset)
+           stall_fetch_r <= stall_fetch;
       end
    end
 
@@ -411,15 +515,90 @@ module nanorv32 (/*AUTOARG*/
 
 
    // Code memory interface
-   assign cpu_codemem_addr = pc_next;
-   assign cpu_codemem_req = 1'b1;
-   // data memory interface
-   assign cpu_datamem_addr = alu_res;
-   assign cpu_datamem_req = datamem_write || datamem_read;
-   assign cpu_datamem_bytesel = {4{datamem_write}};
+   assign cpu_codeif_addr = pc_next;
 
-   assign mem2regfile = datamem_cpu_rdata;
-   assign cpu_datamem_wdata = rf_portb;
+   // data memory interface
+   assign cpu_dataif_addr = alu_res;
+
+   assign cpu_dataif_bytesel = {4{datamem_write}};
+
+
+
+   // assign mem2regfile = dataif_cpu_rdata;
+   assign cpu_dataif_wdata = rf_portb;
+
+   assign cpu_dataif_req = (datamem_write || datamem_read) & data_access_cycle;
+   // assign stall_fetch = !codeif_cpu_early_ready  | force_stall_pstate | !codeif_cpu_ready_r;
+   assign stall_fetch = force_stall_pstate | !codeif_cpu_ready_r;
+   assign stall_exe = force_stall_pstate;
+   assign read_byte_sel = cpu_dataif_addr[1:0];
+
+   always @* begin
+      case(datamem_size_read_sel)
+        NANORV32_MUX_SEL_DATAMEM_SIZE_READ_HALFWORD_UNSIGNED: begin
+           case(cpu_dataif_addr[1])
+             1'b0: begin
+                mem2regfile =  {16'b0,dataif_cpu_rdata[15:0]};
+             end
+             1'b1: begin
+                mem2regfile =  {16'b0,dataif_cpu_rdata[31:16]};
+             end
+           endcase
+
+        end
+        NANORV32_MUX_SEL_DATAMEM_SIZE_READ_HALFWORD: begin
+           case(cpu_dataif_addr[1])
+             1'b0: begin
+                mem2regfile =  {{16{dataif_cpu_rdata[15]}},dataif_cpu_rdata[15:0]};
+             end
+             1'b1: begin
+                mem2regfile =  {{16{dataif_cpu_rdata[31]}},dataif_cpu_rdata[31:16]};
+             end
+           endcase
+        end
+        NANORV32_MUX_SEL_DATAMEM_SIZE_READ_WORD: begin
+           mem2regfile = dataif_cpu_rdata ;
+        end
+        NANORV32_MUX_SEL_DATAMEM_SIZE_READ_BYTE: begin
+           case(cpu_dataif_addr[1:0])
+             2'b00: begin
+                mem2regfile =  {{16{dataif_cpu_rdata[7]}},dataif_cpu_rdata[7:0]};
+             end
+             2'b01: begin
+                mem2regfile =  {{16{dataif_cpu_rdata[15]}},dataif_cpu_rdata[15:8]};
+             end
+             2'b10: begin
+                mem2regfile =  {{16{dataif_cpu_rdata[23]}},dataif_cpu_rdata[23:16]};
+             end
+             2'b11: begin
+                mem2regfile =  {{16{dataif_cpu_rdata[31]}},dataif_cpu_rdata[31:24]};
+             end
+           endcase
+        end
+        NANORV32_MUX_SEL_DATAMEM_SIZE_READ_BYTE_UNSIGNED: begin
+           case(cpu_dataif_addr[1:0])
+             2'b00: begin
+                mem2regfile =  {24'b0,dataif_cpu_rdata[7:0]};
+             end
+             2'b01: begin
+                mem2regfile =  {24'b0,dataif_cpu_rdata[15:8]};
+             end
+             2'b10: begin
+                mem2regfile =  {24'b0,dataif_cpu_rdata[23:16]};
+             end
+             2'b11: begin
+                mem2regfile =  {24'b0,dataif_cpu_rdata[31:24]};
+             end
+           endcase
+        end
+        default begin
+           mem2regfile =  dataif_cpu_rdata;
+        end // UNMATCHED !!
+      endcase
+   end
+
+
+
 
 
 endmodule // nanorv32

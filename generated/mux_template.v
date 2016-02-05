@@ -97,6 +97,24 @@
 
 //========================================
 
+    case(datamem_size_read)
+        NANORV32_MUX_SEL_DATAMEM_SIZE_READ_HALFWORD_UNSIGNED: begin
+            datamem_size_read <= ;
+        end
+        NANORV32_MUX_SEL_DATAMEM_SIZE_READ_HALFWORD: begin
+            datamem_size_read <= ;
+        end
+        NANORV32_MUX_SEL_DATAMEM_SIZE_READ_WORD: begin
+            datamem_size_read <= ;
+        end
+        NANORV32_MUX_SEL_DATAMEM_SIZE_READ_BYTE: begin
+            datamem_size_read <= ;
+        end
+        NANORV32_MUX_SEL_DATAMEM_SIZE_READ_BYTE_UNSIGNED: begin
+            datamem_size_read <= ;
+        end
+//========================================
+
     case(datamem_write)
         NANORV32_MUX_SEL_DATAMEM_WRITE_YES: begin
             datamem_write <= ;
@@ -106,6 +124,18 @@
         end
         NANORV32_MUX_SEL_DATAMEM_WRITE_NO: begin
             datamem_write <= ;
+        end
+//========================================
+
+    case(datamem_size_write)
+        NANORV32_MUX_SEL_DATAMEM_SIZE_WRITE_BYTE: begin
+            datamem_size_write <= ;
+        end
+        NANORV32_MUX_SEL_DATAMEM_SIZE_WRITE_HALFWORD: begin
+            datamem_size_write <= ;
+        end
+        NANORV32_MUX_SEL_DATAMEM_SIZE_WRITE_WORD: begin
+            datamem_size_write <= ;
         end
 //========================================
 

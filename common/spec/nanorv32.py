@@ -495,6 +495,16 @@ spec['nanorv32']['rv32i']['lhu']['desc'] = {
         'func3'   : 0b101
     }
 }
+
+
+spec['nanorv32']['rv32i']['lh']['desc'] = {
+    'inst_type' : 'I-type',
+    'decode' : {
+        'opcode1' : 0b11,
+        'func3'   : 0b001
+    }
+}
+
 #-I inst : lwu of type I-type
 # -I-        I-type  match found lwu 6 0x00 3
 

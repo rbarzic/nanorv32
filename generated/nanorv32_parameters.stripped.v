@@ -69,11 +69,18 @@ parameter NANORV32_SHAMT_FILL = NANORV32_DATA_SIZE-NANORV32_INST_FORMAT_SHAMT_SI
 
 // state machine for the "pipeline" (fetch + executuion stages)
 
-parameter NANORV32_PSTATE_BITS = 2;
+parameter NANORV32_PSTATE_BITS = 3;
 parameter NANORV32_PSTATE_MSB = NANORV32_PSTATE_BITS - 1;
 
 parameter NANORV32_PSTATE_RESET=0;
 parameter NANORV32_PSTATE_CONT=1;
 parameter NANORV32_PSTATE_BRANCH=2;
+parameter NANORV32_PSTATE_STALL=3;
+parameter NANORV32_PSTATE_WAITLD=4;
 
+// "jump to address 0" (reset value for instruction register)
 parameter NANORV32_J0_INSTRUCTION = 32'b00000000_00000000_00000000_01101111;
+
+parameter NANORV32_CODE_BASE_ADDRESS = 32'h00000000;
+parameter NANORV32_RAM_BASE_ADDRESS = 32'h20000000;
+parameter NANORV32_PERIPH_BASE_ADDRESS = 32'hF0000000;

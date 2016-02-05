@@ -23,6 +23,8 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['R-type'] = {
     'datamem' : {
         'write' : 'no',
         'read' : 'no',
+        'size_read' : 'word',
+	'size_write' : 'word',
     },
 
 }
@@ -45,6 +47,8 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['I-type'] = {
     'datamem' : {
         'write' : 'no',
         'read' : 'no',
+        'size_read' : 'word',
+	'size_write' : 'word',
     },
 
 }
@@ -65,6 +69,8 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['S-type'] = {
     'datamem' : {
         'write' : 'word',
         'read' : 'no',
+        'size_read' : 'word',
+	'size_write' : 'word',
     },
 
 }
@@ -86,6 +92,8 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['SB-type'] = {
     'datamem' : {
         'write' : 'no',
         'read' : 'no',
+        'size_read' : 'word',
+	'size_write' : 'word',
     },
 
 }
@@ -107,6 +115,8 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['U-type'] = {
     'datamem' : {
         'write' : 'word',
         'read' : 'no',
+        'size_read' : 'word',
+	'size_write' : 'word',
     },
 
 }
@@ -128,6 +138,8 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['UJ-type'] = {
     'datamem' : {
         'write' : 'no',
         'read' : 'no',
+        'size_read' : 'word',
+	'size_write' : 'word',
     },
 
 }
@@ -149,6 +161,8 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['AS-type'] = {
     'datamem' : {
         'write' : 'no',
         'read' : 'no',
+        'size_read' : 'word',
+	'size_write' : 'word',
     },
 
 }
@@ -171,6 +185,8 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['F-type'] = {
     'datamem' : {
         'write' : 'no',
         'read' : 'no',
+        'size_read' : 'word',
+	'size_write' : 'word',
     },
 
 }
@@ -192,12 +208,14 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['SYS-type'] = {
     'datamem' : {
         'write' : 'no',
         'read' : 'no',
+        'size_read' : 'word',
+	'size_write' : 'word',
     },
 
 }
 
 
-
+# Instruction specific implementation
 
 
 spec['nanorv32']['rv32i']['impl']['inst']['jalr'] = {
@@ -293,6 +311,11 @@ spec['nanorv32']['rv32i']['impl']['inst']['andi'] = {
 
 
 spec['nanorv32']['rv32i']['impl']['inst']['lb'] = {
+    'datamem' : {
+        'size_read' : 'byte',
+        'write' : 'no',
+        'read' : 'yes',
+    }
 
 }
 
@@ -304,6 +327,7 @@ spec['nanorv32']['rv32i']['impl']['inst']['lw'] = {
     'datamem' : {
         'write' : 'no',
         'read' : 'yes',
+        'size_read' : 'word',
     },
 
 }
@@ -318,17 +342,28 @@ spec['nanorv32']['rv32i']['impl']['inst']['lw'] = {
 
 
 spec['nanorv32']['rv32i']['impl']['inst']['lbu'] = {
-
-}
-
-
-spec['nanorv32']['rv32i']['impl']['inst']['lwu'] = {
-
+    'datamem' : {
+        'size_read' : 'byte_unsigned',
+        'write' : 'no',
+        'read' : 'yes',
+    }
 }
 
 
 spec['nanorv32']['rv32i']['impl']['inst']['lhu'] = {
+    'datamem' : {
+        'size_read' : 'halfword_unsigned',
+        'write' : 'no',
+        'read' : 'yes',
+    }
+}
 
+spec['nanorv32']['rv32i']['impl']['inst']['lh'] = {
+    'datamem' : {
+        'size_read' : 'halfword',
+        'write' : 'no',
+        'read' : 'yes',
+    }
 }
 
 
@@ -522,6 +557,7 @@ spec['nanorv32']['rv32i']['impl']['inst']['sb'] = {
      'datamem' : {
         'write' : 'yes',
         'read' : 'no',
+         'size_write' : 'byte',
     },
 }
 
@@ -530,6 +566,7 @@ spec['nanorv32']['rv32i']['impl']['inst']['sh'] = {
      'datamem' : {
         'write' : 'yes',
         'read' : 'no',
+         'size_write' : 'halfword',
     },
 
 }
@@ -539,6 +576,7 @@ spec['nanorv32']['rv32i']['impl']['inst']['sw'] = {
      'datamem' : {
         'write' : 'yes',
         'read' : 'no',
+        'size_write' : 'word',
     },
 }
 
