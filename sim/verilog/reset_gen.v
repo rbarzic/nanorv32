@@ -32,22 +32,45 @@
 
 `timescale 1ns/1ps
 module reset_gen (/*AUTOARG*/
-  // Outputs
-  reset_n
-  );
+   // Outputs
+   reset_n,
+   // Inputs
+   reset_a_n, clk
+   );
 
   output reset_n;
+  input reset_a_n;
+  input clk;
 
   parameter duration = 10;
-  reg    reset_n;
-  initial begin
-    reset_n <= 0;
-    #duration;
-    reset_n <= 1;
-  end
+
+
+   reg   rst_n_m;
+   reg   rst_n_r;
+
+
+   always @(negedge clk or negedge reset_a_n) begin
+      if(reset_a_n == 1'b0) begin
+         /*AUTORESET*/
+         // Beginning of autoreset for uninitialized flops
+         rst_n_m <= 1'h0;
+         rst_n_r <= 1'h0;
+         // End of automatics
+      end
+      else begin
+         rst_n_m <= 1;
+         rst_n_r <= rst_n_m;
+
+      end
+   end
 
 
 
+
+
+
+
+   assign reset_n = rst_n_r & reset_a_n;
 
 
 endmodule // reset_gen

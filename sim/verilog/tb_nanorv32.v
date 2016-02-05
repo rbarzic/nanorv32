@@ -42,6 +42,7 @@ module tb_nanorv32;
    wire                 rst_n;                  // From U_RESET_GEN of reset_gen.v
    // End of automatics
 
+   reg                  reset_a_n;
 
     /* nanorv32 AUTO_TEMPLATE(
      ); */
@@ -56,13 +57,19 @@ module tb_nanorv32;
 
 
 
+
+
+
     /* reset_gen AUTO_TEMPLATE(
      .reset_n              (rst_n));
      ); */
    reset_gen U_RESET_GEN (
                           /*AUTOINST*/
                           // Outputs
-                          .reset_n              (rst_n));         // Templated
+                          .reset_n              (rst_n),         // Templated
+                          // Inputs
+                          .reset_a_n            (reset_a_n),
+                          .clk                  (clk));
 
 
     /* clock_gen AUTO_TEMPLATE(
@@ -129,14 +136,22 @@ module tb_nanorv32;
    wire [NANORV32_DATA_MSB:0] x10_a0; // return value register
 
    assign pc = U_DUT.U_CPU.pc_exe_r;
+   assign illegal_instruction  = U_DUT.U_CPU.illegal_instruction;
+
    assign x10_a0 = U_DUT.U_CPU.U_REG_FILE.regfile[10];
 
    always @(posedge clk) begin
-      if(pc === 32'h00000100) begin
-         if(x10_a0 === 32'hCAFFE000) begin
-            $display("-I- TEST OK");
-            $finish(0);
+      if(rst_n) begin
+         if(illegal_instruction) begin
+            $display("-I- TEST FAILED (Illegal instruction)");
+            $finish(3);
          end
+      else
+        if(pc === 32'h00000100) begin
+           if(x10_a0 === 32'hCAFFE000) begin
+              $display("-I- TEST OK");
+              $finish(0);
+           end
          else
            if(x10_a0 === 32'h0DEAD0000) begin
               $display("-I- TEST FAILED");
@@ -145,16 +160,24 @@ module tb_nanorv32;
            else begin
               $display("-I- TEST FAILED (unknown reason)");
               $finish(2);
-
            end
       end // if (pc === 32'h00000100)
       else if (pc === 32'hxxxxxxxx) begin
          $display("-I- TEST FAILED (PC is X)");
          $finish(2);
       end
+         end
    end
 
 
+
+   initial begin
+      #0;
+
+      reset_a_n = 0;
+      #10;
+      reset_a_n = 1;
+   end
 endmodule // tb_nanorv32
 /*
  Local Variables:

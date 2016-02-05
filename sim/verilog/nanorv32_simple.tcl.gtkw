@@ -1,52 +1,105 @@
 [*]
 [*] GTKWave Analyzer v3.3.64 (w)1999-2014 BSI
-[*] Fri Jan 29 19:32:30 2016
+[*] Fri Feb  5 13:16:58 2016
 [*]
 [dumpfile] "/home/ronan/perso/github/nanorv32/sim/verilog/tb_nanorv32.vcd"
-[dumpfile_mtime] "Fri Jan 29 19:31:33 2016"
-[dumpfile_size] 13843
+[dumpfile_mtime] "Fri Feb  5 13:15:47 2016"
+[dumpfile_size] 1888026
 [savefile] "/home/ronan/perso/github/nanorv32/sim/verilog/nanorv32_simple.tcl.gtkw"
-[timestart] 1000
+[timestart] 559900
 [size] 1600 851
 [pos] -1 -1
-*-18.310080 6050000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-17.471088 1050000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] tb_nanorv32.
 [treeopen] tb_nanorv32.U_DUT.
 [treeopen] tb_nanorv32.U_DUT.U_CPU.
+[treeopen] tb_nanorv32.U_DUT.U_TCM_CODE.
 [sst_width] 201
-[signals_width] 206
+[signals_width] 277
 [sst_expanded] 1
 [sst_vpaned_height] 243
 @28
-tb_nanorv32.U_DUT.U_CPU.clk
+tb_nanorv32.U_RESET_GEN.clk
+tb_nanorv32.U_RESET_GEN.reset_n
+tb_nanorv32.U_RESET_GEN.reset_a_n
 @22
 tb_nanorv32.U_DUT.U_CPU.pc_fetch_r[31:0]
 tb_nanorv32.U_DUT.U_CPU.pc_exe_r[31:0]
 tb_nanorv32.U_DUT.U_CPU.pc_next[31:0]
-@28
-tb_nanorv32.U_DUT.U_CPU.inst_valid_fetch
-@22
 tb_nanorv32.U_DUT.U_CPU.instruction_r[31:0]
 @28
+tb_nanorv32.U_DUT.U_CPU.stall
+tb_nanorv32.U_DUT.U_CPU.stall_exe
+tb_nanorv32.U_DUT.U_CPU.stall_fetch
+tb_nanorv32.U_DUT.U_CPU.force_stall_reset
+tb_nanorv32.U_DUT.U_CPU.force_stall_pstate
 tb_nanorv32.U_DUT.U_CPU.branch_taken
-tb_nanorv32.U_DUT.U_CPU.inst_valid_exe_r
-tb_nanorv32.U_DUT.U_CPU.pstate_r[1:0]
-tb_nanorv32.U_DUT.U_CPU.pstate_next[1:0]
-tb_nanorv32.U_DUT.U_CPU.pc_next_sel[1:0]
-@800201
+tb_nanorv32.U_DUT.U_CPU.output_new_pc
+@22
+tb_nanorv32.U_DUT.U_TCM_CODE.U_MEM.addr[10:0]
+tb_nanorv32.U_DUT.U_CPU.codeif_cpu_rdata[31:0]
+@800200
+-PState
+@2024
+^1 /tmp/../home/ronan/perso/github/nanorv32/sim/verilog/pstate.txt
+tb_nanorv32.U_DUT.U_CPU.pstate_next[2:0]
+^1 /tmp/../home/ronan/perso/github/nanorv32/sim/verilog/pstate.txt
+tb_nanorv32.U_DUT.U_CPU.pstate_r[2:0]
+@1000200
+-PState
+@800200
 -DataMem
-@23
-tb_nanorv32.U_DUT.U_DATA_MEM.addr[12:0]
-@29
-tb_nanorv32.U_DUT.U_DATA_MEM.clk
-@23
-tb_nanorv32.U_DUT.U_DATA_MEM.din[31:0]
-tb_nanorv32.U_DUT.U_DATA_MEM.dout[31:0]
-tb_nanorv32.U_DUT.U_DATA_MEM.dout_int[31:0]
-tb_nanorv32.U_DUT.U_DATA_MEM.we[3:0]
-@1000201
+@1000200
 -DataMem
+@28
+tb_nanorv32.U_DUT.U_ARBITRER.cpu_data_code_access
+tb_nanorv32.U_DUT.U_CPU.stall
+tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.write_rd
 @c00200
+-CodeTCM
+@22
+tb_nanorv32.U_DUT.U_TCM_CODE.addr[12:0]
+tb_nanorv32.U_DUT.U_TCM_CODE.bytesel[3:0]
+@28
+tb_nanorv32.U_DUT.U_TCM_CODE.clk
+@22
+tb_nanorv32.U_DUT.U_TCM_CODE.din[31:0]
+tb_nanorv32.U_DUT.U_TCM_CODE.dout[31:0]
+@28
+tb_nanorv32.U_DUT.U_TCM_CODE.en
+tb_nanorv32.U_DUT.U_TCM_CODE.en_r
+tb_nanorv32.U_DUT.U_TCM_CODE.fast_hanshaking
+tb_nanorv32.U_DUT.U_TCM_CODE.ready_nxt
+tb_nanorv32.U_DUT.U_TCM_CODE.rst_n
+@22
+tb_nanorv32.U_DUT.U_TCM_CODE.we[3:0]
+@28
+tb_nanorv32.U_DUT.U_TCM_CODE.write_access
+@1401200
+-CodeTCM
+@800201
+-DataTCM
+@23
+tb_nanorv32.U_DUT.U_TCM_DATA.addr[12:0]
+tb_nanorv32.U_DUT.U_TCM_DATA.bytesel[3:0]
+@29
+tb_nanorv32.U_DUT.U_TCM_DATA.clk
+@23
+tb_nanorv32.U_DUT.U_TCM_DATA.din[31:0]
+tb_nanorv32.U_DUT.U_TCM_DATA.dout[31:0]
+@29
+tb_nanorv32.U_DUT.U_TCM_DATA.en
+tb_nanorv32.U_DUT.U_TCM_DATA.en_r
+tb_nanorv32.U_DUT.U_TCM_DATA.fast_hanshaking
+tb_nanorv32.U_DUT.U_TCM_DATA.ready_nxt
+tb_nanorv32.U_DUT.U_TCM_DATA.rst_n
+@23
+tb_nanorv32.U_DUT.U_TCM_DATA.we[3:0]
+@29
+tb_nanorv32.U_DUT.U_TCM_DATA.write_access
+@1000201
+-DataTCM
+@800200
 -RegFileRaw
 @22
 tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.x1[31:0]
@@ -59,9 +112,9 @@ tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.x7[31:0]
 tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.x8[31:0]
 tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.x9[31:0]
 tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.x10[31:0]
-@1401200
+@1000200
 -RegFileRaw
-@c00200
+@800200
 -RegFileABI
 @22
 tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.a0[31:0]
@@ -73,7 +126,7 @@ tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.ra[31:0]
 tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.t3[31:0]
 tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.t4[31:0]
 tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.sp[31:0]
-@1401200
+@1000200
 -RegFileABI
 @c00200
 -RegFileCtrl
@@ -134,7 +187,7 @@ tb_nanorv32.U_DUT.U_CPU.imm20u_sext[31:0]
 tb_nanorv32.U_DUT.U_CPU.imm20uj_sext[31:0]
 @1401200
 -ImmSEXT
-@800200
+@c00200
 -MuxSelector
 @22
 tb_nanorv32.U_DUT.U_CPU.pc_exe_r[31:0]
@@ -145,9 +198,61 @@ tb_nanorv32.U_DUT.U_CPU.alu_portb_sel[2:0]
 tb_nanorv32.U_DUT.U_CPU.datamem_read_sel
 tb_nanorv32.U_DUT.U_CPU.datamem_write_sel[1:0]
 tb_nanorv32.U_DUT.U_CPU.pc_next_sel[1:0]
-tb_nanorv32.U_DUT.U_CPU.regfile_source_sel
 tb_nanorv32.U_DUT.U_CPU.regfile_write_sel
-@1000200
+@1401200
 -MuxSelector
+@28
+tb_nanorv32.U_DUT.U_ARBITRER.codeif_cpu_early_ready
+@22
+tb_nanorv32.U_DUT.U_ARBITRER.codeif_cpu_rdata[31:0]
+@28
+tb_nanorv32.U_DUT.U_ARBITRER.cpu_code_code_access
+tb_nanorv32.U_DUT.U_ARBITRER.cpu_code_data_access
+tb_nanorv32.U_DUT.U_ARBITRER.cpu_code_periph_access
+@22
+tb_nanorv32.U_DUT.U_ARBITRER.cpu_codeif_addr[31:0]
+@28
+tb_nanorv32.U_DUT.U_ARBITRER.cpu_codeif_req
+tb_nanorv32.U_DUT.U_ARBITRER.cpu_data_code_access
+tb_nanorv32.U_DUT.U_ARBITRER.cpu_data_data_access
+tb_nanorv32.U_DUT.U_ARBITRER.cpu_data_periph_access
+@22
+tb_nanorv32.U_DUT.U_ARBITRER.cpu_dataif_addr[31:0]
+tb_nanorv32.U_DUT.U_ARBITRER.cpu_dataif_bytesel[3:0]
+@28
+tb_nanorv32.U_DUT.U_ARBITRER.cpu_dataif_req
+@22
+tb_nanorv32.U_DUT.U_ARBITRER.cpu_dataif_wdata[31:0]
+@28
+tb_nanorv32.U_DUT.U_ARBITRER.dataif_cpu_early_ready
+@22
+tb_nanorv32.U_DUT.U_ARBITRER.dataif_cpu_rdata[31:0]
+@28
+tb_nanorv32.U_DUT.U_ARBITRER.periph_dout
+@22
+tb_nanorv32.U_DUT.U_ARBITRER.tcmcode_addr[12:0]
+tb_nanorv32.U_DUT.U_ARBITRER.tcmcode_bytesel[3:0]
+tb_nanorv32.U_DUT.U_ARBITRER.tcmcode_din[31:0]
+tb_nanorv32.U_DUT.U_ARBITRER.tcmcode_dout[31:0]
+@28
+tb_nanorv32.U_DUT.U_ARBITRER.tcmcode_en
+tb_nanorv32.U_DUT.U_ARBITRER.tcmcode_ready_nxt
+@22
+tb_nanorv32.U_DUT.U_ARBITRER.tcmdata_addr[12:0]
+tb_nanorv32.U_DUT.U_ARBITRER.tcmdata_bytesel[3:0]
+tb_nanorv32.U_DUT.U_ARBITRER.tcmdata_din[31:0]
+tb_nanorv32.U_DUT.U_ARBITRER.tcmdata_dout[31:0]
+@28
+tb_nanorv32.U_DUT.U_ARBITRER.tcmdata_en
+tb_nanorv32.U_DUT.U_ARBITRER.tcmdata_ready_nxt
+tb_nanorv32.U_DUT.U_ARBITRER.cpu_code_code_access
+tb_nanorv32.U_DUT.U_ARBITRER.cpu_code_data_access
+tb_nanorv32.U_DUT.U_ARBITRER.cpu_code_periph_access
+tb_nanorv32.U_DUT.U_ARBITRER.cpu_data_code_access
+tb_nanorv32.U_DUT.U_ARBITRER.cpu_data_data_access
+tb_nanorv32.U_DUT.U_ARBITRER.cpu_data_periph_access
+tb_nanorv32.U_DUT.U_TCM_CODE.en
+tb_nanorv32.U_DUT.U_TCM_CODE.fast_hanshaking
+tb_nanorv32.U_DUT.U_TCM_CODE.ready_nxt
 [pattern_trace] 1
 [pattern_trace] 0

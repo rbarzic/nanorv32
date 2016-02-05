@@ -9,7 +9,11 @@ iverilog_file_list.txt:
 
 
 compile:
-	iverilog -DIVERILOG=1 -f   iverilog_file_list.txt -o testbench.exe
+	iverilog   -DIVERILOG=1 -f   iverilog_file_list.txt -o testbench.exe
+
+compile_debug:
+	iverilog -pfileline=1  -DIVERILOG=1 -f   iverilog_file_list.txt -o testbench.exe
+
 
 
 clean:
@@ -27,6 +31,7 @@ TEST_FLAGS += -ffreestanding -nostdlib
 TEST_FLAGS += -D_STARTUP_DATA_INIT_
 
 run_rv32ui: ../../riscv-tests/isa/rv32ui/$(TEST).S
+	@echo  "===================== TEST $(TEST) ============================"
 	mkdir -p logs
 	($(GNU_GCC)  $(GNU_CC_FLAGS) $(TEST_FLAGS) \
 	-L $(LINKER_SCRIPT_PATH) \

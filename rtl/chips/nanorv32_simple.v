@@ -52,8 +52,8 @@ module nanorv32_simple (/*AUTOARG*/
    /*AUTOREG*/
    /*AUTOWIRE*/
    // Beginning of automatic wires (for undeclared instantiated-module outputs)
-   wire                 codeif_cpu_ready;       // From U_ARBITRER of nanorv32_tcm_arbitrer.v
-   wire                 dataif_cpu_ready;       // From U_ARBITRER of nanorv32_tcm_arbitrer.v
+   wire                 codeif_cpu_early_ready; // From U_ARBITRER of nanorv32_tcm_arbitrer.v
+   wire                 dataif_cpu_early_ready; // From U_ARBITRER of nanorv32_tcm_arbitrer.v
    wire [ADDR_WIDTH-1:0] tcmcode_addr;          // From U_ARBITRER of nanorv32_tcm_arbitrer.v
    wire [3:0]           tcmcode_bytesel;        // From U_ARBITRER of nanorv32_tcm_arbitrer.v
    wire [NANORV32_DATA_MSB:0] tcmcode_din;      // From U_ARBITRER of nanorv32_tcm_arbitrer.v
@@ -103,9 +103,9 @@ module nanorv32_simple (/*AUTOARG*/
                    .cpu_dataif_req      (cpu_dataif_req),
                    // Inputs
                    .codeif_cpu_rdata    (codeif_cpu_rdata[NANORV32_DATA_MSB:0]),
-                   .codeif_cpu_ready    (codeif_cpu_ready),
+                   .codeif_cpu_early_ready(codeif_cpu_early_ready),
                    .dataif_cpu_rdata    (dataif_cpu_rdata[NANORV32_DATA_MSB:0]),
-                   .dataif_cpu_ready    (dataif_cpu_ready),
+                   .dataif_cpu_early_ready(dataif_cpu_early_ready),
                    .rst_n               (rst_n),
                    .clk                 (clk));
 
@@ -128,7 +128,7 @@ module nanorv32_simple (/*AUTOARG*/
    nanorv32_tcm_ctrl
      #(.SIZE(1<<(AW-2)),.ADDR_WIDTH(AW-2))
      U_TCM_DATA (
-                 .fast_hanshaking(1'b0),
+                 .fast_hanshaking(1'b1),
                            /*AUTOINST*/
                  // Outputs
                  .ready_nxt             (tcmdata_ready_nxt),     // Templated
@@ -156,7 +156,7 @@ module nanorv32_simple (/*AUTOARG*/
    nanorv32_tcm_ctrl
      #(.SIZE(1<<(AW-2)),.ADDR_WIDTH(AW-2))
      U_TCM_CODE (
-                 .fast_hanshaking(),
+                 .fast_hanshaking(1'b1),
                            /*AUTOINST*/
                  // Outputs
                  .ready_nxt             (tcmcode_ready_nxt),     // Templated
@@ -188,9 +188,9 @@ module nanorv32_simple (/*AUTOARG*/
                  .tcmdata_din           (tcmdata_din[NANORV32_DATA_MSB:0]),
                  .tcmdata_en            (tcmdata_en),
                  .codeif_cpu_rdata      (codeif_cpu_rdata[NANORV32_DATA_MSB:0]),
-                 .codeif_cpu_ready      (codeif_cpu_ready),
+                 .codeif_cpu_early_ready(codeif_cpu_early_ready),
                  .dataif_cpu_rdata      (dataif_cpu_rdata[NANORV32_DATA_MSB:0]),
-                 .dataif_cpu_ready      (dataif_cpu_ready),
+                 .dataif_cpu_early_ready(dataif_cpu_early_ready),
                  // Inputs
                  .tcmcode_dout          (tcmcode_dout[NANORV32_DATA_MSB:0]),
                  .tcmcode_ready_nxt     (tcmcode_ready_nxt),
