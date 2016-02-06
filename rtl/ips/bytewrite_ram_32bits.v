@@ -47,6 +47,7 @@ initial begin
 end
 
 
+   event dbg_evt_write;
 
 
 always @(posedge clk)
@@ -61,8 +62,11 @@ end
 // Remove the original generate statement to ease Xilinx memory bitstream patching
 always @(posedge clk) begin
    if (we[0]) begin
+      // $display("-I Write to address %x , data %x (%t)",addr,din,$realtime);
      RAM[addr][(0+1)*COL_WIDTH-1:0*COL_WIDTH] <= din[(0+1)*COL_WIDTH-1:0*COL_WIDTH];
-      $display("-I Write to address %x (%t)",addr,$realtime);
+      // -> dbg_evt_write;
+
+
    end
 end
 

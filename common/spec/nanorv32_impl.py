@@ -13,6 +13,7 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['R-type'] = {
     'alu' : {
         'porta' : 'rs1',
         'portb' : 'rs2',
+        'op' : 'noop',
 
 
     },
@@ -39,6 +40,7 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['I-type'] = {
     'alu' : {
         'porta' : 'rs1',
         'portb' : 'imm12',
+        'op' : 'add',
     },
     'regfile' : {
         'write' : 'yes',
@@ -61,6 +63,7 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['S-type'] = {
     'alu' : {
         'porta' : 'rs1',
         'portb' : 'imm12hilo',
+        'op' : 'add',
     },
     'regfile' : {
         'write' : 'no',
@@ -84,6 +87,7 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['SB-type'] = {
     'alu' : {
         'porta' : 'rs1',
         'portb' : 'rs2', # ALU op defined in each instruction
+        'op' : 'noop',
     },
     'regfile' : {
         'write' : 'no',
@@ -107,6 +111,7 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['U-type'] = {
     'alu' : {
         'porta' : 'pc_exe',
         'portb' : 'imm20u', # ALU op will be 'portb' or add
+        'op' : 'noop',
     },
     'regfile' : {
         'write' : 'yes',
@@ -153,6 +158,7 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['AS-type'] = {
     'alu' : {
         'porta' : 'rs1',
         'portb' : 'shamt',
+        'op'    : 'noop',
     },
     'regfile' : {
         'write' : 'yes',
@@ -199,7 +205,7 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['SYS-type'] = {
     'alu' : {
         'porta' : 'rs1',
         'portb' : 'rs2',
-        'op'    : 'nop',
+        'op'    : 'noop',
     },
     'regfile' : {
         'write' : 'no',
@@ -311,6 +317,10 @@ spec['nanorv32']['rv32i']['impl']['inst']['andi'] = {
 
 
 spec['nanorv32']['rv32i']['impl']['inst']['lb'] = {
+    'regfile' : {
+        'source' : 'datamem',
+    },
+
     'datamem' : {
         'size_read' : 'byte',
         'write' : 'no',
@@ -342,6 +352,10 @@ spec['nanorv32']['rv32i']['impl']['inst']['lw'] = {
 
 
 spec['nanorv32']['rv32i']['impl']['inst']['lbu'] = {
+    'regfile' : {
+        'source' : 'datamem',
+    },
+
     'datamem' : {
         'size_read' : 'byte_unsigned',
         'write' : 'no',
@@ -351,6 +365,10 @@ spec['nanorv32']['rv32i']['impl']['inst']['lbu'] = {
 
 
 spec['nanorv32']['rv32i']['impl']['inst']['lhu'] = {
+    'regfile' : {
+        'source' : 'datamem',
+    },
+
     'datamem' : {
         'size_read' : 'halfword_unsigned',
         'write' : 'no',
@@ -359,6 +377,10 @@ spec['nanorv32']['rv32i']['impl']['inst']['lhu'] = {
 }
 
 spec['nanorv32']['rv32i']['impl']['inst']['lh'] = {
+    'regfile' : {
+        'source' : 'datamem',
+    },
+
     'datamem' : {
         'size_read' : 'halfword',
         'write' : 'no',

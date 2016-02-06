@@ -122,7 +122,8 @@ module nanorv32 (/*AUTOARG*/
    wire                                      cpu_codeif_req;
    reg                                       valid_inst;
 
-
+   reg [NANORV32_DATA_MSB:0]                 cpu_dataif_wdata;
+   reg [3:0]                              cpu_dataif_bytesel;
    //===========================================================================
    // Immediate value reconstruction
    //===========================================================================
@@ -259,7 +260,7 @@ module nanorv32 (/*AUTOARG*/
    always @* begin
       case(regfile_write_sel)
         NANORV32_MUX_SEL_REGFILE_WRITE_YES: begin
-           write_rd = (!stall_exe);
+           write_rd = (!stall_exe) & valid_inst;
         end
         NANORV32_MUX_SEL_REGFILE_WRITE_NO: begin
            write_rd = 1'b0;
@@ -319,12 +320,12 @@ module nanorv32 (/*AUTOARG*/
            branch_taken = alu_cond;
         end
         NANORV32_MUX_SEL_PC_NEXT_PLUS4: begin
-           if(!stall_exe & valid_inst) begin
+           if(!stall_exe & !stall_fetch) begin
               pc_next = pc_fetch_r + 4; // Only 32-bit instruction for now
               branch_taken = 0;
            end
            else begin
-              pc_next = pc_exe_r + 4; // Only 32-bit instruction for now
+              pc_next = pc_fetch_r; // Only 32-bit instruction for now
               branch_taken = 0;
            end
 
@@ -355,8 +356,8 @@ module nanorv32 (/*AUTOARG*/
          // End of automatics
       end
       else begin
-
-         pc_fetch_r <= pc_next;
+         if(codeif_cpu_ready_r)
+           pc_fetch_r <= pc_next;
 
          if(!stall_fetch) begin
 
@@ -520,12 +521,12 @@ module nanorv32 (/*AUTOARG*/
    // data memory interface
    assign cpu_dataif_addr = alu_res;
 
-   assign cpu_dataif_bytesel = {4{datamem_write}};
+
 
 
 
    // assign mem2regfile = dataif_cpu_rdata;
-   assign cpu_dataif_wdata = rf_portb;
+   // assign cpu_dataif_wdata = rf_portb;
 
    assign cpu_dataif_req = (datamem_write || datamem_read) & data_access_cycle;
    // assign stall_fetch = !codeif_cpu_early_ready  | force_stall_pstate | !codeif_cpu_ready_r;
@@ -597,7 +598,62 @@ module nanorv32 (/*AUTOARG*/
       endcase
    end
 
+   // fixme - we don't need to mux zeros in unwritten bytes
+   always @* begin
+      case(datamem_size_write_sel)
+        NANORV32_MUX_SEL_DATAMEM_SIZE_WRITE_BYTE: begin
 
+           case(cpu_dataif_addr[1:0])
+             2'b00: begin
+                cpu_dataif_wdata =  {24'b0,rf_portb[7:0]};
+                cpu_dataif_bytesel = {3'b0,datamem_write};
+             end
+             2'b01: begin
+                cpu_dataif_wdata =  {16'b0,rf_portb[15:8],8'b0};
+                cpu_dataif_bytesel = {2'b0,datamem_write,1'b0};
+             end
+             2'b10: begin
+                cpu_dataif_wdata =  {8'b0,rf_portb[23:16],16'b0};
+                cpu_dataif_bytesel = {1'b0,datamem_write,2'b0};
+             end
+             2'b11: begin
+                cpu_dataif_wdata =  {rf_portb[31:24],24'b0};
+                cpu_dataif_bytesel = {datamem_write,3'b0};
+             end
+             default begin
+                cpu_dataif_bytesel = {4{datamem_write}};
+                cpu_dataif_wdata =  rf_portb;
+             end
+           endcase
+        end
+        NANORV32_MUX_SEL_DATAMEM_SIZE_WRITE_HALFWORD: begin
+           case(cpu_dataif_addr[1])
+             1'b00: begin
+                cpu_dataif_wdata =  {16'b0,rf_portb[15:0]};
+                cpu_dataif_bytesel = {2'b0,datamem_write,datamem_write};
+             end
+             1'b1: begin
+                cpu_dataif_wdata =  {rf_portb[31:24],16'b0};
+                cpu_dataif_bytesel = {datamem_write,datamem_write,2'b0};
+             end
+
+             default begin
+                cpu_dataif_bytesel = {4{datamem_write}};
+                cpu_dataif_wdata =  rf_portb;
+             end
+           endcase
+
+        end
+        NANORV32_MUX_SEL_DATAMEM_SIZE_WRITE_WORD: begin
+           cpu_dataif_wdata = rf_portb;
+           cpu_dataif_bytesel = {4{datamem_write}};
+        end
+        default begin
+           cpu_dataif_wdata = rf_portb;
+           cpu_dataif_bytesel = {4{datamem_write}};
+        end
+      endcase
+   end
 
 
 

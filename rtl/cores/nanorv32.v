@@ -219,13 +219,14 @@ module nanorv32 (/*AUTOARG*/
     end
     NANORV32_DECODE_LBU: begin
         pc_next_sel = NANORV32_MUX_SEL_PC_NEXT_PLUS4;
+        alu_op_sel = NANORV32_MUX_SEL_ALU_OP_ADD;
         alu_portb_sel = NANORV32_MUX_SEL_ALU_PORTB_IMM12;
         alu_porta_sel = NANORV32_MUX_SEL_ALU_PORTA_RS1;
         datamem_size_read_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_READ_BYTE_UNSIGNED;
         datamem_write_sel = NANORV32_MUX_SEL_DATAMEM_WRITE_NO;
         datamem_size_write_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_WRITE_WORD;
         datamem_read_sel = NANORV32_MUX_SEL_DATAMEM_READ_YES;
-        regfile_source_sel = NANORV32_MUX_SEL_REGFILE_SOURCE_ALU;
+        regfile_source_sel = NANORV32_MUX_SEL_REGFILE_SOURCE_DATAMEM;
         regfile_write_sel = NANORV32_MUX_SEL_REGFILE_WRITE_YES;
     end
     NANORV32_DECODE_FENCE: begin
@@ -242,6 +243,7 @@ module nanorv32 (/*AUTOARG*/
     end
     NANORV32_DECODE_SW: begin
         pc_next_sel = NANORV32_MUX_SEL_PC_NEXT_PLUS4;
+        alu_op_sel = NANORV32_MUX_SEL_ALU_OP_ADD;
         alu_portb_sel = NANORV32_MUX_SEL_ALU_PORTB_IMM12HILO;
         alu_porta_sel = NANORV32_MUX_SEL_ALU_PORTA_RS1;
         datamem_size_read_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_READ_WORD;
@@ -301,6 +303,7 @@ module nanorv32 (/*AUTOARG*/
     end
     NANORV32_DECODE_JALR: begin
         pc_next_sel = NANORV32_MUX_SEL_PC_NEXT_ALU_RES;
+        alu_op_sel = NANORV32_MUX_SEL_ALU_OP_ADD;
         alu_portb_sel = NANORV32_MUX_SEL_ALU_PORTB_IMM12;
         alu_porta_sel = NANORV32_MUX_SEL_ALU_PORTA_RS1;
         datamem_size_read_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_READ_WORD;
@@ -324,7 +327,7 @@ module nanorv32 (/*AUTOARG*/
     end
     NANORV32_DECODE_SCALL: begin
         pc_next_sel = NANORV32_MUX_SEL_PC_NEXT_PLUS4;
-        alu_op_sel = NANORV32_MUX_SEL_ALU_OP_NOP;
+        alu_op_sel = NANORV32_MUX_SEL_ALU_OP_NOOP;
         alu_portb_sel = NANORV32_MUX_SEL_ALU_PORTB_RS2;
         alu_porta_sel = NANORV32_MUX_SEL_ALU_PORTA_RS1;
         datamem_size_read_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_READ_WORD;
@@ -360,17 +363,19 @@ module nanorv32 (/*AUTOARG*/
     end
     NANORV32_DECODE_LH: begin
         pc_next_sel = NANORV32_MUX_SEL_PC_NEXT_PLUS4;
+        alu_op_sel = NANORV32_MUX_SEL_ALU_OP_ADD;
         alu_portb_sel = NANORV32_MUX_SEL_ALU_PORTB_IMM12;
         alu_porta_sel = NANORV32_MUX_SEL_ALU_PORTA_RS1;
         datamem_size_read_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_READ_HALFWORD;
         datamem_write_sel = NANORV32_MUX_SEL_DATAMEM_WRITE_NO;
         datamem_size_write_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_WRITE_WORD;
         datamem_read_sel = NANORV32_MUX_SEL_DATAMEM_READ_YES;
-        regfile_source_sel = NANORV32_MUX_SEL_REGFILE_SOURCE_ALU;
+        regfile_source_sel = NANORV32_MUX_SEL_REGFILE_SOURCE_DATAMEM;
         regfile_write_sel = NANORV32_MUX_SEL_REGFILE_WRITE_YES;
     end
     NANORV32_DECODE_LW: begin
         pc_next_sel = NANORV32_MUX_SEL_PC_NEXT_PLUS4;
+        alu_op_sel = NANORV32_MUX_SEL_ALU_OP_ADD;
         alu_portb_sel = NANORV32_MUX_SEL_ALU_PORTB_IMM12;
         alu_porta_sel = NANORV32_MUX_SEL_ALU_PORTA_RS1;
         datamem_size_read_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_READ_WORD;
@@ -430,7 +435,7 @@ module nanorv32 (/*AUTOARG*/
     end
     NANORV32_DECODE_SBREAK: begin
         pc_next_sel = NANORV32_MUX_SEL_PC_NEXT_PLUS4;
-        alu_op_sel = NANORV32_MUX_SEL_ALU_OP_NOP;
+        alu_op_sel = NANORV32_MUX_SEL_ALU_OP_NOOP;
         alu_portb_sel = NANORV32_MUX_SEL_ALU_PORTB_RS2;
         alu_porta_sel = NANORV32_MUX_SEL_ALU_PORTA_RS1;
         datamem_size_read_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_READ_WORD;
@@ -502,13 +507,14 @@ module nanorv32 (/*AUTOARG*/
     end
     NANORV32_DECODE_LB: begin
         pc_next_sel = NANORV32_MUX_SEL_PC_NEXT_PLUS4;
+        alu_op_sel = NANORV32_MUX_SEL_ALU_OP_ADD;
         alu_portb_sel = NANORV32_MUX_SEL_ALU_PORTB_IMM12;
         alu_porta_sel = NANORV32_MUX_SEL_ALU_PORTA_RS1;
         datamem_size_read_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_READ_BYTE;
         datamem_write_sel = NANORV32_MUX_SEL_DATAMEM_WRITE_NO;
         datamem_size_write_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_WRITE_WORD;
         datamem_read_sel = NANORV32_MUX_SEL_DATAMEM_READ_YES;
-        regfile_source_sel = NANORV32_MUX_SEL_REGFILE_SOURCE_ALU;
+        regfile_source_sel = NANORV32_MUX_SEL_REGFILE_SOURCE_DATAMEM;
         regfile_write_sel = NANORV32_MUX_SEL_REGFILE_WRITE_YES;
     end
     NANORV32_DECODE_SUB: begin
@@ -609,17 +615,19 @@ module nanorv32 (/*AUTOARG*/
     end
     NANORV32_DECODE_LHU: begin
         pc_next_sel = NANORV32_MUX_SEL_PC_NEXT_PLUS4;
+        alu_op_sel = NANORV32_MUX_SEL_ALU_OP_ADD;
         alu_portb_sel = NANORV32_MUX_SEL_ALU_PORTB_IMM12;
         alu_porta_sel = NANORV32_MUX_SEL_ALU_PORTA_RS1;
         datamem_size_read_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_READ_HALFWORD_UNSIGNED;
         datamem_write_sel = NANORV32_MUX_SEL_DATAMEM_WRITE_NO;
         datamem_size_write_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_WRITE_WORD;
         datamem_read_sel = NANORV32_MUX_SEL_DATAMEM_READ_YES;
-        regfile_source_sel = NANORV32_MUX_SEL_REGFILE_SOURCE_ALU;
+        regfile_source_sel = NANORV32_MUX_SEL_REGFILE_SOURCE_DATAMEM;
         regfile_write_sel = NANORV32_MUX_SEL_REGFILE_WRITE_YES;
     end
     NANORV32_DECODE_SH: begin
         pc_next_sel = NANORV32_MUX_SEL_PC_NEXT_PLUS4;
+        alu_op_sel = NANORV32_MUX_SEL_ALU_OP_ADD;
         alu_portb_sel = NANORV32_MUX_SEL_ALU_PORTB_IMM12HILO;
         alu_porta_sel = NANORV32_MUX_SEL_ALU_PORTA_RS1;
         datamem_size_read_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_READ_WORD;
@@ -655,6 +663,7 @@ module nanorv32 (/*AUTOARG*/
     end
     NANORV32_DECODE_SB: begin
         pc_next_sel = NANORV32_MUX_SEL_PC_NEXT_PLUS4;
+        alu_op_sel = NANORV32_MUX_SEL_ALU_OP_ADD;
         alu_portb_sel = NANORV32_MUX_SEL_ALU_PORTB_IMM12HILO;
         alu_porta_sel = NANORV32_MUX_SEL_ALU_PORTA_RS1;
         datamem_size_read_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_READ_WORD;
@@ -771,7 +780,7 @@ module nanorv32 (/*AUTOARG*/
    always @* begin
       case(regfile_write_sel)
         NANORV32_MUX_SEL_REGFILE_WRITE_YES: begin
-           write_rd = (!stall_exe);
+           write_rd = (!stall_exe) & valid_inst;
         end
         NANORV32_MUX_SEL_REGFILE_WRITE_NO: begin
            write_rd = 1'b0;
@@ -831,12 +840,12 @@ module nanorv32 (/*AUTOARG*/
            branch_taken = alu_cond;
         end
         NANORV32_MUX_SEL_PC_NEXT_PLUS4: begin
-           if(!stall_exe & valid_inst) begin
+           if(!stall_exe & !stall_fetch) begin
               pc_next = pc_fetch_r + 4; // Only 32-bit instruction for now
               branch_taken = 0;
            end
            else begin
-              pc_next = pc_exe_r + 4; // Only 32-bit instruction for now
+              pc_next = pc_fetch_r; // Only 32-bit instruction for now
               branch_taken = 0;
            end
 
@@ -867,8 +876,8 @@ module nanorv32 (/*AUTOARG*/
          // End of automatics
       end
       else begin
-
-         pc_fetch_r <= pc_next;
+         if(codeif_cpu_ready_r)
+           pc_fetch_r <= pc_next;
 
          if(!stall_fetch) begin
 
@@ -1074,16 +1083,16 @@ module nanorv32 (/*AUTOARG*/
         NANORV32_MUX_SEL_DATAMEM_SIZE_READ_BYTE: begin
            case(cpu_dataif_addr[1:0])
              2'b00: begin
-                mem2regfile =  {{16{dataif_cpu_rdata[7]}},dataif_cpu_rdata[7:0]};
+                mem2regfile =  {{24{dataif_cpu_rdata[7]}},dataif_cpu_rdata[7:0]};
              end
              2'b01: begin
-                mem2regfile =  {{16{dataif_cpu_rdata[15]}},dataif_cpu_rdata[15:8]};
+                mem2regfile =  {{24{dataif_cpu_rdata[15]}},dataif_cpu_rdata[15:8]};
              end
              2'b10: begin
-                mem2regfile =  {{16{dataif_cpu_rdata[23]}},dataif_cpu_rdata[23:16]};
+                mem2regfile =  {{24{dataif_cpu_rdata[23]}},dataif_cpu_rdata[23:16]};
              end
              2'b11: begin
-                mem2regfile =  {{16{dataif_cpu_rdata[31]}},dataif_cpu_rdata[31:24]};
+                mem2regfile =  {{24{dataif_cpu_rdata[31]}},dataif_cpu_rdata[31:24]};
              end
            endcase
         end
@@ -1120,15 +1129,15 @@ module nanorv32 (/*AUTOARG*/
                 cpu_dataif_bytesel = {3'b0,datamem_write};
              end
              2'b01: begin
-                cpu_dataif_wdata =  {16'b0,rf_portb[15:8],8'b0};
+                cpu_dataif_wdata =  {16'b0,rf_portb[7:0],8'b0};
                 cpu_dataif_bytesel = {2'b0,datamem_write,1'b0};
              end
              2'b10: begin
-                cpu_dataif_wdata =  {8'b0,rf_portb[23:16],16'b0};
+                cpu_dataif_wdata =  {8'b0,rf_portb[7:0],16'b0};
                 cpu_dataif_bytesel = {1'b0,datamem_write,2'b0};
              end
              2'b11: begin
-                cpu_dataif_wdata =  {rf_portb[31:24],24'b0};
+                cpu_dataif_wdata =  {rf_portb[7:0],24'b0};
                 cpu_dataif_bytesel = {datamem_write,3'b0};
              end
              default begin
@@ -1139,12 +1148,12 @@ module nanorv32 (/*AUTOARG*/
         end
         NANORV32_MUX_SEL_DATAMEM_SIZE_WRITE_HALFWORD: begin
            case(cpu_dataif_addr[1])
-             1'b00: begin
+             1'b0: begin
                 cpu_dataif_wdata =  {16'b0,rf_portb[15:0]};
                 cpu_dataif_bytesel = {2'b0,datamem_write,datamem_write};
              end
              1'b1: begin
-                cpu_dataif_wdata =  {rf_portb[31:24],16'b0};
+                cpu_dataif_wdata =  {rf_portb[15:0],16'b0};
                 cpu_dataif_bytesel = {datamem_write,datamem_write,2'b0};
              end
 

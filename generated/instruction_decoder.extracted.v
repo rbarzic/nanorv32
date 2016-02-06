@@ -12,6 +12,7 @@
     end
     NANORV32_DECODE_LBU: begin
         pc_next_sel = NANORV32_MUX_SEL_PC_NEXT_PLUS4;
+        alu_op_sel = NANORV32_MUX_SEL_ALU_OP_ADD;
         alu_portb_sel = NANORV32_MUX_SEL_ALU_PORTB_IMM12;
         alu_porta_sel = NANORV32_MUX_SEL_ALU_PORTA_RS1;
         datamem_size_read_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_READ_BYTE_UNSIGNED;
@@ -35,11 +36,12 @@
     end
     NANORV32_DECODE_SW: begin
         pc_next_sel = NANORV32_MUX_SEL_PC_NEXT_PLUS4;
+        alu_op_sel = NANORV32_MUX_SEL_ALU_OP_ADD;
         alu_portb_sel = NANORV32_MUX_SEL_ALU_PORTB_IMM12HILO;
         alu_porta_sel = NANORV32_MUX_SEL_ALU_PORTA_RS1;
         datamem_size_read_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_READ_WORD;
         datamem_write_sel = NANORV32_MUX_SEL_DATAMEM_WRITE_YES;
-        datamem_size_write_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_WRITE_NO;
+        datamem_size_write_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_WRITE_WORD;
         datamem_read_sel = NANORV32_MUX_SEL_DATAMEM_READ_NO;
         regfile_source_sel = NANORV32_MUX_SEL_REGFILE_SOURCE_ALU;
         regfile_write_sel = NANORV32_MUX_SEL_REGFILE_WRITE_NO;
@@ -94,6 +96,7 @@
     end
     NANORV32_DECODE_JALR: begin
         pc_next_sel = NANORV32_MUX_SEL_PC_NEXT_ALU_RES;
+        alu_op_sel = NANORV32_MUX_SEL_ALU_OP_ADD;
         alu_portb_sel = NANORV32_MUX_SEL_ALU_PORTB_IMM12;
         alu_porta_sel = NANORV32_MUX_SEL_ALU_PORTA_RS1;
         datamem_size_read_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_READ_WORD;
@@ -117,7 +120,7 @@
     end
     NANORV32_DECODE_SCALL: begin
         pc_next_sel = NANORV32_MUX_SEL_PC_NEXT_PLUS4;
-        alu_op_sel = NANORV32_MUX_SEL_ALU_OP_NOP;
+        alu_op_sel = NANORV32_MUX_SEL_ALU_OP_NOOP;
         alu_portb_sel = NANORV32_MUX_SEL_ALU_PORTB_RS2;
         alu_porta_sel = NANORV32_MUX_SEL_ALU_PORTA_RS1;
         datamem_size_read_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_READ_WORD;
@@ -153,6 +156,7 @@
     end
     NANORV32_DECODE_LH: begin
         pc_next_sel = NANORV32_MUX_SEL_PC_NEXT_PLUS4;
+        alu_op_sel = NANORV32_MUX_SEL_ALU_OP_ADD;
         alu_portb_sel = NANORV32_MUX_SEL_ALU_PORTB_IMM12;
         alu_porta_sel = NANORV32_MUX_SEL_ALU_PORTA_RS1;
         datamem_size_read_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_READ_HALFWORD;
@@ -164,6 +168,7 @@
     end
     NANORV32_DECODE_LW: begin
         pc_next_sel = NANORV32_MUX_SEL_PC_NEXT_PLUS4;
+        alu_op_sel = NANORV32_MUX_SEL_ALU_OP_ADD;
         alu_portb_sel = NANORV32_MUX_SEL_ALU_PORTB_IMM12;
         alu_porta_sel = NANORV32_MUX_SEL_ALU_PORTA_RS1;
         datamem_size_read_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_READ_WORD;
@@ -223,7 +228,7 @@
     end
     NANORV32_DECODE_SBREAK: begin
         pc_next_sel = NANORV32_MUX_SEL_PC_NEXT_PLUS4;
-        alu_op_sel = NANORV32_MUX_SEL_ALU_OP_NOP;
+        alu_op_sel = NANORV32_MUX_SEL_ALU_OP_NOOP;
         alu_portb_sel = NANORV32_MUX_SEL_ALU_PORTB_RS2;
         alu_porta_sel = NANORV32_MUX_SEL_ALU_PORTA_RS1;
         datamem_size_read_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_READ_WORD;
@@ -295,6 +300,7 @@
     end
     NANORV32_DECODE_LB: begin
         pc_next_sel = NANORV32_MUX_SEL_PC_NEXT_PLUS4;
+        alu_op_sel = NANORV32_MUX_SEL_ALU_OP_ADD;
         alu_portb_sel = NANORV32_MUX_SEL_ALU_PORTB_IMM12;
         alu_porta_sel = NANORV32_MUX_SEL_ALU_PORTA_RS1;
         datamem_size_read_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_READ_BYTE;
@@ -402,6 +408,7 @@
     end
     NANORV32_DECODE_LHU: begin
         pc_next_sel = NANORV32_MUX_SEL_PC_NEXT_PLUS4;
+        alu_op_sel = NANORV32_MUX_SEL_ALU_OP_ADD;
         alu_portb_sel = NANORV32_MUX_SEL_ALU_PORTB_IMM12;
         alu_porta_sel = NANORV32_MUX_SEL_ALU_PORTA_RS1;
         datamem_size_read_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_READ_HALFWORD_UNSIGNED;
@@ -413,6 +420,7 @@
     end
     NANORV32_DECODE_SH: begin
         pc_next_sel = NANORV32_MUX_SEL_PC_NEXT_PLUS4;
+        alu_op_sel = NANORV32_MUX_SEL_ALU_OP_ADD;
         alu_portb_sel = NANORV32_MUX_SEL_ALU_PORTB_IMM12HILO;
         alu_porta_sel = NANORV32_MUX_SEL_ALU_PORTA_RS1;
         datamem_size_read_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_READ_WORD;
@@ -448,6 +456,7 @@
     end
     NANORV32_DECODE_SB: begin
         pc_next_sel = NANORV32_MUX_SEL_PC_NEXT_PLUS4;
+        alu_op_sel = NANORV32_MUX_SEL_ALU_OP_ADD;
         alu_portb_sel = NANORV32_MUX_SEL_ALU_PORTB_IMM12HILO;
         alu_porta_sel = NANORV32_MUX_SEL_ALU_PORTA_RS1;
         datamem_size_read_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_READ_WORD;
