@@ -7,7 +7,7 @@ vivado_sim:
 	@python main.py --topdir=../..  --vivado_sim ../sim/vivado_file_list.txt
 
 vivado_synt:
-	@python main.py --topdir=../..  --vivado_synt ../sim/vivado_file_list.tcl
+	@python main.py --topdir=../..  --vivado_synt ../../synt/fpga/vivado_files.tcl
 
 
 all: iverilog vivado_sim

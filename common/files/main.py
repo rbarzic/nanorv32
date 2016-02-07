@@ -61,4 +61,8 @@ if args.vivado_sim != "":
         f.write(txt)
 
 if args.vivado_synt != "":
+    print "-I- Vivado/Sim  generation"""
+    txt = xilinx.get_vivado_synt_file_list(l, d, context)
+    with open(args.vivado_synt,'w')  as f:
+        f.write(txt)
     print "Vivado/Sim  generation"""

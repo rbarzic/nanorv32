@@ -40,3 +40,4 @@
 /sim/verilog/*.hex2
 /sim/verilog/*.log
 /sim/verilog/*.map
+/synt/fpga/vivado_14548.backup.jou

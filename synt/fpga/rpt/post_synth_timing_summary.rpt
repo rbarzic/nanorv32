@@ -1,0 +1,225 @@
+Copyright 1986-2015 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2015.4 (lin64) Build 1412921 Wed Nov 18 09:44:32 MST 2015
+| Date         : Sun Feb  7 21:22:24 2016
+| Host         : ThinkPad-T420s running 64-bit Ubuntu 15.04
+| Command      : report_timing_summary -file ./rpt/post_synth_timing_summary.rpt
+| Design       : nanorv32_simple
+| Device       : 7a35t-csg324
+| Speed File   : -1  PRODUCTION 1.14 2014-09-11
+------------------------------------------------------------------------------------
+
+Timing Summary Report
+
+------------------------------------------------------------------------------------------------
+| Timer Settings
+| --------------
+------------------------------------------------------------------------------------------------
+
+  Enable Multi Corner Analysis               :  Yes
+  Enable Pessimism Removal                   :  Yes
+  Pessimism Removal Resolution               :  Nearest Common Node
+  Enable Input Delay Default Clock           :  No
+  Enable Preset / Clear Arcs                 :  No
+  Disable Flight Delays                      :  No
+  Ignore I/O Paths                           :  No
+  Timing Early Launch at Borrowing Latches   :  false
+
+  Corner  Analyze    Analyze    
+  Name    Max Paths  Min Paths  
+  ------  ---------  ---------  
+  Slow    Yes        Yes        
+  Fast    Yes        Yes        
+
+
+
+check_timing report
+
+Table of Contents
+-----------------
+1. checking no_clock
+2. checking constant_clock
+3. checking pulse_width_clock
+4. checking unconstrained_internal_endpoints
+5. checking no_input_delay
+6. checking no_output_delay
+7. checking multiple_clock
+8. checking generated_clocks
+9. checking loops
+10. checking partial_input_delay
+11. checking partial_output_delay
+12. checking latch_loops
+
+1. checking no_clock
+--------------------
+ There are 203 register/latch pins with no clock driven by root clock pin: clk (HIGH)
+
+ There are 37 register/latch pins with no clock driven by root clock pin: U_CPU/instruction_r_reg[0]/C (HIGH)
+
+ There are 37 register/latch pins with no clock driven by root clock pin: U_CPU/instruction_r_reg[12]/C (HIGH)
+
+ There are 37 register/latch pins with no clock driven by root clock pin: U_CPU/instruction_r_reg[13]/C (HIGH)
+
+ There are 37 register/latch pins with no clock driven by root clock pin: U_CPU/instruction_r_reg[14]/C (HIGH)
+
+ There are 37 register/latch pins with no clock driven by root clock pin: U_CPU/instruction_r_reg[15]/C (HIGH)
+
+ There are 37 register/latch pins with no clock driven by root clock pin: U_CPU/instruction_r_reg[16]/C (HIGH)
+
+ There are 37 register/latch pins with no clock driven by root clock pin: U_CPU/instruction_r_reg[17]/C (HIGH)
+
+ There are 37 register/latch pins with no clock driven by root clock pin: U_CPU/instruction_r_reg[18]/C (HIGH)
+
+ There are 37 register/latch pins with no clock driven by root clock pin: U_CPU/instruction_r_reg[19]/C (HIGH)
+
+ There are 37 register/latch pins with no clock driven by root clock pin: U_CPU/instruction_r_reg[1]/C (HIGH)
+
+ There are 37 register/latch pins with no clock driven by root clock pin: U_CPU/instruction_r_reg[21]/C (HIGH)
+
+ There are 37 register/latch pins with no clock driven by root clock pin: U_CPU/instruction_r_reg[22]/C (HIGH)
+
+ There are 37 register/latch pins with no clock driven by root clock pin: U_CPU/instruction_r_reg[23]/C (HIGH)
+
+ There are 37 register/latch pins with no clock driven by root clock pin: U_CPU/instruction_r_reg[24]/C (HIGH)
+
+ There are 37 register/latch pins with no clock driven by root clock pin: U_CPU/instruction_r_reg[25]/C (HIGH)
+
+ There are 37 register/latch pins with no clock driven by root clock pin: U_CPU/instruction_r_reg[26]/C (HIGH)
+
+ There are 37 register/latch pins with no clock driven by root clock pin: U_CPU/instruction_r_reg[27]/C (HIGH)
+
+ There are 37 register/latch pins with no clock driven by root clock pin: U_CPU/instruction_r_reg[28]/C (HIGH)
+
+ There are 37 register/latch pins with no clock driven by root clock pin: U_CPU/instruction_r_reg[29]/C (HIGH)
+
+ There are 37 register/latch pins with no clock driven by root clock pin: U_CPU/instruction_r_reg[2]/C (HIGH)
+
+ There are 37 register/latch pins with no clock driven by root clock pin: U_CPU/instruction_r_reg[30]/C (HIGH)
+
+ There are 37 register/latch pins with no clock driven by root clock pin: U_CPU/instruction_r_reg[31]/C (HIGH)
+
+ There are 37 register/latch pins with no clock driven by root clock pin: U_CPU/instruction_r_reg[3]/C (HIGH)
+
+ There are 37 register/latch pins with no clock driven by root clock pin: U_CPU/instruction_r_reg[4]/C (HIGH)
+
+ There are 37 register/latch pins with no clock driven by root clock pin: U_CPU/instruction_r_reg[5]/C (HIGH)
+
+ There are 37 register/latch pins with no clock driven by root clock pin: U_CPU/instruction_r_reg[6]/C (HIGH)
+
+
+2. checking constant_clock
+--------------------------
+ There are 0 register/latch pins with constant_clock.
+
+
+3. checking pulse_width_clock
+-----------------------------
+ There are 0 register/latch pins which need pulse_width check
+
+
+4. checking unconstrained_internal_endpoints
+--------------------------------------------
+ There are 1095 pins that are not constrained for maximum delay. (HIGH)
+
+ There are 0 pins that are not constrained for maximum delay due to constant clock.
+
+
+5. checking no_input_delay
+--------------------------
+ There is 1 input port with no input delay specified. (HIGH)
+
+ There are 0 input ports with no input delay but user has a false path constraint.
+
+
+6. checking no_output_delay
+---------------------------
+ There are 0 ports with no output delay specified.
+
+ There are 0 ports with no output delay but user has a false path constraint
+
+ There are 0 ports with no output delay but with a timing clock defined on it or propagating through it
+
+
+7. checking multiple_clock
+--------------------------
+ There are 0 register/latch pins with multiple clocks.
+
+
+8. checking generated_clocks
+----------------------------
+ There are 0 generated clocks that are not connected to a clock source.
+
+
+9. checking loops
+-----------------
+ There are 5 combinational loops in the design. (HIGH)
+
+
+10. checking partial_input_delay
+--------------------------------
+ There are 0 input ports with partial input delay specified.
+
+
+11. checking partial_output_delay
+---------------------------------
+ There are 0 ports with partial output delay specified.
+
+
+12. checking latch_loops
+------------------------
+ There are 0 combinational latch loops in the design through latch input
+
+
+
+------------------------------------------------------------------------------------------------
+| Design Timing Summary
+| ---------------------
+------------------------------------------------------------------------------------------------
+
+    WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints     WPWS(ns)     TPWS(ns)  TPWS Failing Endpoints  TPWS Total Endpoints  
+    -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------     --------     --------  ----------------------  --------------------  
+         NA           NA                     NA                   NA           NA           NA                     NA                   NA           NA           NA                      NA                    NA  
+
+
+There are no user specified timing constraints.
+
+
+------------------------------------------------------------------------------------------------
+| Clock Summary
+| -------------
+------------------------------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------------------------------
+| Intra Clock Table
+| -----------------
+------------------------------------------------------------------------------------------------
+
+Clock             WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints     WPWS(ns)     TPWS(ns)  TPWS Failing Endpoints  TPWS Total Endpoints  
+-----             -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------     --------     --------  ----------------------  --------------------  
+
+
+------------------------------------------------------------------------------------------------
+| Inter Clock Table
+| -----------------
+------------------------------------------------------------------------------------------------
+
+From Clock    To Clock          WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints  
+----------    --------          -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------  
+
+
+------------------------------------------------------------------------------------------------
+| Other Path Groups Table
+| -----------------------
+------------------------------------------------------------------------------------------------
+
+Path Group    From Clock    To Clock          WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints  
+----------    ----------    --------          -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------  
+
+
+------------------------------------------------------------------------------------------------
+| Timing Details
+| --------------
+------------------------------------------------------------------------------------------------
+
+

@@ -1,0 +1,8 @@
+lappend include_dir "../../rtl/cores/"
+lappend verilog_files "../../rtl/cores/nanorv32_alu.v"
+lappend verilog_files "../../rtl/cores/nanorv32_regfile.v"
+lappend verilog_files "../../rtl/cores/nanorv32.v"
+lappend verilog_files "../../rtl/ips/bytewrite_ram_32bits.v"
+lappend verilog_files "../../rtl/ips/nanorv32_tcm_ctrl.v"
+lappend verilog_files "../../rtl/ips/nanorv32_tcm_arbitrer.v"
+lappend verilog_files "../../rtl/chips/nanorv32_simple.v"
