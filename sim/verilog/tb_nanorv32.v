@@ -38,18 +38,24 @@ module tb_nanorv32;
    /*AUTOREG*/
    /*AUTOWIRE*/
    // Beginning of automatic wires (for undeclared instantiated-module outputs)
+   wire [15:0]          P0;                     // To/From U_DUT of nanorv32_simple.v
+   wire [15:0]          P1;                     // To/From U_DUT of nanorv32_simple.v
    wire                 clk;                    // From U_CLOCK_GEN of clock_gen.v
    wire                 rst_n;                  // From U_RESET_GEN of reset_gen.v
    // End of automatics
 
    reg                  reset_a_n;
 
-    /* nanorv32 AUTO_TEMPLATE(
+    /* nanorv32_simple AUTO_TEMPLATE(
+     .clk_in                  (clk),
      ); */
    nanorv32_simple U_DUT (
                            /*AUTOINST*/
+                          // Inouts
+                          .P0                   (P0[15:0]),
+                          .P1                   (P1[15:0]),
                           // Inputs
-                          .clk                  (clk),
+                          .clk_in               (clk),           // Templated
                           .rst_n                (rst_n));
 
 

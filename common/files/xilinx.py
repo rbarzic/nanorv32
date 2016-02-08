@@ -40,8 +40,8 @@ def get_vivado_synt_file_list(l, d, context):
 
     """
     result = ""
-    filelist = file_list.get_file_list(l, context, 'synt, synt_xilinx')
-    dirlist = file_list.get_dir_list(d, context, 'synt, synt_xilinx')
+    filelist = file_list.get_file_list(l, context, 'synt,synt_xilinx')
+    dirlist = file_list.get_dir_list(d, context, 'synt,synt_xilinx')
     for d in dirlist:
         result += "lappend include_dir \"" + d + "\"\n"
 

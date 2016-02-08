@@ -1,0 +1,2 @@
+Language File-Name                IP         Library         File-Path                                      
+Verilog, arty_mmcm_sim_netlist.v, arty_mmcm, xil_defaultlib, ./../../../../arty_mmcm/arty_mmcm_sim_netlist.v

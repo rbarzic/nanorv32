@@ -38,6 +38,26 @@ def nanor32_fl():
         'file': "{top}/rtl/ips/nanorv32_tcm_arbitrer.v",
         'targets': 'synt,sim_rtl'
     })
+
+    l.append({
+        'file': "{top}/rtl/chips/nanorv32_clkgen.v",
+        'targets': 'sim_rtl'
+    })
+
+    l.append({
+        'file': "{top}/rtl/ips/clock_manager/arty_mmcm/arty_mmcm_clk_wiz.v",
+        'targets': 'sim_xilinx,synt_xilinx'
+    })
+    l.append({
+        'file': "{top}/rtl/ips/clock_manager/arty_mmcm/arty_mmcm.v",
+        'targets': 'sim_xilinx,synt_xilinx'
+    })
+
+    l.append({
+        'file': "{top}/rtl/chips/nanorv32_clkgen_xilinx.v",
+        'targets': 'sim_xilinx,synt_xilinx'
+    })
+
     l.append({
         'file': "{top}/rtl/chips/nanorv32_simple.v",
         'targets': 'synt,sim_rtl'

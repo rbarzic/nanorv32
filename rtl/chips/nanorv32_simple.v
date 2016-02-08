@@ -33,8 +33,10 @@
 
 
 module nanorv32_simple (/*AUTOARG*/
+   // Inouts
+   P0, P1,
    // Inputs
-   clk, rst_n
+   clk_in, rst_n
    );
 
 `include "nanorv32_parameters.v"
@@ -42,8 +44,13 @@ module nanorv32_simple (/*AUTOARG*/
    parameter AW = 15; // 32K per RAM
    localparam ADDR_WIDTH = AW;
 
-   input                clk;                    // To U_CPU of nanorv32.v
+   input                clk_in;                    // To U_CPU of nanorv32.v
    input                rst_n;                  // To U_CPU of nanorv32.v
+
+
+   inout  wire [15:0]   P0;
+   inout  wire [15:0]   P1;
+
 
    // Code memory port
 /*AUTOINPUT*/
@@ -52,6 +59,7 @@ module nanorv32_simple (/*AUTOARG*/
    /*AUTOREG*/
    /*AUTOWIRE*/
    // Beginning of automatic wires (for undeclared instantiated-module outputs)
+   wire                 clk;                    // From U_CLK_GEN of nanorv32_clkgen.v
    wire                 codeif_cpu_early_ready; // From U_ARBITRER of nanorv32_tcm_arbitrer.v
    wire                 codeif_cpu_ready_r;     // From U_ARBITRER of nanorv32_tcm_arbitrer.v
    wire                 dataif_cpu_early_ready; // From U_ARBITRER of nanorv32_tcm_arbitrer.v
@@ -213,6 +221,20 @@ module nanorv32_simple (/*AUTOARG*/
 
 
 
+    /* nanorv32_clkgen  AUTO_TEMPLATE(
+     .clk_out         (clk),
+     .locked          (),
+    ); */
+    nanorv32_clkgen U_CLK_GEN (
+
+                               /*AUTOINST*/
+                               // Outputs
+                               .clk_out         (clk),           // Templated
+                               .locked          (),              // Templated
+                               // Inputs
+                               .clk_in          (clk_in),
+                               .rst_n           (rst_n));
+
 
 
 
@@ -226,6 +248,7 @@ endmodule // nanorv32_simple
  "."
  "../cores"
  "../ips"
+ "../chips"
  )
  End:
  */
