@@ -1,6 +1,6 @@
 # clock signal
-set_property -dict { PACKAGE_PIN E3    IOSTANDARD LVCMOS33 } [get_ports { XTAL1 }]; #IO_L12P_T1_MRCC_35 Sch=gclk[100]
-create_clock -add -name xtal1  -period 10.00 -waveform {0 5} [get_ports {XTAL1}];
+set_property -dict { PACKAGE_PIN E3    IOSTANDARD LVCMOS33 } [get_ports {clk_in}]; #IO_L12P_T1_MRCC_35 Sch=gclk[100]
+create_clock -add -name clk_in  -period 10.00 -waveform {0 5} [get_ports {clk_in}];
 
 #Switches
 
@@ -11,7 +11,7 @@ create_clock -add -name xtal1  -period 10.00 -waveform {0 5} [get_ports {XTAL1}]
 
 #Switches
 
-set_property -dict { PACKAGE_PIN A8    IOSTANDARD LVCMOS33 } [get_ports { NRST }]; #IO_L12N_T1_MRCC_16 Sch=sw[0]
+set_property -dict { PACKAGE_PIN A8    IOSTANDARD LVCMOS33 } [get_ports { rst_n }]; #IO_L12N_T1_MRCC_16 Sch=sw[0]
 #set_property -dict { PACKAGE_PIN C11   IOSTANDARD LVCMOS33 } [get_ports { SW[1] }]; #IO_L13P_T2_MRCC_16 Sch=sw[1]
 #set_property -dict { PACKAGE_PIN C10   IOSTANDARD LVCMOS33 } [get_ports { SW[2] }]; #IO_L13N_T2_MRCC_16 Sch=sw[2]
 #set_property -dict { PACKAGE_PIN A10   IOSTANDARD LVCMOS33 } [get_ports { SW[3] }]; #IO_L14P_T2_SRCC_16 Sch=sw[3]
@@ -103,11 +103,11 @@ set_property -dict { PACKAGE_PIN K16   IOSTANDARD LVCMOS33 } [get_ports { P1[15]
 #set_property -dict { PACKAGE_PIN U13   IOSTANDARD LVCMOS33 } [get_ports { jc[10] }]; #IO_L23N_T3_A02_D18_14 Sch=jc[10]
 
 
-set_property -dict { PACKAGE_PIN U12   IOSTANDARD LVCMOS33 } [get_ports { nTRST }]; #IO_L20P_T3_A08_D24_14 Sch=jc[1]
-set_property -dict { PACKAGE_PIN V12   IOSTANDARD LVCMOS33 } [get_ports { TDI }]; #IO_L20N_T3_A07_D23_14 Sch=jc[2]
-set_property -dict { PACKAGE_PIN V10   IOSTANDARD LVCMOS33 } [get_ports { TDO }]; #IO_L21P_T3_DQS_14 Sch=jc[3]
-set_property -dict { PACKAGE_PIN V11   IOSTANDARD LVCMOS33 } [get_ports { SWDIOTMS }]; #IO_L21N_T3_DQS_A06_D22_14 Sch=jc[4]
-set_property -dict { PACKAGE_PIN U14   IOSTANDARD LVCMOS33 } [get_ports { SWCLKTCK }]; #IO_L22P_T3_A05_D21_14 Sch=jc[7]
-set_property -dict { PACKAGE_PIN V14   IOSTANDARD LVCMOS33 } [get_ports { XTAL2 }]; #IO_L22N_T3_A04_D20_14 Sch=jc[8]
+#set_property -dict { PACKAGE_PIN U12   IOSTANDARD LVCMOS33 } [get_ports { nTRST }]; #IO_L20P_T3_A08_D24_14 Sch=jc[1]
+#set_property -dict { PACKAGE_PIN V12   IOSTANDARD LVCMOS33 } [get_ports { TDI }]; #IO_L20N_T3_A07_D23_14 Sch=jc[2]
+#set_property -dict { PACKAGE_PIN V10   IOSTANDARD LVCMOS33 } [get_ports { TDO }]; #IO_L21P_T3_DQS_14 Sch=jc[3]
+#set_property -dict { PACKAGE_PIN V11   IOSTANDARD LVCMOS33 } [get_ports { SWDIOTMS }]; #IO_L21N_T3_DQS_A06_D22_14 Sch=jc[4]
+#set_property -dict { PACKAGE_PIN U14   IOSTANDARD LVCMOS33 } [get_ports { SWCLKTCK }]; #IO_L22P_T3_A05_D21_14 Sch=jc[7]
+#set_property -dict { PACKAGE_PIN V14   IOSTANDARD LVCMOS33 } [get_ports { XTAL2 }]; #IO_L22N_T3_A04_D20_14 Sch=jc[8]
 #set_property -dict { PACKAGE_PIN T13   IOSTANDARD LVCMOS33 } [get_ports { jc[9] }]; #IO_L23P_T3_A03_D19_14 Sch=jc[9]
 #set_property -dict { PACKAGE_PIN U13   IOSTANDARD LVCMOS33 } [get_ports { jc[10] }]; #IO_L23N_T3_A02_D18_14 Sch=jc[10]

@@ -2,8 +2,8 @@
 # Vivado v2015.4 (64-bit)
 # SW Build 1412921 on Wed Nov 18 09:44:32 MST 2015
 # IP Build 1412160 on Tue Nov 17 13:47:24 MST 2015
-# Start of session at: Sun Feb  7 21:21:39 2016
-# Process ID: 15293
+# Start of session at: Tue Feb  9 20:41:46 2016
+# Process ID: 5118
 # Current directory: /home/ronan/perso/github/nanorv32/synt/fpga
 # Command line: vivado -mode tcl -source vivado.tcl
 # Log file: /home/ronan/perso/github/nanorv32/synt/fpga/vivado.log
@@ -55,6 +55,9 @@ source vivado.tcl
 ## lappend verilog_files "../../rtl/ips/bytewrite_ram_32bits.v"
 ## lappend verilog_files "../../rtl/ips/nanorv32_tcm_ctrl.v"
 ## lappend verilog_files "../../rtl/ips/nanorv32_tcm_arbitrer.v"
+## lappend verilog_files "../../rtl/ips/clock_manager/arty_mmcm/arty_mmcm_clk_wiz.v"
+## lappend verilog_files "../../rtl/ips/clock_manager/arty_mmcm/arty_mmcm.v"
+## lappend verilog_files "../../rtl/chips/nanorv32_clkgen_xilinx.v"
 ## lappend verilog_files "../../rtl/chips/nanorv32_simple.v"
 # foreach vfile $verilog_files {
 #     read_verilog $vfile
@@ -66,7 +69,7 @@ Starting synth_design
 Attempting to get a license for feature 'Synthesis' and/or device 'xc7a35t'
 INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a35t'
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1000.238 ; gain = 151.918 ; free physical = 5503 ; free virtual = 20575
+Starting RTL Elaboration : Time (s): cpu = 00:00:06 ; elapsed = 00:00:07 . Memory (MB): peak = 1000.234 ; gain = 151.918 ; free physical = 7321 ; free virtual = 21186
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-638] synthesizing module 'nanorv32_simple' [/home/ronan/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:35]
 	Parameter NANORV32_ADDR_SIZE bound to: 16 - type: integer 
@@ -1001,8 +1004,8 @@ INFO: [Synth 8-638] synthesizing module 'bytewrite_ram_32bits' [/home/ronan/pers
 CRITICAL WARNING: [Synth 8-4445] could not open $readmem data file 'code.hex'; please make sure the file is added to project and has read permission, ignoring [/home/ronan/perso/github/nanorv32/rtl/ips/bytewrite_ram_32bits.v:39]
 INFO: [Synth 8-256] done synthesizing module 'bytewrite_ram_32bits' (4#1) [/home/ronan/perso/github/nanorv32/rtl/ips/bytewrite_ram_32bits.v:12]
 INFO: [Synth 8-256] done synthesizing module 'nanorv32_tcm_ctrl' (5#1) [/home/ronan/perso/github/nanorv32/rtl/ips/nanorv32_tcm_ctrl.v:32]
-WARNING: [Synth 8-689] width (15) of port connection 'addr' does not match port width (13) of module 'nanorv32_tcm_ctrl' [/home/ronan/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:145]
-WARNING: [Synth 8-689] width (15) of port connection 'addr' does not match port width (13) of module 'nanorv32_tcm_ctrl' [/home/ronan/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:173]
+WARNING: [Synth 8-689] width (15) of port connection 'addr' does not match port width (13) of module 'nanorv32_tcm_ctrl' [/home/ronan/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:153]
+WARNING: [Synth 8-689] width (15) of port connection 'addr' does not match port width (13) of module 'nanorv32_tcm_ctrl' [/home/ronan/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:181]
 INFO: [Synth 8-638] synthesizing module 'nanorv32_tcm_arbitrer' [/home/ronan/perso/github/nanorv32/rtl/ips/nanorv32_tcm_arbitrer.v:32]
 	Parameter ADDR_WIDTH bound to: 13 - type: integer 
 	Parameter NANORV32_ADDR_SIZE bound to: 16 - type: integer 
@@ -1187,11 +1190,108 @@ INFO: [Synth 8-638] synthesizing module 'nanorv32_tcm_arbitrer' [/home/ronan/per
 	Parameter NANORV32_RAM_BASE_ADDRESS bound to: 536870912 - type: integer 
 	Parameter NANORV32_PERIPH_BASE_ADDRESS bound to: -268435456 - type: integer 
 INFO: [Synth 8-256] done synthesizing module 'nanorv32_tcm_arbitrer' (6#1) [/home/ronan/perso/github/nanorv32/rtl/ips/nanorv32_tcm_arbitrer.v:32]
-WARNING: [Synth 8-689] width (15) of port connection 'tcmcode_addr' does not match port width (13) of module 'nanorv32_tcm_arbitrer' [/home/ronan/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:186]
-WARNING: [Synth 8-689] width (15) of port connection 'tcmdata_addr' does not match port width (13) of module 'nanorv32_tcm_arbitrer' [/home/ronan/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:190]
-INFO: [Synth 8-256] done synthesizing module 'nanorv32_simple' (7#1) [/home/ronan/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:35]
+WARNING: [Synth 8-689] width (15) of port connection 'tcmcode_addr' does not match port width (13) of module 'nanorv32_tcm_arbitrer' [/home/ronan/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:194]
+WARNING: [Synth 8-689] width (15) of port connection 'tcmdata_addr' does not match port width (13) of module 'nanorv32_tcm_arbitrer' [/home/ronan/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:198]
+INFO: [Synth 8-638] synthesizing module 'nanorv32_clkgen' [/home/ronan/perso/github/nanorv32/rtl/chips/nanorv32_clkgen_xilinx.v:33]
+INFO: [Synth 8-638] synthesizing module 'arty_mmcm' [/home/ronan/perso/github/nanorv32/rtl/ips/clock_manager/arty_mmcm/arty_mmcm.v:69]
+INFO: [Synth 8-638] synthesizing module 'arty_mmcm_clk_wiz' [/home/ronan/perso/github/nanorv32/rtl/ips/clock_manager/arty_mmcm/arty_mmcm_clk_wiz.v:67]
+INFO: [Synth 8-638] synthesizing module 'IBUF' [/opt/Xilinx/Vivado/2015.4/scripts/rt/data/unisim_comp.v:14145]
+	Parameter CAPACITANCE bound to: DONT_CARE - type: string 
+	Parameter IBUF_DELAY_VALUE bound to: 0 - type: string 
+	Parameter IBUF_LOW_PWR bound to: TRUE - type: string 
+	Parameter IFD_DELAY_VALUE bound to: AUTO - type: string 
+	Parameter IOSTANDARD bound to: DEFAULT - type: string 
+INFO: [Synth 8-256] done synthesizing module 'IBUF' (7#1) [/opt/Xilinx/Vivado/2015.4/scripts/rt/data/unisim_comp.v:14145]
+INFO: [Synth 8-638] synthesizing module 'MMCME2_ADV' [/opt/Xilinx/Vivado/2015.4/scripts/rt/data/unisim_comp.v:20396]
+	Parameter BANDWIDTH bound to: OPTIMIZED - type: string 
+	Parameter CLKFBOUT_MULT_F bound to: 10.000000 - type: float 
+	Parameter CLKFBOUT_PHASE bound to: 0.000000 - type: float 
+	Parameter CLKFBOUT_USE_FINE_PS bound to: FALSE - type: string 
+	Parameter CLKIN1_PERIOD bound to: 10.000000 - type: float 
+	Parameter CLKIN2_PERIOD bound to: 0.000000 - type: float 
+	Parameter CLKOUT0_DIVIDE_F bound to: 20.000000 - type: float 
+	Parameter CLKOUT0_DUTY_CYCLE bound to: 0.500000 - type: float 
+	Parameter CLKOUT0_PHASE bound to: 0.000000 - type: float 
+	Parameter CLKOUT0_USE_FINE_PS bound to: FALSE - type: string 
+	Parameter CLKOUT1_DIVIDE bound to: 1 - type: integer 
+	Parameter CLKOUT1_DUTY_CYCLE bound to: 0.500000 - type: float 
+	Parameter CLKOUT1_PHASE bound to: 0.000000 - type: float 
+	Parameter CLKOUT1_USE_FINE_PS bound to: FALSE - type: string 
+	Parameter CLKOUT2_DIVIDE bound to: 1 - type: integer 
+	Parameter CLKOUT2_DUTY_CYCLE bound to: 0.500000 - type: float 
+	Parameter CLKOUT2_PHASE bound to: 0.000000 - type: float 
+	Parameter CLKOUT2_USE_FINE_PS bound to: FALSE - type: string 
+	Parameter CLKOUT3_DIVIDE bound to: 1 - type: integer 
+	Parameter CLKOUT3_DUTY_CYCLE bound to: 0.500000 - type: float 
+	Parameter CLKOUT3_PHASE bound to: 0.000000 - type: float 
+	Parameter CLKOUT3_USE_FINE_PS bound to: FALSE - type: string 
+	Parameter CLKOUT4_CASCADE bound to: FALSE - type: string 
+	Parameter CLKOUT4_DIVIDE bound to: 1 - type: integer 
+	Parameter CLKOUT4_DUTY_CYCLE bound to: 0.500000 - type: float 
+	Parameter CLKOUT4_PHASE bound to: 0.000000 - type: float 
+	Parameter CLKOUT4_USE_FINE_PS bound to: FALSE - type: string 
+	Parameter CLKOUT5_DIVIDE bound to: 1 - type: integer 
+	Parameter CLKOUT5_DUTY_CYCLE bound to: 0.500000 - type: float 
+	Parameter CLKOUT5_PHASE bound to: 0.000000 - type: float 
+	Parameter CLKOUT5_USE_FINE_PS bound to: FALSE - type: string 
+	Parameter CLKOUT6_DIVIDE bound to: 1 - type: integer 
+	Parameter CLKOUT6_DUTY_CYCLE bound to: 0.500000 - type: float 
+	Parameter CLKOUT6_PHASE bound to: 0.000000 - type: float 
+	Parameter CLKOUT6_USE_FINE_PS bound to: FALSE - type: string 
+	Parameter COMPENSATION bound to: ZHOLD - type: string 
+	Parameter DIVCLK_DIVIDE bound to: 1 - type: integer 
+	Parameter IS_CLKINSEL_INVERTED bound to: 1'b0 
+	Parameter IS_PSEN_INVERTED bound to: 1'b0 
+	Parameter IS_PSINCDEC_INVERTED bound to: 1'b0 
+	Parameter IS_PWRDWN_INVERTED bound to: 1'b0 
+	Parameter IS_RST_INVERTED bound to: 1'b0 
+	Parameter REF_JITTER1 bound to: 0.010000 - type: float 
+	Parameter REF_JITTER2 bound to: 0.010000 - type: float 
+	Parameter SS_EN bound to: FALSE - type: string 
+	Parameter SS_MODE bound to: CENTER_HIGH - type: string 
+	Parameter SS_MOD_PERIOD bound to: 10000 - type: integer 
+	Parameter STARTUP_WAIT bound to: FALSE - type: string 
+INFO: [Synth 8-256] done synthesizing module 'MMCME2_ADV' (8#1) [/opt/Xilinx/Vivado/2015.4/scripts/rt/data/unisim_comp.v:20396]
+INFO: [Synth 8-638] synthesizing module 'BUFG' [/opt/Xilinx/Vivado/2015.4/scripts/rt/data/unisim_comp.v:607]
+INFO: [Synth 8-256] done synthesizing module 'BUFG' (9#1) [/opt/Xilinx/Vivado/2015.4/scripts/rt/data/unisim_comp.v:607]
+INFO: [Synth 8-256] done synthesizing module 'arty_mmcm_clk_wiz' (10#1) [/home/ronan/perso/github/nanorv32/rtl/ips/clock_manager/arty_mmcm/arty_mmcm_clk_wiz.v:67]
+INFO: [Synth 8-256] done synthesizing module 'arty_mmcm' (11#1) [/home/ronan/perso/github/nanorv32/rtl/ips/clock_manager/arty_mmcm/arty_mmcm.v:69]
+INFO: [Synth 8-256] done synthesizing module 'nanorv32_clkgen' (12#1) [/home/ronan/perso/github/nanorv32/rtl/chips/nanorv32_clkgen_xilinx.v:33]
+INFO: [Synth 8-256] done synthesizing module 'nanorv32_simple' (13#1) [/home/ronan/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:35]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[15]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[14]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[13]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[12]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[11]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[10]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[9]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[8]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[7]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[6]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[5]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[4]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[3]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[2]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[1]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[0]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[15]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[14]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[13]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[12]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[11]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[10]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[9]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[8]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[7]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[6]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[5]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[4]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[3]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[2]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[1]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[0]
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:07 ; elapsed = 00:00:07 . Memory (MB): peak = 1041.621 ; gain = 193.301 ; free physical = 5472 ; free virtual = 20533
+Finished RTL Elaboration : Time (s): cpu = 00:00:08 ; elapsed = 00:00:08 . Memory (MB): peak = 1041.617 ; gain = 193.301 ; free physical = 7273 ; free virtual = 21143
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -1201,161 +1301,43 @@ Report Check Netlist:
 |1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
 +------+------------------+-------+---------+-------+------------------+
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:07 ; elapsed = 00:00:07 . Memory (MB): peak = 1041.621 ; gain = 193.301 ; free physical = 5471 ; free virtual = 20532
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:08 ; elapsed = 00:00:08 . Memory (MB): peak = 1041.617 ; gain = 193.301 ; free physical = 7273 ; free virtual = 21143
 ---------------------------------------------------------------------------------
+INFO: [Netlist 29-17] Analyzing 2 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Device 21-403] Loading part xc7a35tcsg324-1
 INFO: [Project 1-570] Preparing netlist for logic optimization
 
 Processing XDC Constraints
 Initializing timing engine
 Parsing XDC File [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc]
-WARNING: [Vivado 12-584] No ports matched 'XTAL1'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:2]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:2]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'XTAL1'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:3]
-CRITICAL WARNING: [Vivado 12-1387] No valid object(s) found for create_clock constraint with option '-objects [get_ports XTAL1]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:3]
-Resolution: Check if the specified object(s) exists in the current design. If it does, ensure that the correct design hierarchy was specified for the object. If you are working with clocks, make sure create_clock was used to create the clock object before it is referenced.
-WARNING: [Vivado 12-584] No ports matched 'NRST'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:14]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:14]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P0[0]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:42]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:42]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P0[1]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:43]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:43]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P0[2]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:44]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:44]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P0[3]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:45]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:45]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P0[4]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:47]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:47]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P0[5]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:48]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:48]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P0[6]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:49]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:49]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P0[7]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:50]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:50]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P0[8]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:51]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:51]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P0[9]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:52]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:52]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P0[10]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:53]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:53]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P0[11]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:54]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:54]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P0[12]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:55]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:55]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P0[13]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:56]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:56]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P0[14]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:57]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:57]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P0[15]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:58]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:58]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P1[0]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:72]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:72]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P1[1]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:73]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:73]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P1[2]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:74]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:74]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P1[3]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:75]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:75]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P1[4]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:76]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:76]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P1[5]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:77]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:77]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P1[6]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:78]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:78]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P1[7]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:79]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:79]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P1[8]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:85]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:85]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P1[9]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:86]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:86]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P1[10]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:87]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:87]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P1[11]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:88]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:88]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P1[12]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:89]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:89]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P1[13]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:90]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:90]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P1[14]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:91]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:91]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P1[15]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:92]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:92]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'nTRST'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:106]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:106]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'TDI'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:107]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:107]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'TDO'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:108]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:108]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'SWDIOTMS'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:109]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:109]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'SWCLKTCK'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:110]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:110]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'XTAL2'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:111]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:111]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
 Finished Parsing XDC File [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc]
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/nanorv32_simple_propImpl.xdc].
+Resolution: To avoid this warning, move constraints listed in [.Xil/nanorv32_simple_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
+INFO: [Timing 38-2] Deriving generated clocks
 Completed Processing XDC Constraints
 
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00 . Memory (MB): peak = 1327.824 ; gain = 0.000 ; free physical = 5191 ; free virtual = 20288
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1334.820 ; gain = 0.000 ; free physical = 6991 ; free virtual = 20878
 INFO: Launching helper process for spawning children vivado processes
-INFO: Helper process launched with PID 15302 
+INFO: Helper process launched with PID 5185 
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:14 ; elapsed = 00:00:14 . Memory (MB): peak = 1327.828 ; gain = 479.508 ; free physical = 5186 ; free virtual = 20284
+Finished Constraint Validation : Time (s): cpu = 00:00:16 ; elapsed = 00:00:16 . Memory (MB): peak = 1334.824 ; gain = 486.508 ; free physical = 6994 ; free virtual = 20876
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7a35tcsg324-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:14 ; elapsed = 00:00:14 . Memory (MB): peak = 1327.828 ; gain = 479.508 ; free physical = 5186 ; free virtual = 20284
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:16 ; elapsed = 00:00:16 . Memory (MB): peak = 1334.824 ; gain = 486.508 ; free physical = 6994 ; free virtual = 20876
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:14 ; elapsed = 00:00:14 . Memory (MB): peak = 1327.828 ; gain = 479.508 ; free physical = 5186 ; free virtual = 20284
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:16 ; elapsed = 00:00:16 . Memory (MB): peak = 1334.824 ; gain = 486.508 ; free physical = 6994 ; free virtual = 20876
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-3537] HDL ADVISOR - The operator resource <adder> is shared. To prevent sharing consider applying a KEEP on the inputs of the operator [/home/ronan/perso/github/nanorv32/rtl/cores/nanorv32_alu.v:60]
 INFO: [Synth 8-802] inferred FSM for state register 'pstate_r_reg' in module 'nanorv32'
@@ -1380,7 +1362,7 @@ INFO: [Synth 8-3354] encoded FSM with state register 'pstate_r_reg' using encodi
 WARNING: [Synth 8-327] inferring latch for variable 'datamem_size_write_sel_reg' [/home/ronan/perso/github/nanorv32/rtl/cores/nanorv32.v:215]
 WARNING: [Synth 8-327] inferring latch for variable 'datamem_size_read_sel_reg' [/home/ronan/perso/github/nanorv32/rtl/cores/nanorv32.v:213]
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:15 ; elapsed = 00:00:15 . Memory (MB): peak = 1327.828 ; gain = 479.508 ; free physical = 5184 ; free virtual = 20281
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:16 ; elapsed = 00:00:16 . Memory (MB): peak = 1334.824 ; gain = 486.508 ; free physical = 6990 ; free virtual = 20872
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -1512,14 +1494,46 @@ BRAMs: 100 (col length: RAMB18 60 RAMB36 30)
 ---------------------------------------------------------------------------------
 Finished Part Resource Summary
 ---------------------------------------------------------------------------------
-Start Parallel Synthesis Optimization  : Time (s): cpu = 00:00:15 ; elapsed = 00:00:15 . Memory (MB): peak = 1327.832 ; gain = 479.512 ; free physical = 5183 ; free virtual = 20281
+Start Parallel Synthesis Optimization  : Time (s): cpu = 00:00:16 ; elapsed = 00:00:17 . Memory (MB): peak = 1334.828 ; gain = 486.512 ; free physical = 6991 ; free virtual = 20872
 ---------------------------------------------------------------------------------
 Start Cross Boundary Optimization
 ---------------------------------------------------------------------------------
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[15]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[14]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[13]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[12]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[11]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[10]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[9]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[8]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[7]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[6]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[5]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[4]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[3]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[2]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[1]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[0]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[15]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[14]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[13]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[12]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[11]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[10]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[9]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[8]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[7]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[6]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[5]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[4]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[3]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[2]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[1]
+WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[0]
 ---------------------------------------------------------------------------------
-Finished Cross Boundary Optimization : Time (s): cpu = 00:00:15 ; elapsed = 00:00:16 . Memory (MB): peak = 1327.832 ; gain = 479.512 ; free physical = 5185 ; free virtual = 20283
+Finished Cross Boundary Optimization : Time (s): cpu = 00:00:17 ; elapsed = 00:00:17 . Memory (MB): peak = 1334.828 ; gain = 486.512 ; free physical = 6993 ; free virtual = 20875
 ---------------------------------------------------------------------------------
-Finished Parallel Reinference  : Time (s): cpu = 00:00:15 ; elapsed = 00:00:16 . Memory (MB): peak = 1327.832 ; gain = 479.512 ; free physical = 5185 ; free virtual = 20283
+Finished Parallel Reinference  : Time (s): cpu = 00:00:17 ; elapsed = 00:00:17 . Memory (MB): peak = 1334.828 ; gain = 486.512 ; free physical = 6993 ; free virtual = 20875
 
 Report RTL Partitions: 
 +-+--------------+------------+----------+
@@ -1554,9 +1568,9 @@ Start Area Optimization
 ---------------------------------------------------------------------------------
 WARNING: [Synth 8-3332] Sequential element (dataif_cpu_ready_r_reg) is unused and will be removed from module nanorv32_tcm_arbitrer.
 ---------------------------------------------------------------------------------
-Finished Area Optimization : Time (s): cpu = 00:00:18 ; elapsed = 00:00:18 . Memory (MB): peak = 1327.832 ; gain = 479.512 ; free physical = 5188 ; free virtual = 20282
+Finished Area Optimization : Time (s): cpu = 00:00:20 ; elapsed = 00:00:20 . Memory (MB): peak = 1334.828 ; gain = 486.512 ; free physical = 7011 ; free virtual = 20893
 ---------------------------------------------------------------------------------
-Finished Parallel Area Optimization  : Time (s): cpu = 00:00:18 ; elapsed = 00:00:18 . Memory (MB): peak = 1327.832 ; gain = 479.512 ; free physical = 5188 ; free virtual = 20282
+Finished Parallel Area Optimization  : Time (s): cpu = 00:00:20 ; elapsed = 00:00:20 . Memory (MB): peak = 1334.828 ; gain = 486.512 ; free physical = 7011 ; free virtual = 20893
 
 Report RTL Partitions: 
 +-+--------------+------------+----------+
@@ -1570,10 +1584,51 @@ Start Timing Optimization
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:27 ; elapsed = 00:00:27 . Memory (MB): peak = 1335.824 ; gain = 487.504 ; free physical = 5165 ; free virtual = 20267
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:28 ; elapsed = 00:00:28 . Memory (MB): peak = 1335.820 ; gain = 487.504 ; free physical = 7058 ; free virtual = 20929
 ---------------------------------------------------------------------------------
+Found timing loop:
+     0: U_ARBITRER/i_2/i_19/O (GATE_2_2)
+     1: U_ARBITRER/i_2/i_19/I0 (GATE_2_2)
+     2: U_ARBITRER/i_2/i_18/O (GATE_2_14_OR)
+     3: U_ARBITRER/i_2/i_18/I0 (GATE_2_14_OR)
+     4: U_ARBITRER/i_2/i_12/O (GATE_2_7_NAND)
+     5: U_ARBITRER/i_2/i_12/I0 (GATE_2_7_NAND)
+      : U_ARBITRER/i_2/cpu_codeif_addr[12]
+      : U_ARBITRER/cpu_codeif_addr[29]
+      : U_CPU/cpu_codeif_addr[29]
+      : U_CPU/i_97/D[29]
+     6: U_CPU/i_97/i_532/Z (MUX1)
+     7: U_CPU/i_97/i_532/B (MUX1)
+     8: U_CPU/i_97/i_528/Z (MUX1)
+     9: U_CPU/i_97/i_528/S (MUX1)
+    10: U_CPU/i_97/i_519/O (GATE_2_14_OR)
+    11: U_CPU/i_97/i_519/I0 (GATE_2_14_OR)
+    12: U_CPU/i_97/i_200/O (GATE_2_2)
+    13: U_CPU/i_97/i_200/I1 (GATE_2_2)
+      : U_CPU/i_97/force_stall_pstate
+      : U_CPU/i_4/out2
+      : U_CPU/i_4/i_3/out2
+    14: U_CPU/i_4/i_3/i_10/O (GATE_2_14_OR)
+    15: U_CPU/i_4/i_3/i_10/I1 (GATE_2_14_OR)
+    16: U_CPU/i_4/i_3/i_8/O (GATE_2_2)
+    17: U_CPU/i_4/i_3/i_8/I0 (GATE_2_2)
+    18: U_CPU/i_4/i_3/i_7/O (GATE_2_14_OR)
+    19: U_CPU/i_4/i_3/i_7/I0 (GATE_2_14_OR)
+      : U_CPU/i_4/i_3/in9
+      : U_CPU/i_4/in9
+      : U_CPU/p_0_out_inferred/p_0_out
+    20: U_CPU/p_0_out_inferred/i_0/O (INV)
+    21: U_CPU/p_0_out_inferred/i_0/I (INV)
+      : U_CPU/p_0_out_inferred/codeif_cpu_early_ready
+      : U_CPU/codeif_cpu_early_ready
+      : U_ARBITRER/codeif_cpu_early_ready
+      : U_ARBITRER/i_2/codeif_cpu_early_ready
+    22: U_ARBITRER/i_2/i_19/O (GATE_2_2)
+WARNING: [Synth 8-295] found timing loop. [/home/ronan/perso/github/nanorv32/rtl/ips/nanorv32_tcm_arbitrer.v:124]
+WARNING: [Synth 8-326] inferred exception to break timing loop: 'set_false_path -through U_ARBITRER/i_2/i_19/O'
+WARNING: [Synth 8-326] inferred exception to break timing loop: 'set_false_path -through U_ARBITRER/i_2/i_19/O'
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:27 ; elapsed = 00:00:27 . Memory (MB): peak = 1335.824 ; gain = 487.504 ; free physical = 5165 ; free virtual = 20267
+Finished Timing Optimization : Time (s): cpu = 00:00:30 ; elapsed = 00:00:30 . Memory (MB): peak = 1385.414 ; gain = 537.098 ; free physical = 7015 ; free virtual = 20880
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -1584,21 +1639,40 @@ Report RTL Partitions:
 ---------------------------------------------------------------------------------
 Start Technology Mapping
 ---------------------------------------------------------------------------------
+Found timing loop:
+     0: U_CPU/i_4/O (LUT4)
+     1: U_CPU/i_4/I0 (LUT4)
+      : U_CPU/codeif_cpu_early_ready
+      : U_ARBITRER/codeif_cpu_early_ready
+     2: U_ARBITRER/i_105/O (LUT2)
+     3: U_ARBITRER/i_105/I1 (LUT2)
+     4: U_ARBITRER/i_100/O (LUT5)
+     5: U_ARBITRER/i_100/I4 (LUT5)
+      : U_ARBITRER/cpu_codeif_addr[29]
+      : U_CPU/cpu_codeif_addr[29]
+     6: U_CPU/i_90/O (MUXF7)
+     7: U_CPU/i_90/I1 (MUXF7)
+     8: U_CPU/i_127/O (LUT4)
+     9: U_CPU/i_127/I1 (LUT4)
+    10: U_CPU/i_130/O (LUT6)
+    11: U_CPU/i_130/I1 (LUT6)
+    12: U_CPU/i_4/O (LUT4)
+WARNING: [Synth 8-295] found timing loop. [/home/ronan/perso/github/nanorv32/rtl/cores/nanorv32.v:34]
 INFO: [Synth 8-4480] The timing for the instance RAM_reg_0 (implemented as a block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
 INFO: [Synth 8-4480] The timing for the instance RAM_reg_1 (implemented as a block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
 INFO: [Synth 8-4480] The timing for the instance RAM_reg_0 (implemented as a block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
 INFO: [Synth 8-4480] The timing for the instance RAM_reg_1 (implemented as a block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:27 ; elapsed = 00:00:27 . Memory (MB): peak = 1363.863 ; gain = 515.543 ; free physical = 5137 ; free virtual = 20239
+Finished Technology Mapping : Time (s): cpu = 00:00:31 ; elapsed = 00:00:31 . Memory (MB): peak = 1385.414 ; gain = 537.098 ; free physical = 7015 ; free virtual = 20880
 ---------------------------------------------------------------------------------
-Finished Parallel Technology Mapping Optimization  : Time (s): cpu = 00:00:27 ; elapsed = 00:00:27 . Memory (MB): peak = 1363.863 ; gain = 515.543 ; free physical = 5137 ; free virtual = 20239
+Finished Parallel Technology Mapping Optimization  : Time (s): cpu = 00:00:31 ; elapsed = 00:00:31 . Memory (MB): peak = 1385.414 ; gain = 537.098 ; free physical = 7015 ; free virtual = 20880
 
 Report RTL Partitions: 
 +-+--------------+------------+----------+
 | |RTL Partition |Replication |Instances |
 +-+--------------+------------+----------+
 +-+--------------+------------+----------+
-Finished Parallel Synthesis Optimization  : Time (s): cpu = 00:00:27 ; elapsed = 00:00:27 . Memory (MB): peak = 1363.863 ; gain = 515.543 ; free physical = 5137 ; free virtual = 20239
+Finished Parallel Synthesis Optimization  : Time (s): cpu = 00:00:31 ; elapsed = 00:00:31 . Memory (MB): peak = 1385.414 ; gain = 537.098 ; free physical = 7015 ; free virtual = 20880
 ---------------------------------------------------------------------------------
 Start IO Insertion
 ---------------------------------------------------------------------------------
@@ -1649,7 +1723,7 @@ WARNING: [Synth 8-3295] tying undriven pin U_ARBITRER:cpu_dataif_addr[13] to con
 WARNING: [Synth 8-3295] tying undriven pin U_ARBITRER:cpu_dataif_addr[1] to constant 0
 WARNING: [Synth 8-3295] tying undriven pin U_ARBITRER:cpu_dataif_addr[0] to constant 0
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:28 ; elapsed = 00:00:28 . Memory (MB): peak = 1363.863 ; gain = 515.543 ; free physical = 5137 ; free virtual = 20239
+Finished IO Insertion : Time (s): cpu = 00:00:31 ; elapsed = 00:00:31 . Memory (MB): peak = 1385.414 ; gain = 537.098 ; free physical = 7015 ; free virtual = 20880
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -1662,7 +1736,7 @@ Report Check Netlist:
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:28 ; elapsed = 00:00:28 . Memory (MB): peak = 1363.863 ; gain = 515.543 ; free physical = 5137 ; free virtual = 20239
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:31 ; elapsed = 00:00:31 . Memory (MB): peak = 1385.414 ; gain = 537.098 ; free physical = 7015 ; free virtual = 20880
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -1670,11 +1744,14 @@ Report RTL Partitions:
 | |RTL Partition |Replication |Instances |
 +-+--------------+------------+----------+
 +-+--------------+------------+----------+
+WARNING: [Synth 8-326] inferred exception to break timing loop: 'set_false_path -through U_ARBITRER/codeif_cpu_early_ready_INST_0_i_1/O'
+WARNING: [Synth 8-326] inferred exception to break timing loop: 'set_false_path -through U_ARBITRER/codeif_cpu_early_ready_INST_0_i_1/O'
+WARNING: [Synth 8-326] inferred exception to break timing loop: 'set_false_path -through U_ARBITRER/codeif_cpu_early_ready_INST_0_i_2/O'
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:28 ; elapsed = 00:00:28 . Memory (MB): peak = 1363.863 ; gain = 515.543 ; free physical = 5137 ; free virtual = 20239
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:31 ; elapsed = 00:00:32 . Memory (MB): peak = 1385.414 ; gain = 537.098 ; free physical = 7015 ; free virtual = 20880
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -1687,31 +1764,32 @@ Report BlackBoxes:
 +-+--------------+----------+
 
 Report Cell Usage: 
-+------+---------+------+
-|      |Cell     |Count |
-+------+---------+------+
-|1     |BUFG     |     2|
-|2     |CARRY4   |    54|
-|3     |LUT1     |    69|
-|4     |LUT2     |    88|
-|5     |LUT3     |   234|
-|6     |LUT4     |   215|
-|7     |LUT5     |   208|
-|8     |LUT6     |   529|
-|9     |MUXF7    |    59|
-|10    |RAM32M   |    12|
-|11    |RAMB36E1 |     4|
-|12    |FDCE     |    97|
-|13    |FDPE     |     6|
-|14    |LD       |    37|
-|15    |IBUF     |     2|
-+------+---------+------+
++------+-----------+------+
+|      |Cell       |Count |
++------+-----------+------+
+|1     |BUFG       |     3|
+|2     |CARRY4     |    54|
+|3     |LUT1       |    70|
+|4     |LUT2       |    88|
+|5     |LUT3       |   241|
+|6     |LUT4       |   215|
+|7     |LUT5       |   199|
+|8     |LUT6       |   530|
+|9     |MMCME2_ADV |     1|
+|10    |MUXF7      |    59|
+|11    |RAM32M     |    12|
+|12    |RAMB36E1   |     4|
+|13    |FDCE       |    97|
+|14    |FDPE       |     6|
+|15    |LD         |    37|
+|16    |IBUF       |     2|
++------+-----------+------+
 
 Report Instance Areas: 
 +------+---------------+------------------------+------+
 |      |Instance       |Module                  |Cells |
 +------+---------------+------------------------+------+
-|1     |top            |                        |  1616|
+|1     |top            |                        |  1618|
 |2     |  U_CPU        |nanorv32                |  1419|
 |3     |    U_REG_FILE |nanorv32_regfile        |    77|
 |4     |    U_ALU      |nanorv32_alu            |   700|
@@ -1719,142 +1797,22 @@ Report Instance Areas:
 |6     |    U_MEM      |bytewrite_ram_32bits__1 |     2|
 |7     |  U_TCM_CODE   |nanorv32_tcm_ctrl       |    11|
 |8     |    U_MEM      |bytewrite_ram_32bits    |     2|
-|9     |  U_ARBITRER   |nanorv32_tcm_arbitrer   |   172|
+|9     |  U_ARBITRER   |nanorv32_tcm_arbitrer   |   171|
+|10    |  U_CLK_GEN    |nanorv32_clkgen         |     5|
+|11    |    U_MCM      |arty_mmcm               |     5|
+|12    |      inst     |arty_mmcm_clk_wiz       |     5|
 +------+---------------+------------------------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:28 ; elapsed = 00:00:28 . Memory (MB): peak = 1363.863 ; gain = 515.543 ; free physical = 5137 ; free virtual = 20239
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:31 ; elapsed = 00:00:32 . Memory (MB): peak = 1385.414 ; gain = 537.098 ; free physical = 7015 ; free virtual = 20880
 ---------------------------------------------------------------------------------
-Synthesis finished with 0 errors, 0 critical warnings and 44 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:23 ; elapsed = 00:00:23 . Memory (MB): peak = 1363.863 ; gain = 137.422 ; free physical = 5137 ; free virtual = 20239
-Synthesis Optimization Complete : Time (s): cpu = 00:00:28 ; elapsed = 00:00:28 . Memory (MB): peak = 1363.863 ; gain = 515.543 ; free physical = 5137 ; free virtual = 20239
+Synthesis finished with 0 errors, 0 critical warnings and 83 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:25 ; elapsed = 00:00:25 . Memory (MB): peak = 1385.414 ; gain = 151.977 ; free physical = 7015 ; free virtual = 20880
+Synthesis Optimization Complete : Time (s): cpu = 00:00:31 ; elapsed = 00:00:32 . Memory (MB): peak = 1385.414 ; gain = 537.098 ; free physical = 7015 ; free virtual = 20880
 INFO: [Project 1-571] Translating synthesized netlist
-INFO: [Netlist 29-17] Analyzing 109 Unisim elements for replacement
+INFO: [Netlist 29-17] Analyzing 110 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
 Parsing XDC File [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc]
-WARNING: [Vivado 12-584] No ports matched 'XTAL1'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:2]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:2]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'XTAL1'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:3]
-CRITICAL WARNING: [Vivado 12-1387] No valid object(s) found for create_clock constraint with option '-objects [get_ports XTAL1]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:3]
-Resolution: Check if the specified object(s) exists in the current design. If it does, ensure that the correct design hierarchy was specified for the object. If you are working with clocks, make sure create_clock was used to create the clock object before it is referenced.
-WARNING: [Vivado 12-584] No ports matched 'NRST'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:14]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:14]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P0[0]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:42]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:42]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P0[1]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:43]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:43]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P0[2]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:44]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:44]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P0[3]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:45]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:45]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P0[4]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:47]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:47]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P0[5]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:48]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:48]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P0[6]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:49]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:49]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P0[7]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:50]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:50]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P0[8]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:51]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:51]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P0[9]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:52]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:52]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P0[10]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:53]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:53]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P0[11]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:54]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:54]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P0[12]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:55]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:55]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P0[13]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:56]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:56]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P0[14]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:57]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:57]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P0[15]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:58]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:58]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P1[0]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:72]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:72]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P1[1]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:73]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:73]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P1[2]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:74]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:74]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P1[3]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:75]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:75]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P1[4]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:76]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:76]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P1[5]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:77]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:77]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P1[6]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:78]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:78]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P1[7]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:79]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:79]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P1[8]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:85]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:85]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P1[9]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:86]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:86]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P1[10]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:87]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:87]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P1[11]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:88]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:88]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P1[12]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:89]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:89]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P1[13]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:90]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:90]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P1[14]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:91]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:91]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'P1[15]'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:92]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:92]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'nTRST'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:106]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:106]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'TDI'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:107]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:107]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'TDO'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:108]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:108]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'SWDIOTMS'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:109]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:109]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'SWCLKTCK'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:110]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:110]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'XTAL2'. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:111]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc:111]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
 Finished Parsing XDC File [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc]
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
 INFO: [Project 1-111] Unisim Transformation Summary:
@@ -1863,18 +1821,19 @@ INFO: [Project 1-111] Unisim Transformation Summary:
   RAM32M => RAM32M (RAMD32, RAMD32, RAMD32, RAMD32, RAMD32, RAMD32, RAMS32, RAMS32): 12 instances
 
 INFO: [Common 17-83] Releasing license: Synthesis
-45 Infos, 130 Warnings, 83 Critical Warnings and 0 Errors encountered.
+61 Infos, 119 Warnings, 1 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:00:27 ; elapsed = 00:00:27 . Memory (MB): peak = 1363.867 ; gain = 444.211 ; free physical = 5134 ; free virtual = 20238
+synth_design: Time (s): cpu = 00:00:31 ; elapsed = 00:00:31 . Memory (MB): peak = 1385.418 ; gain = 465.766 ; free physical = 7016 ; free virtual = 20881
 # set outputDir ./rpt
 # file mkdir $outputDir
 # report_timing_summary -file $outputDir/post_synth_timing_summary.rpt
 INFO: [Timing 38-35] Done setting XDC timing constraints.
+INFO: [Timing 38-2] Deriving generated clocks
 INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -1, Delay Type: min_max.
 INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 4 CPUs
-report_timing_summary: Time (s): cpu = 00:00:11 ; elapsed = 00:00:11 . Memory (MB): peak = 1672.031 ; gain = 308.164 ; free physical = 4906 ; free virtual = 20030
+report_timing_summary: Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 1682.582 ; gain = 297.164 ; free physical = 6815 ; free virtual = 20680
 # report_utilization -file $outputDir/post_synth_util.rpt
-report_utilization: Time (s): cpu = 00:00:00.10 ; elapsed = 00:00:00.15 . Memory (MB): peak = 1672.031 ; gain = 0.000 ; free physical = 4905 ; free virtual = 20029
+report_utilization: Time (s): cpu = 00:00:00.13 ; elapsed = 00:00:00.15 . Memory (MB): peak = 1682.582 ; gain = 0.000 ; free physical = 6815 ; free virtual = 20680
 # check_timing -override_defaults loops -verbose > post_synt_loops.rpt
 
 check_timing report
@@ -1885,22 +1844,7 @@ Table of Contents
 
 1. checking loops
 -----------------
- There are 5 combinational loops in the design. (HIGH)
-
-U_ARBITRER/tcmdata_din[31]_INST_0_i_1/O
-U_ARBITRER/codeif_cpu_early_ready_INST_0/I3
-U_ARBITRER/codeif_cpu_early_ready_INST_0/O
-U_CPU/pc_exe_r[31]_i_2/I0
-U_CPU/pc_exe_r[31]_i_2/O
-U_CPU/pc_exe_r[31]_i_1/I1
-U_CPU/pc_exe_r[31]_i_1/O
-U_CPU/cpu_codeif_addr[31]_INST_0_i_3/I1
-U_CPU/cpu_codeif_addr[31]_INST_0_i_3/O
-U_CPU/cpu_codeif_addr[31]_INST_0/I1
-U_CPU/cpu_codeif_addr[31]_INST_0/O
-U_ARBITRER/tcmdata_din[31]_INST_0_i_1/I2
-U_ARBITRER/tcmdata_din[31]_INST_0_i_1/O
-
+ There are 6 combinational loops in the design. (HIGH)
 
 U_ARBITRER/codeif_cpu_early_ready_INST_0/O
 U_CPU/pc_exe_r[31]_i_2/I0
@@ -1917,12 +1861,44 @@ U_ARBITRER/tcmdata_en_INST_0/I0
 U_ARBITRER/tcmdata_en_INST_0/O
 U_TCM_DATA/ready_nxt_INST_0/I3
 U_TCM_DATA/ready_nxt_INST_0/O
-U_ARBITRER/codeif_cpu_early_ready_INST_0/I2
+U_ARBITRER/codeif_cpu_early_ready_INST_0/I0
 U_ARBITRER/codeif_cpu_early_ready_INST_0/O
 
 
-U_ARBITRER/tcmdata_din[31]_INST_0_i_1/O
-U_ARBITRER/codeif_cpu_early_ready_INST_0/I3
+U_ARBITRER/codeif_cpu_early_ready_INST_0/O
+U_CPU/pc_exe_r[31]_i_2/I0
+U_CPU/pc_exe_r[31]_i_2/O
+U_CPU/pc_exe_r[31]_i_1/I1
+U_CPU/pc_exe_r[31]_i_1/O
+U_CPU/cpu_codeif_addr[31]_INST_0_i_3/I1
+U_CPU/cpu_codeif_addr[31]_INST_0_i_3/O
+U_CPU/cpu_codeif_addr[31]_INST_0/I1
+U_CPU/cpu_codeif_addr[31]_INST_0/O
+U_ARBITRER/tcmdata_addr[12]_INST_0_i_2/I2
+U_ARBITRER/tcmdata_addr[12]_INST_0_i_2/O
+U_ARBITRER/codeif_cpu_early_ready_INST_0_i_2/I0
+U_ARBITRER/codeif_cpu_early_ready_INST_0_i_2/O
+U_ARBITRER/codeif_cpu_early_ready_INST_0/I5
+U_ARBITRER/codeif_cpu_early_ready_INST_0/O
+
+
+U_ARBITRER/codeif_cpu_early_ready_INST_0_i_1/O
+U_ARBITRER/codeif_cpu_early_ready_INST_0/I2
+U_ARBITRER/codeif_cpu_early_ready_INST_0/O
+U_CPU/pc_exe_r[31]_i_2/I0
+U_CPU/pc_exe_r[31]_i_2/O
+U_CPU/pc_exe_r[31]_i_1/I1
+U_CPU/pc_exe_r[31]_i_1/O
+U_CPU/cpu_codeif_addr[31]_INST_0_i_3/I1
+U_CPU/cpu_codeif_addr[31]_INST_0_i_3/O
+U_CPU/cpu_codeif_addr[31]_INST_0/I1
+U_CPU/cpu_codeif_addr[31]_INST_0/O
+U_ARBITRER/codeif_cpu_early_ready_INST_0_i_1/I1
+U_ARBITRER/codeif_cpu_early_ready_INST_0_i_1/O
+
+
+U_ARBITRER/codeif_cpu_early_ready_INST_0_i_1/O
+U_ARBITRER/codeif_cpu_early_ready_INST_0/I2
 U_ARBITRER/codeif_cpu_early_ready_INST_0/O
 U_CPU/pc_exe_r[31]_i_2/I0
 U_CPU/pc_exe_r[31]_i_2/O
@@ -1932,8 +1908,8 @@ U_CPU/cpu_codeif_addr[30]_INST_0_i_2/I1
 U_CPU/cpu_codeif_addr[30]_INST_0_i_2/O
 U_CPU/cpu_codeif_addr[30]_INST_0/I1
 U_CPU/cpu_codeif_addr[30]_INST_0/O
-U_ARBITRER/tcmdata_din[31]_INST_0_i_1/I0
-U_ARBITRER/tcmdata_din[31]_INST_0_i_1/O
+U_ARBITRER/codeif_cpu_early_ready_INST_0_i_1/I2
+U_ARBITRER/codeif_cpu_early_ready_INST_0_i_1/O
 
 
 U_ARBITRER/codeif_cpu_early_ready_INST_0/O
@@ -1945,14 +1921,14 @@ U_CPU/cpu_codeif_addr[29]_INST_0_i_2/I1
 U_CPU/cpu_codeif_addr[29]_INST_0_i_2/O
 U_CPU/cpu_codeif_addr[29]_INST_0/I1
 U_CPU/cpu_codeif_addr[29]_INST_0/O
-U_ARBITRER/codeif_cpu_early_ready_INST_0/I1
+U_ARBITRER/codeif_cpu_early_ready_INST_0/I4
 U_ARBITRER/codeif_cpu_early_ready_INST_0/O
 
 
 U_CPU/cpu_codeif_addr[28]_INST_0/O
-U_ARBITRER/tcmdata_din[31]_INST_0_i_1/I3
-U_ARBITRER/tcmdata_din[31]_INST_0_i_1/O
-U_ARBITRER/codeif_cpu_early_ready_INST_0/I3
+U_ARBITRER/codeif_cpu_early_ready_INST_0_i_1/I3
+U_ARBITRER/codeif_cpu_early_ready_INST_0_i_1/O
+U_ARBITRER/codeif_cpu_early_ready_INST_0/I2
 U_ARBITRER/codeif_cpu_early_ready_INST_0/O
 U_CPU/pc_exe_r[31]_i_2/I0
 U_CPU/pc_exe_r[31]_i_2/O
@@ -1977,44 +1953,44 @@ INFO: [DRC 23-27] Running DRC with 4 threads
 INFO: [Project 1-461] DRC finished with 0 Errors
 INFO: [Project 1-462] Please refer to the DRC report (report_drc) for more information.
 
-Time (s): cpu = 00:00:00.10 ; elapsed = 00:00:00.10 . Memory (MB): peak = 1709.047 ; gain = 37.016 ; free physical = 4900 ; free virtual = 20024
+Time (s): cpu = 00:00:00.10 ; elapsed = 00:00:00.10 . Memory (MB): peak = 1719.598 ; gain = 37.016 ; free physical = 6811 ; free virtual = 20675
 
 Starting Logic Optimization Task
-Implement Debug Cores | Checksum: 697a5071
+Implement Debug Cores | Checksum: 223d8fb75
 
 Phase 1 Retarget
-INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+INFO: [Opt 31-138] Pushed 1 inverter(s) to 1 load pin(s).
 INFO: [Opt 31-49] Retargeted 0 cell(s).
-Phase 1 Retarget | Checksum: 115128e19
+Phase 1 Retarget | Checksum: 23804115d
 
-Time (s): cpu = 00:00:00.10 ; elapsed = 00:00:00.10 . Memory (MB): peak = 1709.047 ; gain = 0.000 ; free physical = 4900 ; free virtual = 20024
+Time (s): cpu = 00:00:00.15 ; elapsed = 00:00:00.15 . Memory (MB): peak = 1719.598 ; gain = 0.000 ; free physical = 6811 ; free virtual = 20676
 
 Phase 2 Constant Propagation
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
 INFO: [Opt 31-10] Eliminated 9 cells.
-Phase 2 Constant Propagation | Checksum: f55f445c
+Phase 2 Constant Propagation | Checksum: 1a808c5b2
 
-Time (s): cpu = 00:00:00.20 ; elapsed = 00:00:00.20 . Memory (MB): peak = 1709.047 ; gain = 0.000 ; free physical = 4899 ; free virtual = 20024
+Time (s): cpu = 00:00:00.27 ; elapsed = 00:00:00.26 . Memory (MB): peak = 1719.598 ; gain = 0.000 ; free physical = 6811 ; free virtual = 20676
 
 Phase 3 Sweep
-INFO: [Opt 31-12] Eliminated 1245 unconnected nets.
-INFO: [Opt 31-11] Eliminated 1573 unconnected cells.
-Phase 3 Sweep | Checksum: 20311885
+INFO: [Opt 31-12] Eliminated 1258 unconnected nets.
+INFO: [Opt 31-11] Eliminated 1581 unconnected cells.
+Phase 3 Sweep | Checksum: 5ca649a7
 
-Time (s): cpu = 00:00:00.47 ; elapsed = 00:00:00.47 . Memory (MB): peak = 1709.047 ; gain = 0.000 ; free physical = 4896 ; free virtual = 20021
+Time (s): cpu = 00:00:00.53 ; elapsed = 00:00:00.52 . Memory (MB): peak = 1719.598 ; gain = 0.000 ; free physical = 6811 ; free virtual = 20676
 
 Starting Connectivity Check Task
 
-Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1709.047 ; gain = 0.000 ; free physical = 4896 ; free virtual = 20021
-Ending Logic Optimization Task | Checksum: 20311885
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1719.598 ; gain = 0.000 ; free physical = 6811 ; free virtual = 20676
+Ending Logic Optimization Task | Checksum: 5ca649a7
 
-Time (s): cpu = 00:00:00.47 ; elapsed = 00:00:00.47 . Memory (MB): peak = 1709.047 ; gain = 0.000 ; free physical = 4896 ; free virtual = 20021
+Time (s): cpu = 00:00:00.53 ; elapsed = 00:00:00.52 . Memory (MB): peak = 1719.598 ; gain = 0.000 ; free physical = 6811 ; free virtual = 20676
 
 Starting Power Optimization Task
 INFO: [Pwropt 34-132] Skipping clock gating for clocks with a period < 2.00 ns.
-Ending Power Optimization Task | Checksum: 20311885
+Ending Power Optimization Task | Checksum: 5ca649a7
 
-Time (s): cpu = 00:00:00.02 ; elapsed = 00:00:00.02 . Memory (MB): peak = 1709.047 ; gain = 0.000 ; free physical = 4896 ; free virtual = 20021
+Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.01 . Memory (MB): peak = 1719.598 ; gain = 0.000 ; free physical = 6811 ; free virtual = 20676
 INFO: [Common 17-83] Releasing license: Implementation
 12 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
 opt_design completed successfully
@@ -2040,18 +2016,16 @@ Starting Placer Task
 INFO: [Place 30-611] Multithreading enabled for place_design using a maximum of 4 CPUs
 
 Phase 1 Placer Initialization
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1709.047 ; gain = 0.000 ; free physical = 4893 ; free virtual = 20021
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1719.598 ; gain = 0.000 ; free physical = 6811 ; free virtual = 20675
 Phase 1 Placer Initialization | Checksum: 00000000
 
-Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.01 . Memory (MB): peak = 1709.047 ; gain = 0.000 ; free physical = 4893 ; free virtual = 20022
+Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.02 . Memory (MB): peak = 1719.598 ; gain = 0.000 ; free physical = 6811 ; free virtual = 20675
 ERROR: [Place 30-494] The design is empty
 Resolution: Check if opt_design has removed all the leaf cells of your design.  Check whether you have instantiated and connected all of the top level ports.
 Ending Placer Task | Checksum: 00000000
 
-Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.01 . Memory (MB): peak = 1709.047 ; gain = 0.000 ; free physical = 4892 ; free virtual = 20021
+Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.02 . Memory (MB): peak = 1719.598 ; gain = 0.000 ; free physical = 6811 ; free virtual = 20675
 INFO: [Common 17-83] Releasing license: Implementation
 9 Infos, 0 Warnings, 0 Critical Warnings and 2 Errors encountered.
 place_design failed
 ERROR: [Common 17-69] Command failed: Placer could not place all instances
-exit
-INFO: [Common 17-206] Exiting Vivado at Sun Feb  7 21:22:44 2016...

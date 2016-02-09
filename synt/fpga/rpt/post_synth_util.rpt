@@ -1,7 +1,7 @@
 Copyright 1986-2015 Xilinx, Inc. All Rights Reserved.
 ------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2015.4 (lin64) Build 1412921 Wed Nov 18 09:44:32 MST 2015
-| Date         : Sun Feb  7 21:22:24 2016
+| Date         : Tue Feb  9 20:42:36 2016
 | Host         : ThinkPad-T420s running 64-bit Ubuntu 15.04
 | Command      : report_utilization -file ./rpt/post_synth_util.rpt
 | Design       : nanorv32_simple
@@ -30,8 +30,8 @@ Table of Contents
 +----------------------------+------+-------+-----------+-------+
 |          Site Type         | Used | Fixed | Available | Util% |
 +----------------------------+------+-------+-----------+-------+
-| Slice LUTs*                | 1173 |     0 |     20800 |  5.64 |
-|   LUT as Logic             | 1125 |     0 |     20800 |  5.41 |
+| Slice LUTs*                | 1175 |     0 |     20800 |  5.65 |
+|   LUT as Logic             | 1127 |     0 |     20800 |  5.42 |
 |   LUT as Memory            |   48 |     0 |      9600 |  0.50 |
 |     LUT as Distributed RAM |   48 |     0 |           |       |
 |     LUT as Shift Register  |    0 |     0 |           |       |
@@ -93,7 +93,9 @@ Table of Contents
 +-----------------------------+------+-------+-----------+-------+
 |          Site Type          | Used | Fixed | Available | Util% |
 +-----------------------------+------+-------+-----------+-------+
-| Bonded IOB                  |    2 |     0 |       210 |  0.95 |
+| Bonded IOB                  |    2 |     2 |       210 |  0.95 |
+|   IOB Master Pads           |    1 |       |           |       |
+|   IOB Slave Pads            |    1 |       |           |       |
 | Bonded IPADs                |    0 |     0 |         2 |  0.00 |
 | PHY_CONTROL                 |    0 |     0 |         5 |  0.00 |
 | PHASER_REF                  |    0 |     0 |         5 |  0.00 |
@@ -116,9 +118,9 @@ Table of Contents
 +------------+------+-------+-----------+-------+
 |  Site Type | Used | Fixed | Available | Util% |
 +------------+------+-------+-----------+-------+
-| BUFGCTRL   |    2 |     0 |        32 |  6.25 |
+| BUFGCTRL   |    3 |     0 |        32 |  9.38 |
 | BUFIO      |    0 |     0 |        20 |  0.00 |
-| MMCME2_ADV |    0 |     0 |         5 |  0.00 |
+| MMCME2_ADV |    1 |     0 |         5 | 20.00 |
 | PLLE2_ADV  |    0 |     0 |         5 |  0.00 |
 | BUFMRCE    |    0 |     0 |        10 |  0.00 |
 | BUFHCE     |    0 |     0 |        72 |  0.00 |
@@ -147,26 +149,27 @@ Table of Contents
 7. Primitives
 -------------
 
-+----------+------+---------------------+
-| Ref Name | Used | Functional Category |
-+----------+------+---------------------+
-| LUT6     |  529 |                 LUT |
-| LUT3     |  234 |                 LUT |
-| LUT4     |  215 |                 LUT |
-| LUT5     |  208 |                 LUT |
-| FDCE     |   97 |        Flop & Latch |
-| LUT2     |   88 |                 LUT |
-| RAMD32   |   72 |  Distributed Memory |
-| LUT1     |   69 |                 LUT |
-| MUXF7    |   59 |               MuxFx |
-| CARRY4   |   54 |          CarryLogic |
-| LDCE     |   37 |        Flop & Latch |
-| RAMS32   |   24 |  Distributed Memory |
-| FDPE     |    6 |        Flop & Latch |
-| RAMB36E1 |    4 |        Block Memory |
-| IBUF     |    2 |                  IO |
-| BUFG     |    2 |               Clock |
-+----------+------+---------------------+
++------------+------+---------------------+
+|  Ref Name  | Used | Functional Category |
++------------+------+---------------------+
+| LUT6       |  530 |                 LUT |
+| LUT3       |  241 |                 LUT |
+| LUT4       |  215 |                 LUT |
+| LUT5       |  199 |                 LUT |
+| FDCE       |   97 |        Flop & Latch |
+| LUT2       |   88 |                 LUT |
+| RAMD32     |   72 |  Distributed Memory |
+| LUT1       |   70 |                 LUT |
+| MUXF7      |   59 |               MuxFx |
+| CARRY4     |   54 |          CarryLogic |
+| LDCE       |   37 |        Flop & Latch |
+| RAMS32     |   24 |  Distributed Memory |
+| FDPE       |    6 |        Flop & Latch |
+| RAMB36E1   |    4 |        Block Memory |
+| BUFG       |    3 |               Clock |
+| IBUF       |    2 |                  IO |
+| MMCME2_ADV |    1 |               Clock |
++------------+------+---------------------+
 
 
 8. Black Boxes
