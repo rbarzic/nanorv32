@@ -131,7 +131,7 @@ module nanorv32 (/*AUTOARG*/
 
    reg                                     branch_taken;
    reg                                     inst_valid_fetch;
-   reg                                     inst_valid_exe_r;
+
 
    wire                                    alu_cond;
 
@@ -145,7 +145,7 @@ module nanorv32 (/*AUTOARG*/
    wire                                     stall_fetch;
    reg                                      force_stall_pstate;
 
-   reg                                      stall_fetch_r;
+
    reg                                      output_new_pc;
    wire                                      cpu_codeif_req;
    reg                                       valid_inst;
@@ -994,17 +994,12 @@ module nanorv32 (/*AUTOARG*/
    always @(posedge clk or negedge rst_n) begin
       if(rst_n == 1'b0) begin
          pstate_r <= NANORV32_PSTATE_RESET;
-         inst_valid_exe_r <= 1'h1; // The first instruction is the reset value of
          // instruction_r - so it must be valid
          /*AUTORESET*/
-         // Beginning of autoreset for uninitialized flops
-         stall_fetch_r <= 1'h0;
-         // End of automatics
       end
       else begin
          pstate_r <= pstate_next;
-         if(!force_stall_reset)
-           stall_fetch_r <= stall_fetch;
+
       end
    end
 

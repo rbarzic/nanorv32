@@ -68,8 +68,13 @@ check_timing -override_defaults loops -verbose > post_synt_loops.rpt
 
 opt_design
 reportCriticalPaths $outputDir/post_opt_critpath_report.csv
+
+check_timing -override_defaults loops -verbose > post_opt_loops.rpt
 place_design
 report_clock_utilization -file $outputDir/clock_util.rpt
+
+check_timing -override_defaults loops -verbose > post_place_loops.rpt
+
 #
 # Optionally run optimization if there are timing violations after placement
 if {[get_property SLACK [get_timing_paths -max_paths 1 -nworst 1 -setup]] < 0} {

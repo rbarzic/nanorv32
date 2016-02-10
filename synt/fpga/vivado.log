@@ -2,8 +2,8 @@
 # Vivado v2015.4 (64-bit)
 # SW Build 1412921 on Wed Nov 18 09:44:32 MST 2015
 # IP Build 1412160 on Tue Nov 17 13:47:24 MST 2015
-# Start of session at: Tue Feb  9 20:41:46 2016
-# Process ID: 5118
+# Start of session at: Wed Feb 10 20:56:25 2016
+# Process ID: 15329
 # Current directory: /home/ronan/perso/github/nanorv32/synt/fpga
 # Command line: vivado -mode tcl -source vivado.tcl
 # Log file: /home/ronan/perso/github/nanorv32/synt/fpga/vivado.log
@@ -69,7 +69,7 @@ Starting synth_design
 Attempting to get a license for feature 'Synthesis' and/or device 'xc7a35t'
 INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a35t'
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:06 ; elapsed = 00:00:07 . Memory (MB): peak = 1000.234 ; gain = 151.918 ; free physical = 7321 ; free virtual = 21186
+Starting RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 1000.238 ; gain = 151.918 ; free physical = 6602 ; free virtual = 20810
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-638] synthesizing module 'nanorv32_simple' [/home/ronan/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:35]
 	Parameter NANORV32_ADDR_SIZE bound to: 16 - type: integer 
@@ -808,8 +808,8 @@ INFO: [Synth 8-638] synthesizing module 'nanorv32_alu' [/home/ronan/perso/github
 	Parameter NANORV32_PERIPH_BASE_ADDRESS bound to: -268435456 - type: integer 
 INFO: [Synth 8-155] case statement is not full and has no default [/home/ronan/perso/github/nanorv32/rtl/cores/nanorv32_alu.v:60]
 INFO: [Synth 8-256] done synthesizing module 'nanorv32_alu' (2#1) [/home/ronan/perso/github/nanorv32/rtl/cores/nanorv32_alu.v:31]
-INFO: [Synth 8-226] default block is never used [/home/ronan/perso/github/nanorv32/rtl/cores/nanorv32.v:1126]
-INFO: [Synth 8-226] default block is never used [/home/ronan/perso/github/nanorv32/rtl/cores/nanorv32.v:1150]
+INFO: [Synth 8-226] default block is never used [/home/ronan/perso/github/nanorv32/rtl/cores/nanorv32.v:1121]
+INFO: [Synth 8-226] default block is never used [/home/ronan/perso/github/nanorv32/rtl/cores/nanorv32.v:1145]
 INFO: [Synth 8-256] done synthesizing module 'nanorv32' (3#1) [/home/ronan/perso/github/nanorv32/rtl/cores/nanorv32.v:34]
 INFO: [Synth 8-638] synthesizing module 'nanorv32_tcm_ctrl' [/home/ronan/perso/github/nanorv32/rtl/ips/nanorv32_tcm_ctrl.v:32]
 	Parameter SIZE bound to: 8192 - type: integer 
@@ -1291,7 +1291,7 @@ WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[2]
 WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[1]
 WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[0]
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:08 ; elapsed = 00:00:08 . Memory (MB): peak = 1041.617 ; gain = 193.301 ; free physical = 7273 ; free virtual = 21143
+Finished RTL Elaboration : Time (s): cpu = 00:00:07 ; elapsed = 00:00:07 . Memory (MB): peak = 1041.621 ; gain = 193.301 ; free physical = 6556 ; free virtual = 20767
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -1301,7 +1301,7 @@ Report Check Netlist:
 |1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
 +------+------------------+-------+---------+-------+------------------+
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:08 ; elapsed = 00:00:08 . Memory (MB): peak = 1041.617 ; gain = 193.301 ; free physical = 7273 ; free virtual = 21143
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:07 ; elapsed = 00:00:07 . Memory (MB): peak = 1041.621 ; gain = 193.301 ; free physical = 6556 ; free virtual = 20766
 ---------------------------------------------------------------------------------
 INFO: [Netlist 29-17] Analyzing 2 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
@@ -1320,24 +1320,24 @@ Completed Processing XDC Constraints
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1334.820 ; gain = 0.000 ; free physical = 6991 ; free virtual = 20878
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1334.824 ; gain = 0.000 ; free physical = 6273 ; free virtual = 20516
 INFO: Launching helper process for spawning children vivado processes
-INFO: Helper process launched with PID 5185 
+INFO: Helper process launched with PID 15340 
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:16 ; elapsed = 00:00:16 . Memory (MB): peak = 1334.824 ; gain = 486.508 ; free physical = 6994 ; free virtual = 20876
+Finished Constraint Validation : Time (s): cpu = 00:00:14 ; elapsed = 00:00:15 . Memory (MB): peak = 1334.828 ; gain = 486.508 ; free physical = 6269 ; free virtual = 20513
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7a35tcsg324-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:16 ; elapsed = 00:00:16 . Memory (MB): peak = 1334.824 ; gain = 486.508 ; free physical = 6994 ; free virtual = 20876
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:14 ; elapsed = 00:00:15 . Memory (MB): peak = 1334.828 ; gain = 486.508 ; free physical = 6269 ; free virtual = 20513
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:16 ; elapsed = 00:00:16 . Memory (MB): peak = 1334.824 ; gain = 486.508 ; free physical = 6994 ; free virtual = 20876
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:14 ; elapsed = 00:00:15 . Memory (MB): peak = 1334.828 ; gain = 486.508 ; free physical = 6269 ; free virtual = 20513
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-3537] HDL ADVISOR - The operator resource <adder> is shared. To prevent sharing consider applying a KEEP on the inputs of the operator [/home/ronan/perso/github/nanorv32/rtl/cores/nanorv32_alu.v:60]
 INFO: [Synth 8-802] inferred FSM for state register 'pstate_r_reg' in module 'nanorv32'
@@ -1362,7 +1362,7 @@ INFO: [Synth 8-3354] encoded FSM with state register 'pstate_r_reg' using encodi
 WARNING: [Synth 8-327] inferring latch for variable 'datamem_size_write_sel_reg' [/home/ronan/perso/github/nanorv32/rtl/cores/nanorv32.v:215]
 WARNING: [Synth 8-327] inferring latch for variable 'datamem_size_read_sel_reg' [/home/ronan/perso/github/nanorv32/rtl/cores/nanorv32.v:213]
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:16 ; elapsed = 00:00:16 . Memory (MB): peak = 1334.824 ; gain = 486.508 ; free physical = 6990 ; free virtual = 20872
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:15 ; elapsed = 00:00:15 . Memory (MB): peak = 1334.828 ; gain = 486.508 ; free physical = 6266 ; free virtual = 20510
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -1494,7 +1494,7 @@ BRAMs: 100 (col length: RAMB18 60 RAMB36 30)
 ---------------------------------------------------------------------------------
 Finished Part Resource Summary
 ---------------------------------------------------------------------------------
-Start Parallel Synthesis Optimization  : Time (s): cpu = 00:00:16 ; elapsed = 00:00:17 . Memory (MB): peak = 1334.828 ; gain = 486.512 ; free physical = 6991 ; free virtual = 20872
+Start Parallel Synthesis Optimization  : Time (s): cpu = 00:00:15 ; elapsed = 00:00:15 . Memory (MB): peak = 1334.832 ; gain = 486.512 ; free physical = 6266 ; free virtual = 20510
 ---------------------------------------------------------------------------------
 Start Cross Boundary Optimization
 ---------------------------------------------------------------------------------
@@ -1531,9 +1531,9 @@ WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[2]
 WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[1]
 WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[0]
 ---------------------------------------------------------------------------------
-Finished Cross Boundary Optimization : Time (s): cpu = 00:00:17 ; elapsed = 00:00:17 . Memory (MB): peak = 1334.828 ; gain = 486.512 ; free physical = 6993 ; free virtual = 20875
+Finished Cross Boundary Optimization : Time (s): cpu = 00:00:15 ; elapsed = 00:00:16 . Memory (MB): peak = 1334.832 ; gain = 486.512 ; free physical = 6269 ; free virtual = 20512
 ---------------------------------------------------------------------------------
-Finished Parallel Reinference  : Time (s): cpu = 00:00:17 ; elapsed = 00:00:17 . Memory (MB): peak = 1334.828 ; gain = 486.512 ; free physical = 6993 ; free virtual = 20875
+Finished Parallel Reinference  : Time (s): cpu = 00:00:15 ; elapsed = 00:00:16 . Memory (MB): peak = 1334.832 ; gain = 486.512 ; free physical = 6269 ; free virtual = 20512
 
 Report RTL Partitions: 
 +-+--------------+------------+----------+
@@ -1568,9 +1568,9 @@ Start Area Optimization
 ---------------------------------------------------------------------------------
 WARNING: [Synth 8-3332] Sequential element (dataif_cpu_ready_r_reg) is unused and will be removed from module nanorv32_tcm_arbitrer.
 ---------------------------------------------------------------------------------
-Finished Area Optimization : Time (s): cpu = 00:00:20 ; elapsed = 00:00:20 . Memory (MB): peak = 1334.828 ; gain = 486.512 ; free physical = 7011 ; free virtual = 20893
+Finished Area Optimization : Time (s): cpu = 00:00:18 ; elapsed = 00:00:19 . Memory (MB): peak = 1334.832 ; gain = 486.512 ; free physical = 6266 ; free virtual = 20511
 ---------------------------------------------------------------------------------
-Finished Parallel Area Optimization  : Time (s): cpu = 00:00:20 ; elapsed = 00:00:20 . Memory (MB): peak = 1334.828 ; gain = 486.512 ; free physical = 7011 ; free virtual = 20893
+Finished Parallel Area Optimization  : Time (s): cpu = 00:00:18 ; elapsed = 00:00:19 . Memory (MB): peak = 1334.832 ; gain = 486.512 ; free physical = 6266 ; free virtual = 20511
 
 Report RTL Partitions: 
 +-+--------------+------------+----------+
@@ -1584,7 +1584,7 @@ Start Timing Optimization
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:28 ; elapsed = 00:00:28 . Memory (MB): peak = 1335.820 ; gain = 487.504 ; free physical = 7058 ; free virtual = 20929
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:27 ; elapsed = 00:00:27 . Memory (MB): peak = 1335.824 ; gain = 487.504 ; free physical = 6244 ; free virtual = 20502
 ---------------------------------------------------------------------------------
 Found timing loop:
      0: U_ARBITRER/i_2/i_19/O (GATE_2_2)
@@ -1628,7 +1628,7 @@ WARNING: [Synth 8-295] found timing loop. [/home/ronan/perso/github/nanorv32/rtl
 WARNING: [Synth 8-326] inferred exception to break timing loop: 'set_false_path -through U_ARBITRER/i_2/i_19/O'
 WARNING: [Synth 8-326] inferred exception to break timing loop: 'set_false_path -through U_ARBITRER/i_2/i_19/O'
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:30 ; elapsed = 00:00:30 . Memory (MB): peak = 1385.414 ; gain = 537.098 ; free physical = 7015 ; free virtual = 20880
+Finished Timing Optimization : Time (s): cpu = 00:00:29 ; elapsed = 00:00:29 . Memory (MB): peak = 1385.418 ; gain = 537.098 ; free physical = 6195 ; free virtual = 20454
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -1663,16 +1663,16 @@ INFO: [Synth 8-4480] The timing for the instance RAM_reg_1 (implemented as a blo
 INFO: [Synth 8-4480] The timing for the instance RAM_reg_0 (implemented as a block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
 INFO: [Synth 8-4480] The timing for the instance RAM_reg_1 (implemented as a block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:31 ; elapsed = 00:00:31 . Memory (MB): peak = 1385.414 ; gain = 537.098 ; free physical = 7015 ; free virtual = 20880
+Finished Technology Mapping : Time (s): cpu = 00:00:29 ; elapsed = 00:00:30 . Memory (MB): peak = 1385.418 ; gain = 537.098 ; free physical = 6194 ; free virtual = 20453
 ---------------------------------------------------------------------------------
-Finished Parallel Technology Mapping Optimization  : Time (s): cpu = 00:00:31 ; elapsed = 00:00:31 . Memory (MB): peak = 1385.414 ; gain = 537.098 ; free physical = 7015 ; free virtual = 20880
+Finished Parallel Technology Mapping Optimization  : Time (s): cpu = 00:00:29 ; elapsed = 00:00:30 . Memory (MB): peak = 1385.418 ; gain = 537.098 ; free physical = 6194 ; free virtual = 20453
 
 Report RTL Partitions: 
 +-+--------------+------------+----------+
 | |RTL Partition |Replication |Instances |
 +-+--------------+------------+----------+
 +-+--------------+------------+----------+
-Finished Parallel Synthesis Optimization  : Time (s): cpu = 00:00:31 ; elapsed = 00:00:31 . Memory (MB): peak = 1385.414 ; gain = 537.098 ; free physical = 7015 ; free virtual = 20880
+Finished Parallel Synthesis Optimization  : Time (s): cpu = 00:00:29 ; elapsed = 00:00:30 . Memory (MB): peak = 1385.418 ; gain = 537.098 ; free physical = 6194 ; free virtual = 20453
 ---------------------------------------------------------------------------------
 Start IO Insertion
 ---------------------------------------------------------------------------------
@@ -1723,7 +1723,7 @@ WARNING: [Synth 8-3295] tying undriven pin U_ARBITRER:cpu_dataif_addr[13] to con
 WARNING: [Synth 8-3295] tying undriven pin U_ARBITRER:cpu_dataif_addr[1] to constant 0
 WARNING: [Synth 8-3295] tying undriven pin U_ARBITRER:cpu_dataif_addr[0] to constant 0
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:31 ; elapsed = 00:00:31 . Memory (MB): peak = 1385.414 ; gain = 537.098 ; free physical = 7015 ; free virtual = 20880
+Finished IO Insertion : Time (s): cpu = 00:00:30 ; elapsed = 00:00:30 . Memory (MB): peak = 1385.418 ; gain = 537.098 ; free physical = 6194 ; free virtual = 20453
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -1736,7 +1736,7 @@ Report Check Netlist:
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:31 ; elapsed = 00:00:31 . Memory (MB): peak = 1385.414 ; gain = 537.098 ; free physical = 7015 ; free virtual = 20880
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:30 ; elapsed = 00:00:30 . Memory (MB): peak = 1385.418 ; gain = 537.098 ; free physical = 6194 ; free virtual = 20453
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -1751,7 +1751,7 @@ WARNING: [Synth 8-326] inferred exception to break timing loop: 'set_false_path 
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:31 ; elapsed = 00:00:32 . Memory (MB): peak = 1385.414 ; gain = 537.098 ; free physical = 7015 ; free virtual = 20880
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:30 ; elapsed = 00:00:30 . Memory (MB): peak = 1385.418 ; gain = 537.098 ; free physical = 6194 ; free virtual = 20453
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -1803,11 +1803,11 @@ Report Instance Areas:
 |12    |      inst     |arty_mmcm_clk_wiz       |     5|
 +------+---------------+------------------------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:31 ; elapsed = 00:00:32 . Memory (MB): peak = 1385.414 ; gain = 537.098 ; free physical = 7015 ; free virtual = 20880
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:30 ; elapsed = 00:00:30 . Memory (MB): peak = 1385.418 ; gain = 537.098 ; free physical = 6194 ; free virtual = 20453
 ---------------------------------------------------------------------------------
 Synthesis finished with 0 errors, 0 critical warnings and 83 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:25 ; elapsed = 00:00:25 . Memory (MB): peak = 1385.414 ; gain = 151.977 ; free physical = 7015 ; free virtual = 20880
-Synthesis Optimization Complete : Time (s): cpu = 00:00:31 ; elapsed = 00:00:32 . Memory (MB): peak = 1385.414 ; gain = 537.098 ; free physical = 7015 ; free virtual = 20880
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:24 ; elapsed = 00:00:25 . Memory (MB): peak = 1385.418 ; gain = 151.977 ; free physical = 6194 ; free virtual = 20453
+Synthesis Optimization Complete : Time (s): cpu = 00:00:30 ; elapsed = 00:00:30 . Memory (MB): peak = 1385.418 ; gain = 537.098 ; free physical = 6194 ; free virtual = 20453
 INFO: [Project 1-571] Translating synthesized netlist
 INFO: [Netlist 29-17] Analyzing 110 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
@@ -1823,7 +1823,7 @@ INFO: [Project 1-111] Unisim Transformation Summary:
 INFO: [Common 17-83] Releasing license: Synthesis
 61 Infos, 119 Warnings, 1 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:00:31 ; elapsed = 00:00:31 . Memory (MB): peak = 1385.418 ; gain = 465.766 ; free physical = 7016 ; free virtual = 20881
+synth_design: Time (s): cpu = 00:00:30 ; elapsed = 00:00:30 . Memory (MB): peak = 1385.422 ; gain = 465.766 ; free physical = 6188 ; free virtual = 20449
 # set outputDir ./rpt
 # file mkdir $outputDir
 # report_timing_summary -file $outputDir/post_synth_timing_summary.rpt
@@ -1831,9 +1831,9 @@ INFO: [Timing 38-35] Done setting XDC timing constraints.
 INFO: [Timing 38-2] Deriving generated clocks
 INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -1, Delay Type: min_max.
 INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 4 CPUs
-report_timing_summary: Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 1682.582 ; gain = 297.164 ; free physical = 6815 ; free virtual = 20680
+report_timing_summary: Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 1682.586 ; gain = 297.164 ; free physical = 5958 ; free virtual = 20252
 # report_utilization -file $outputDir/post_synth_util.rpt
-report_utilization: Time (s): cpu = 00:00:00.13 ; elapsed = 00:00:00.15 . Memory (MB): peak = 1682.582 ; gain = 0.000 ; free physical = 6815 ; free virtual = 20680
+report_utilization: Time (s): cpu = 00:00:00.12 ; elapsed = 00:00:00.17 . Memory (MB): peak = 1682.586 ; gain = 0.000 ; free physical = 5957 ; free virtual = 20251
 # check_timing -override_defaults loops -verbose > post_synt_loops.rpt
 
 check_timing report
@@ -1953,7 +1953,7 @@ INFO: [DRC 23-27] Running DRC with 4 threads
 INFO: [Project 1-461] DRC finished with 0 Errors
 INFO: [Project 1-462] Please refer to the DRC report (report_drc) for more information.
 
-Time (s): cpu = 00:00:00.10 ; elapsed = 00:00:00.10 . Memory (MB): peak = 1719.598 ; gain = 37.016 ; free physical = 6811 ; free virtual = 20675
+Time (s): cpu = 00:00:00.17 ; elapsed = 00:00:00.18 . Memory (MB): peak = 1719.602 ; gain = 37.016 ; free physical = 5952 ; free virtual = 20247
 
 Starting Logic Optimization Task
 Implement Debug Cores | Checksum: 223d8fb75
@@ -1963,34 +1963,34 @@ INFO: [Opt 31-138] Pushed 1 inverter(s) to 1 load pin(s).
 INFO: [Opt 31-49] Retargeted 0 cell(s).
 Phase 1 Retarget | Checksum: 23804115d
 
-Time (s): cpu = 00:00:00.15 ; elapsed = 00:00:00.15 . Memory (MB): peak = 1719.598 ; gain = 0.000 ; free physical = 6811 ; free virtual = 20676
+Time (s): cpu = 00:00:00.11 ; elapsed = 00:00:00.11 . Memory (MB): peak = 1719.602 ; gain = 0.000 ; free physical = 5952 ; free virtual = 20247
 
 Phase 2 Constant Propagation
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
 INFO: [Opt 31-10] Eliminated 9 cells.
 Phase 2 Constant Propagation | Checksum: 1a808c5b2
 
-Time (s): cpu = 00:00:00.27 ; elapsed = 00:00:00.26 . Memory (MB): peak = 1719.598 ; gain = 0.000 ; free physical = 6811 ; free virtual = 20676
+Time (s): cpu = 00:00:00.23 ; elapsed = 00:00:00.22 . Memory (MB): peak = 1719.602 ; gain = 0.000 ; free physical = 5952 ; free virtual = 20247
 
 Phase 3 Sweep
 INFO: [Opt 31-12] Eliminated 1258 unconnected nets.
 INFO: [Opt 31-11] Eliminated 1581 unconnected cells.
 Phase 3 Sweep | Checksum: 5ca649a7
 
-Time (s): cpu = 00:00:00.53 ; elapsed = 00:00:00.52 . Memory (MB): peak = 1719.598 ; gain = 0.000 ; free physical = 6811 ; free virtual = 20676
+Time (s): cpu = 00:00:00.49 ; elapsed = 00:00:00.49 . Memory (MB): peak = 1719.602 ; gain = 0.000 ; free physical = 5952 ; free virtual = 20247
 
 Starting Connectivity Check Task
 
-Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1719.598 ; gain = 0.000 ; free physical = 6811 ; free virtual = 20676
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1719.602 ; gain = 0.000 ; free physical = 5952 ; free virtual = 20247
 Ending Logic Optimization Task | Checksum: 5ca649a7
 
-Time (s): cpu = 00:00:00.53 ; elapsed = 00:00:00.52 . Memory (MB): peak = 1719.598 ; gain = 0.000 ; free physical = 6811 ; free virtual = 20676
+Time (s): cpu = 00:00:00.49 ; elapsed = 00:00:00.49 . Memory (MB): peak = 1719.602 ; gain = 0.000 ; free physical = 5952 ; free virtual = 20247
 
 Starting Power Optimization Task
 INFO: [Pwropt 34-132] Skipping clock gating for clocks with a period < 2.00 ns.
 Ending Power Optimization Task | Checksum: 5ca649a7
 
-Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.01 . Memory (MB): peak = 1719.598 ; gain = 0.000 ; free physical = 6811 ; free virtual = 20676
+Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.01 . Memory (MB): peak = 1719.602 ; gain = 0.000 ; free physical = 5952 ; free virtual = 20247
 INFO: [Common 17-83] Releasing license: Implementation
 12 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
 opt_design completed successfully
@@ -1999,6 +1999,19 @@ INFO: [Timing 38-35] Done setting XDC timing constraints.
 WARNING: [Vivado 12-975] No timing paths matched 'get_timing_paths -delay_type max -max_paths 50 -nworst 1'.
 WARNING: [Vivado 12-975] No timing paths matched 'get_timing_paths -delay_type min -max_paths 50 -nworst 1'.
 CSV file ./rpt/post_opt_critpath_report.csv has been created.
+
+# check_timing -override_defaults loops -verbose > post_opt_loops.rpt
+
+check_timing report
+
+Table of Contents
+-----------------
+1. checking loops
+
+1. checking loops
+-----------------
+ There are 0 combinational loops in the design.
+
 
 # place_design
 Command: place_design
@@ -2016,15 +2029,15 @@ Starting Placer Task
 INFO: [Place 30-611] Multithreading enabled for place_design using a maximum of 4 CPUs
 
 Phase 1 Placer Initialization
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1719.598 ; gain = 0.000 ; free physical = 6811 ; free virtual = 20675
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1719.602 ; gain = 0.000 ; free physical = 5949 ; free virtual = 20248
 Phase 1 Placer Initialization | Checksum: 00000000
 
-Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.02 . Memory (MB): peak = 1719.598 ; gain = 0.000 ; free physical = 6811 ; free virtual = 20675
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.01 . Memory (MB): peak = 1719.602 ; gain = 0.000 ; free physical = 5949 ; free virtual = 20248
 ERROR: [Place 30-494] The design is empty
 Resolution: Check if opt_design has removed all the leaf cells of your design.  Check whether you have instantiated and connected all of the top level ports.
 Ending Placer Task | Checksum: 00000000
 
-Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.02 . Memory (MB): peak = 1719.598 ; gain = 0.000 ; free physical = 6811 ; free virtual = 20675
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.01 . Memory (MB): peak = 1719.602 ; gain = 0.000 ; free physical = 5949 ; free virtual = 20248
 INFO: [Common 17-83] Releasing license: Implementation
 9 Infos, 0 Warnings, 0 Critical Warnings and 2 Errors encountered.
 place_design failed
