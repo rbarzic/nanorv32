@@ -41,6 +41,7 @@ module tb_nanorv32;
    wire [15:0]          P0;                     // To/From U_DUT of nanorv32_simple.v
    wire [15:0]          P1;                     // To/From U_DUT of nanorv32_simple.v
    wire                 clk;                    // From U_CLOCK_GEN of clock_gen.v
+   wire                 illegal_instruction;    // From U_DUT of nanorv32_simple.v
    wire                 rst_n;                  // From U_RESET_GEN of reset_gen.v
    // End of automatics
 
@@ -51,6 +52,8 @@ module tb_nanorv32;
      ); */
    nanorv32_simple U_DUT (
                            /*AUTOINST*/
+                          // Outputs
+                          .illegal_instruction  (illegal_instruction),
                           // Inouts
                           .P0                   (P0[15:0]),
                           .P1                   (P1[15:0]),

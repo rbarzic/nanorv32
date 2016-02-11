@@ -33,15 +33,22 @@
 
 module nanorv32 (/*AUTOARG*/
    // Outputs
-   cpu_codeif_addr, cpu_codeif_req, cpu_dataif_addr, cpu_dataif_wdata,
-   cpu_dataif_bytesel, cpu_dataif_req,
+   illegal_instruction, cpu_codeif_addr, cpu_codeif_req,
+   cpu_dataif_addr, cpu_dataif_wdata, cpu_dataif_bytesel,
+   cpu_dataif_req,
    // Inputs
-   codeif_cpu_rdata, codeif_cpu_early_ready, codeif_cpu_ready_r,
-   dataif_cpu_rdata, dataif_cpu_early_ready, dataif_cpu_ready_r,
-   rst_n, clk
+   rst_n, clk, codeif_cpu_rdata, codeif_cpu_early_ready,
+   codeif_cpu_ready_r, dataif_cpu_rdata, dataif_cpu_early_ready,
+   dataif_cpu_ready_r
    );
 
 `include "nanorv32_parameters.v"
+
+
+   input                     rst_n;
+   input                     clk;
+
+   output                    illegal_instruction;
 
 
    // Code memory interface
@@ -59,8 +66,6 @@ module nanorv32 (/*AUTOARG*/
    input [NANORV32_DATA_MSB:0]  dataif_cpu_rdata;
    input                     dataif_cpu_early_ready;
    input                     dataif_cpu_ready_r;
-   input                     rst_n;
-   input                     clk;
 
    /*AUTOINPUT*/
    /*AUTOOUTPUT*/
@@ -944,7 +949,7 @@ module nanorv32 (/*AUTOARG*/
 
         NANORV32_PSTATE_BRANCH: begin
            output_new_pc = 0;
-           if (codeif_cpu_early_ready) begin
+           if (codeif_cpu_ready_r) begin
               force_stall_pstate = 1'b0;
               pstate_next =  NANORV32_PSTATE_CONT;
            end
@@ -955,7 +960,7 @@ module nanorv32 (/*AUTOARG*/
         end
         NANORV32_PSTATE_STALL: begin
            valid_inst = 0;
-           if (codeif_cpu_early_ready)
+           if (codeif_cpu_ready_r)
              begin
               force_stall_pstate = 1'b0;
               pstate_next =  NANORV32_PSTATE_CONT ;

@@ -1,13 +1,13 @@
 #-----------------------------------------------------------
-# Vivado v2015.4 (64-bit)
-# SW Build 1412921 on Wed Nov 18 09:44:32 MST 2015
-# IP Build 1412160 on Tue Nov 17 13:47:24 MST 2015
-# Start of session at: Wed Feb 10 20:56:25 2016
-# Process ID: 15329
-# Current directory: /home/ronan/perso/github/nanorv32/synt/fpga
+# Vivado v2015.3 (64-bit)
+# SW Build 1368829 on Mon Sep 28 20:06:39 MDT 2015
+# IP Build 1367837 on Mon Sep 28 08:56:14 MDT 2015
+# Start of session at: Thu Feb 11 08:23:26 2016
+# Process ID: 1691
+# Current directory: /home/roba/perso/github/nanorv32/synt/fpga
 # Command line: vivado -mode tcl -source vivado.tcl
-# Log file: /home/ronan/perso/github/nanorv32/synt/fpga/vivado.log
-# Journal file: /home/ronan/perso/github/nanorv32/synt/fpga/vivado.jou
+# Log file: /home/roba/perso/github/nanorv32/synt/fpga/vivado.log
+# Journal file: /home/roba/perso/github/nanorv32/synt/fpga/vivado.jou
 #-----------------------------------------------------------
 source vivado.tcl
 # source vivado_utils.tcl
@@ -69,9 +69,9 @@ Starting synth_design
 Attempting to get a license for feature 'Synthesis' and/or device 'xc7a35t'
 INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a35t'
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 1000.238 ; gain = 151.918 ; free physical = 6602 ; free virtual = 20810
+Starting RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 1032.242 ; gain = 162.945 ; free physical = 3866 ; free virtual = 25464
 ---------------------------------------------------------------------------------
-INFO: [Synth 8-638] synthesizing module 'nanorv32_simple' [/home/ronan/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:35]
+INFO: [Synth 8-638] synthesizing module 'nanorv32_simple' [/home/roba/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:35]
 	Parameter NANORV32_ADDR_SIZE bound to: 16 - type: integer 
 	Parameter NANORV32_ADDR_MSB bound to: 15 - type: integer 
 	Parameter NANORV32_DATA_SIZE bound to: 32 - type: integer 
@@ -255,7 +255,7 @@ INFO: [Synth 8-638] synthesizing module 'nanorv32_simple' [/home/ronan/perso/git
 	Parameter NANORV32_PERIPH_BASE_ADDRESS bound to: -268435456 - type: integer 
 	Parameter AW bound to: 15 - type: integer 
 	Parameter ADDR_WIDTH bound to: 15 - type: integer 
-INFO: [Synth 8-638] synthesizing module 'nanorv32' [/home/ronan/perso/github/nanorv32/rtl/cores/nanorv32.v:34]
+INFO: [Synth 8-638] synthesizing module 'nanorv32' [/home/roba/perso/github/nanorv32/rtl/cores/nanorv32.v:34]
 	Parameter NANORV32_ADDR_SIZE bound to: 16 - type: integer 
 	Parameter NANORV32_ADDR_MSB bound to: 15 - type: integer 
 	Parameter NANORV32_DATA_SIZE bound to: 32 - type: integer 
@@ -437,10 +437,10 @@ INFO: [Synth 8-638] synthesizing module 'nanorv32' [/home/ronan/perso/github/nan
 	Parameter NANORV32_CODE_BASE_ADDRESS bound to: 0 - type: integer 
 	Parameter NANORV32_RAM_BASE_ADDRESS bound to: 536870912 - type: integer 
 	Parameter NANORV32_PERIPH_BASE_ADDRESS bound to: -268435456 - type: integer 
-INFO: [Synth 8-226] default block is never used [/home/ronan/perso/github/nanorv32/rtl/cores/nanorv32.v:747]
-INFO: [Synth 8-226] default block is never used [/home/ronan/perso/github/nanorv32/rtl/cores/nanorv32.v:781]
-INFO: [Synth 8-226] default block is never used [/home/ronan/perso/github/nanorv32/rtl/cores/nanorv32.v:801]
-INFO: [Synth 8-638] synthesizing module 'nanorv32_regfile' [/home/ronan/perso/github/nanorv32/rtl/cores/nanorv32_regfile.v:34]
+INFO: [Synth 8-226] default block is never used [/home/roba/perso/github/nanorv32/rtl/cores/nanorv32.v:752]
+INFO: [Synth 8-226] default block is never used [/home/roba/perso/github/nanorv32/rtl/cores/nanorv32.v:786]
+INFO: [Synth 8-226] default block is never used [/home/roba/perso/github/nanorv32/rtl/cores/nanorv32.v:806]
+INFO: [Synth 8-638] synthesizing module 'nanorv32_regfile' [/home/roba/perso/github/nanorv32/rtl/cores/nanorv32_regfile.v:34]
 	Parameter NUM_REGS bound to: 32 - type: integer 
 	Parameter NANORV32_ADDR_SIZE bound to: 16 - type: integer 
 	Parameter NANORV32_ADDR_MSB bound to: 15 - type: integer 
@@ -623,8 +623,8 @@ INFO: [Synth 8-638] synthesizing module 'nanorv32_regfile' [/home/ronan/perso/gi
 	Parameter NANORV32_CODE_BASE_ADDRESS bound to: 0 - type: integer 
 	Parameter NANORV32_RAM_BASE_ADDRESS bound to: 536870912 - type: integer 
 	Parameter NANORV32_PERIPH_BASE_ADDRESS bound to: -268435456 - type: integer 
-INFO: [Synth 8-256] done synthesizing module 'nanorv32_regfile' (1#1) [/home/ronan/perso/github/nanorv32/rtl/cores/nanorv32_regfile.v:34]
-INFO: [Synth 8-638] synthesizing module 'nanorv32_alu' [/home/ronan/perso/github/nanorv32/rtl/cores/nanorv32_alu.v:31]
+INFO: [Synth 8-256] done synthesizing module 'nanorv32_regfile' (1#1) [/home/roba/perso/github/nanorv32/rtl/cores/nanorv32_regfile.v:34]
+INFO: [Synth 8-638] synthesizing module 'nanorv32_alu' [/home/roba/perso/github/nanorv32/rtl/cores/nanorv32_alu.v:31]
 	Parameter NANORV32_ADDR_SIZE bound to: 16 - type: integer 
 	Parameter NANORV32_ADDR_MSB bound to: 15 - type: integer 
 	Parameter NANORV32_DATA_SIZE bound to: 32 - type: integer 
@@ -806,12 +806,12 @@ INFO: [Synth 8-638] synthesizing module 'nanorv32_alu' [/home/ronan/perso/github
 	Parameter NANORV32_CODE_BASE_ADDRESS bound to: 0 - type: integer 
 	Parameter NANORV32_RAM_BASE_ADDRESS bound to: 536870912 - type: integer 
 	Parameter NANORV32_PERIPH_BASE_ADDRESS bound to: -268435456 - type: integer 
-INFO: [Synth 8-155] case statement is not full and has no default [/home/ronan/perso/github/nanorv32/rtl/cores/nanorv32_alu.v:60]
-INFO: [Synth 8-256] done synthesizing module 'nanorv32_alu' (2#1) [/home/ronan/perso/github/nanorv32/rtl/cores/nanorv32_alu.v:31]
-INFO: [Synth 8-226] default block is never used [/home/ronan/perso/github/nanorv32/rtl/cores/nanorv32.v:1121]
-INFO: [Synth 8-226] default block is never used [/home/ronan/perso/github/nanorv32/rtl/cores/nanorv32.v:1145]
-INFO: [Synth 8-256] done synthesizing module 'nanorv32' (3#1) [/home/ronan/perso/github/nanorv32/rtl/cores/nanorv32.v:34]
-INFO: [Synth 8-638] synthesizing module 'nanorv32_tcm_ctrl' [/home/ronan/perso/github/nanorv32/rtl/ips/nanorv32_tcm_ctrl.v:32]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/roba/perso/github/nanorv32/rtl/cores/nanorv32_alu.v:60]
+INFO: [Synth 8-256] done synthesizing module 'nanorv32_alu' (2#1) [/home/roba/perso/github/nanorv32/rtl/cores/nanorv32_alu.v:31]
+INFO: [Synth 8-226] default block is never used [/home/roba/perso/github/nanorv32/rtl/cores/nanorv32.v:1126]
+INFO: [Synth 8-226] default block is never used [/home/roba/perso/github/nanorv32/rtl/cores/nanorv32.v:1150]
+INFO: [Synth 8-256] done synthesizing module 'nanorv32' (3#1) [/home/roba/perso/github/nanorv32/rtl/cores/nanorv32.v:34]
+INFO: [Synth 8-638] synthesizing module 'nanorv32_tcm_ctrl' [/home/roba/perso/github/nanorv32/rtl/ips/nanorv32_tcm_ctrl.v:32]
 	Parameter SIZE bound to: 8192 - type: integer 
 	Parameter ADDR_WIDTH bound to: 13 - type: integer 
 	Parameter NANORV32_ADDR_SIZE bound to: 16 - type: integer 
@@ -995,18 +995,18 @@ INFO: [Synth 8-638] synthesizing module 'nanorv32_tcm_ctrl' [/home/ronan/perso/g
 	Parameter NANORV32_CODE_BASE_ADDRESS bound to: 0 - type: integer 
 	Parameter NANORV32_RAM_BASE_ADDRESS bound to: 536870912 - type: integer 
 	Parameter NANORV32_PERIPH_BASE_ADDRESS bound to: -268435456 - type: integer 
-INFO: [Synth 8-638] synthesizing module 'bytewrite_ram_32bits' [/home/ronan/perso/github/nanorv32/rtl/ips/bytewrite_ram_32bits.v:12]
+INFO: [Synth 8-638] synthesizing module 'bytewrite_ram_32bits' [/home/roba/perso/github/nanorv32/rtl/ips/bytewrite_ram_32bits.v:12]
 	Parameter SIZE bound to: 8192 - type: integer 
 	Parameter ADDR_WIDTH bound to: 11 - type: integer 
 	Parameter filename bound to: code.hex - type: string 
 	Parameter COL_WIDTH bound to: 8 - type: integer 
 	Parameter NB_COL bound to: 4 - type: integer 
-CRITICAL WARNING: [Synth 8-4445] could not open $readmem data file 'code.hex'; please make sure the file is added to project and has read permission, ignoring [/home/ronan/perso/github/nanorv32/rtl/ips/bytewrite_ram_32bits.v:39]
-INFO: [Synth 8-256] done synthesizing module 'bytewrite_ram_32bits' (4#1) [/home/ronan/perso/github/nanorv32/rtl/ips/bytewrite_ram_32bits.v:12]
-INFO: [Synth 8-256] done synthesizing module 'nanorv32_tcm_ctrl' (5#1) [/home/ronan/perso/github/nanorv32/rtl/ips/nanorv32_tcm_ctrl.v:32]
-WARNING: [Synth 8-689] width (15) of port connection 'addr' does not match port width (13) of module 'nanorv32_tcm_ctrl' [/home/ronan/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:153]
-WARNING: [Synth 8-689] width (15) of port connection 'addr' does not match port width (13) of module 'nanorv32_tcm_ctrl' [/home/ronan/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:181]
-INFO: [Synth 8-638] synthesizing module 'nanorv32_tcm_arbitrer' [/home/ronan/perso/github/nanorv32/rtl/ips/nanorv32_tcm_arbitrer.v:32]
+CRITICAL WARNING: [Synth 8-4445] could not open $readmem data file 'code.hex'; please make sure the file is added to project and has read permission, ignoring [/home/roba/perso/github/nanorv32/rtl/ips/bytewrite_ram_32bits.v:39]
+INFO: [Synth 8-256] done synthesizing module 'bytewrite_ram_32bits' (4#1) [/home/roba/perso/github/nanorv32/rtl/ips/bytewrite_ram_32bits.v:12]
+INFO: [Synth 8-256] done synthesizing module 'nanorv32_tcm_ctrl' (5#1) [/home/roba/perso/github/nanorv32/rtl/ips/nanorv32_tcm_ctrl.v:32]
+WARNING: [Synth 8-689] width (15) of port connection 'addr' does not match port width (13) of module 'nanorv32_tcm_ctrl' [/home/roba/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:158]
+WARNING: [Synth 8-689] width (15) of port connection 'addr' does not match port width (13) of module 'nanorv32_tcm_ctrl' [/home/roba/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:186]
+INFO: [Synth 8-638] synthesizing module 'nanorv32_tcm_arbitrer' [/home/roba/perso/github/nanorv32/rtl/ips/nanorv32_tcm_arbitrer.v:32]
 	Parameter ADDR_WIDTH bound to: 13 - type: integer 
 	Parameter NANORV32_ADDR_SIZE bound to: 16 - type: integer 
 	Parameter NANORV32_ADDR_MSB bound to: 15 - type: integer 
@@ -1189,20 +1189,20 @@ INFO: [Synth 8-638] synthesizing module 'nanorv32_tcm_arbitrer' [/home/ronan/per
 	Parameter NANORV32_CODE_BASE_ADDRESS bound to: 0 - type: integer 
 	Parameter NANORV32_RAM_BASE_ADDRESS bound to: 536870912 - type: integer 
 	Parameter NANORV32_PERIPH_BASE_ADDRESS bound to: -268435456 - type: integer 
-INFO: [Synth 8-256] done synthesizing module 'nanorv32_tcm_arbitrer' (6#1) [/home/ronan/perso/github/nanorv32/rtl/ips/nanorv32_tcm_arbitrer.v:32]
-WARNING: [Synth 8-689] width (15) of port connection 'tcmcode_addr' does not match port width (13) of module 'nanorv32_tcm_arbitrer' [/home/ronan/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:194]
-WARNING: [Synth 8-689] width (15) of port connection 'tcmdata_addr' does not match port width (13) of module 'nanorv32_tcm_arbitrer' [/home/ronan/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:198]
-INFO: [Synth 8-638] synthesizing module 'nanorv32_clkgen' [/home/ronan/perso/github/nanorv32/rtl/chips/nanorv32_clkgen_xilinx.v:33]
-INFO: [Synth 8-638] synthesizing module 'arty_mmcm' [/home/ronan/perso/github/nanorv32/rtl/ips/clock_manager/arty_mmcm/arty_mmcm.v:69]
-INFO: [Synth 8-638] synthesizing module 'arty_mmcm_clk_wiz' [/home/ronan/perso/github/nanorv32/rtl/ips/clock_manager/arty_mmcm/arty_mmcm_clk_wiz.v:67]
-INFO: [Synth 8-638] synthesizing module 'IBUF' [/opt/Xilinx/Vivado/2015.4/scripts/rt/data/unisim_comp.v:14145]
+INFO: [Synth 8-256] done synthesizing module 'nanorv32_tcm_arbitrer' (6#1) [/home/roba/perso/github/nanorv32/rtl/ips/nanorv32_tcm_arbitrer.v:32]
+WARNING: [Synth 8-689] width (15) of port connection 'tcmcode_addr' does not match port width (13) of module 'nanorv32_tcm_arbitrer' [/home/roba/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:199]
+WARNING: [Synth 8-689] width (15) of port connection 'tcmdata_addr' does not match port width (13) of module 'nanorv32_tcm_arbitrer' [/home/roba/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:203]
+INFO: [Synth 8-638] synthesizing module 'nanorv32_clkgen' [/home/roba/perso/github/nanorv32/rtl/chips/nanorv32_clkgen_xilinx.v:33]
+INFO: [Synth 8-638] synthesizing module 'arty_mmcm' [/home/roba/perso/github/nanorv32/rtl/ips/clock_manager/arty_mmcm/arty_mmcm.v:69]
+INFO: [Synth 8-638] synthesizing module 'arty_mmcm_clk_wiz' [/home/roba/perso/github/nanorv32/rtl/ips/clock_manager/arty_mmcm/arty_mmcm_clk_wiz.v:67]
+INFO: [Synth 8-638] synthesizing module 'IBUF' [/opt/Xilinx/Vivado/2015.3/scripts/rt/data/unisim_comp.v:14176]
 	Parameter CAPACITANCE bound to: DONT_CARE - type: string 
 	Parameter IBUF_DELAY_VALUE bound to: 0 - type: string 
 	Parameter IBUF_LOW_PWR bound to: TRUE - type: string 
 	Parameter IFD_DELAY_VALUE bound to: AUTO - type: string 
 	Parameter IOSTANDARD bound to: DEFAULT - type: string 
-INFO: [Synth 8-256] done synthesizing module 'IBUF' (7#1) [/opt/Xilinx/Vivado/2015.4/scripts/rt/data/unisim_comp.v:14145]
-INFO: [Synth 8-638] synthesizing module 'MMCME2_ADV' [/opt/Xilinx/Vivado/2015.4/scripts/rt/data/unisim_comp.v:20396]
+INFO: [Synth 8-256] done synthesizing module 'IBUF' (7#1) [/opt/Xilinx/Vivado/2015.3/scripts/rt/data/unisim_comp.v:14176]
+INFO: [Synth 8-638] synthesizing module 'MMCME2_ADV' [/opt/Xilinx/Vivado/2015.3/scripts/rt/data/unisim_comp.v:20441]
 	Parameter BANDWIDTH bound to: OPTIMIZED - type: string 
 	Parameter CLKFBOUT_MULT_F bound to: 10.000000 - type: float 
 	Parameter CLKFBOUT_PHASE bound to: 0.000000 - type: float 
@@ -1251,13 +1251,13 @@ INFO: [Synth 8-638] synthesizing module 'MMCME2_ADV' [/opt/Xilinx/Vivado/2015.4/
 	Parameter SS_MODE bound to: CENTER_HIGH - type: string 
 	Parameter SS_MOD_PERIOD bound to: 10000 - type: integer 
 	Parameter STARTUP_WAIT bound to: FALSE - type: string 
-INFO: [Synth 8-256] done synthesizing module 'MMCME2_ADV' (8#1) [/opt/Xilinx/Vivado/2015.4/scripts/rt/data/unisim_comp.v:20396]
-INFO: [Synth 8-638] synthesizing module 'BUFG' [/opt/Xilinx/Vivado/2015.4/scripts/rt/data/unisim_comp.v:607]
-INFO: [Synth 8-256] done synthesizing module 'BUFG' (9#1) [/opt/Xilinx/Vivado/2015.4/scripts/rt/data/unisim_comp.v:607]
-INFO: [Synth 8-256] done synthesizing module 'arty_mmcm_clk_wiz' (10#1) [/home/ronan/perso/github/nanorv32/rtl/ips/clock_manager/arty_mmcm/arty_mmcm_clk_wiz.v:67]
-INFO: [Synth 8-256] done synthesizing module 'arty_mmcm' (11#1) [/home/ronan/perso/github/nanorv32/rtl/ips/clock_manager/arty_mmcm/arty_mmcm.v:69]
-INFO: [Synth 8-256] done synthesizing module 'nanorv32_clkgen' (12#1) [/home/ronan/perso/github/nanorv32/rtl/chips/nanorv32_clkgen_xilinx.v:33]
-INFO: [Synth 8-256] done synthesizing module 'nanorv32_simple' (13#1) [/home/ronan/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:35]
+INFO: [Synth 8-256] done synthesizing module 'MMCME2_ADV' (8#1) [/opt/Xilinx/Vivado/2015.3/scripts/rt/data/unisim_comp.v:20441]
+INFO: [Synth 8-638] synthesizing module 'BUFG' [/opt/Xilinx/Vivado/2015.3/scripts/rt/data/unisim_comp.v:607]
+INFO: [Synth 8-256] done synthesizing module 'BUFG' (9#1) [/opt/Xilinx/Vivado/2015.3/scripts/rt/data/unisim_comp.v:607]
+INFO: [Synth 8-256] done synthesizing module 'arty_mmcm_clk_wiz' (10#1) [/home/roba/perso/github/nanorv32/rtl/ips/clock_manager/arty_mmcm/arty_mmcm_clk_wiz.v:67]
+INFO: [Synth 8-256] done synthesizing module 'arty_mmcm' (11#1) [/home/roba/perso/github/nanorv32/rtl/ips/clock_manager/arty_mmcm/arty_mmcm.v:69]
+INFO: [Synth 8-256] done synthesizing module 'nanorv32_clkgen' (12#1) [/home/roba/perso/github/nanorv32/rtl/chips/nanorv32_clkgen_xilinx.v:33]
+INFO: [Synth 8-256] done synthesizing module 'nanorv32_simple' (13#1) [/home/roba/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:35]
 WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[15]
 WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[14]
 WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[13]
@@ -1291,7 +1291,7 @@ WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[2]
 WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[1]
 WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[0]
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:07 ; elapsed = 00:00:07 . Memory (MB): peak = 1041.621 ; gain = 193.301 ; free physical = 6556 ; free virtual = 20767
+Finished RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 1073.625 ; gain = 204.328 ; free physical = 3823 ; free virtual = 25422
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -1301,7 +1301,7 @@ Report Check Netlist:
 |1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
 +------+------------------+-------+---------+-------+------------------+
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:07 ; elapsed = 00:00:07 . Memory (MB): peak = 1041.621 ; gain = 193.301 ; free physical = 6556 ; free virtual = 20766
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 1073.625 ; gain = 204.328 ; free physical = 3823 ; free virtual = 25422
 ---------------------------------------------------------------------------------
 INFO: [Netlist 29-17] Analyzing 2 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
@@ -1310,9 +1310,9 @@ INFO: [Project 1-570] Preparing netlist for logic optimization
 
 Processing XDC Constraints
 Initializing timing engine
-Parsing XDC File [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc]
-Finished Parsing XDC File [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc]
-INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/nanorv32_simple_propImpl.xdc].
+Parsing XDC File [/home/roba/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc]
+Finished Parsing XDC File [/home/roba/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc]
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [/home/roba/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/nanorv32_simple_propImpl.xdc].
 Resolution: To avoid this warning, move constraints listed in [.Xil/nanorv32_simple_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
 INFO: [Timing 38-2] Deriving generated clocks
 Completed Processing XDC Constraints
@@ -1320,26 +1320,26 @@ Completed Processing XDC Constraints
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1334.824 ; gain = 0.000 ; free physical = 6273 ; free virtual = 20516
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1397.836 ; gain = 0.000 ; free physical = 3647 ; free virtual = 25245
 INFO: Launching helper process for spawning children vivado processes
-INFO: Helper process launched with PID 15340 
+INFO: Helper process launched with PID 1710 
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:14 ; elapsed = 00:00:15 . Memory (MB): peak = 1334.828 ; gain = 486.508 ; free physical = 6269 ; free virtual = 20513
+Finished Constraint Validation : Time (s): cpu = 00:00:11 ; elapsed = 00:00:11 . Memory (MB): peak = 1397.836 ; gain = 528.539 ; free physical = 3644 ; free virtual = 25243
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7a35tcsg324-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:14 ; elapsed = 00:00:15 . Memory (MB): peak = 1334.828 ; gain = 486.508 ; free physical = 6269 ; free virtual = 20513
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:11 ; elapsed = 00:00:11 . Memory (MB): peak = 1397.836 ; gain = 528.539 ; free physical = 3644 ; free virtual = 25243
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:14 ; elapsed = 00:00:15 . Memory (MB): peak = 1334.828 ; gain = 486.508 ; free physical = 6269 ; free virtual = 20513
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:11 ; elapsed = 00:00:11 . Memory (MB): peak = 1397.836 ; gain = 528.539 ; free physical = 3644 ; free virtual = 25243
 ---------------------------------------------------------------------------------
-INFO: [Synth 8-3537] HDL ADVISOR - The operator resource <adder> is shared. To prevent sharing consider applying a KEEP on the inputs of the operator [/home/ronan/perso/github/nanorv32/rtl/cores/nanorv32_alu.v:60]
+INFO: [Synth 8-3537] HDL ADVISOR - The operator resource <adder> is shared. To prevent sharing consider applying a KEEP on the inputs of the operator [/home/roba/perso/github/nanorv32/rtl/cores/nanorv32_alu.v:60]
 INFO: [Synth 8-802] inferred FSM for state register 'pstate_r_reg' in module 'nanorv32'
 INFO: [Synth 8-5544] ROM "valid_inst" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
 INFO: [Synth 8-5544] ROM "force_stall_reset" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
@@ -1348,7 +1348,7 @@ INFO: [Synth 8-5544] ROM "pstate_next" won't be mapped to Block RAM because addr
 INFO: [Synth 8-5544] ROM "pstate_next" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
 INFO: [Synth 8-5544] ROM "pstate_next" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
 INFO: [Synth 8-5544] ROM "pstate_next" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
-WARNING: [Synth 8-327] inferring latch for variable 'alu_res_reg' [/home/ronan/perso/github/nanorv32/rtl/cores/nanorv32_alu.v:62]
+WARNING: [Synth 8-327] inferring latch for variable 'alu_res_reg' [/home/roba/perso/github/nanorv32/rtl/cores/nanorv32_alu.v:62]
 ---------------------------------------------------------------------------------------------------
                    State |                     New Encoding |                Previous Encoding 
 ---------------------------------------------------------------------------------------------------
@@ -1359,10 +1359,10 @@ WARNING: [Synth 8-327] inferring latch for variable 'alu_res_reg' [/home/ronan/p
    NANORV32_PSTATE_STALL |                              100 |                              011
 ---------------------------------------------------------------------------------------------------
 INFO: [Synth 8-3354] encoded FSM with state register 'pstate_r_reg' using encoding 'sequential' in module 'nanorv32'
-WARNING: [Synth 8-327] inferring latch for variable 'datamem_size_write_sel_reg' [/home/ronan/perso/github/nanorv32/rtl/cores/nanorv32.v:215]
-WARNING: [Synth 8-327] inferring latch for variable 'datamem_size_read_sel_reg' [/home/ronan/perso/github/nanorv32/rtl/cores/nanorv32.v:213]
+WARNING: [Synth 8-327] inferring latch for variable 'datamem_size_write_sel_reg' [/home/roba/perso/github/nanorv32/rtl/cores/nanorv32.v:220]
+WARNING: [Synth 8-327] inferring latch for variable 'datamem_size_read_sel_reg' [/home/roba/perso/github/nanorv32/rtl/cores/nanorv32.v:218]
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:15 ; elapsed = 00:00:15 . Memory (MB): peak = 1334.828 ; gain = 486.508 ; free physical = 6266 ; free virtual = 20510
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:12 ; elapsed = 00:00:12 . Memory (MB): peak = 1397.836 ; gain = 528.539 ; free physical = 3635 ; free virtual = 25234
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -1405,7 +1405,7 @@ Detailed RTL Component Info :
 	  42 Input      2 Bit        Muxes := 4     
 	  16 Input      1 Bit        Muxes := 1     
 	   4 Input      1 Bit        Muxes := 6     
-	  42 Input      1 Bit        Muxes := 4     
+	  42 Input      1 Bit        Muxes := 5     
 	   3 Input      1 Bit        Muxes := 2     
 	   2 Input      1 Bit        Muxes := 10    
 	   5 Input      1 Bit        Muxes := 7     
@@ -1450,7 +1450,7 @@ Detailed RTL Component Info :
 	  42 Input      3 Bit        Muxes := 2     
 	  42 Input      2 Bit        Muxes := 4     
 	   4 Input      1 Bit        Muxes := 1     
-	  42 Input      1 Bit        Muxes := 4     
+	  42 Input      1 Bit        Muxes := 5     
 	   3 Input      1 Bit        Muxes := 2     
 	   2 Input      1 Bit        Muxes := 2     
 	   5 Input      1 Bit        Muxes := 5     
@@ -1494,7 +1494,7 @@ BRAMs: 100 (col length: RAMB18 60 RAMB36 30)
 ---------------------------------------------------------------------------------
 Finished Part Resource Summary
 ---------------------------------------------------------------------------------
-Start Parallel Synthesis Optimization  : Time (s): cpu = 00:00:15 ; elapsed = 00:00:15 . Memory (MB): peak = 1334.832 ; gain = 486.512 ; free physical = 6266 ; free virtual = 20510
+Start Parallel Synthesis Optimization  : Time (s): cpu = 00:00:12 ; elapsed = 00:00:12 . Memory (MB): peak = 1397.836 ; gain = 528.539 ; free physical = 3635 ; free virtual = 25234
 ---------------------------------------------------------------------------------
 Start Cross Boundary Optimization
 ---------------------------------------------------------------------------------
@@ -1531,9 +1531,9 @@ WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[2]
 WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[1]
 WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[0]
 ---------------------------------------------------------------------------------
-Finished Cross Boundary Optimization : Time (s): cpu = 00:00:15 ; elapsed = 00:00:16 . Memory (MB): peak = 1334.832 ; gain = 486.512 ; free physical = 6269 ; free virtual = 20512
+Finished Cross Boundary Optimization : Time (s): cpu = 00:00:12 ; elapsed = 00:00:12 . Memory (MB): peak = 1397.836 ; gain = 528.539 ; free physical = 3637 ; free virtual = 25236
 ---------------------------------------------------------------------------------
-Finished Parallel Reinference  : Time (s): cpu = 00:00:15 ; elapsed = 00:00:16 . Memory (MB): peak = 1334.832 ; gain = 486.512 ; free physical = 6269 ; free virtual = 20512
+Finished Parallel Reinference  : Time (s): cpu = 00:00:12 ; elapsed = 00:00:12 . Memory (MB): peak = 1397.836 ; gain = 528.539 ; free physical = 3637 ; free virtual = 25236
 
 Report RTL Partitions: 
 +-+--------------+------------+----------+
@@ -1567,10 +1567,12 @@ Finished ROM, RAM, DSP and Shift Register Reporting
 Start Area Optimization
 ---------------------------------------------------------------------------------
 WARNING: [Synth 8-3332] Sequential element (dataif_cpu_ready_r_reg) is unused and will be removed from module nanorv32_tcm_arbitrer.
+WARNING: [Synth 8-3332] Sequential element (en_r_reg) is unused and will be removed from module nanorv32_tcm_ctrl__1.
+WARNING: [Synth 8-3332] Sequential element (en_r_reg) is unused and will be removed from module nanorv32_tcm_ctrl.
 ---------------------------------------------------------------------------------
-Finished Area Optimization : Time (s): cpu = 00:00:18 ; elapsed = 00:00:19 . Memory (MB): peak = 1334.832 ; gain = 486.512 ; free physical = 6266 ; free virtual = 20511
+Finished Area Optimization : Time (s): cpu = 00:00:15 ; elapsed = 00:00:15 . Memory (MB): peak = 1397.836 ; gain = 528.539 ; free physical = 3605 ; free virtual = 25204
 ---------------------------------------------------------------------------------
-Finished Parallel Area Optimization  : Time (s): cpu = 00:00:18 ; elapsed = 00:00:19 . Memory (MB): peak = 1334.832 ; gain = 486.512 ; free physical = 6266 ; free virtual = 20511
+Finished Parallel Area Optimization  : Time (s): cpu = 00:00:15 ; elapsed = 00:00:15 . Memory (MB): peak = 1397.836 ; gain = 528.539 ; free physical = 3605 ; free virtual = 25204
 
 Report RTL Partitions: 
 +-+--------------+------------+----------+
@@ -1584,95 +1586,35 @@ Start Timing Optimization
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:27 ; elapsed = 00:00:27 . Memory (MB): peak = 1335.824 ; gain = 487.504 ; free physical = 6244 ; free virtual = 20502
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:21 ; elapsed = 00:00:21 . Memory (MB): peak = 1397.836 ; gain = 528.539 ; free physical = 3549 ; free virtual = 25155
 ---------------------------------------------------------------------------------
-Found timing loop:
-     0: U_ARBITRER/i_2/i_19/O (GATE_2_2)
-     1: U_ARBITRER/i_2/i_19/I0 (GATE_2_2)
-     2: U_ARBITRER/i_2/i_18/O (GATE_2_14_OR)
-     3: U_ARBITRER/i_2/i_18/I0 (GATE_2_14_OR)
-     4: U_ARBITRER/i_2/i_12/O (GATE_2_7_NAND)
-     5: U_ARBITRER/i_2/i_12/I0 (GATE_2_7_NAND)
-      : U_ARBITRER/i_2/cpu_codeif_addr[12]
-      : U_ARBITRER/cpu_codeif_addr[29]
-      : U_CPU/cpu_codeif_addr[29]
-      : U_CPU/i_97/D[29]
-     6: U_CPU/i_97/i_532/Z (MUX1)
-     7: U_CPU/i_97/i_532/B (MUX1)
-     8: U_CPU/i_97/i_528/Z (MUX1)
-     9: U_CPU/i_97/i_528/S (MUX1)
-    10: U_CPU/i_97/i_519/O (GATE_2_14_OR)
-    11: U_CPU/i_97/i_519/I0 (GATE_2_14_OR)
-    12: U_CPU/i_97/i_200/O (GATE_2_2)
-    13: U_CPU/i_97/i_200/I1 (GATE_2_2)
-      : U_CPU/i_97/force_stall_pstate
-      : U_CPU/i_4/out2
-      : U_CPU/i_4/i_3/out2
-    14: U_CPU/i_4/i_3/i_10/O (GATE_2_14_OR)
-    15: U_CPU/i_4/i_3/i_10/I1 (GATE_2_14_OR)
-    16: U_CPU/i_4/i_3/i_8/O (GATE_2_2)
-    17: U_CPU/i_4/i_3/i_8/I0 (GATE_2_2)
-    18: U_CPU/i_4/i_3/i_7/O (GATE_2_14_OR)
-    19: U_CPU/i_4/i_3/i_7/I0 (GATE_2_14_OR)
-      : U_CPU/i_4/i_3/in9
-      : U_CPU/i_4/in9
-      : U_CPU/p_0_out_inferred/p_0_out
-    20: U_CPU/p_0_out_inferred/i_0/O (INV)
-    21: U_CPU/p_0_out_inferred/i_0/I (INV)
-      : U_CPU/p_0_out_inferred/codeif_cpu_early_ready
-      : U_CPU/codeif_cpu_early_ready
-      : U_ARBITRER/codeif_cpu_early_ready
-      : U_ARBITRER/i_2/codeif_cpu_early_ready
-    22: U_ARBITRER/i_2/i_19/O (GATE_2_2)
-WARNING: [Synth 8-295] found timing loop. [/home/ronan/perso/github/nanorv32/rtl/ips/nanorv32_tcm_arbitrer.v:124]
-WARNING: [Synth 8-326] inferred exception to break timing loop: 'set_false_path -through U_ARBITRER/i_2/i_19/O'
-WARNING: [Synth 8-326] inferred exception to break timing loop: 'set_false_path -through U_ARBITRER/i_2/i_19/O'
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:29 ; elapsed = 00:00:29 . Memory (MB): peak = 1385.418 ; gain = 537.098 ; free physical = 6195 ; free virtual = 20454
+Finished Timing Optimization : Time (s): cpu = 00:00:23 ; elapsed = 00:00:23 . Memory (MB): peak = 1413.414 ; gain = 544.117 ; free physical = 3498 ; free virtual = 25107
 ---------------------------------------------------------------------------------
+Finished Parallel Timing Optimization  : Time (s): cpu = 00:00:23 ; elapsed = 00:00:23 . Memory (MB): peak = 1413.414 ; gain = 544.117 ; free physical = 3498 ; free virtual = 25107
 
 Report RTL Partitions: 
 +-+--------------+------------+----------+
 | |RTL Partition |Replication |Instances |
 +-+--------------+------------+----------+
 +-+--------------+------------+----------+
+Finished Parallel Synthesis Optimization  : Time (s): cpu = 00:00:23 ; elapsed = 00:00:23 . Memory (MB): peak = 1413.414 ; gain = 544.117 ; free physical = 3498 ; free virtual = 25107
 ---------------------------------------------------------------------------------
 Start Technology Mapping
 ---------------------------------------------------------------------------------
-Found timing loop:
-     0: U_CPU/i_4/O (LUT4)
-     1: U_CPU/i_4/I0 (LUT4)
-      : U_CPU/codeif_cpu_early_ready
-      : U_ARBITRER/codeif_cpu_early_ready
-     2: U_ARBITRER/i_105/O (LUT2)
-     3: U_ARBITRER/i_105/I1 (LUT2)
-     4: U_ARBITRER/i_100/O (LUT5)
-     5: U_ARBITRER/i_100/I4 (LUT5)
-      : U_ARBITRER/cpu_codeif_addr[29]
-      : U_CPU/cpu_codeif_addr[29]
-     6: U_CPU/i_90/O (MUXF7)
-     7: U_CPU/i_90/I1 (MUXF7)
-     8: U_CPU/i_127/O (LUT4)
-     9: U_CPU/i_127/I1 (LUT4)
-    10: U_CPU/i_130/O (LUT6)
-    11: U_CPU/i_130/I1 (LUT6)
-    12: U_CPU/i_4/O (LUT4)
-WARNING: [Synth 8-295] found timing loop. [/home/ronan/perso/github/nanorv32/rtl/cores/nanorv32.v:34]
 INFO: [Synth 8-4480] The timing for the instance RAM_reg_0 (implemented as a block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
 INFO: [Synth 8-4480] The timing for the instance RAM_reg_1 (implemented as a block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
 INFO: [Synth 8-4480] The timing for the instance RAM_reg_0 (implemented as a block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
 INFO: [Synth 8-4480] The timing for the instance RAM_reg_1 (implemented as a block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:29 ; elapsed = 00:00:30 . Memory (MB): peak = 1385.418 ; gain = 537.098 ; free physical = 6194 ; free virtual = 20453
+Finished Technology Mapping : Time (s): cpu = 00:00:23 ; elapsed = 00:00:24 . Memory (MB): peak = 1421.422 ; gain = 552.125 ; free physical = 3489 ; free virtual = 25098
 ---------------------------------------------------------------------------------
-Finished Parallel Technology Mapping Optimization  : Time (s): cpu = 00:00:29 ; elapsed = 00:00:30 . Memory (MB): peak = 1385.418 ; gain = 537.098 ; free physical = 6194 ; free virtual = 20453
 
 Report RTL Partitions: 
 +-+--------------+------------+----------+
 | |RTL Partition |Replication |Instances |
 +-+--------------+------------+----------+
 +-+--------------+------------+----------+
-Finished Parallel Synthesis Optimization  : Time (s): cpu = 00:00:29 ; elapsed = 00:00:30 . Memory (MB): peak = 1385.418 ; gain = 537.098 ; free physical = 6194 ; free virtual = 20453
 ---------------------------------------------------------------------------------
 Start IO Insertion
 ---------------------------------------------------------------------------------
@@ -1683,11 +1625,19 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 WARNING: [Synth 8-3295] tying undriven pin U_REG_FILE:rst_n to constant 0
+WARNING: [Synth 8-3295] tying undriven pin U_CPU:codeif_cpu_early_ready to constant 0
 WARNING: [Synth 8-3295] tying undriven pin U_CPU:dataif_cpu_ready_r to constant 0
+WARNING: [Synth 8-3295] tying undriven pin U_TCM_DATA:rst_n to constant 0
 WARNING: [Synth 8-3295] tying undriven pin U_TCM_DATA:addr[1] to constant 0
 WARNING: [Synth 8-3295] tying undriven pin U_TCM_DATA:addr[0] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin U_TCM_DATA:fast_hanshaking to constant 0
+WARNING: [Synth 8-3295] tying undriven pin U_TCM_CODE:rst_n to constant 0
+WARNING: [Synth 8-3295] tying undriven pin U_TCM_CODE:en to constant 0
 WARNING: [Synth 8-3295] tying undriven pin U_TCM_CODE:addr[1] to constant 0
 WARNING: [Synth 8-3295] tying undriven pin U_TCM_CODE:addr[0] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin U_TCM_CODE:fast_hanshaking to constant 0
+WARNING: [Synth 8-3295] tying undriven pin U_ARBITRER:tcmcode_ready_nxt to constant 0
+WARNING: [Synth 8-3295] tying undriven pin U_ARBITRER:tcmdata_ready_nxt to constant 0
 WARNING: [Synth 8-3295] tying undriven pin U_ARBITRER:cpu_codeif_addr[27] to constant 0
 WARNING: [Synth 8-3295] tying undriven pin U_ARBITRER:cpu_codeif_addr[26] to constant 0
 WARNING: [Synth 8-3295] tying undriven pin U_ARBITRER:cpu_codeif_addr[25] to constant 0
@@ -1705,6 +1655,7 @@ WARNING: [Synth 8-3295] tying undriven pin U_ARBITRER:cpu_codeif_addr[14] to con
 WARNING: [Synth 8-3295] tying undriven pin U_ARBITRER:cpu_codeif_addr[13] to constant 0
 WARNING: [Synth 8-3295] tying undriven pin U_ARBITRER:cpu_codeif_addr[1] to constant 0
 WARNING: [Synth 8-3295] tying undriven pin U_ARBITRER:cpu_codeif_addr[0] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin U_ARBITRER:cpu_codeif_req to constant 0
 WARNING: [Synth 8-3295] tying undriven pin U_ARBITRER:cpu_dataif_addr[27] to constant 0
 WARNING: [Synth 8-3295] tying undriven pin U_ARBITRER:cpu_dataif_addr[26] to constant 0
 WARNING: [Synth 8-3295] tying undriven pin U_ARBITRER:cpu_dataif_addr[25] to constant 0
@@ -1723,7 +1674,7 @@ WARNING: [Synth 8-3295] tying undriven pin U_ARBITRER:cpu_dataif_addr[13] to con
 WARNING: [Synth 8-3295] tying undriven pin U_ARBITRER:cpu_dataif_addr[1] to constant 0
 WARNING: [Synth 8-3295] tying undriven pin U_ARBITRER:cpu_dataif_addr[0] to constant 0
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:30 ; elapsed = 00:00:30 . Memory (MB): peak = 1385.418 ; gain = 537.098 ; free physical = 6194 ; free virtual = 20453
+Finished IO Insertion : Time (s): cpu = 00:00:24 ; elapsed = 00:00:24 . Memory (MB): peak = 1421.422 ; gain = 552.125 ; free physical = 3485 ; free virtual = 25098
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -1736,7 +1687,7 @@ Report Check Netlist:
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:30 ; elapsed = 00:00:30 . Memory (MB): peak = 1385.418 ; gain = 537.098 ; free physical = 6194 ; free virtual = 20453
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:24 ; elapsed = 00:00:24 . Memory (MB): peak = 1421.422 ; gain = 552.125 ; free physical = 3485 ; free virtual = 25098
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -1744,14 +1695,11 @@ Report RTL Partitions:
 | |RTL Partition |Replication |Instances |
 +-+--------------+------------+----------+
 +-+--------------+------------+----------+
-WARNING: [Synth 8-326] inferred exception to break timing loop: 'set_false_path -through U_ARBITRER/codeif_cpu_early_ready_INST_0_i_1/O'
-WARNING: [Synth 8-326] inferred exception to break timing loop: 'set_false_path -through U_ARBITRER/codeif_cpu_early_ready_INST_0_i_1/O'
-WARNING: [Synth 8-326] inferred exception to break timing loop: 'set_false_path -through U_ARBITRER/codeif_cpu_early_ready_INST_0_i_2/O'
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:30 ; elapsed = 00:00:30 . Memory (MB): peak = 1385.418 ; gain = 537.098 ; free physical = 6194 ; free virtual = 20453
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:24 ; elapsed = 00:00:24 . Memory (MB): peak = 1421.422 ; gain = 552.125 ; free physical = 3485 ; free virtual = 25098
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -1769,51 +1717,53 @@ Report Cell Usage:
 +------+-----------+------+
 |1     |BUFG       |     3|
 |2     |CARRY4     |    54|
-|3     |LUT1       |    70|
-|4     |LUT2       |    88|
-|5     |LUT3       |   241|
-|6     |LUT4       |   215|
-|7     |LUT5       |   199|
-|8     |LUT6       |   530|
+|3     |LUT1       |    68|
+|4     |LUT2       |    91|
+|5     |LUT3       |   197|
+|6     |LUT4       |   260|
+|7     |LUT5       |   167|
+|8     |LUT6       |   538|
 |9     |MMCME2_ADV |     1|
-|10    |MUXF7      |    59|
-|11    |RAM32M     |    12|
-|12    |RAMB36E1   |     4|
-|13    |FDCE       |    97|
-|14    |FDPE       |     6|
-|15    |LD         |    37|
-|16    |IBUF       |     2|
+|10    |MUXF7      |    62|
+|11    |MUXF8      |    29|
+|12    |RAM32M     |    12|
+|13    |RAMB36E1   |     4|
+|14    |FDCE       |    95|
+|15    |FDPE       |     6|
+|16    |LD         |    37|
+|17    |IBUF       |     2|
+|18    |OBUF       |     1|
 +------+-----------+------+
 
 Report Instance Areas: 
 +------+---------------+------------------------+------+
 |      |Instance       |Module                  |Cells |
 +------+---------------+------------------------+------+
-|1     |top            |                        |  1618|
-|2     |  U_CPU        |nanorv32                |  1419|
+|1     |top            |                        |  1627|
+|2     |  U_CPU        |nanorv32                |  1445|
 |3     |    U_REG_FILE |nanorv32_regfile        |    77|
-|4     |    U_ALU      |nanorv32_alu            |   700|
-|5     |  U_TCM_DATA   |nanorv32_tcm_ctrl__1    |    11|
+|4     |    U_ALU      |nanorv32_alu            |   717|
+|5     |  U_TCM_DATA   |nanorv32_tcm_ctrl__1    |     6|
 |6     |    U_MEM      |bytewrite_ram_32bits__1 |     2|
-|7     |  U_TCM_CODE   |nanorv32_tcm_ctrl       |    11|
+|7     |  U_TCM_CODE   |nanorv32_tcm_ctrl       |     2|
 |8     |    U_MEM      |bytewrite_ram_32bits    |     2|
-|9     |  U_ARBITRER   |nanorv32_tcm_arbitrer   |   171|
+|9     |  U_ARBITRER   |nanorv32_tcm_arbitrer   |   167|
 |10    |  U_CLK_GEN    |nanorv32_clkgen         |     5|
 |11    |    U_MCM      |arty_mmcm               |     5|
 |12    |      inst     |arty_mmcm_clk_wiz       |     5|
 +------+---------------+------------------------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:30 ; elapsed = 00:00:30 . Memory (MB): peak = 1385.418 ; gain = 537.098 ; free physical = 6194 ; free virtual = 20453
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:24 ; elapsed = 00:00:24 . Memory (MB): peak = 1421.422 ; gain = 552.125 ; free physical = 3485 ; free virtual = 25098
 ---------------------------------------------------------------------------------
-Synthesis finished with 0 errors, 0 critical warnings and 83 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:24 ; elapsed = 00:00:25 . Memory (MB): peak = 1385.418 ; gain = 151.977 ; free physical = 6194 ; free virtual = 20453
-Synthesis Optimization Complete : Time (s): cpu = 00:00:30 ; elapsed = 00:00:30 . Memory (MB): peak = 1385.418 ; gain = 537.098 ; free physical = 6194 ; free virtual = 20453
+Synthesis finished with 0 errors, 0 critical warnings and 87 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:20 ; elapsed = 00:00:20 . Memory (MB): peak = 1421.422 ; gain = 109.969 ; free physical = 3485 ; free virtual = 25098
+Synthesis Optimization Complete : Time (s): cpu = 00:00:24 ; elapsed = 00:00:24 . Memory (MB): peak = 1421.422 ; gain = 552.125 ; free physical = 3485 ; free virtual = 25098
 INFO: [Project 1-571] Translating synthesized netlist
 INFO: [Netlist 29-17] Analyzing 110 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
-Parsing XDC File [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc]
-Finished Parsing XDC File [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc]
+Parsing XDC File [/home/roba/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc]
+Finished Parsing XDC File [/home/roba/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc]
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
 INFO: [Project 1-111] Unisim Transformation Summary:
   A total of 49 instances were transformed.
@@ -1821,19 +1771,19 @@ INFO: [Project 1-111] Unisim Transformation Summary:
   RAM32M => RAM32M (RAMD32, RAMD32, RAMD32, RAMD32, RAMD32, RAMD32, RAMS32, RAMS32): 12 instances
 
 INFO: [Common 17-83] Releasing license: Synthesis
-61 Infos, 119 Warnings, 1 Critical Warnings and 0 Errors encountered.
+61 Infos, 123 Warnings, 1 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:00:30 ; elapsed = 00:00:30 . Memory (MB): peak = 1385.422 ; gain = 465.766 ; free physical = 6188 ; free virtual = 20449
+synth_design: Time (s): cpu = 00:00:24 ; elapsed = 00:00:24 . Memory (MB): peak = 1453.438 ; gain = 512.918 ; free physical = 3484 ; free virtual = 25098
 # set outputDir ./rpt
 # file mkdir $outputDir
 # report_timing_summary -file $outputDir/post_synth_timing_summary.rpt
 INFO: [Timing 38-35] Done setting XDC timing constraints.
 INFO: [Timing 38-2] Deriving generated clocks
 INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -1, Delay Type: min_max.
-INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 4 CPUs
-report_timing_summary: Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 1682.586 ; gain = 297.164 ; free physical = 5958 ; free virtual = 20252
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 8 CPUs
+report_timing_summary: Time (s): cpu = 00:00:08 ; elapsed = 00:00:08 . Memory (MB): peak = 1787.637 ; gain = 334.199 ; free physical = 3281 ; free virtual = 24900
 # report_utilization -file $outputDir/post_synth_util.rpt
-report_utilization: Time (s): cpu = 00:00:00.12 ; elapsed = 00:00:00.17 . Memory (MB): peak = 1682.586 ; gain = 0.000 ; free physical = 5957 ; free virtual = 20251
+report_utilization: Time (s): cpu = 00:00:00.11 ; elapsed = 00:00:00.16 . Memory (MB): peak = 1787.637 ; gain = 0.000 ; free physical = 3280 ; free virtual = 24898
 # check_timing -override_defaults loops -verbose > post_synt_loops.rpt
 
 check_timing report
@@ -1844,102 +1794,7 @@ Table of Contents
 
 1. checking loops
 -----------------
- There are 6 combinational loops in the design. (HIGH)
-
-U_ARBITRER/codeif_cpu_early_ready_INST_0/O
-U_CPU/pc_exe_r[31]_i_2/I0
-U_CPU/pc_exe_r[31]_i_2/O
-U_CPU/pc_exe_r[31]_i_1/I1
-U_CPU/pc_exe_r[31]_i_1/O
-U_CPU/cpu_codeif_addr[31]_INST_0_i_3/I1
-U_CPU/cpu_codeif_addr[31]_INST_0_i_3/O
-U_CPU/cpu_codeif_addr[31]_INST_0/I1
-U_CPU/cpu_codeif_addr[31]_INST_0/O
-U_ARBITRER/tcmdata_addr[12]_INST_0_i_2/I2
-U_ARBITRER/tcmdata_addr[12]_INST_0_i_2/O
-U_ARBITRER/tcmdata_en_INST_0/I0
-U_ARBITRER/tcmdata_en_INST_0/O
-U_TCM_DATA/ready_nxt_INST_0/I3
-U_TCM_DATA/ready_nxt_INST_0/O
-U_ARBITRER/codeif_cpu_early_ready_INST_0/I0
-U_ARBITRER/codeif_cpu_early_ready_INST_0/O
-
-
-U_ARBITRER/codeif_cpu_early_ready_INST_0/O
-U_CPU/pc_exe_r[31]_i_2/I0
-U_CPU/pc_exe_r[31]_i_2/O
-U_CPU/pc_exe_r[31]_i_1/I1
-U_CPU/pc_exe_r[31]_i_1/O
-U_CPU/cpu_codeif_addr[31]_INST_0_i_3/I1
-U_CPU/cpu_codeif_addr[31]_INST_0_i_3/O
-U_CPU/cpu_codeif_addr[31]_INST_0/I1
-U_CPU/cpu_codeif_addr[31]_INST_0/O
-U_ARBITRER/tcmdata_addr[12]_INST_0_i_2/I2
-U_ARBITRER/tcmdata_addr[12]_INST_0_i_2/O
-U_ARBITRER/codeif_cpu_early_ready_INST_0_i_2/I0
-U_ARBITRER/codeif_cpu_early_ready_INST_0_i_2/O
-U_ARBITRER/codeif_cpu_early_ready_INST_0/I5
-U_ARBITRER/codeif_cpu_early_ready_INST_0/O
-
-
-U_ARBITRER/codeif_cpu_early_ready_INST_0_i_1/O
-U_ARBITRER/codeif_cpu_early_ready_INST_0/I2
-U_ARBITRER/codeif_cpu_early_ready_INST_0/O
-U_CPU/pc_exe_r[31]_i_2/I0
-U_CPU/pc_exe_r[31]_i_2/O
-U_CPU/pc_exe_r[31]_i_1/I1
-U_CPU/pc_exe_r[31]_i_1/O
-U_CPU/cpu_codeif_addr[31]_INST_0_i_3/I1
-U_CPU/cpu_codeif_addr[31]_INST_0_i_3/O
-U_CPU/cpu_codeif_addr[31]_INST_0/I1
-U_CPU/cpu_codeif_addr[31]_INST_0/O
-U_ARBITRER/codeif_cpu_early_ready_INST_0_i_1/I1
-U_ARBITRER/codeif_cpu_early_ready_INST_0_i_1/O
-
-
-U_ARBITRER/codeif_cpu_early_ready_INST_0_i_1/O
-U_ARBITRER/codeif_cpu_early_ready_INST_0/I2
-U_ARBITRER/codeif_cpu_early_ready_INST_0/O
-U_CPU/pc_exe_r[31]_i_2/I0
-U_CPU/pc_exe_r[31]_i_2/O
-U_CPU/pc_exe_r[31]_i_1/I1
-U_CPU/pc_exe_r[31]_i_1/O
-U_CPU/cpu_codeif_addr[30]_INST_0_i_2/I1
-U_CPU/cpu_codeif_addr[30]_INST_0_i_2/O
-U_CPU/cpu_codeif_addr[30]_INST_0/I1
-U_CPU/cpu_codeif_addr[30]_INST_0/O
-U_ARBITRER/codeif_cpu_early_ready_INST_0_i_1/I2
-U_ARBITRER/codeif_cpu_early_ready_INST_0_i_1/O
-
-
-U_ARBITRER/codeif_cpu_early_ready_INST_0/O
-U_CPU/pc_exe_r[31]_i_2/I0
-U_CPU/pc_exe_r[31]_i_2/O
-U_CPU/pc_exe_r[31]_i_1/I1
-U_CPU/pc_exe_r[31]_i_1/O
-U_CPU/cpu_codeif_addr[29]_INST_0_i_2/I1
-U_CPU/cpu_codeif_addr[29]_INST_0_i_2/O
-U_CPU/cpu_codeif_addr[29]_INST_0/I1
-U_CPU/cpu_codeif_addr[29]_INST_0/O
-U_ARBITRER/codeif_cpu_early_ready_INST_0/I4
-U_ARBITRER/codeif_cpu_early_ready_INST_0/O
-
-
-U_CPU/cpu_codeif_addr[28]_INST_0/O
-U_ARBITRER/codeif_cpu_early_ready_INST_0_i_1/I3
-U_ARBITRER/codeif_cpu_early_ready_INST_0_i_1/O
-U_ARBITRER/codeif_cpu_early_ready_INST_0/I2
-U_ARBITRER/codeif_cpu_early_ready_INST_0/O
-U_CPU/pc_exe_r[31]_i_2/I0
-U_CPU/pc_exe_r[31]_i_2/O
-U_CPU/pc_exe_r[31]_i_1/I1
-U_CPU/pc_exe_r[31]_i_1/O
-U_CPU/cpu_codeif_addr[28]_INST_0_i_2/I1
-U_CPU/cpu_codeif_addr[28]_INST_0_i_2/O
-U_CPU/cpu_codeif_addr[28]_INST_0/I1
-U_CPU/cpu_codeif_addr[28]_INST_0/O
-
-
+ There are 0 combinational loops in the design.
 
 
 # opt_design
@@ -1949,55 +1804,118 @@ INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc
 Running DRC as a precondition to command opt_design
 
 Starting DRC Task
-INFO: [DRC 23-27] Running DRC with 4 threads
+INFO: [DRC 23-27] Running DRC with 8 threads
 INFO: [Project 1-461] DRC finished with 0 Errors
 INFO: [Project 1-462] Please refer to the DRC report (report_drc) for more information.
 
-Time (s): cpu = 00:00:00.17 ; elapsed = 00:00:00.18 . Memory (MB): peak = 1719.602 ; gain = 37.016 ; free physical = 5952 ; free virtual = 20247
+Time (s): cpu = 00:00:00.14 ; elapsed = 00:00:00.14 . Memory (MB): peak = 1855.668 ; gain = 68.031 ; free physical = 3277 ; free virtual = 24895
 
 Starting Logic Optimization Task
-Implement Debug Cores | Checksum: 223d8fb75
+Implement Debug Cores | Checksum: f779ffc7
 
 Phase 1 Retarget
 INFO: [Opt 31-138] Pushed 1 inverter(s) to 1 load pin(s).
 INFO: [Opt 31-49] Retargeted 0 cell(s).
-Phase 1 Retarget | Checksum: 23804115d
+Phase 1 Retarget | Checksum: dbef4119
 
-Time (s): cpu = 00:00:00.11 ; elapsed = 00:00:00.11 . Memory (MB): peak = 1719.602 ; gain = 0.000 ; free physical = 5952 ; free virtual = 20247
+Time (s): cpu = 00:00:00.08 ; elapsed = 00:00:00.08 . Memory (MB): peak = 1855.668 ; gain = 0.000 ; free physical = 3277 ; free virtual = 24896
 
 Phase 2 Constant Propagation
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-INFO: [Opt 31-10] Eliminated 9 cells.
-Phase 2 Constant Propagation | Checksum: 1a808c5b2
+INFO: [Opt 31-10] Eliminated 0 cells.
+Phase 2 Constant Propagation | Checksum: dbef4119
 
-Time (s): cpu = 00:00:00.23 ; elapsed = 00:00:00.22 . Memory (MB): peak = 1719.602 ; gain = 0.000 ; free physical = 5952 ; free virtual = 20247
+Time (s): cpu = 00:00:00.13 ; elapsed = 00:00:00.13 . Memory (MB): peak = 1855.668 ; gain = 0.000 ; free physical = 3277 ; free virtual = 24896
 
 Phase 3 Sweep
-INFO: [Opt 31-12] Eliminated 1258 unconnected nets.
-INFO: [Opt 31-11] Eliminated 1581 unconnected cells.
-Phase 3 Sweep | Checksum: 5ca649a7
+INFO: [Opt 31-12] Eliminated 165 unconnected nets.
+INFO: [Opt 31-11] Eliminated 6 unconnected cells.
+Phase 3 Sweep | Checksum: 1129c06c2
 
-Time (s): cpu = 00:00:00.49 ; elapsed = 00:00:00.49 . Memory (MB): peak = 1719.602 ; gain = 0.000 ; free physical = 5952 ; free virtual = 20247
+Time (s): cpu = 00:00:00.20 ; elapsed = 00:00:00.20 . Memory (MB): peak = 1855.668 ; gain = 0.000 ; free physical = 3277 ; free virtual = 24896
 
 Starting Connectivity Check Task
 
-Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1719.602 ; gain = 0.000 ; free physical = 5952 ; free virtual = 20247
-Ending Logic Optimization Task | Checksum: 5ca649a7
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1855.668 ; gain = 0.000 ; free physical = 3277 ; free virtual = 24896
+Ending Logic Optimization Task | Checksum: 1129c06c2
 
-Time (s): cpu = 00:00:00.49 ; elapsed = 00:00:00.49 . Memory (MB): peak = 1719.602 ; gain = 0.000 ; free physical = 5952 ; free virtual = 20247
+Time (s): cpu = 00:00:00.21 ; elapsed = 00:00:00.21 . Memory (MB): peak = 1855.668 ; gain = 0.000 ; free physical = 3277 ; free virtual = 24896
 
 Starting Power Optimization Task
 INFO: [Pwropt 34-132] Skipping clock gating for clocks with a period < 2.00 ns.
-Ending Power Optimization Task | Checksum: 5ca649a7
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+Running Vector-less Activity Propagation...
+INFO: [Pwropt 34-9] Applying IDT optimizations ...
+INFO: [Pwropt 34-10] Applying ODC optimizations ...
 
-Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.01 . Memory (MB): peak = 1719.602 ; gain = 0.000 ; free physical = 5952 ; free virtual = 20247
+Finished Running Vector-less Activity Propagation
+
+
+Starting PowerOpt Patch Enables Task
+INFO: [Pwropt 34-162] WRITE_MODE attribute of 0 BRAM(s) out of a total of 4 has been updated to save power. Run report_power_opt to get a complete listing of the BRAMs updated.
+INFO: [Pwropt 34-201] Structural ODC has moved 0 WE to EN ports
+Number of BRAM Ports augmented: 0 newly gated: 0 Total Ports: 8
+Ending PowerOpt Patch Enables Task | Checksum: 1129c06c2
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.01 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3170 ; free virtual = 24789
+Ending Power Optimization Task | Checksum: 1129c06c2
+
+Time (s): cpu = 00:00:00.91 ; elapsed = 00:00:00.55 . Memory (MB): peak = 2082.840 ; gain = 227.172 ; free physical = 3170 ; free virtual = 24789
 INFO: [Common 17-83] Releasing license: Implementation
-12 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
+17 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
 opt_design completed successfully
 # reportCriticalPaths $outputDir/post_opt_critpath_report.csv
 INFO: [Timing 38-35] Done setting XDC timing constraints.
-WARNING: [Vivado 12-975] No timing paths matched 'get_timing_paths -delay_type max -max_paths 50 -nworst 1'.
-WARNING: [Vivado 12-975] No timing paths matched 'get_timing_paths -delay_type min -max_paths 50 -nworst 1'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -filter {REF_NAME =~ LUT*} -of_object {{U_CPU/instruction_r_reg[10]/C --> U_CPU/U_REG_FILE/regfile_reg_r1_0_31_0_5/RAMD/ADR3}}'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -filter {REF_NAME =~ LUT*} -of_object {{U_CPU/instruction_r_reg[10]/C --> U_CPU/U_REG_FILE/regfile_reg_r1_0_31_0_5/RAMD_D1/ADR3}}'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -filter {REF_NAME =~ LUT*} -of_object {{U_CPU/instruction_r_reg[10]/C --> U_CPU/U_REG_FILE/regfile_reg_r1_0_31_12_17/RAMD/ADR3}}'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -filter {REF_NAME =~ LUT*} -of_object {{U_CPU/instruction_r_reg[10]/C --> U_CPU/U_REG_FILE/regfile_reg_r1_0_31_12_17/RAMD_D1/ADR3}}'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -filter {REF_NAME =~ LUT*} -of_object {{U_CPU/instruction_r_reg[10]/C --> U_CPU/U_REG_FILE/regfile_reg_r1_0_31_18_23/RAMD/ADR3}}'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -filter {REF_NAME =~ LUT*} -of_object {{U_CPU/instruction_r_reg[10]/C --> U_CPU/U_REG_FILE/regfile_reg_r1_0_31_18_23/RAMD_D1/ADR3}}'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -filter {REF_NAME =~ LUT*} -of_object {{U_CPU/instruction_r_reg[10]/C --> U_CPU/U_REG_FILE/regfile_reg_r1_0_31_24_29/RAMD/ADR3}}'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -filter {REF_NAME =~ LUT*} -of_object {{U_CPU/instruction_r_reg[10]/C --> U_CPU/U_REG_FILE/regfile_reg_r1_0_31_24_29/RAMD_D1/ADR3}}'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -filter {REF_NAME =~ LUT*} -of_object {{U_CPU/instruction_r_reg[10]/C --> U_CPU/U_REG_FILE/regfile_reg_r1_0_31_30_31/RAMD/ADR3}}'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -filter {REF_NAME =~ LUT*} -of_object {{U_CPU/instruction_r_reg[10]/C --> U_CPU/U_REG_FILE/regfile_reg_r1_0_31_30_31/RAMD_D1/ADR3}}'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -filter {REF_NAME =~ LUT*} -of_object {{U_CPU/instruction_r_reg[10]/C --> U_CPU/U_REG_FILE/regfile_reg_r1_0_31_6_11/RAMD/ADR3}}'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -filter {REF_NAME =~ LUT*} -of_object {{U_CPU/instruction_r_reg[10]/C --> U_CPU/U_REG_FILE/regfile_reg_r1_0_31_6_11/RAMD_D1/ADR3}}'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -filter {REF_NAME =~ LUT*} -of_object {{U_CPU/instruction_r_reg[10]/C --> U_CPU/U_REG_FILE/regfile_reg_r2_0_31_0_5/RAMD/ADR3}}'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -filter {REF_NAME =~ LUT*} -of_object {{U_CPU/instruction_r_reg[10]/C --> U_CPU/U_REG_FILE/regfile_reg_r2_0_31_0_5/RAMD_D1/ADR3}}'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -filter {REF_NAME =~ LUT*} -of_object {{U_CPU/instruction_r_reg[10]/C --> U_CPU/U_REG_FILE/regfile_reg_r2_0_31_12_17/RAMD/ADR3}}'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -filter {REF_NAME =~ LUT*} -of_object {{U_CPU/instruction_r_reg[10]/C --> U_CPU/U_REG_FILE/regfile_reg_r2_0_31_12_17/RAMD_D1/ADR3}}'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -filter {REF_NAME =~ LUT*} -of_object {{U_CPU/instruction_r_reg[10]/C --> U_CPU/U_REG_FILE/regfile_reg_r2_0_31_18_23/RAMD/ADR3}}'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -filter {REF_NAME =~ LUT*} -of_object {{U_CPU/instruction_r_reg[10]/C --> U_CPU/U_REG_FILE/regfile_reg_r2_0_31_18_23/RAMD_D1/ADR3}}'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -filter {REF_NAME =~ LUT*} -of_object {{U_CPU/instruction_r_reg[10]/C --> U_CPU/U_REG_FILE/regfile_reg_r2_0_31_24_29/RAMD/ADR3}}'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -filter {REF_NAME =~ LUT*} -of_object {{U_CPU/instruction_r_reg[10]/C --> U_CPU/U_REG_FILE/regfile_reg_r2_0_31_24_29/RAMD_D1/ADR3}}'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -filter {REF_NAME =~ LUT*} -of_object {{U_CPU/instruction_r_reg[10]/C --> U_CPU/U_REG_FILE/regfile_reg_r2_0_31_30_31/RAMD/ADR3}}'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -filter {REF_NAME =~ LUT*} -of_object {{U_CPU/instruction_r_reg[10]/C --> U_CPU/U_REG_FILE/regfile_reg_r2_0_31_30_31/RAMD_D1/ADR3}}'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -filter {REF_NAME =~ LUT*} -of_object {{U_CPU/instruction_r_reg[10]/C --> U_CPU/U_REG_FILE/regfile_reg_r2_0_31_6_11/RAMD/ADR3}}'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -filter {REF_NAME =~ LUT*} -of_object {{U_CPU/instruction_r_reg[10]/C --> U_CPU/U_REG_FILE/regfile_reg_r2_0_31_6_11/RAMD_D1/ADR3}}'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -filter {REF_NAME =~ LUT*} -of_object {{U_CPU/instruction_r_reg[10]/C --> U_CPU/U_REG_FILE/regfile_reg_r1_0_31_0_5/RAMA/WADR3}}'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -filter {REF_NAME =~ LUT*} -of_object {{U_CPU/instruction_r_reg[10]/C --> U_CPU/U_REG_FILE/regfile_reg_r1_0_31_0_5/RAMA_D1/WADR3}}'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -filter {REF_NAME =~ LUT*} -of_object {{U_CPU/instruction_r_reg[10]/C --> U_CPU/U_REG_FILE/regfile_reg_r1_0_31_0_5/RAMB/WADR3}}'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -filter {REF_NAME =~ LUT*} -of_object {{U_CPU/instruction_r_reg[10]/C --> U_CPU/U_REG_FILE/regfile_reg_r1_0_31_0_5/RAMB_D1/WADR3}}'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -filter {REF_NAME =~ LUT*} -of_object {{U_CPU/instruction_r_reg[10]/C --> U_CPU/U_REG_FILE/regfile_reg_r1_0_31_0_5/RAMC/WADR3}}'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -filter {REF_NAME =~ LUT*} -of_object {{U_CPU/instruction_r_reg[10]/C --> U_CPU/U_REG_FILE/regfile_reg_r1_0_31_0_5/RAMC_D1/WADR3}}'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -filter {REF_NAME =~ LUT*} -of_object {{U_CPU/instruction_r_reg[10]/C --> U_CPU/U_REG_FILE/regfile_reg_r1_0_31_12_17/RAMA/WADR3}}'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -filter {REF_NAME =~ LUT*} -of_object {{U_CPU/instruction_r_reg[10]/C --> U_CPU/U_REG_FILE/regfile_reg_r1_0_31_12_17/RAMA_D1/WADR3}}'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -filter {REF_NAME =~ LUT*} -of_object {{U_CPU/instruction_r_reg[10]/C --> U_CPU/U_REG_FILE/regfile_reg_r1_0_31_12_17/RAMB/WADR3}}'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -filter {REF_NAME =~ LUT*} -of_object {{U_CPU/instruction_r_reg[10]/C --> U_CPU/U_REG_FILE/regfile_reg_r1_0_31_12_17/RAMB_D1/WADR3}}'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -filter {REF_NAME =~ LUT*} -of_object {{U_CPU/instruction_r_reg[10]/C --> U_CPU/U_REG_FILE/regfile_reg_r1_0_31_12_17/RAMC/WADR3}}'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -filter {REF_NAME =~ LUT*} -of_object {{U_CPU/instruction_r_reg[10]/C --> U_CPU/U_REG_FILE/regfile_reg_r1_0_31_12_17/RAMC_D1/WADR3}}'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -filter {REF_NAME =~ LUT*} -of_object {{U_CPU/instruction_r_reg[10]/C --> U_CPU/U_REG_FILE/regfile_reg_r1_0_31_18_23/RAMA/WADR3}}'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -filter {REF_NAME =~ LUT*} -of_object {{U_CPU/instruction_r_reg[10]/C --> U_CPU/U_REG_FILE/regfile_reg_r1_0_31_18_23/RAMA_D1/WADR3}}'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -filter {REF_NAME =~ LUT*} -of_object {{U_CPU/instruction_r_reg[10]/C --> U_CPU/U_REG_FILE/regfile_reg_r1_0_31_18_23/RAMB/WADR3}}'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -filter {REF_NAME =~ LUT*} -of_object {{U_CPU/instruction_r_reg[10]/C --> U_CPU/U_REG_FILE/regfile_reg_r1_0_31_18_23/RAMB_D1/WADR3}}'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -filter {REF_NAME =~ LUT*} -of_object {{U_CPU/instruction_r_reg[10]/C --> U_CPU/U_REG_FILE/regfile_reg_r1_0_31_18_23/RAMC/WADR3}}'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -filter {REF_NAME =~ LUT*} -of_object {{U_CPU/instruction_r_reg[10]/C --> U_CPU/U_REG_FILE/regfile_reg_r1_0_31_18_23/RAMC_D1/WADR3}}'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -filter {REF_NAME =~ LUT*} -of_object {{U_CPU/instruction_r_reg[10]/C --> U_CPU/U_REG_FILE/regfile_reg_r1_0_31_24_29/RAMA/WADR3}}'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -filter {REF_NAME =~ LUT*} -of_object {{U_CPU/instruction_r_reg[10]/C --> U_CPU/U_REG_FILE/regfile_reg_r1_0_31_24_29/RAMA_D1/WADR3}}'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -filter {REF_NAME =~ LUT*} -of_object {{U_CPU/instruction_r_reg[10]/C --> U_CPU/U_REG_FILE/regfile_reg_r1_0_31_24_29/RAMB/WADR3}}'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -filter {REF_NAME =~ LUT*} -of_object {{U_CPU/instruction_r_reg[10]/C --> U_CPU/U_REG_FILE/regfile_reg_r1_0_31_24_29/RAMB_D1/WADR3}}'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -filter {REF_NAME =~ LUT*} -of_object {{U_CPU/instruction_r_reg[10]/C --> U_CPU/U_REG_FILE/regfile_reg_r1_0_31_24_29/RAMC/WADR3}}'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -filter {REF_NAME =~ LUT*} -of_object {{U_CPU/instruction_r_reg[10]/C --> U_CPU/U_REG_FILE/regfile_reg_r1_0_31_24_29/RAMC_D1/WADR3}}'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -filter {REF_NAME =~ LUT*} -of_object {{U_CPU/instruction_r_reg[10]/C --> U_CPU/U_REG_FILE/regfile_reg_r1_0_31_30_31/RAMA/WADR3}}'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -filter {REF_NAME =~ LUT*} -of_object {{U_CPU/instruction_r_reg[10]/C --> U_CPU/U_REG_FILE/regfile_reg_r1_0_31_30_31/RAMA_D1/WADR3}}'.
 CSV file ./rpt/post_opt_critpath_report.csv has been created.
 
 # check_timing -override_defaults loops -verbose > post_opt_loops.rpt
@@ -2017,28 +1935,462 @@ Table of Contents
 Command: place_design
 Attempting to get a license for feature 'Implementation' and/or device 'xc7a35t'
 INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7a35t'
-INFO: [DRC 23-27] Running DRC with 4 threads
+INFO: [DRC 23-27] Running DRC with 8 threads
 INFO: [Vivado_Tcl 4-198] DRC finished with 0 Errors
 INFO: [Vivado_Tcl 4-199] Please refer to the DRC report (report_drc) for more information.
 Running DRC as a precondition to command place_design
-INFO: [DRC 23-27] Running DRC with 4 threads
+INFO: [DRC 23-27] Running DRC with 8 threads
 INFO: [Vivado_Tcl 4-198] DRC finished with 0 Errors
 INFO: [Vivado_Tcl 4-199] Please refer to the DRC report (report_drc) for more information.
 
 Starting Placer Task
-INFO: [Place 30-611] Multithreading enabled for place_design using a maximum of 4 CPUs
+INFO: [Place 30-611] Multithreading enabled for place_design using a maximum of 8 CPUs
 
 Phase 1 Placer Initialization
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1719.602 ; gain = 0.000 ; free physical = 5949 ; free virtual = 20248
-Phase 1 Placer Initialization | Checksum: 00000000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3165 ; free virtual = 24784
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3165 ; free virtual = 24784
 
-Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.01 . Memory (MB): peak = 1719.602 ; gain = 0.000 ; free physical = 5949 ; free virtual = 20248
-ERROR: [Place 30-494] The design is empty
-Resolution: Check if opt_design has removed all the leaf cells of your design.  Check whether you have instantiated and connected all of the top level ports.
-Ending Placer Task | Checksum: 00000000
+Phase 1.1 IO Placement/ Clock Placement/ Build Placer Device
 
-Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.01 . Memory (MB): peak = 1719.602 ; gain = 0.000 ; free physical = 5949 ; free virtual = 20248
+Phase 1.1.1 Pre-Place Cells
+Phase 1.1.1 Pre-Place Cells | Checksum: 393038d6
+
+Time (s): cpu = 00:00:00.02 ; elapsed = 00:00:00.02 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3165 ; free virtual = 24784
+
+Phase 1.1.2 IO and Clk Clean Up
+Phase 1.1.2 IO and Clk Clean Up | Checksum: 393038d6
+
+Time (s): cpu = 00:00:00.64 ; elapsed = 00:00:00.40 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3165 ; free virtual = 24784
+
+Phase 1.1.3 Implementation Feasibility check On IDelay
+Phase 1.1.3 Implementation Feasibility check On IDelay | Checksum: 393038d6
+
+Time (s): cpu = 00:00:00.65 ; elapsed = 00:00:00.40 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3165 ; free virtual = 24784
+
+Phase 1.1.4 Commit IO Placement
+Phase 1.1.4 Commit IO Placement | Checksum: 5352c070
+
+Time (s): cpu = 00:00:00.65 ; elapsed = 00:00:00.40 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3165 ; free virtual = 24784
+Phase 1.1 IO Placement/ Clock Placement/ Build Placer Device | Checksum: 66f10b2c
+
+Time (s): cpu = 00:00:00.65 ; elapsed = 00:00:00.41 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3165 ; free virtual = 24784
+
+Phase 1.2 Build Placer Netlist Model
+
+Phase 1.2.1 Place Init Design
+
+Phase 1.2.1.1 Init Lut Pin Assignment
+Phase 1.2.1.1 Init Lut Pin Assignment | Checksum: 753fe82a
+
+Time (s): cpu = 00:00:00.76 ; elapsed = 00:00:00.48 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3165 ; free virtual = 24784
+Phase 1.2.1 Place Init Design | Checksum: 151d1d00f
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.74 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3157 ; free virtual = 24776
+Phase 1.2 Build Placer Netlist Model | Checksum: 151d1d00f
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.74 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3157 ; free virtual = 24776
+
+Phase 1.3 Constrain Clocks/Macros
+
+Phase 1.3.1 Constrain Global/Regional Clocks
+Phase 1.3.1 Constrain Global/Regional Clocks | Checksum: 151d1d00f
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.74 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3157 ; free virtual = 24776
+Phase 1.3 Constrain Clocks/Macros | Checksum: 151d1d00f
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.74 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3157 ; free virtual = 24776
+Phase 1 Placer Initialization | Checksum: 151d1d00f
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.74 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3157 ; free virtual = 24776
+
+Phase 2 Global Placement
+SimPL: WL = 114226 (10553, 103673)
+SimPL: WL = 114974 (10610, 104364)
+SimPL: WL = 115386 (10569, 104817)
+SimPL: WL = 115787 (10572, 105215)
+SimPL: WL = 115198 (10570, 104628)
+Phase 2 Global Placement | Checksum: f5302410
+
+Time (s): cpu = 00:00:13 ; elapsed = 00:00:03 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3154 ; free virtual = 24773
+
+Phase 3 Detail Placement
+
+Phase 3.1 Commit Multi Column Macros
+Phase 3.1 Commit Multi Column Macros | Checksum: f5302410
+
+Time (s): cpu = 00:00:13 ; elapsed = 00:00:03 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3154 ; free virtual = 24773
+
+Phase 3.2 Commit Most Macros & LUTRAMs
+Phase 3.2 Commit Most Macros & LUTRAMs | Checksum: d074884e
+
+Time (s): cpu = 00:00:13 ; elapsed = 00:00:03 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3154 ; free virtual = 24773
+
+Phase 3.3 Area Swap Optimization
+Phase 3.3 Area Swap Optimization | Checksum: 1613ffb50
+
+Time (s): cpu = 00:00:14 ; elapsed = 00:00:03 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3154 ; free virtual = 24773
+
+Phase 3.4 updateClock Trees: DP
+Phase 3.4 updateClock Trees: DP | Checksum: 1613ffb50
+
+Time (s): cpu = 00:00:14 ; elapsed = 00:00:03 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3154 ; free virtual = 24773
+
+Phase 3.5 Timing Path Optimizer
+Phase 3.5 Timing Path Optimizer | Checksum: fad58c35
+
+Time (s): cpu = 00:00:14 ; elapsed = 00:00:03 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3154 ; free virtual = 24773
+
+Phase 3.6 Fast Optimization
+Phase 3.6 Fast Optimization | Checksum: fad58c35
+
+Time (s): cpu = 00:00:14 ; elapsed = 00:00:03 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3154 ; free virtual = 24773
+
+Phase 3.7 Small Shape Detail Placement
+
+Phase 3.7.1 Commit Small Macros and Core Logic
+
+Phase 3.7.1.1 Commit Slice Clusters
+Phase 3.7.1.1 Commit Slice Clusters | Checksum: 6d654bb3
+
+Time (s): cpu = 00:00:14 ; elapsed = 00:00:04 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3152 ; free virtual = 24771
+Phase 3.7.1 Commit Small Macros and Core Logic | Checksum: 6d654bb3
+
+Time (s): cpu = 00:00:14 ; elapsed = 00:00:04 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3152 ; free virtual = 24771
+
+Phase 3.7.2 Clock Restriction Legalization for Leaf Columns
+Phase 3.7.2 Clock Restriction Legalization for Leaf Columns | Checksum: 6d654bb3
+
+Time (s): cpu = 00:00:14 ; elapsed = 00:00:04 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3152 ; free virtual = 24771
+
+Phase 3.7.3 Clock Restriction Legalization for Non-Clock Pins
+Phase 3.7.3 Clock Restriction Legalization for Non-Clock Pins | Checksum: 6d654bb3
+
+Time (s): cpu = 00:00:14 ; elapsed = 00:00:04 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3152 ; free virtual = 24771
+Phase 3.7 Small Shape Detail Placement | Checksum: 6d654bb3
+
+Time (s): cpu = 00:00:14 ; elapsed = 00:00:04 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3152 ; free virtual = 24771
+
+Phase 3.8 Re-assign LUT pins
+Phase 3.8 Re-assign LUT pins | Checksum: 12413b4db
+
+Time (s): cpu = 00:00:14 ; elapsed = 00:00:04 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3152 ; free virtual = 24771
+Phase 3 Detail Placement | Checksum: 12413b4db
+
+Time (s): cpu = 00:00:14 ; elapsed = 00:00:04 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3152 ; free virtual = 24771
+
+Phase 4 Post Placement Optimization and Clean-Up
+
+Phase 4.1 Post Commit Optimization
+
+Phase 4.1.1 callUpdateTimingBeforePCO
+Phase 4.1.1 callUpdateTimingBeforePCO | Checksum: 148a799cb
+
+Time (s): cpu = 00:00:15 ; elapsed = 00:00:04 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3152 ; free virtual = 24771
+
+Phase 4.1.2 updateClock Trees: PCOPT
+Phase 4.1.2 updateClock Trees: PCOPT | Checksum: 148a799cb
+
+Time (s): cpu = 00:00:15 ; elapsed = 00:00:04 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3152 ; free virtual = 24771
+
+Phase 4.1.3 Post Placement Optimization
+
+Phase 4.1.3.1 PCOPT Shape updates
+
+Phase 4.1.3.1.1 removeOptionalFFsFromShapes
+Phase 4.1.3.1.1 removeOptionalFFsFromShapes | Checksum: 148a799cb
+
+Time (s): cpu = 00:00:15 ; elapsed = 00:00:04 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3152 ; free virtual = 24771
+
+Phase 4.1.3.1.2 deleteLutnmShapes
+
+Phase 4.1.3.1.2.1 deleteShapes
+Phase 4.1.3.1.2.1 deleteShapes | Checksum: 23006fde6
+
+Time (s): cpu = 00:00:15 ; elapsed = 00:00:04 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3152 ; free virtual = 24771
+Phase 4.1.3.1.2 deleteLutnmShapes | Checksum: 23006fde6
+
+Time (s): cpu = 00:00:15 ; elapsed = 00:00:04 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3152 ; free virtual = 24771
+Phase 4.1.3.1 PCOPT Shape updates | Checksum: 23006fde6
+
+Time (s): cpu = 00:00:15 ; elapsed = 00:00:04 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3152 ; free virtual = 24771
+
+Phase 4.1.3.2 Post Placement Timing Optimization
+INFO: [Place 30-746] Post Placement Timing Summary WNS=6.706. For the most accurate timing information please run report_timing.
+Phase 4.1.3.2 Post Placement Timing Optimization | Checksum: 1b4c4a3e9
+
+Time (s): cpu = 00:00:15 ; elapsed = 00:00:04 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3152 ; free virtual = 24771
+Phase 4.1.3 Post Placement Optimization | Checksum: 1b4c4a3e9
+
+Time (s): cpu = 00:00:15 ; elapsed = 00:00:04 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3152 ; free virtual = 24771
+Phase 4.1 Post Commit Optimization | Checksum: 1b4c4a3e9
+
+Time (s): cpu = 00:00:15 ; elapsed = 00:00:04 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3152 ; free virtual = 24771
+
+Phase 4.2 Sweep Clock Roots: Post-Placement
+Phase 4.2 Sweep Clock Roots: Post-Placement | Checksum: 1b4c4a3e9
+
+Time (s): cpu = 00:00:15 ; elapsed = 00:00:04 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3152 ; free virtual = 24771
+
+Phase 4.3 Post Placement Cleanup
+Phase 4.3 Post Placement Cleanup | Checksum: 1b4c4a3e9
+
+Time (s): cpu = 00:00:15 ; elapsed = 00:00:04 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3152 ; free virtual = 24771
+
+Phase 4.4 Placer Reporting
+
+Phase 4.4.1 Restore STA
+Phase 4.4.1 Restore STA | Checksum: 1b4c4a3e9
+
+Time (s): cpu = 00:00:15 ; elapsed = 00:00:04 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3152 ; free virtual = 24771
+Phase 4.4 Placer Reporting | Checksum: 1b4c4a3e9
+
+Time (s): cpu = 00:00:15 ; elapsed = 00:00:04 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3152 ; free virtual = 24771
+
+Phase 4.5 Final Placement Cleanup
+Phase 4.5 Final Placement Cleanup | Checksum: 18ba9685b
+
+Time (s): cpu = 00:00:15 ; elapsed = 00:00:04 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3152 ; free virtual = 24771
+Phase 4 Post Placement Optimization and Clean-Up | Checksum: 18ba9685b
+
+Time (s): cpu = 00:00:15 ; elapsed = 00:00:04 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3152 ; free virtual = 24771
+Ending Placer Task | Checksum: 12bab6fc1
+
+Time (s): cpu = 00:00:15 ; elapsed = 00:00:04 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3152 ; free virtual = 24771
 INFO: [Common 17-83] Releasing license: Implementation
-9 Infos, 0 Warnings, 0 Critical Warnings and 2 Errors encountered.
-place_design failed
-ERROR: [Common 17-69] Command failed: Placer could not place all instances
+10 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
+place_design completed successfully
+# report_clock_utilization -file $outputDir/clock_util.rpt
+# check_timing -override_defaults loops -verbose > post_place_loops.rpt
+
+check_timing report
+
+Table of Contents
+-----------------
+1. checking loops
+
+1. checking loops
+-----------------
+ There are 0 combinational loops in the design.
+
+
+# if {[get_property SLACK [get_timing_paths -max_paths 1 -nworst 1 -setup]] < 0} {
+# puts "Found setup timing violations => running physical optimization"
+# phys_opt_design
+# }
+# write_checkpoint -force $outputDir/post_place.dcp
+Writing placer database...
+Writing XDEF routing.
+Writing XDEF routing logical nets.
+Writing XDEF routing special nets.
+Write XDEF Complete: Time (s): cpu = 00:00:00.27 ; elapsed = 00:00:00.09 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3149 ; free virtual = 24770
+# report_utilization -file $outputDir/post_place_util.rpt
+report_utilization: Time (s): cpu = 00:00:00.07 ; elapsed = 00:00:00.11 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3150 ; free virtual = 24769
+# report_timing_summary -file $outputDir/post_place_timing_summary.rpt
+# route_design
+Command: route_design
+Attempting to get a license for feature 'Implementation' and/or device 'xc7a35t'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7a35t'
+Running DRC as a precondition to command route_design
+INFO: [DRC 23-27] Running DRC with 8 threads
+INFO: [Vivado_Tcl 4-198] DRC finished with 0 Errors
+INFO: [Vivado_Tcl 4-199] Please refer to the DRC report (report_drc) for more information.
+
+
+Starting Routing Task
+INFO: [Route 35-254] Multithreading enabled for route_design using a maximum of 8 CPUs
+Checksum: PlaceDB: bb1534e6 ConstDB: 0 ShapeSum: 70963adb RouteDB: 0
+
+Phase 1 Build RT Design
+Phase 1 Build RT Design | Checksum: bc1e3bfd
+
+Time (s): cpu = 00:00:14 ; elapsed = 00:00:12 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3090 ; free virtual = 24706
+
+Phase 2 Router Initialization
+
+Phase 2.1 Create Timer
+Phase 2.1 Create Timer | Checksum: bc1e3bfd
+
+Time (s): cpu = 00:00:14 ; elapsed = 00:00:12 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3090 ; free virtual = 24706
+
+Phase 2.2 Pre Route Cleanup
+Phase 2.2 Pre Route Cleanup | Checksum: bc1e3bfd
+
+Time (s): cpu = 00:00:14 ; elapsed = 00:00:12 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3063 ; free virtual = 24679
+ Number of Nodes with overlaps = 0
+
+Phase 2.3 Update Timing
+Phase 2.3 Update Timing | Checksum: dd19b577
+
+Time (s): cpu = 00:00:15 ; elapsed = 00:00:12 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3062 ; free virtual = 24678
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=6.964  | TNS=0.000  | WHS=-0.185 | THS=-25.072|
+
+Phase 2 Router Initialization | Checksum: 159a3c887
+
+Time (s): cpu = 00:00:16 ; elapsed = 00:00:12 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3062 ; free virtual = 24678
+
+Phase 3 Initial Routing
+Phase 3 Initial Routing | Checksum: 23ce033a5
+
+Time (s): cpu = 00:00:17 ; elapsed = 00:00:12 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3061 ; free virtual = 24677
+
+Phase 4 Rip-up And Reroute
+
+Phase 4.1 Global Iteration 0
+ Number of Nodes with overlaps = 200
+ Number of Nodes with overlaps = 1
+ Number of Nodes with overlaps = 0
+
+Phase 4.1.1 Update Timing
+Phase 4.1.1 Update Timing | Checksum: 27cd2c941
+
+Time (s): cpu = 00:00:19 ; elapsed = 00:00:13 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3061 ; free virtual = 24677
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=6.725  | TNS=0.000  | WHS=N/A    | THS=N/A    |
+
+Phase 4.1 Global Iteration 0 | Checksum: 2340493a7
+
+Time (s): cpu = 00:00:19 ; elapsed = 00:00:13 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3061 ; free virtual = 24677
+Phase 4 Rip-up And Reroute | Checksum: 2340493a7
+
+Time (s): cpu = 00:00:19 ; elapsed = 00:00:13 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3061 ; free virtual = 24677
+
+Phase 5 Delay and Skew Optimization
+
+Phase 5.1 Delay CleanUp
+
+Phase 5.1.1 Update Timing
+Phase 5.1.1 Update Timing | Checksum: 185abbe88
+
+Time (s): cpu = 00:00:19 ; elapsed = 00:00:13 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3061 ; free virtual = 24677
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=6.804  | TNS=0.000  | WHS=N/A    | THS=N/A    |
+
+Phase 5.1 Delay CleanUp | Checksum: 185abbe88
+
+Time (s): cpu = 00:00:19 ; elapsed = 00:00:13 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3061 ; free virtual = 24677
+
+Phase 5.2 Clock Skew Optimization
+Phase 5.2 Clock Skew Optimization | Checksum: 185abbe88
+
+Time (s): cpu = 00:00:19 ; elapsed = 00:00:13 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3061 ; free virtual = 24677
+Phase 5 Delay and Skew Optimization | Checksum: 185abbe88
+
+Time (s): cpu = 00:00:19 ; elapsed = 00:00:13 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3061 ; free virtual = 24677
+
+Phase 6 Post Hold Fix
+
+Phase 6.1 Update Timing
+Phase 6.1 Update Timing | Checksum: 20f28c6be
+
+Time (s): cpu = 00:00:19 ; elapsed = 00:00:13 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3061 ; free virtual = 24677
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=6.804  | TNS=0.000  | WHS=0.044  | THS=0.000  |
+
+Phase 6 Post Hold Fix | Checksum: 20f28c6be
+
+Time (s): cpu = 00:00:19 ; elapsed = 00:00:13 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3061 ; free virtual = 24677
+
+Phase 7 Route finalize
+
+Router Utilization Summary
+  Global Vertical Routing Utilization    = 0.45635 %
+  Global Horizontal Routing Utilization  = 0.647449 %
+  Routable Net Status*
+  *Does not include unroutable nets such as driverless and loadless.
+  Run report_route_status for detailed report.
+  Number of Failed Nets               = 0
+  Number of Unrouted Nets             = 0
+  Number of Partially Routed Nets     = 0
+  Number of Node Overlaps             = 0
+
+Phase 7 Route finalize | Checksum: 182d94f9a
+
+Time (s): cpu = 00:00:19 ; elapsed = 00:00:13 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3061 ; free virtual = 24677
+
+Phase 8 Verifying routed nets
+
+ Verification completed successfully
+Phase 8 Verifying routed nets | Checksum: 182d94f9a
+
+Time (s): cpu = 00:00:19 ; elapsed = 00:00:13 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3061 ; free virtual = 24677
+
+Phase 9 Depositing Routes
+Phase 9 Depositing Routes | Checksum: 1f87e4504
+
+Time (s): cpu = 00:00:19 ; elapsed = 00:00:13 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3061 ; free virtual = 24677
+
+Phase 10 Post Router Timing
+INFO: [Route 35-57] Estimated Timing Summary | WNS=6.804  | TNS=0.000  | WHS=0.044  | THS=0.000  |
+
+INFO: [Route 35-327] The final timing numbers are based on the router estimated timing analysis. For a complete and accurate timing signoff, please run report_timing_summary.
+Phase 10 Post Router Timing | Checksum: 1f87e4504
+
+Time (s): cpu = 00:00:19 ; elapsed = 00:00:13 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3061 ; free virtual = 24677
+INFO: [Route 35-16] Router Completed Successfully
+
+Time (s): cpu = 00:00:19 ; elapsed = 00:00:13 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3061 ; free virtual = 24677
+
+Routing Is Done.
+INFO: [Common 17-83] Releasing license: Implementation
+13 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
+route_design completed successfully
+route_design: Time (s): cpu = 00:00:20 ; elapsed = 00:00:13 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3061 ; free virtual = 24677
+# write_checkpoint -force $outputDir/post_route.dcp
+Writing placer database...
+Writing XDEF routing.
+Writing XDEF routing logical nets.
+Writing XDEF routing special nets.
+Write XDEF Complete: Time (s): cpu = 00:00:00.44 ; elapsed = 00:00:00.18 . Memory (MB): peak = 2082.840 ; gain = 0.000 ; free physical = 3059 ; free virtual = 24677
+# report_route_status -file $outputDir/post_route_status.rpt
+# report_timing_summary -file $outputDir/post_route_timing_summary.rpt
+# report_power -file $outputDir/post_route_power.rpt
+Running Vector-less Activity Propagation...
+
+Finished Running Vector-less Activity Propagation
+# report_drc -file $outputDir/post_imp_drc.rpt
+INFO: [DRC 23-27] Running DRC with 8 threads
+INFO: [Coretcl 2-168] The results of DRC are in file /home/roba/perso/github/nanorv32/synt/fpga/rpt/post_imp_drc.rpt.
+# write_bitstream -force $outputDir/cpu.bit
+Attempting to get a license for feature 'Implementation' and/or device 'xc7a35t'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7a35t'
+Running DRC as a precondition to command write_bitstream
+INFO: [DRC 23-27] Running DRC with 8 threads
+WARNING: [DRC 23-20] Rule violation (CFGBVS-1) Missing CFGBVS and CONFIG_VOLTAGE Design Properties - Neither the CFGBVS nor CONFIG_VOLTAGE voltage property is set in the current_design.  Configuration bank voltage select (CFGBVS) must be set to VCCO or GND, and CONFIG_VOLTAGE must be set to the correct configuration voltage, in order to determine the I/O voltage support for the pins in bank 0.  It is suggested to specify these either using the 'Edit Device Properties' function in the GUI or directly in the XDC file using the following syntax:
+
+ set_property CFGBVS value1 [current_design]
+ #where value1 is either VCCO or GND
+
+ set_property CONFIG_VOLTAGE value2 [current_design]
+ #where value2 is the voltage provided to configuration bank 0
+
+Refer to the device configuration user guide for more information.
+WARNING: [DRC 23-20] Rule violation (PDRC-153) Gated clock check - Net U_CPU/datamem_size_write_sel_reg[1]_i_2_n_1 is a gated clock net sourced by a combinational pin U_CPU/datamem_size_write_sel_reg[1]_i_2/O, cell U_CPU/datamem_size_write_sel_reg[1]_i_2. This is not good design practice and will likely impact performance. For SLICE registers, for example, use the CE pin to control the loading of data.
+INFO: [Vivado 12-3199] DRC finished with 0 Errors, 2 Warnings
+INFO: [Vivado 12-3200] Please refer to the DRC report (report_drc) for more information.
+Loading data files...
+Loading site data...
+Loading route data...
+Processing options...
+Creating bitmap...
+Creating bitstream...
+Writing bitstream ./rpt/cpu.bit...
+INFO: [Vivado 12-1842] Bitgen Completed Successfully.
+INFO: [Project 1-118] WebTalk data collection is enabled (User setting is ON. Install Setting is ON.).
+INFO: [Common 17-186] '/home/roba/perso/github/nanorv32/synt/fpga/usage_statistics_webtalk.xml' has been successfully sent to Xilinx on Thu Feb 11 08:24:40 2016. For additional details about this file, please refer to the WebTalk help file at /opt/Xilinx/Vivado/2015.3/doc/webtalk_introduction.html.
+INFO: [Common 17-83] Releasing license: Implementation
+write_bitstream: Time (s): cpu = 00:00:12 ; elapsed = 00:00:14 . Memory (MB): peak = 2228.184 ; gain = 145.344 ; free physical = 2765 ; free virtual = 24413
+# write_verilog -force -mode timesim -sdf_anno true chip_layout.v
+# write_sdf -force chip_layout.sdf
+# source report_bram.tcl > bram.yaml
+WARNING: [Vivado 12-180] No cells matched 'get_cells -hierarchical -filter { PRIMITIVE_TYPE =~ BMEM.bram.*  &&  NAME =~  "*u_ahb_rom*" }'.
+## set all_rom_blocks [get_cells -hierarchical -filter { PRIMITIVE_TYPE =~ BMEM.bram.*  &&  NAME =~  "*u_ahb_rom*" }]
+## puts "# Block ram description"
+# Block ram description
+## puts "---"
+---
+## puts "bram:"
+bram:
+## foreach block $all_rom_blocks {
+##     puts "- NAME:  [get_property NAME $block]"
+##     puts "  SITE: [get_property SITE $block]"
+##     puts "  READ_WIDTH_A: [get_property READ_WIDTH_A $block]"
+## }
+exit
+INFO: [Common 17-206] Exiting Vivado at Thu Feb 11 08:25:36 2016...

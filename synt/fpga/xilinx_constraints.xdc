@@ -110,4 +110,5 @@ set_property -dict { PACKAGE_PIN K16   IOSTANDARD LVCMOS33 } [get_ports { P1[15]
 #set_property -dict { PACKAGE_PIN U14   IOSTANDARD LVCMOS33 } [get_ports { SWCLKTCK }]; #IO_L22P_T3_A05_D21_14 Sch=jc[7]
 #set_property -dict { PACKAGE_PIN V14   IOSTANDARD LVCMOS33 } [get_ports { XTAL2 }]; #IO_L22N_T3_A04_D20_14 Sch=jc[8]
 #set_property -dict { PACKAGE_PIN T13   IOSTANDARD LVCMOS33 } [get_ports { jc[9] }]; #IO_L23P_T3_A03_D19_14 Sch=jc[9]
-#set_property -dict { PACKAGE_PIN U13   IOSTANDARD LVCMOS33 } [get_ports { jc[10] }]; #IO_L23N_T3_A02_D18_14 Sch=jc[10]
+
+set_property -dict { PACKAGE_PIN U13   IOSTANDARD LVCMOS33 } [get_ports { illegal_instruction }]; #IO_L23N_T3_A02_D18_14 Sch=jc[10]

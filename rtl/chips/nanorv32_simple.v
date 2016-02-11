@@ -33,6 +33,8 @@
 
 
 module nanorv32_simple (/*AUTOARG*/
+   // Outputs
+   illegal_instruction,
    // Inouts
    P0, P1,
    // Inputs
@@ -47,6 +49,8 @@ module nanorv32_simple (/*AUTOARG*/
    input                clk_in;                    // To U_CPU of nanorv32.v
    input                rst_n;                  // To U_CPU of nanorv32.v
 
+
+   output               illegal_instruction;    // From U_CPU of nanorv32.v
 
    inout  wire [15:0]   P0;
    inout  wire [15:0]   P1;
@@ -105,6 +109,7 @@ module nanorv32_simple (/*AUTOARG*/
    nanorv32 U_CPU (
                    /*AUTOINST*/
                    // Outputs
+                   .illegal_instruction (illegal_instruction),
                    .cpu_codeif_addr     (cpu_codeif_addr[NANORV32_DATA_MSB:0]),
                    .cpu_codeif_req      (cpu_codeif_req),
                    .cpu_dataif_addr     (cpu_dataif_addr[NANORV32_DATA_MSB:0]),
@@ -112,14 +117,14 @@ module nanorv32_simple (/*AUTOARG*/
                    .cpu_dataif_bytesel  (cpu_dataif_bytesel[3:0]),
                    .cpu_dataif_req      (cpu_dataif_req),
                    // Inputs
+                   .rst_n               (rst_n),
+                   .clk                 (clk),
                    .codeif_cpu_rdata    (codeif_cpu_rdata[NANORV32_DATA_MSB:0]),
                    .codeif_cpu_early_ready(codeif_cpu_early_ready),
                    .codeif_cpu_ready_r  (codeif_cpu_ready_r),
                    .dataif_cpu_rdata    (dataif_cpu_rdata[NANORV32_DATA_MSB:0]),
                    .dataif_cpu_early_ready(dataif_cpu_early_ready),
-                   .dataif_cpu_ready_r  (dataif_cpu_ready_r),
-                   .rst_n               (rst_n),
-                   .clk                 (clk));
+                   .dataif_cpu_ready_r  (dataif_cpu_ready_r));
 
 
 
