@@ -5,6 +5,8 @@
 ../../rtl/ips/bytewrite_ram_32bits.v
 ../../rtl/ips/nanorv32_tcm_ctrl.v
 ../../rtl/ips/nanorv32_tcm_arbitrer.v
+../../rtl/ips/nanorv32_periph_mux.v
+../../rtl/ips/nanorv32_gpio_ctrl.v
 ../../rtl/chips/nanorv32_clkgen.v
 ../../rtl/chips/nanorv32_simple.v
 ../../sim/verilog/reset_gen.v

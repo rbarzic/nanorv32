@@ -38,6 +38,14 @@ def nanor32_fl():
         'file': "{top}/rtl/ips/nanorv32_tcm_arbitrer.v",
         'targets': 'synt,sim_rtl'
     })
+    l.append({
+        'file': "{top}/rtl/ips/nanorv32_periph_mux.v",
+        'targets': 'synt,sim_rtl'
+    })
+    l.append({
+        'file': "{top}/rtl/ips/nanorv32_gpio_ctrl.v",
+        'targets': 'synt,sim_rtl'
+    })
 
     l.append({
         'file': "{top}/rtl/chips/nanorv32_clkgen.v",

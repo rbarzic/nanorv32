@@ -11,7 +11,7 @@ iverilog_file_list.txt:
 
 
 compile:
-	iverilog   -DIVERILOG=1 -f   iverilog_file_list.txt -o testbench.exe
+	iverilog  -g2005 -DIVERILOG=1 -f   iverilog_file_list.txt -o testbench.exe
 
 compile_debug:
 	iverilog -pfileline=1  -DIVERILOG=1 -f   iverilog_file_list.txt -o testbench.exe
@@ -92,3 +92,5 @@ regression_p: regression
 
 find_failled:
 	@(find logs/  -name "*.run.log" | xargs  grep "\-I\- TEST" | grep FAILED) || echo "No error found !"
+
+.PHONY: iverilog_file_list.txt
