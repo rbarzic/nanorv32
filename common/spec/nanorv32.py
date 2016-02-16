@@ -5,7 +5,7 @@ spec = av.AutoVivification()
 
 spec['nanorv32']['cpu']['num_std_regs'] = 32
 
-spec['nanorv32']['cpu']['special_regs'] = 'npc'
+spec['nanorv32']['cpu']['special_regs'] = 'npc' # Fixme
 spec['nanorv32']['cpu']['endianess'] = 'little'
 spec['nanorv32']['cpu']['wordsize'] = '32'
 

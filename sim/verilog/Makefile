@@ -4,6 +4,8 @@ TOP:=$(shell cd ../..; pwd)
 
 include ../../common/makefile/gcc.mk
 
+
+XARGS=xargs
 iverilog_file_list.txt:
 	make -C $(TOP)/common/files iverilog
 
@@ -78,13 +80,15 @@ check-syntax:
 rv32ui.regression.txt:
 	find ../../riscv-tests/isa/rv32ui -name "*.S" | xargs -n1 basename --suffix=.S > rv32ui.regression.txt
 
-regression: rv32ui.regression.txt compile
+regression: $(TOP)/common/instructions/rv32e_base.txt compile
 	rm -f logs/*
-	@cat rv32ui.regression.txt | xargs -n1 -IXXX make -C . run_rv32ui TEST=XXX
+	@cat $(TOP)/common/instructions/rv32e_base.txt | $(XARGS) -n1 -IXXX make -C . run_rv32ui TEST=XXX
 
-regression_p: rv32ui.regression.txt compile
-	rm -f logs/*
-	@cat rv32ui.regression.txt | parallel -n1 -IXXX make -C . run_rv32ui TEST=XXX
+regression_p: XARGS=parallel
+regression_p: regression
+#regression_p: rv32ui.regression.txt compile
+#	rm -f logs/*
+#	@cat rv32ui.regression.txt | parallel -n1 -IXXX make -C . run_rv32ui TEST=XXX
 
 find_failled:
-	find logs/  -name "*.run.log" | xargs  grep "\-I\- TEST" | grep FAILED
+	@(find logs/  -name "*.run.log" | xargs  grep "\-I\- TEST" | grep FAILED) || echo "No error found !"
