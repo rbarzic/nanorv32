@@ -43,7 +43,7 @@ module nanorv32_simple (/*AUTOARG*/
 
 `include "nanorv32_parameters.v"
 
-   parameter AW = 15; // 32K per RAM
+   parameter AW = 16; // 64K per RAM
    localparam ADDR_WIDTH = AW;
 
    input                clk_in;                    // To U_CPU of nanorv32.v
@@ -305,8 +305,8 @@ module nanorv32_simple (/*AUTOARG*/
 
 
 
-
-
+   assign P0 = gpio_pad_out[15:0];
+   assign pad_gpio_in[15:0] = P1;
 
 endmodule // nanorv32_simple
 /*

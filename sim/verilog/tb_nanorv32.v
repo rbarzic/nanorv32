@@ -135,7 +135,7 @@ module tb_nanorv32;
       vcd_dump();
       #1000000;
       $display("-E- Timeout !");
-      $finish(3);
+      $finish(2);
 
    end
 
@@ -153,7 +153,7 @@ module tb_nanorv32;
       if(rst_n) begin
          if(illegal_instruction) begin
             $display("-I- TEST FAILED (Illegal instruction)");
-            $finish(3);
+            $finish(2);
          end
       else
         if(pc === 32'h00000100) begin

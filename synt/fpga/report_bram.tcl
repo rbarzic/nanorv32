@@ -1,5 +1,5 @@
 # script to help generation of MMI file
-set all_rom_blocks [get_cells -hierarchical -filter { PRIMITIVE_TYPE =~ BMEM.bram.*  &&  NAME =~  "*u_ahb_rom*" }]
+set all_rom_blocks [get_cells -hierarchical -filter { PRIMITIVE_TYPE =~ BMEM.bram.*  &&  NAME =~  "*U_TCM_CODE*" }]
 puts "# Block ram description"
 puts "---"
 puts "bram:"

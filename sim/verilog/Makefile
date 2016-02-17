@@ -9,6 +9,9 @@ XARGS=xargs
 iverilog_file_list.txt:
 	make -C $(TOP)/common/files iverilog
 
+vivado_file_list.txt:
+	make -C $(TOP)/common/files vivado_sim
+
 
 compile:
 	iverilog  -g2005 -DIVERILOG=1 -f   iverilog_file_list.txt -o testbench.exe
@@ -93,4 +96,45 @@ regression_p: regression
 find_failled:
 	@(find logs/  -name "*.run.log" | xargs  grep "\-I\- TEST" | grep FAILED) || echo "No error found !"
 
-.PHONY: iverilog_file_list.txt
+
+###################  Xilinx simulation ###############################################
+# Xilinx :
+# xvlog -f xilinx_vlist.txt
+# xelab cmsdk_mcu -relax (because of timescale)
+# see ug900
+#Step2: Elaborating and Creating a Snapshot
+#After analysis, elaborate the design and create a snapshot for simulation using the xelab
+#command:
+#xelab <topDesignUnitName> -debug typicalx
+#IMPORTANT: You can provide multiple top-level design unit names with xelab. To use the Vivado
+#simulator workspace for purposes similar to those used during launch_simulation, you must set
+#debug level to typical.
+#Step 3: Running Simulation
+#After successful completion of the xelab phase, the Vivado simulator creates a snapshot
+#used for running simulation.
+#To invoke the Vivado simulator workspace, use the following command:
+#xsim
+#<SnapShotName> -gui
+#To open the wave config file:
+#xsim <SnapShotName> -view <wcfg FileName> -gui
+#You can provide multiple wcfg files using multiple -view flags. For example:
+#xsim
+#<SnapShotName> -view <wcfg FileName> -view <wcfg FileName>
+
+xcomp:
+	xvlog --define NO_TIME_SCALE -f vivado_file_list.txt  $(XILINX_VIVADO)/data/verilog/src/glbl.v
+
+xelab:
+	xelab -L unisims_ver tb_nanorv32 glbl --relax --debug all
+
+xsim:
+	xsim work.tb_nanorv32#work.glbl  -runall
+
+xsim work.tb_nanorv32#work.glbl  -runallxsim work.tb_nanorv32#work.glbl  -runall
+
+
+
+
+
+
+.PHONY: iverilog_file_list.txt vivado_file_list.txt

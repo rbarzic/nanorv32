@@ -1,5 +1,4 @@
-WARNING: [Vivado 12-180] No cells matched 'get_cells -hierarchical -filter { PRIMITIVE_TYPE =~ BMEM.bram.*  &&  NAME =~  "*u_ahb_rom*" }'.
-## set all_rom_blocks [get_cells -hierarchical -filter { PRIMITIVE_TYPE =~ BMEM.bram.*  &&  NAME =~  "*u_ahb_rom*" }]
+## set all_rom_blocks [get_cells -hierarchical -filter { PRIMITIVE_TYPE =~ BMEM.bram.*  &&  NAME =~  "*U_TCM_CODE*" }]
 ## puts "# Block ram description"
 # Block ram description
 ## puts "---"
@@ -11,3 +10,51 @@ bram:
 ##     puts "  SITE: [get_property SITE $block]"
 ##     puts "  READ_WIDTH_A: [get_property READ_WIDTH_A $block]"
 ## }
+- NAME:  U_TCM_CODE/U_MEM/RAM_reg_0_0
+  SITE: RAMB36_X2Y3
+  READ_WIDTH_A: 2
+- NAME:  U_TCM_CODE/U_MEM/RAM_reg_0_1
+  SITE: RAMB36_X2Y4
+  READ_WIDTH_A: 2
+- NAME:  U_TCM_CODE/U_MEM/RAM_reg_0_2
+  SITE: RAMB36_X2Y5
+  READ_WIDTH_A: 2
+- NAME:  U_TCM_CODE/U_MEM/RAM_reg_0_3
+  SITE: RAMB36_X2Y0
+  READ_WIDTH_A: 2
+- NAME:  U_TCM_CODE/U_MEM/RAM_reg_1_0
+  SITE: RAMB36_X0Y1
+  READ_WIDTH_A: 2
+- NAME:  U_TCM_CODE/U_MEM/RAM_reg_1_1
+  SITE: RAMB36_X0Y2
+  READ_WIDTH_A: 2
+- NAME:  U_TCM_CODE/U_MEM/RAM_reg_1_2
+  SITE: RAMB36_X1Y4
+  READ_WIDTH_A: 2
+- NAME:  U_TCM_CODE/U_MEM/RAM_reg_1_3
+  SITE: RAMB36_X0Y3
+  READ_WIDTH_A: 2
+- NAME:  U_TCM_CODE/U_MEM/RAM_reg_2_0
+  SITE: RAMB36_X0Y5
+  READ_WIDTH_A: 2
+- NAME:  U_TCM_CODE/U_MEM/RAM_reg_2_1
+  SITE: RAMB36_X1Y10
+  READ_WIDTH_A: 2
+- NAME:  U_TCM_CODE/U_MEM/RAM_reg_2_2
+  SITE: RAMB36_X2Y10
+  READ_WIDTH_A: 2
+- NAME:  U_TCM_CODE/U_MEM/RAM_reg_2_3
+  SITE: RAMB36_X2Y9
+  READ_WIDTH_A: 2
+- NAME:  U_TCM_CODE/U_MEM/RAM_reg_3_0
+  SITE: RAMB36_X0Y9
+  READ_WIDTH_A: 2
+- NAME:  U_TCM_CODE/U_MEM/RAM_reg_3_1
+  SITE: RAMB36_X1Y8
+  READ_WIDTH_A: 2
+- NAME:  U_TCM_CODE/U_MEM/RAM_reg_3_2
+  SITE: RAMB36_X0Y6
+  READ_WIDTH_A: 2
+- NAME:  U_TCM_CODE/U_MEM/RAM_reg_3_3
+  SITE: RAMB36_X2Y8
+  READ_WIDTH_A: 2

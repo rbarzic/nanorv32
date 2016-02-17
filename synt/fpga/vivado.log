@@ -1,13 +1,13 @@
 #-----------------------------------------------------------
-# Vivado v2015.3 (64-bit)
-# SW Build 1368829 on Mon Sep 28 20:06:39 MDT 2015
-# IP Build 1367837 on Mon Sep 28 08:56:14 MDT 2015
-# Start of session at: Wed Feb 17 11:43:25 2016
-# Process ID: 12593
-# Current directory: /home/roba/perso/github/nanorv32/synt/fpga
+# Vivado v2015.4 (64-bit)
+# SW Build 1412921 on Wed Nov 18 09:44:32 MST 2015
+# IP Build 1412160 on Tue Nov 17 13:47:24 MST 2015
+# Start of session at: Wed Feb 17 18:58:08 2016
+# Process ID: 13792
+# Current directory: /home/ronan/perso/github/nanorv32/synt/fpga
 # Command line: vivado -mode tcl -source vivado.tcl
-# Log file: /home/roba/perso/github/nanorv32/synt/fpga/vivado.log
-# Journal file: /home/roba/perso/github/nanorv32/synt/fpga/vivado.jou
+# Log file: /home/ronan/perso/github/nanorv32/synt/fpga/vivado.log
+# Journal file: /home/ronan/perso/github/nanorv32/synt/fpga/vivado.jou
 #-----------------------------------------------------------
 source vivado.tcl
 # source vivado_utils.tcl
@@ -71,17 +71,17 @@ Starting synth_design
 Attempting to get a license for feature 'Synthesis' and/or device 'xc7a35t'
 INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a35t'
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 1033.238 ; gain = 163.945 ; free physical = 2973 ; free virtual = 20453
+Starting RTL Elaboration : Time (s): cpu = 00:00:07 ; elapsed = 00:00:07 . Memory (MB): peak = 1001.238 ; gain = 152.918 ; free physical = 8547 ; free virtual = 22362
 ---------------------------------------------------------------------------------
-INFO: [Synth 8-638] synthesizing module 'nanorv32_simple' [/home/roba/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:35]
-	Parameter NANORV32_ADDR_SIZE bound to: 15 - type: integer 
-	Parameter NANORV32_ADDR_MSB bound to: 14 - type: integer 
+INFO: [Synth 8-638] synthesizing module 'nanorv32_simple' [/home/ronan/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:35]
+	Parameter NANORV32_ADDR_SIZE bound to: 16 - type: integer 
+	Parameter NANORV32_ADDR_MSB bound to: 15 - type: integer 
 	Parameter NANORV32_DATA_SIZE bound to: 32 - type: integer 
 	Parameter NANORV32_DATA_MSB bound to: 31 - type: integer 
 	Parameter NANORV32_INSTRUCTION_SIZE bound to: 32 - type: integer 
 	Parameter NANORV32_INSTRUCTION_MSB bound to: 31 - type: integer 
-	Parameter NANORV32_PERIPH_ADDR_SIZE bound to: 15 - type: integer 
-	Parameter NANORV32_PERIPH_ADDR_MSB bound to: 14 - type: integer 
+	Parameter NANORV32_PERIPH_ADDR_SIZE bound to: 16 - type: integer 
+	Parameter NANORV32_PERIPH_ADDR_MSB bound to: 15 - type: integer 
 	Parameter NANORV32_RF_PORTA_SIZE bound to: 5 - type: integer 
 	Parameter NANORV32_RF_PORTA_MSB bound to: 4 - type: integer 
 	Parameter NANORV32_RF_PORTB_SIZE bound to: 5 - type: integer 
@@ -257,17 +257,17 @@ INFO: [Synth 8-638] synthesizing module 'nanorv32_simple' [/home/roba/perso/gith
 	Parameter NANORV32_CODE_BASE_ADDRESS bound to: 0 - type: integer 
 	Parameter NANORV32_RAM_BASE_ADDRESS bound to: 536870912 - type: integer 
 	Parameter NANORV32_PERIPH_BASE_ADDRESS bound to: -268435456 - type: integer 
-	Parameter AW bound to: 15 - type: integer 
-	Parameter ADDR_WIDTH bound to: 15 - type: integer 
-INFO: [Synth 8-638] synthesizing module 'nanorv32' [/home/roba/perso/github/nanorv32/rtl/cores/nanorv32.v:34]
-	Parameter NANORV32_ADDR_SIZE bound to: 15 - type: integer 
-	Parameter NANORV32_ADDR_MSB bound to: 14 - type: integer 
+	Parameter AW bound to: 16 - type: integer 
+	Parameter ADDR_WIDTH bound to: 16 - type: integer 
+INFO: [Synth 8-638] synthesizing module 'nanorv32' [/home/ronan/perso/github/nanorv32/rtl/cores/nanorv32.v:34]
+	Parameter NANORV32_ADDR_SIZE bound to: 16 - type: integer 
+	Parameter NANORV32_ADDR_MSB bound to: 15 - type: integer 
 	Parameter NANORV32_DATA_SIZE bound to: 32 - type: integer 
 	Parameter NANORV32_DATA_MSB bound to: 31 - type: integer 
 	Parameter NANORV32_INSTRUCTION_SIZE bound to: 32 - type: integer 
 	Parameter NANORV32_INSTRUCTION_MSB bound to: 31 - type: integer 
-	Parameter NANORV32_PERIPH_ADDR_SIZE bound to: 15 - type: integer 
-	Parameter NANORV32_PERIPH_ADDR_MSB bound to: 14 - type: integer 
+	Parameter NANORV32_PERIPH_ADDR_SIZE bound to: 16 - type: integer 
+	Parameter NANORV32_PERIPH_ADDR_MSB bound to: 15 - type: integer 
 	Parameter NANORV32_RF_PORTA_SIZE bound to: 5 - type: integer 
 	Parameter NANORV32_RF_PORTA_MSB bound to: 4 - type: integer 
 	Parameter NANORV32_RF_PORTB_SIZE bound to: 5 - type: integer 
@@ -443,19 +443,19 @@ INFO: [Synth 8-638] synthesizing module 'nanorv32' [/home/roba/perso/github/nano
 	Parameter NANORV32_CODE_BASE_ADDRESS bound to: 0 - type: integer 
 	Parameter NANORV32_RAM_BASE_ADDRESS bound to: 536870912 - type: integer 
 	Parameter NANORV32_PERIPH_BASE_ADDRESS bound to: -268435456 - type: integer 
-INFO: [Synth 8-226] default block is never used [/home/roba/perso/github/nanorv32/rtl/cores/nanorv32.v:752]
-INFO: [Synth 8-226] default block is never used [/home/roba/perso/github/nanorv32/rtl/cores/nanorv32.v:786]
-INFO: [Synth 8-226] default block is never used [/home/roba/perso/github/nanorv32/rtl/cores/nanorv32.v:806]
-INFO: [Synth 8-638] synthesizing module 'nanorv32_regfile' [/home/roba/perso/github/nanorv32/rtl/cores/nanorv32_regfile.v:34]
+INFO: [Synth 8-226] default block is never used [/home/ronan/perso/github/nanorv32/rtl/cores/nanorv32.v:752]
+INFO: [Synth 8-226] default block is never used [/home/ronan/perso/github/nanorv32/rtl/cores/nanorv32.v:786]
+INFO: [Synth 8-226] default block is never used [/home/ronan/perso/github/nanorv32/rtl/cores/nanorv32.v:806]
+INFO: [Synth 8-638] synthesizing module 'nanorv32_regfile' [/home/ronan/perso/github/nanorv32/rtl/cores/nanorv32_regfile.v:34]
 	Parameter NUM_REGS bound to: 32 - type: integer 
-	Parameter NANORV32_ADDR_SIZE bound to: 15 - type: integer 
-	Parameter NANORV32_ADDR_MSB bound to: 14 - type: integer 
+	Parameter NANORV32_ADDR_SIZE bound to: 16 - type: integer 
+	Parameter NANORV32_ADDR_MSB bound to: 15 - type: integer 
 	Parameter NANORV32_DATA_SIZE bound to: 32 - type: integer 
 	Parameter NANORV32_DATA_MSB bound to: 31 - type: integer 
 	Parameter NANORV32_INSTRUCTION_SIZE bound to: 32 - type: integer 
 	Parameter NANORV32_INSTRUCTION_MSB bound to: 31 - type: integer 
-	Parameter NANORV32_PERIPH_ADDR_SIZE bound to: 15 - type: integer 
-	Parameter NANORV32_PERIPH_ADDR_MSB bound to: 14 - type: integer 
+	Parameter NANORV32_PERIPH_ADDR_SIZE bound to: 16 - type: integer 
+	Parameter NANORV32_PERIPH_ADDR_MSB bound to: 15 - type: integer 
 	Parameter NANORV32_RF_PORTA_SIZE bound to: 5 - type: integer 
 	Parameter NANORV32_RF_PORTA_MSB bound to: 4 - type: integer 
 	Parameter NANORV32_RF_PORTB_SIZE bound to: 5 - type: integer 
@@ -631,16 +631,16 @@ INFO: [Synth 8-638] synthesizing module 'nanorv32_regfile' [/home/roba/perso/git
 	Parameter NANORV32_CODE_BASE_ADDRESS bound to: 0 - type: integer 
 	Parameter NANORV32_RAM_BASE_ADDRESS bound to: 536870912 - type: integer 
 	Parameter NANORV32_PERIPH_BASE_ADDRESS bound to: -268435456 - type: integer 
-INFO: [Synth 8-256] done synthesizing module 'nanorv32_regfile' (1#1) [/home/roba/perso/github/nanorv32/rtl/cores/nanorv32_regfile.v:34]
-INFO: [Synth 8-638] synthesizing module 'nanorv32_alu' [/home/roba/perso/github/nanorv32/rtl/cores/nanorv32_alu.v:31]
-	Parameter NANORV32_ADDR_SIZE bound to: 15 - type: integer 
-	Parameter NANORV32_ADDR_MSB bound to: 14 - type: integer 
+INFO: [Synth 8-256] done synthesizing module 'nanorv32_regfile' (1#1) [/home/ronan/perso/github/nanorv32/rtl/cores/nanorv32_regfile.v:34]
+INFO: [Synth 8-638] synthesizing module 'nanorv32_alu' [/home/ronan/perso/github/nanorv32/rtl/cores/nanorv32_alu.v:31]
+	Parameter NANORV32_ADDR_SIZE bound to: 16 - type: integer 
+	Parameter NANORV32_ADDR_MSB bound to: 15 - type: integer 
 	Parameter NANORV32_DATA_SIZE bound to: 32 - type: integer 
 	Parameter NANORV32_DATA_MSB bound to: 31 - type: integer 
 	Parameter NANORV32_INSTRUCTION_SIZE bound to: 32 - type: integer 
 	Parameter NANORV32_INSTRUCTION_MSB bound to: 31 - type: integer 
-	Parameter NANORV32_PERIPH_ADDR_SIZE bound to: 15 - type: integer 
-	Parameter NANORV32_PERIPH_ADDR_MSB bound to: 14 - type: integer 
+	Parameter NANORV32_PERIPH_ADDR_SIZE bound to: 16 - type: integer 
+	Parameter NANORV32_PERIPH_ADDR_MSB bound to: 15 - type: integer 
 	Parameter NANORV32_RF_PORTA_SIZE bound to: 5 - type: integer 
 	Parameter NANORV32_RF_PORTA_MSB bound to: 4 - type: integer 
 	Parameter NANORV32_RF_PORTB_SIZE bound to: 5 - type: integer 
@@ -816,22 +816,22 @@ INFO: [Synth 8-638] synthesizing module 'nanorv32_alu' [/home/roba/perso/github/
 	Parameter NANORV32_CODE_BASE_ADDRESS bound to: 0 - type: integer 
 	Parameter NANORV32_RAM_BASE_ADDRESS bound to: 536870912 - type: integer 
 	Parameter NANORV32_PERIPH_BASE_ADDRESS bound to: -268435456 - type: integer 
-INFO: [Synth 8-155] case statement is not full and has no default [/home/roba/perso/github/nanorv32/rtl/cores/nanorv32_alu.v:60]
-INFO: [Synth 8-256] done synthesizing module 'nanorv32_alu' (2#1) [/home/roba/perso/github/nanorv32/rtl/cores/nanorv32_alu.v:31]
-INFO: [Synth 8-226] default block is never used [/home/roba/perso/github/nanorv32/rtl/cores/nanorv32.v:1126]
-INFO: [Synth 8-226] default block is never used [/home/roba/perso/github/nanorv32/rtl/cores/nanorv32.v:1150]
-INFO: [Synth 8-256] done synthesizing module 'nanorv32' (3#1) [/home/roba/perso/github/nanorv32/rtl/cores/nanorv32.v:34]
-INFO: [Synth 8-638] synthesizing module 'nanorv32_tcm_ctrl' [/home/roba/perso/github/nanorv32/rtl/ips/nanorv32_tcm_ctrl.v:32]
-	Parameter SIZE bound to: 8192 - type: integer 
-	Parameter ADDR_WIDTH bound to: 15 - type: integer 
-	Parameter NANORV32_ADDR_SIZE bound to: 15 - type: integer 
-	Parameter NANORV32_ADDR_MSB bound to: 14 - type: integer 
+INFO: [Synth 8-155] case statement is not full and has no default [/home/ronan/perso/github/nanorv32/rtl/cores/nanorv32_alu.v:60]
+INFO: [Synth 8-256] done synthesizing module 'nanorv32_alu' (2#1) [/home/ronan/perso/github/nanorv32/rtl/cores/nanorv32_alu.v:31]
+INFO: [Synth 8-226] default block is never used [/home/ronan/perso/github/nanorv32/rtl/cores/nanorv32.v:1126]
+INFO: [Synth 8-226] default block is never used [/home/ronan/perso/github/nanorv32/rtl/cores/nanorv32.v:1150]
+INFO: [Synth 8-256] done synthesizing module 'nanorv32' (3#1) [/home/ronan/perso/github/nanorv32/rtl/cores/nanorv32.v:34]
+INFO: [Synth 8-638] synthesizing module 'nanorv32_tcm_ctrl' [/home/ronan/perso/github/nanorv32/rtl/ips/nanorv32_tcm_ctrl.v:32]
+	Parameter SIZE bound to: 16384 - type: integer 
+	Parameter ADDR_WIDTH bound to: 16 - type: integer 
+	Parameter NANORV32_ADDR_SIZE bound to: 16 - type: integer 
+	Parameter NANORV32_ADDR_MSB bound to: 15 - type: integer 
 	Parameter NANORV32_DATA_SIZE bound to: 32 - type: integer 
 	Parameter NANORV32_DATA_MSB bound to: 31 - type: integer 
 	Parameter NANORV32_INSTRUCTION_SIZE bound to: 32 - type: integer 
 	Parameter NANORV32_INSTRUCTION_MSB bound to: 31 - type: integer 
-	Parameter NANORV32_PERIPH_ADDR_SIZE bound to: 15 - type: integer 
-	Parameter NANORV32_PERIPH_ADDR_MSB bound to: 14 - type: integer 
+	Parameter NANORV32_PERIPH_ADDR_SIZE bound to: 16 - type: integer 
+	Parameter NANORV32_PERIPH_ADDR_MSB bound to: 15 - type: integer 
 	Parameter NANORV32_RF_PORTA_SIZE bound to: 5 - type: integer 
 	Parameter NANORV32_RF_PORTA_MSB bound to: 4 - type: integer 
 	Parameter NANORV32_RF_PORTB_SIZE bound to: 5 - type: integer 
@@ -1007,25 +1007,25 @@ INFO: [Synth 8-638] synthesizing module 'nanorv32_tcm_ctrl' [/home/roba/perso/gi
 	Parameter NANORV32_CODE_BASE_ADDRESS bound to: 0 - type: integer 
 	Parameter NANORV32_RAM_BASE_ADDRESS bound to: 536870912 - type: integer 
 	Parameter NANORV32_PERIPH_BASE_ADDRESS bound to: -268435456 - type: integer 
-INFO: [Synth 8-638] synthesizing module 'bytewrite_ram_32bits' [/home/roba/perso/github/nanorv32/rtl/ips/bytewrite_ram_32bits.v:12]
-	Parameter SIZE bound to: 8192 - type: integer 
-	Parameter ADDR_WIDTH bound to: 13 - type: integer 
+INFO: [Synth 8-638] synthesizing module 'bytewrite_ram_32bits' [/home/ronan/perso/github/nanorv32/rtl/ips/bytewrite_ram_32bits.v:12]
+	Parameter SIZE bound to: 16384 - type: integer 
+	Parameter ADDR_WIDTH bound to: 14 - type: integer 
 	Parameter filename bound to: code.hex - type: string 
 	Parameter COL_WIDTH bound to: 8 - type: integer 
 	Parameter NB_COL bound to: 4 - type: integer 
-CRITICAL WARNING: [Synth 8-4445] could not open $readmem data file 'code.hex'; please make sure the file is added to project and has read permission, ignoring [/home/roba/perso/github/nanorv32/rtl/ips/bytewrite_ram_32bits.v:39]
-INFO: [Synth 8-256] done synthesizing module 'bytewrite_ram_32bits' (4#1) [/home/roba/perso/github/nanorv32/rtl/ips/bytewrite_ram_32bits.v:12]
-INFO: [Synth 8-256] done synthesizing module 'nanorv32_tcm_ctrl' (5#1) [/home/roba/perso/github/nanorv32/rtl/ips/nanorv32_tcm_ctrl.v:32]
-INFO: [Synth 8-638] synthesizing module 'nanorv32_tcm_arbitrer' [/home/roba/perso/github/nanorv32/rtl/ips/nanorv32_tcm_arbitrer.v:32]
-	Parameter ADDR_WIDTH bound to: 15 - type: integer 
-	Parameter NANORV32_ADDR_SIZE bound to: 15 - type: integer 
-	Parameter NANORV32_ADDR_MSB bound to: 14 - type: integer 
+INFO: [Synth 8-3876] $readmem data file 'code.hex' is read successfully [/home/ronan/perso/github/nanorv32/rtl/ips/bytewrite_ram_32bits.v:39]
+INFO: [Synth 8-256] done synthesizing module 'bytewrite_ram_32bits' (4#1) [/home/ronan/perso/github/nanorv32/rtl/ips/bytewrite_ram_32bits.v:12]
+INFO: [Synth 8-256] done synthesizing module 'nanorv32_tcm_ctrl' (5#1) [/home/ronan/perso/github/nanorv32/rtl/ips/nanorv32_tcm_ctrl.v:32]
+INFO: [Synth 8-638] synthesizing module 'nanorv32_tcm_arbitrer' [/home/ronan/perso/github/nanorv32/rtl/ips/nanorv32_tcm_arbitrer.v:32]
+	Parameter ADDR_WIDTH bound to: 16 - type: integer 
+	Parameter NANORV32_ADDR_SIZE bound to: 16 - type: integer 
+	Parameter NANORV32_ADDR_MSB bound to: 15 - type: integer 
 	Parameter NANORV32_DATA_SIZE bound to: 32 - type: integer 
 	Parameter NANORV32_DATA_MSB bound to: 31 - type: integer 
 	Parameter NANORV32_INSTRUCTION_SIZE bound to: 32 - type: integer 
 	Parameter NANORV32_INSTRUCTION_MSB bound to: 31 - type: integer 
-	Parameter NANORV32_PERIPH_ADDR_SIZE bound to: 15 - type: integer 
-	Parameter NANORV32_PERIPH_ADDR_MSB bound to: 14 - type: integer 
+	Parameter NANORV32_PERIPH_ADDR_SIZE bound to: 16 - type: integer 
+	Parameter NANORV32_PERIPH_ADDR_MSB bound to: 15 - type: integer 
 	Parameter NANORV32_RF_PORTA_SIZE bound to: 5 - type: integer 
 	Parameter NANORV32_RF_PORTA_MSB bound to: 4 - type: integer 
 	Parameter NANORV32_RF_PORTB_SIZE bound to: 5 - type: integer 
@@ -1201,16 +1201,16 @@ INFO: [Synth 8-638] synthesizing module 'nanorv32_tcm_arbitrer' [/home/roba/pers
 	Parameter NANORV32_CODE_BASE_ADDRESS bound to: 0 - type: integer 
 	Parameter NANORV32_RAM_BASE_ADDRESS bound to: 536870912 - type: integer 
 	Parameter NANORV32_PERIPH_BASE_ADDRESS bound to: -268435456 - type: integer 
-INFO: [Synth 8-256] done synthesizing module 'nanorv32_tcm_arbitrer' (6#1) [/home/roba/perso/github/nanorv32/rtl/ips/nanorv32_tcm_arbitrer.v:32]
-INFO: [Synth 8-638] synthesizing module 'nanorv32_periph_mux' [/home/roba/perso/github/nanorv32/rtl/ips/nanorv32_periph_mux.v:31]
-	Parameter NANORV32_ADDR_SIZE bound to: 15 - type: integer 
-	Parameter NANORV32_ADDR_MSB bound to: 14 - type: integer 
+INFO: [Synth 8-256] done synthesizing module 'nanorv32_tcm_arbitrer' (6#1) [/home/ronan/perso/github/nanorv32/rtl/ips/nanorv32_tcm_arbitrer.v:32]
+INFO: [Synth 8-638] synthesizing module 'nanorv32_periph_mux' [/home/ronan/perso/github/nanorv32/rtl/ips/nanorv32_periph_mux.v:31]
+	Parameter NANORV32_ADDR_SIZE bound to: 16 - type: integer 
+	Parameter NANORV32_ADDR_MSB bound to: 15 - type: integer 
 	Parameter NANORV32_DATA_SIZE bound to: 32 - type: integer 
 	Parameter NANORV32_DATA_MSB bound to: 31 - type: integer 
 	Parameter NANORV32_INSTRUCTION_SIZE bound to: 32 - type: integer 
 	Parameter NANORV32_INSTRUCTION_MSB bound to: 31 - type: integer 
-	Parameter NANORV32_PERIPH_ADDR_SIZE bound to: 15 - type: integer 
-	Parameter NANORV32_PERIPH_ADDR_MSB bound to: 14 - type: integer 
+	Parameter NANORV32_PERIPH_ADDR_SIZE bound to: 16 - type: integer 
+	Parameter NANORV32_PERIPH_ADDR_MSB bound to: 15 - type: integer 
 	Parameter NANORV32_RF_PORTA_SIZE bound to: 5 - type: integer 
 	Parameter NANORV32_RF_PORTA_MSB bound to: 4 - type: integer 
 	Parameter NANORV32_RF_PORTB_SIZE bound to: 5 - type: integer 
@@ -1386,16 +1386,16 @@ INFO: [Synth 8-638] synthesizing module 'nanorv32_periph_mux' [/home/roba/perso/
 	Parameter NANORV32_CODE_BASE_ADDRESS bound to: 0 - type: integer 
 	Parameter NANORV32_RAM_BASE_ADDRESS bound to: 536870912 - type: integer 
 	Parameter NANORV32_PERIPH_BASE_ADDRESS bound to: -268435456 - type: integer 
-INFO: [Synth 8-256] done synthesizing module 'nanorv32_periph_mux' (7#1) [/home/roba/perso/github/nanorv32/rtl/ips/nanorv32_periph_mux.v:31]
-INFO: [Synth 8-638] synthesizing module 'nanorv32_gpio_ctrl' [/home/roba/perso/github/nanorv32/rtl/ips/nanorv32_gpio_ctrl.v:33]
-	Parameter NANORV32_ADDR_SIZE bound to: 15 - type: integer 
-	Parameter NANORV32_ADDR_MSB bound to: 14 - type: integer 
+INFO: [Synth 8-256] done synthesizing module 'nanorv32_periph_mux' (7#1) [/home/ronan/perso/github/nanorv32/rtl/ips/nanorv32_periph_mux.v:31]
+INFO: [Synth 8-638] synthesizing module 'nanorv32_gpio_ctrl' [/home/ronan/perso/github/nanorv32/rtl/ips/nanorv32_gpio_ctrl.v:33]
+	Parameter NANORV32_ADDR_SIZE bound to: 16 - type: integer 
+	Parameter NANORV32_ADDR_MSB bound to: 15 - type: integer 
 	Parameter NANORV32_DATA_SIZE bound to: 32 - type: integer 
 	Parameter NANORV32_DATA_MSB bound to: 31 - type: integer 
 	Parameter NANORV32_INSTRUCTION_SIZE bound to: 32 - type: integer 
 	Parameter NANORV32_INSTRUCTION_MSB bound to: 31 - type: integer 
-	Parameter NANORV32_PERIPH_ADDR_SIZE bound to: 15 - type: integer 
-	Parameter NANORV32_PERIPH_ADDR_MSB bound to: 14 - type: integer 
+	Parameter NANORV32_PERIPH_ADDR_SIZE bound to: 16 - type: integer 
+	Parameter NANORV32_PERIPH_ADDR_MSB bound to: 15 - type: integer 
 	Parameter NANORV32_RF_PORTA_SIZE bound to: 5 - type: integer 
 	Parameter NANORV32_RF_PORTA_MSB bound to: 4 - type: integer 
 	Parameter NANORV32_RF_PORTB_SIZE bound to: 5 - type: integer 
@@ -1571,18 +1571,18 @@ INFO: [Synth 8-638] synthesizing module 'nanorv32_gpio_ctrl' [/home/roba/perso/g
 	Parameter NANORV32_CODE_BASE_ADDRESS bound to: 0 - type: integer 
 	Parameter NANORV32_RAM_BASE_ADDRESS bound to: 536870912 - type: integer 
 	Parameter NANORV32_PERIPH_BASE_ADDRESS bound to: -268435456 - type: integer 
-INFO: [Synth 8-256] done synthesizing module 'nanorv32_gpio_ctrl' (8#1) [/home/roba/perso/github/nanorv32/rtl/ips/nanorv32_gpio_ctrl.v:33]
-INFO: [Synth 8-638] synthesizing module 'nanorv32_clkgen' [/home/roba/perso/github/nanorv32/rtl/chips/nanorv32_clkgen_xilinx.v:33]
-INFO: [Synth 8-638] synthesizing module 'arty_mmcm' [/home/roba/perso/github/nanorv32/rtl/ips/clock_manager/arty_mmcm/arty_mmcm.v:69]
-INFO: [Synth 8-638] synthesizing module 'arty_mmcm_clk_wiz' [/home/roba/perso/github/nanorv32/rtl/ips/clock_manager/arty_mmcm/arty_mmcm_clk_wiz.v:67]
-INFO: [Synth 8-638] synthesizing module 'IBUF' [/opt/Xilinx/Vivado/2015.3/scripts/rt/data/unisim_comp.v:14176]
+INFO: [Synth 8-256] done synthesizing module 'nanorv32_gpio_ctrl' (8#1) [/home/ronan/perso/github/nanorv32/rtl/ips/nanorv32_gpio_ctrl.v:33]
+INFO: [Synth 8-638] synthesizing module 'nanorv32_clkgen' [/home/ronan/perso/github/nanorv32/rtl/chips/nanorv32_clkgen_xilinx.v:33]
+INFO: [Synth 8-638] synthesizing module 'arty_mmcm' [/home/ronan/perso/github/nanorv32/rtl/ips/clock_manager/arty_mmcm/arty_mmcm.v:69]
+INFO: [Synth 8-638] synthesizing module 'arty_mmcm_clk_wiz' [/home/ronan/perso/github/nanorv32/rtl/ips/clock_manager/arty_mmcm/arty_mmcm_clk_wiz.v:67]
+INFO: [Synth 8-638] synthesizing module 'IBUF' [/opt/Xilinx/Vivado/2015.4/scripts/rt/data/unisim_comp.v:14145]
 	Parameter CAPACITANCE bound to: DONT_CARE - type: string 
 	Parameter IBUF_DELAY_VALUE bound to: 0 - type: string 
 	Parameter IBUF_LOW_PWR bound to: TRUE - type: string 
 	Parameter IFD_DELAY_VALUE bound to: AUTO - type: string 
 	Parameter IOSTANDARD bound to: DEFAULT - type: string 
-INFO: [Synth 8-256] done synthesizing module 'IBUF' (9#1) [/opt/Xilinx/Vivado/2015.3/scripts/rt/data/unisim_comp.v:14176]
-INFO: [Synth 8-638] synthesizing module 'MMCME2_ADV' [/opt/Xilinx/Vivado/2015.3/scripts/rt/data/unisim_comp.v:20441]
+INFO: [Synth 8-256] done synthesizing module 'IBUF' (9#1) [/opt/Xilinx/Vivado/2015.4/scripts/rt/data/unisim_comp.v:14145]
+INFO: [Synth 8-638] synthesizing module 'MMCME2_ADV' [/opt/Xilinx/Vivado/2015.4/scripts/rt/data/unisim_comp.v:20396]
 	Parameter BANDWIDTH bound to: OPTIMIZED - type: string 
 	Parameter CLKFBOUT_MULT_F bound to: 10.000000 - type: float 
 	Parameter CLKFBOUT_PHASE bound to: 0.000000 - type: float 
@@ -1631,48 +1631,15 @@ INFO: [Synth 8-638] synthesizing module 'MMCME2_ADV' [/opt/Xilinx/Vivado/2015.3/
 	Parameter SS_MODE bound to: CENTER_HIGH - type: string 
 	Parameter SS_MOD_PERIOD bound to: 10000 - type: integer 
 	Parameter STARTUP_WAIT bound to: FALSE - type: string 
-INFO: [Synth 8-256] done synthesizing module 'MMCME2_ADV' (10#1) [/opt/Xilinx/Vivado/2015.3/scripts/rt/data/unisim_comp.v:20441]
-INFO: [Synth 8-638] synthesizing module 'BUFG' [/opt/Xilinx/Vivado/2015.3/scripts/rt/data/unisim_comp.v:607]
-INFO: [Synth 8-256] done synthesizing module 'BUFG' (11#1) [/opt/Xilinx/Vivado/2015.3/scripts/rt/data/unisim_comp.v:607]
-INFO: [Synth 8-256] done synthesizing module 'arty_mmcm_clk_wiz' (12#1) [/home/roba/perso/github/nanorv32/rtl/ips/clock_manager/arty_mmcm/arty_mmcm_clk_wiz.v:67]
-INFO: [Synth 8-256] done synthesizing module 'arty_mmcm' (13#1) [/home/roba/perso/github/nanorv32/rtl/ips/clock_manager/arty_mmcm/arty_mmcm.v:69]
-INFO: [Synth 8-256] done synthesizing module 'nanorv32_clkgen' (14#1) [/home/roba/perso/github/nanorv32/rtl/chips/nanorv32_clkgen_xilinx.v:33]
-WARNING: [Synth 8-3848] Net pad_gpio_in in module/entity nanorv32_simple does not have driver. [/home/roba/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:267]
-INFO: [Synth 8-256] done synthesizing module 'nanorv32_simple' (15#1) [/home/roba/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:35]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[15]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[14]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[13]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[12]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[11]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[10]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[9]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[8]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[7]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[6]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[5]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[4]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[3]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[2]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[1]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[0]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[15]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[14]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[13]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[12]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[11]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[10]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[9]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[8]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[7]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[6]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[5]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[4]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[3]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[2]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[1]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[0]
+INFO: [Synth 8-256] done synthesizing module 'MMCME2_ADV' (10#1) [/opt/Xilinx/Vivado/2015.4/scripts/rt/data/unisim_comp.v:20396]
+INFO: [Synth 8-638] synthesizing module 'BUFG' [/opt/Xilinx/Vivado/2015.4/scripts/rt/data/unisim_comp.v:607]
+INFO: [Synth 8-256] done synthesizing module 'BUFG' (11#1) [/opt/Xilinx/Vivado/2015.4/scripts/rt/data/unisim_comp.v:607]
+INFO: [Synth 8-256] done synthesizing module 'arty_mmcm_clk_wiz' (12#1) [/home/ronan/perso/github/nanorv32/rtl/ips/clock_manager/arty_mmcm/arty_mmcm_clk_wiz.v:67]
+INFO: [Synth 8-256] done synthesizing module 'arty_mmcm' (13#1) [/home/ronan/perso/github/nanorv32/rtl/ips/clock_manager/arty_mmcm/arty_mmcm.v:69]
+INFO: [Synth 8-256] done synthesizing module 'nanorv32_clkgen' (14#1) [/home/ronan/perso/github/nanorv32/rtl/chips/nanorv32_clkgen_xilinx.v:33]
+INFO: [Synth 8-256] done synthesizing module 'nanorv32_simple' (15#1) [/home/ronan/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:35]
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 1073.621 ; gain = 204.328 ; free physical = 2930 ; free virtual = 20410
+Finished RTL Elaboration : Time (s): cpu = 00:00:08 ; elapsed = 00:00:08 . Memory (MB): peak = 1047.621 ; gain = 199.301 ; free physical = 8506 ; free virtual = 22313
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -1681,40 +1648,24 @@ Report Check Netlist:
 +------+------------------+-------+---------+-------+------------------+
 |1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
 +------+------------------+-------+---------+-------+------------------+
-WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[31] to constant 0 [/home/roba/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:272]
-WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[30] to constant 0 [/home/roba/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:272]
-WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[29] to constant 0 [/home/roba/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:272]
-WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[28] to constant 0 [/home/roba/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:272]
-WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[27] to constant 0 [/home/roba/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:272]
-WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[26] to constant 0 [/home/roba/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:272]
-WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[25] to constant 0 [/home/roba/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:272]
-WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[24] to constant 0 [/home/roba/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:272]
-WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[23] to constant 0 [/home/roba/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:272]
-WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[22] to constant 0 [/home/roba/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:272]
-WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[21] to constant 0 [/home/roba/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:272]
-WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[20] to constant 0 [/home/roba/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:272]
-WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[19] to constant 0 [/home/roba/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:272]
-WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[18] to constant 0 [/home/roba/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:272]
-WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[17] to constant 0 [/home/roba/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:272]
-WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[16] to constant 0 [/home/roba/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:272]
-WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[15] to constant 0 [/home/roba/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:272]
-WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[14] to constant 0 [/home/roba/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:272]
-WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[13] to constant 0 [/home/roba/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:272]
-WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[12] to constant 0 [/home/roba/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:272]
-WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[11] to constant 0 [/home/roba/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:272]
-WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[10] to constant 0 [/home/roba/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:272]
-WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[9] to constant 0 [/home/roba/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:272]
-WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[8] to constant 0 [/home/roba/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:272]
-WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[7] to constant 0 [/home/roba/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:272]
-WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[6] to constant 0 [/home/roba/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:272]
-WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[5] to constant 0 [/home/roba/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:272]
-WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[4] to constant 0 [/home/roba/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:272]
-WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[3] to constant 0 [/home/roba/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:272]
-WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[2] to constant 0 [/home/roba/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:272]
-WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[1] to constant 0 [/home/roba/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:272]
-WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[0] to constant 0 [/home/roba/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:272]
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[31] to constant 0 [/home/ronan/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:272]
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[30] to constant 0 [/home/ronan/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:272]
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[29] to constant 0 [/home/ronan/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:272]
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[28] to constant 0 [/home/ronan/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:272]
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[27] to constant 0 [/home/ronan/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:272]
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[26] to constant 0 [/home/ronan/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:272]
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[25] to constant 0 [/home/ronan/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:272]
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[24] to constant 0 [/home/ronan/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:272]
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[23] to constant 0 [/home/ronan/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:272]
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[22] to constant 0 [/home/ronan/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:272]
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[21] to constant 0 [/home/ronan/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:272]
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[20] to constant 0 [/home/ronan/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:272]
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[19] to constant 0 [/home/ronan/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:272]
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[18] to constant 0 [/home/ronan/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:272]
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[17] to constant 0 [/home/ronan/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:272]
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[16] to constant 0 [/home/ronan/perso/github/nanorv32/rtl/chips/nanorv32_simple.v:272]
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 1073.621 ; gain = 204.328 ; free physical = 2931 ; free virtual = 20412
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:08 ; elapsed = 00:00:08 . Memory (MB): peak = 1047.621 ; gain = 199.301 ; free physical = 8505 ; free virtual = 22312
 ---------------------------------------------------------------------------------
 INFO: [Netlist 29-17] Analyzing 2 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
@@ -1723,9 +1674,9 @@ INFO: [Project 1-570] Preparing netlist for logic optimization
 
 Processing XDC Constraints
 Initializing timing engine
-Parsing XDC File [/home/roba/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc]
-Finished Parsing XDC File [/home/roba/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc]
-INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [/home/roba/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/nanorv32_simple_propImpl.xdc].
+Parsing XDC File [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc]
+Finished Parsing XDC File [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc]
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/nanorv32_simple_propImpl.xdc].
 Resolution: To avoid this warning, move constraints listed in [.Xil/nanorv32_simple_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
 INFO: [Timing 38-2] Deriving generated clocks
 Completed Processing XDC Constraints
@@ -1733,26 +1684,26 @@ Completed Processing XDC Constraints
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1399.824 ; gain = 0.000 ; free physical = 2714 ; free virtual = 20236
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.01 . Memory (MB): peak = 1338.832 ; gain = 0.000 ; free physical = 8276 ; free virtual = 22080
 INFO: Launching helper process for spawning children vivado processes
-INFO: Helper process launched with PID 12608 
+INFO: Helper process launched with PID 13870 
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:12 ; elapsed = 00:00:12 . Memory (MB): peak = 1399.824 ; gain = 530.531 ; free physical = 2732 ; free virtual = 20235
+Finished Constraint Validation : Time (s): cpu = 00:00:16 ; elapsed = 00:00:16 . Memory (MB): peak = 1338.836 ; gain = 490.516 ; free physical = 8267 ; free virtual = 22069
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7a35tcsg324-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:12 ; elapsed = 00:00:12 . Memory (MB): peak = 1399.824 ; gain = 530.531 ; free physical = 2732 ; free virtual = 20235
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:16 ; elapsed = 00:00:16 . Memory (MB): peak = 1338.836 ; gain = 490.516 ; free physical = 8267 ; free virtual = 22069
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:12 ; elapsed = 00:00:12 . Memory (MB): peak = 1399.824 ; gain = 530.531 ; free physical = 2732 ; free virtual = 20235
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:16 ; elapsed = 00:00:16 . Memory (MB): peak = 1338.836 ; gain = 490.516 ; free physical = 8267 ; free virtual = 22069
 ---------------------------------------------------------------------------------
-INFO: [Synth 8-3537] HDL ADVISOR - The operator resource <adder> is shared. To prevent sharing consider applying a KEEP on the inputs of the operator [/home/roba/perso/github/nanorv32/rtl/cores/nanorv32_alu.v:60]
+INFO: [Synth 8-3537] HDL ADVISOR - The operator resource <adder> is shared. To prevent sharing consider applying a KEEP on the inputs of the operator [/home/ronan/perso/github/nanorv32/rtl/cores/nanorv32_alu.v:60]
 INFO: [Synth 8-802] inferred FSM for state register 'pstate_r_reg' in module 'nanorv32'
 INFO: [Synth 8-5544] ROM "valid_inst" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
 INFO: [Synth 8-5544] ROM "force_stall_reset" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
@@ -1761,7 +1712,7 @@ INFO: [Synth 8-5544] ROM "pstate_next" won't be mapped to Block RAM because addr
 INFO: [Synth 8-5544] ROM "pstate_next" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
 INFO: [Synth 8-5544] ROM "pstate_next" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
 INFO: [Synth 8-5544] ROM "pstate_next" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
-WARNING: [Synth 8-327] inferring latch for variable 'alu_res_reg' [/home/roba/perso/github/nanorv32/rtl/cores/nanorv32_alu.v:62]
+WARNING: [Synth 8-327] inferring latch for variable 'alu_res_reg' [/home/ronan/perso/github/nanorv32/rtl/cores/nanorv32_alu.v:62]
 ---------------------------------------------------------------------------------------------------
                    State |                     New Encoding |                Previous Encoding 
 ---------------------------------------------------------------------------------------------------
@@ -1772,11 +1723,11 @@ WARNING: [Synth 8-327] inferring latch for variable 'alu_res_reg' [/home/roba/pe
    NANORV32_PSTATE_STALL |                              100 |                              011
 ---------------------------------------------------------------------------------------------------
 INFO: [Synth 8-3354] encoded FSM with state register 'pstate_r_reg' using encoding 'sequential' in module 'nanorv32'
-WARNING: [Synth 8-327] inferring latch for variable 'datamem_size_write_sel_reg' [/home/roba/perso/github/nanorv32/rtl/cores/nanorv32.v:220]
-WARNING: [Synth 8-327] inferring latch for variable 'datamem_size_read_sel_reg' [/home/roba/perso/github/nanorv32/rtl/cores/nanorv32.v:218]
+WARNING: [Synth 8-327] inferring latch for variable 'datamem_size_write_sel_reg' [/home/ronan/perso/github/nanorv32/rtl/cores/nanorv32.v:220]
+WARNING: [Synth 8-327] inferring latch for variable 'datamem_size_read_sel_reg' [/home/ronan/perso/github/nanorv32/rtl/cores/nanorv32.v:218]
 Block RAM RAM_reg originally specified as a Byte Wide Write Enable RAM cannot take advantage of ByteWide feature and is implemented with single write enable per RAM due to following reason.
-address width (13) is more than optimal threshold of 12. Implementing using BWWE will require more logic and timing would be suboptimal---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:12 ; elapsed = 00:00:13 . Memory (MB): peak = 1399.824 ; gain = 530.531 ; free physical = 2718 ; free virtual = 20221
+address width (14) is more than optimal threshold of 12. Implementing using BWWE will require more logic and timing would be suboptimal---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:17 ; elapsed = 00:00:17 . Memory (MB): peak = 1338.836 ; gain = 490.516 ; free physical = 8264 ; free virtual = 22060
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -1797,7 +1748,7 @@ Detailed RTL Component Info :
 	               32 Bit    Registers := 8     
 	                1 Bit    Registers := 5     
 +---RAMs : 
-	             256K Bit         RAMs := 2     
+	             512K Bit         RAMs := 2     
 	             1024 Bit         RAMs := 1     
 +---Muxes : 
 	   2 Input     32 Bit        Muxes := 12    
@@ -1807,9 +1758,9 @@ Detailed RTL Component Info :
 	   6 Input     32 Bit        Muxes := 1     
 	   7 Input     32 Bit        Muxes := 1     
 	   2 Input     16 Bit        Muxes := 1     
-	   5 Input     15 Bit        Muxes := 1     
-	   6 Input     15 Bit        Muxes := 1     
-	   7 Input     15 Bit        Muxes := 1     
+	   5 Input     16 Bit        Muxes := 1     
+	   6 Input     16 Bit        Muxes := 1     
+	   7 Input     16 Bit        Muxes := 1     
 	   4 Input      8 Bit        Muxes := 1     
 	   4 Input      4 Bit        Muxes := 2     
 	   2 Input      4 Bit        Muxes := 1     
@@ -1875,7 +1826,7 @@ Detailed RTL Component Info :
 +---Registers : 
 	               32 Bit    Registers := 1     
 +---RAMs : 
-	             256K Bit         RAMs := 1     
+	             512K Bit         RAMs := 1     
 Module nanorv32_tcm_ctrl 
 Detailed RTL Component Info : 
 +---Registers : 
@@ -1891,9 +1842,9 @@ Detailed RTL Component Info :
 	   6 Input     32 Bit        Muxes := 1     
 	   7 Input     32 Bit        Muxes := 1     
 	   2 Input     32 Bit        Muxes := 3     
-	   5 Input     15 Bit        Muxes := 1     
-	   6 Input     15 Bit        Muxes := 1     
-	   7 Input     15 Bit        Muxes := 1     
+	   5 Input     16 Bit        Muxes := 1     
+	   6 Input     16 Bit        Muxes := 1     
+	   7 Input     16 Bit        Muxes := 1     
 	   5 Input      4 Bit        Muxes := 1     
 	   6 Input      4 Bit        Muxes := 1     
 	   7 Input      4 Bit        Muxes := 1     
@@ -1915,46 +1866,14 @@ BRAMs: 100 (col length: RAMB18 60 RAMB36 30)
 ---------------------------------------------------------------------------------
 Finished Part Resource Summary
 ---------------------------------------------------------------------------------
-Start Parallel Synthesis Optimization  : Time (s): cpu = 00:00:12 ; elapsed = 00:00:13 . Memory (MB): peak = 1399.824 ; gain = 530.531 ; free physical = 2718 ; free virtual = 20220
+Start Parallel Synthesis Optimization  : Time (s): cpu = 00:00:17 ; elapsed = 00:00:17 . Memory (MB): peak = 1338.840 ; gain = 490.520 ; free physical = 8264 ; free virtual = 22060
 ---------------------------------------------------------------------------------
 Start Cross Boundary Optimization
 ---------------------------------------------------------------------------------
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[15]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[14]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[13]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[12]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[11]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[10]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[9]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[8]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[7]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[6]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[5]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[4]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[3]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[2]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[1]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P0[0]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[15]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[14]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[13]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[12]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[11]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[10]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[9]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[8]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[7]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[6]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[5]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[4]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[3]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[2]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[1]
-WARNING: [Synth 8-3331] design nanorv32_simple has unconnected port P1[0]
 ---------------------------------------------------------------------------------
-Finished Cross Boundary Optimization : Time (s): cpu = 00:00:13 ; elapsed = 00:00:13 . Memory (MB): peak = 1399.824 ; gain = 530.531 ; free physical = 2720 ; free virtual = 20223
+Finished Cross Boundary Optimization : Time (s): cpu = 00:00:18 ; elapsed = 00:00:18 . Memory (MB): peak = 1338.840 ; gain = 490.520 ; free physical = 8266 ; free virtual = 22063
 ---------------------------------------------------------------------------------
-Finished Parallel Reinference  : Time (s): cpu = 00:00:13 ; elapsed = 00:00:13 . Memory (MB): peak = 1399.824 ; gain = 530.531 ; free physical = 2720 ; free virtual = 20223
+Finished Parallel Reinference  : Time (s): cpu = 00:00:18 ; elapsed = 00:00:18 . Memory (MB): peak = 1338.840 ; gain = 490.520 ; free physical = 8266 ; free virtual = 22063
 
 Report RTL Partitions: 
 +-+--------------+------------+----------+
@@ -1962,7 +1881,7 @@ Report RTL Partitions:
 +-+--------------+------------+----------+
 +-+--------------+------------+----------+
 Block RAM RAM_reg originally specified as a Byte Wide Write Enable RAM cannot take advantage of ByteWide feature and is implemented with single write enable per RAM due to following reason.
-address width (13) is more than optimal threshold of 12. Implementing using BWWE will require more logic and timing would be suboptimal
+address width (14) is more than optimal threshold of 12. Implementing using BWWE will require more logic and timing would be suboptimal
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP and Shift Register Reporting
 ---------------------------------------------------------------------------------
@@ -1971,7 +1890,7 @@ Block RAM:
 +----------------+------------+------------------------+---+---+------------------------+---+---+---------+--------+--------+---------------------------------------------------------------------------+
 |Module Name     | RTL Object | PORT A (Depth x Width) | W | R | PORT B (Depth x Width) | W | R | OUT_REG | RAMB18 | RAMB36 | Hierarchical Name                                                         | 
 +----------------+------------+------------------------+---+---+------------------------+---+---+---------+--------+--------+---------------------------------------------------------------------------+
-|nanorv32_simple | RAM_reg    | 8 K x 32(READ_FIRST)   | W | R |                        |   |   | Port A  | 0      | 8      | nanorv32_simple/Multiple/nanorv32_tcm_ctrl/bytewrite_ram_32bits/extram__4 | 
+|nanorv32_simple | RAM_reg    | 16 K x 32(READ_FIRST)  | W | R |                        |   |   | Port A  | 0      | 16     | nanorv32_simple/Multiple/nanorv32_tcm_ctrl/bytewrite_ram_32bits/extram__4 | 
 +----------------+------------+------------------------+---+---+------------------------+---+---+---------+--------+--------+---------------------------------------------------------------------------+
 
 Note: The table above shows the Block RAMs at the current stage of the synthesis flow. Some Block RAMs may be reimplemented as non Block RAM primitives later in the synthesis flow. Multiple instantiated Block RAMs are reported only once. "Hierarchical Name" reflects the Block RAM name as it appears in the hierarchical module and only part of it is displayed.
@@ -1989,75 +1908,42 @@ Finished ROM, RAM, DSP and Shift Register Reporting
 ---------------------------------------------------------------------------------
 Start Area Optimization
 ---------------------------------------------------------------------------------
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_m_reg[4] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_m_reg[0] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_m_reg[5] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_m_reg[0] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_m_reg[2] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_m_reg[0] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_m_reg[3] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_m_reg[0] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_m_reg[0] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_m_reg[1] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_m_reg[1] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_m_reg[6] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_m_reg[26] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_m_reg[6] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_m_reg[10] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_m_reg[6] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_m_reg[27] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_m_reg[6] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_m_reg[11] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_m_reg[6] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_m_reg[24] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_m_reg[6] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_m_reg[8] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_m_reg[6] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_m_reg[25] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_m_reg[6] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_m_reg[9] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_m_reg[6] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_m_reg[6] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_m_reg[7] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_m_reg[16] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_m_reg[7] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_m_reg[17] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_m_reg[7] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_m_reg[30] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_m_reg[7] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_m_reg[14] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_m_reg[7] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_m_reg[28] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_m_reg[7] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_m_reg[12] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_m_reg[7] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_m_reg[29] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_m_reg[7] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_m_reg[13] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_m_reg[7] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_m_reg[22] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_m_reg[7] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_m_reg[20] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_m_reg[7] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_m_reg[21] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_m_reg[7] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_m_reg[18] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_m_reg[7] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_m_reg[23] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_m_reg[7] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_m_reg[7] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_m_reg[15] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_m_reg[31] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_m_reg[15] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_m_reg[15] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_m_reg[19] '
-INFO: [Synth 8-3333] propagating constant 0 across sequential element (U_GPIO_CTRL/\gpio_in_m_reg[19] )
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_r_reg[4] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_r_reg[31] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_r_reg[5] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_r_reg[31] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_r_reg[2] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_r_reg[31] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_r_reg[3] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_r_reg[31] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_r_reg[0] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_r_reg[31] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_r_reg[1] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_r_reg[31] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_r_reg[26] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_r_reg[31] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_r_reg[10] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_r_reg[31] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_r_reg[27] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_r_reg[31] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_r_reg[11] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_r_reg[31] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_r_reg[24] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_r_reg[31] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_r_reg[8] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_r_reg[31] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_r_reg[25] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_r_reg[31] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_r_reg[9] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_r_reg[31] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_r_reg[6] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_r_reg[31] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_r_reg[16] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_r_reg[31] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_r_reg[17] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_r_reg[31] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_r_reg[30] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_r_reg[31] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_r_reg[14] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_r_reg[31] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_r_reg[28] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_r_reg[31] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_r_reg[12] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_r_reg[31] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_r_reg[29] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_r_reg[31] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_r_reg[13] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_r_reg[31] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_r_reg[22] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_r_reg[31] '
+INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_m_reg[20] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_m_reg[16] '
+INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_m_reg[21] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_m_reg[16] '
+INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_m_reg[18] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_m_reg[16] '
+INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_m_reg[19] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_m_reg[16] '
+INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_m_reg[26] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_m_reg[16] '
+INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_m_reg[27] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_m_reg[16] '
+INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_m_reg[24] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_m_reg[16] '
+INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_m_reg[25] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_m_reg[16] '
+INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_m_reg[22] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_m_reg[16] '
+INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_m_reg[16] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_m_reg[17] '
+INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_m_reg[17] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_m_reg[23] '
+INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_m_reg[30] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_m_reg[23] '
+INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_m_reg[28] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_m_reg[23] '
+INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_m_reg[31] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_m_reg[23] '
+INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_m_reg[23] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_m_reg[29] '
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (U_GPIO_CTRL/\gpio_in_m_reg[29] )
 INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_r_reg[20] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_r_reg[31] '
 INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_r_reg[21] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_r_reg[31] '
 INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_r_reg[18] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_r_reg[31] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_r_reg[23] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_r_reg[31] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_r_reg[7] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_r_reg[31] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_r_reg[31] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_r_reg[19] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_r_reg[15] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_r_reg[19] '
-INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_r_reg[19] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_m_reg[19] '
-INFO: [Synth 8-3333] propagating constant 0 across sequential element (U_GPIO_CTRL/\gpio_in_m_reg[19] )
+INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_r_reg[19] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_r_reg[31] '
+INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_r_reg[26] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_r_reg[31] '
+INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_r_reg[27] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_r_reg[31] '
+INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_r_reg[24] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_r_reg[31] '
+INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_r_reg[25] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_r_reg[31] '
+INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_r_reg[22] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_r_reg[31] '
+INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_r_reg[16] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_r_reg[31] '
+INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_r_reg[17] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_r_reg[31] '
+INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_r_reg[30] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_r_reg[31] '
+INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_r_reg[28] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_r_reg[31] '
+INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_r_reg[31] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_r_reg[29] '
+INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_r_reg[23] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_r_reg[29] '
+INFO: [Synth 8-3886] merging instance 'U_GPIO_CTRL/\gpio_in_r_reg[29] ' (FDC) to 'U_GPIO_CTRL/\gpio_in_m_reg[29] '
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (U_GPIO_CTRL/\gpio_in_m_reg[29] )
 WARNING: [Synth 8-3332] Sequential element (dataif_cpu_ready_r_reg) is unused and will be removed from module nanorv32_tcm_arbitrer.
 WARNING: [Synth 8-3332] Sequential element (\gpio_in_m_reg[31] ) is unused and will be removed from module nanorv32_gpio_ctrl.
 WARNING: [Synth 8-3332] Sequential element (\gpio_in_m_reg[30] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_in_m_reg[29] ) is unused and will be removed from module nanorv32_gpio_ctrl.
 WARNING: [Synth 8-3332] Sequential element (\gpio_in_m_reg[28] ) is unused and will be removed from module nanorv32_gpio_ctrl.
 WARNING: [Synth 8-3332] Sequential element (\gpio_in_m_reg[27] ) is unused and will be removed from module nanorv32_gpio_ctrl.
 WARNING: [Synth 8-3332] Sequential element (\gpio_in_m_reg[26] ) is unused and will be removed from module nanorv32_gpio_ctrl.
@@ -2067,28 +1953,12 @@ WARNING: [Synth 8-3332] Sequential element (\gpio_in_m_reg[23] ) is unused and w
 WARNING: [Synth 8-3332] Sequential element (\gpio_in_m_reg[22] ) is unused and will be removed from module nanorv32_gpio_ctrl.
 WARNING: [Synth 8-3332] Sequential element (\gpio_in_m_reg[21] ) is unused and will be removed from module nanorv32_gpio_ctrl.
 WARNING: [Synth 8-3332] Sequential element (\gpio_in_m_reg[20] ) is unused and will be removed from module nanorv32_gpio_ctrl.
+WARNING: [Synth 8-3332] Sequential element (\gpio_in_m_reg[19] ) is unused and will be removed from module nanorv32_gpio_ctrl.
 WARNING: [Synth 8-3332] Sequential element (\gpio_in_m_reg[18] ) is unused and will be removed from module nanorv32_gpio_ctrl.
 WARNING: [Synth 8-3332] Sequential element (\gpio_in_m_reg[17] ) is unused and will be removed from module nanorv32_gpio_ctrl.
 WARNING: [Synth 8-3332] Sequential element (\gpio_in_m_reg[16] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_in_m_reg[15] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_in_m_reg[14] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_in_m_reg[13] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_in_m_reg[12] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_in_m_reg[11] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_in_m_reg[10] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_in_m_reg[9] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_in_m_reg[8] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_in_m_reg[7] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_in_m_reg[6] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_in_m_reg[5] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_in_m_reg[4] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_in_m_reg[3] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_in_m_reg[2] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_in_m_reg[1] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_in_m_reg[0] ) is unused and will be removed from module nanorv32_gpio_ctrl.
 WARNING: [Synth 8-3332] Sequential element (\gpio_in_r_reg[31] ) is unused and will be removed from module nanorv32_gpio_ctrl.
 WARNING: [Synth 8-3332] Sequential element (\gpio_in_r_reg[30] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_in_r_reg[29] ) is unused and will be removed from module nanorv32_gpio_ctrl.
 WARNING: [Synth 8-3332] Sequential element (\gpio_in_r_reg[28] ) is unused and will be removed from module nanorv32_gpio_ctrl.
 WARNING: [Synth 8-3332] Sequential element (\gpio_in_r_reg[27] ) is unused and will be removed from module nanorv32_gpio_ctrl.
 WARNING: [Synth 8-3332] Sequential element (\gpio_in_r_reg[26] ) is unused and will be removed from module nanorv32_gpio_ctrl.
@@ -2098,25 +1968,10 @@ WARNING: [Synth 8-3332] Sequential element (\gpio_in_r_reg[23] ) is unused and w
 WARNING: [Synth 8-3332] Sequential element (\gpio_in_r_reg[22] ) is unused and will be removed from module nanorv32_gpio_ctrl.
 WARNING: [Synth 8-3332] Sequential element (\gpio_in_r_reg[21] ) is unused and will be removed from module nanorv32_gpio_ctrl.
 WARNING: [Synth 8-3332] Sequential element (\gpio_in_r_reg[20] ) is unused and will be removed from module nanorv32_gpio_ctrl.
+WARNING: [Synth 8-3332] Sequential element (\gpio_in_r_reg[19] ) is unused and will be removed from module nanorv32_gpio_ctrl.
 WARNING: [Synth 8-3332] Sequential element (\gpio_in_r_reg[18] ) is unused and will be removed from module nanorv32_gpio_ctrl.
 WARNING: [Synth 8-3332] Sequential element (\gpio_in_r_reg[17] ) is unused and will be removed from module nanorv32_gpio_ctrl.
 WARNING: [Synth 8-3332] Sequential element (\gpio_in_r_reg[16] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_in_r_reg[15] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_in_r_reg[14] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_in_r_reg[13] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_in_r_reg[12] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_in_r_reg[11] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_in_r_reg[10] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_in_r_reg[9] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_in_r_reg[8] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_in_r_reg[7] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_in_r_reg[6] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_in_r_reg[5] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_in_r_reg[4] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_in_r_reg[3] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_in_r_reg[2] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_in_r_reg[1] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_in_r_reg[0] ) is unused and will be removed from module nanorv32_gpio_ctrl.
 WARNING: [Synth 8-3332] Sequential element (\gpio_out_r_reg[31] ) is unused and will be removed from module nanorv32_gpio_ctrl.
 WARNING: [Synth 8-3332] Sequential element (\gpio_out_r_reg[30] ) is unused and will be removed from module nanorv32_gpio_ctrl.
 WARNING: [Synth 8-3332] Sequential element (\gpio_out_r_reg[29] ) is unused and will be removed from module nanorv32_gpio_ctrl.
@@ -2133,30 +1988,14 @@ WARNING: [Synth 8-3332] Sequential element (\gpio_out_r_reg[19] ) is unused and 
 WARNING: [Synth 8-3332] Sequential element (\gpio_out_r_reg[18] ) is unused and will be removed from module nanorv32_gpio_ctrl.
 WARNING: [Synth 8-3332] Sequential element (\gpio_out_r_reg[17] ) is unused and will be removed from module nanorv32_gpio_ctrl.
 WARNING: [Synth 8-3332] Sequential element (\gpio_out_r_reg[16] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_out_r_reg[15] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_out_r_reg[14] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_out_r_reg[13] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_out_r_reg[12] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_out_r_reg[11] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_out_r_reg[10] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_out_r_reg[9] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_out_r_reg[8] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_out_r_reg[7] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_out_r_reg[6] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_out_r_reg[5] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_out_r_reg[4] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_out_r_reg[3] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_out_r_reg[2] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_out_r_reg[1] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_out_r_reg[0] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_in_m_reg[19] ) is unused and will be removed from module nanorv32_gpio_ctrl.
-WARNING: [Synth 8-3332] Sequential element (\gpio_in_r_reg[19] ) is unused and will be removed from module nanorv32_gpio_ctrl.
+WARNING: [Synth 8-3332] Sequential element (\gpio_in_m_reg[29] ) is unused and will be removed from module nanorv32_gpio_ctrl.
+WARNING: [Synth 8-3332] Sequential element (\gpio_in_r_reg[29] ) is unused and will be removed from module nanorv32_gpio_ctrl.
 WARNING: [Synth 8-3332] Sequential element (en_r_reg) is unused and will be removed from module nanorv32_tcm_ctrl__1.
 WARNING: [Synth 8-3332] Sequential element (en_r_reg) is unused and will be removed from module nanorv32_tcm_ctrl.
 ---------------------------------------------------------------------------------
-Finished Area Optimization : Time (s): cpu = 00:00:15 ; elapsed = 00:00:16 . Memory (MB): peak = 1399.824 ; gain = 530.531 ; free physical = 2694 ; free virtual = 20199
+Finished Area Optimization : Time (s): cpu = 00:00:22 ; elapsed = 00:00:22 . Memory (MB): peak = 1338.840 ; gain = 490.520 ; free physical = 8240 ; free virtual = 22039
 ---------------------------------------------------------------------------------
-Finished Parallel Area Optimization  : Time (s): cpu = 00:00:15 ; elapsed = 00:00:16 . Memory (MB): peak = 1399.824 ; gain = 530.531 ; free physical = 2694 ; free virtual = 20199
+Finished Parallel Area Optimization  : Time (s): cpu = 00:00:22 ; elapsed = 00:00:22 . Memory (MB): peak = 1338.840 ; gain = 490.520 ; free physical = 8240 ; free virtual = 22039
 
 Report RTL Partitions: 
 +-+--------------+------------+----------+
@@ -2170,48 +2009,64 @@ Start Timing Optimization
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:22 ; elapsed = 00:00:22 . Memory (MB): peak = 1399.824 ; gain = 530.531 ; free physical = 2637 ; free virtual = 20148
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:35 ; elapsed = 00:00:36 . Memory (MB): peak = 1364.832 ; gain = 516.512 ; free physical = 7826 ; free virtual = 21709
 ---------------------------------------------------------------------------------
 Block RAM RAM_reg originally specified as a Byte Wide Write Enable RAM cannot take advantage of ByteWide feature and is implemented with single write enable per RAM due to following reason.
-address width (13) is more than optimal threshold of 12. Implementing using BWWE will require more logic and timing would be suboptimal---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:24 ; elapsed = 00:00:24 . Memory (MB): peak = 1415.402 ; gain = 546.109 ; free physical = 2594 ; free virtual = 20105
+address width (14) is more than optimal threshold of 12. Implementing using BWWE will require more logic and timing would be suboptimal---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:40 ; elapsed = 00:00:41 . Memory (MB): peak = 1413.426 ; gain = 565.105 ; free physical = 7782 ; free virtual = 21663
 ---------------------------------------------------------------------------------
-Finished Parallel Timing Optimization  : Time (s): cpu = 00:00:24 ; elapsed = 00:00:24 . Memory (MB): peak = 1415.402 ; gain = 546.109 ; free physical = 2594 ; free virtual = 20105
 
 Report RTL Partitions: 
 +-+--------------+------------+----------+
 | |RTL Partition |Replication |Instances |
 +-+--------------+------------+----------+
 +-+--------------+------------+----------+
-Finished Parallel Synthesis Optimization  : Time (s): cpu = 00:00:24 ; elapsed = 00:00:24 . Memory (MB): peak = 1415.402 ; gain = 546.109 ; free physical = 2594 ; free virtual = 20105
 ---------------------------------------------------------------------------------
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-4480] The timing for the instance RAM_reg_0_0 (implemented as a block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
 INFO: [Synth 8-4480] The timing for the instance RAM_reg_0_1 (implemented as a block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-4480] The timing for the instance RAM_reg_0_2 (implemented as a block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-4480] The timing for the instance RAM_reg_0_3 (implemented as a block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
 INFO: [Synth 8-4480] The timing for the instance RAM_reg_1_0 (implemented as a block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
 INFO: [Synth 8-4480] The timing for the instance RAM_reg_1_1 (implemented as a block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-4480] The timing for the instance RAM_reg_1_2 (implemented as a block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-4480] The timing for the instance RAM_reg_1_3 (implemented as a block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
 INFO: [Synth 8-4480] The timing for the instance RAM_reg_2_0 (implemented as a block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
 INFO: [Synth 8-4480] The timing for the instance RAM_reg_2_1 (implemented as a block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-4480] The timing for the instance RAM_reg_2_2 (implemented as a block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-4480] The timing for the instance RAM_reg_2_3 (implemented as a block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
 INFO: [Synth 8-4480] The timing for the instance RAM_reg_3_0 (implemented as a block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
 INFO: [Synth 8-4480] The timing for the instance RAM_reg_3_1 (implemented as a block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-4480] The timing for the instance RAM_reg_3_2 (implemented as a block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-4480] The timing for the instance RAM_reg_3_3 (implemented as a block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
 INFO: [Synth 8-4480] The timing for the instance RAM_reg_0_0 (implemented as a block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
 INFO: [Synth 8-4480] The timing for the instance RAM_reg_0_1 (implemented as a block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-4480] The timing for the instance RAM_reg_0_2 (implemented as a block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-4480] The timing for the instance RAM_reg_0_3 (implemented as a block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
 INFO: [Synth 8-4480] The timing for the instance RAM_reg_1_0 (implemented as a block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
 INFO: [Synth 8-4480] The timing for the instance RAM_reg_1_1 (implemented as a block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-4480] The timing for the instance RAM_reg_1_2 (implemented as a block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-4480] The timing for the instance RAM_reg_1_3 (implemented as a block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
 INFO: [Synth 8-4480] The timing for the instance RAM_reg_2_0 (implemented as a block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
 INFO: [Synth 8-4480] The timing for the instance RAM_reg_2_1 (implemented as a block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-4480] The timing for the instance RAM_reg_2_2 (implemented as a block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-4480] The timing for the instance RAM_reg_2_3 (implemented as a block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
 INFO: [Synth 8-4480] The timing for the instance RAM_reg_3_0 (implemented as a block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
 INFO: [Synth 8-4480] The timing for the instance RAM_reg_3_1 (implemented as a block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-4480] The timing for the instance RAM_reg_3_2 (implemented as a block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-4480] The timing for the instance RAM_reg_3_3 (implemented as a block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:24 ; elapsed = 00:00:24 . Memory (MB): peak = 1423.410 ; gain = 554.117 ; free physical = 2584 ; free virtual = 20095
+Finished Technology Mapping : Time (s): cpu = 00:00:41 ; elapsed = 00:00:43 . Memory (MB): peak = 1440.465 ; gain = 592.145 ; free physical = 7760 ; free virtual = 21641
 ---------------------------------------------------------------------------------
+Finished Parallel Technology Mapping Optimization  : Time (s): cpu = 00:00:41 ; elapsed = 00:00:43 . Memory (MB): peak = 1440.465 ; gain = 592.145 ; free physical = 7760 ; free virtual = 21641
 
 Report RTL Partitions: 
 +-+--------------+------------+----------+
 | |RTL Partition |Replication |Instances |
 +-+--------------+------------+----------+
 +-+--------------+------------+----------+
+Finished Parallel Synthesis Optimization  : Time (s): cpu = 00:00:41 ; elapsed = 00:00:43 . Memory (MB): peak = 1440.465 ; gain = 592.145 ; free physical = 7760 ; free virtual = 21641
 ---------------------------------------------------------------------------------
 Start IO Insertion
 ---------------------------------------------------------------------------------
@@ -2235,7 +2090,7 @@ WARNING: [Synth 8-3295] tying undriven pin U_TCM_CODE:addr[0] to constant 0
 WARNING: [Synth 8-3295] tying undriven pin U_TCM_CODE:fast_hanshaking to constant 0
 WARNING: [Synth 8-3295] tying undriven pin U_ARBITRER:tcmcode_ready_nxt to constant 0
 WARNING: [Synth 8-3295] tying undriven pin U_ARBITRER:tcmdata_ready_nxt to constant 0
-WARNING: [Synth 8-3295] tying undriven pin U_ARBITRER:periph_dout[19] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin U_ARBITRER:periph_dout[29] to constant 0
 WARNING: [Synth 8-3295] tying undriven pin U_ARBITRER:periph_ready_nxt to constant 0
 WARNING: [Synth 8-3295] tying undriven pin U_ARBITRER:cpu_codeif_addr[27] to constant 0
 WARNING: [Synth 8-3295] tying undriven pin U_ARBITRER:cpu_codeif_addr[26] to constant 0
@@ -2249,7 +2104,6 @@ WARNING: [Synth 8-3295] tying undriven pin U_ARBITRER:cpu_codeif_addr[19] to con
 WARNING: [Synth 8-3295] tying undriven pin U_ARBITRER:cpu_codeif_addr[18] to constant 0
 WARNING: [Synth 8-3295] tying undriven pin U_ARBITRER:cpu_codeif_addr[17] to constant 0
 WARNING: [Synth 8-3295] tying undriven pin U_ARBITRER:cpu_codeif_addr[16] to constant 0
-WARNING: [Synth 8-3295] tying undriven pin U_ARBITRER:cpu_codeif_addr[15] to constant 0
 WARNING: [Synth 8-3295] tying undriven pin U_ARBITRER:cpu_codeif_addr[1] to constant 0
 WARNING: [Synth 8-3295] tying undriven pin U_ARBITRER:cpu_codeif_addr[0] to constant 0
 WARNING: [Synth 8-3295] tying undriven pin U_ARBITRER:cpu_codeif_req to constant 0
@@ -2265,11 +2119,50 @@ WARNING: [Synth 8-3295] tying undriven pin U_ARBITRER:cpu_dataif_addr[19] to con
 WARNING: [Synth 8-3295] tying undriven pin U_ARBITRER:cpu_dataif_addr[18] to constant 0
 WARNING: [Synth 8-3295] tying undriven pin U_ARBITRER:cpu_dataif_addr[17] to constant 0
 WARNING: [Synth 8-3295] tying undriven pin U_ARBITRER:cpu_dataif_addr[16] to constant 0
-WARNING: [Synth 8-3295] tying undriven pin U_ARBITRER:cpu_dataif_addr[15] to constant 0
 WARNING: [Synth 8-3295] tying undriven pin U_ARBITRER:cpu_dataif_addr[1] to constant 0
 WARNING: [Synth 8-3295] tying undriven pin U_ARBITRER:cpu_dataif_addr[0] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:bus_gpio_addr[15] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:bus_gpio_addr[14] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:bus_gpio_addr[13] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:bus_gpio_addr[12] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:bus_gpio_addr[11] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:bus_gpio_addr[10] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:bus_gpio_addr[9] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:bus_gpio_addr[8] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:bus_gpio_addr[7] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:bus_gpio_addr[6] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:bus_gpio_addr[5] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:bus_gpio_addr[4] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:bus_gpio_addr[3] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:bus_gpio_addr[2] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:bus_gpio_addr[1] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:bus_gpio_addr[0] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:bus_gpio_din[31] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:bus_gpio_din[30] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:bus_gpio_din[29] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:bus_gpio_din[28] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:bus_gpio_din[27] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:bus_gpio_din[26] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:bus_gpio_din[25] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:bus_gpio_din[24] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:bus_gpio_din[23] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:bus_gpio_din[22] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:bus_gpio_din[21] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:bus_gpio_din[20] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:bus_gpio_din[19] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:bus_gpio_din[18] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:bus_gpio_din[17] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:bus_gpio_din[16] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[31] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[30] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[29] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[28] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[27] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[26] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin U_GPIO_CTRL:pad_gpio_in[25] to constant 0
+INFO: [Common 17-14] Message 'Synth 8-3295' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:25 ; elapsed = 00:00:25 . Memory (MB): peak = 1423.410 ; gain = 554.117 ; free physical = 2584 ; free virtual = 20095
+Finished IO Insertion : Time (s): cpu = 00:00:42 ; elapsed = 00:00:44 . Memory (MB): peak = 1440.465 ; gain = 592.145 ; free physical = 7762 ; free virtual = 21642
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -2282,7 +2175,7 @@ Report Check Netlist:
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:25 ; elapsed = 00:00:25 . Memory (MB): peak = 1423.410 ; gain = 554.117 ; free physical = 2584 ; free virtual = 20095
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:42 ; elapsed = 00:00:44 . Memory (MB): peak = 1440.465 ; gain = 592.145 ; free physical = 7762 ; free virtual = 21642
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -2294,7 +2187,7 @@ Report RTL Partitions:
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:25 ; elapsed = 00:00:25 . Memory (MB): peak = 1423.410 ; gain = 554.117 ; free physical = 2583 ; free virtual = 20095
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:43 ; elapsed = 00:00:44 . Memory (MB): peak = 1440.465 ; gain = 592.145 ; free physical = 7792 ; free virtual = 21672
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -2307,58 +2200,74 @@ Report BlackBoxes:
 +-+--------------+----------+
 
 Report Cell Usage: 
-+------+-----------+------+
-|      |Cell       |Count |
-+------+-----------+------+
-|1     |BUFG       |     3|
-|2     |CARRY4     |    54|
-|3     |LUT1       |    68|
-|4     |LUT2       |    95|
-|5     |LUT3       |   167|
-|6     |LUT4       |   318|
-|7     |LUT5       |   180|
-|8     |LUT6       |   502|
-|9     |MMCME2_ADV |     1|
-|10    |MUXF7      |    62|
-|11    |MUXF8      |    29|
-|12    |RAM32M     |    12|
-|13    |RAMB36E1   |    16|
-|14    |FDCE       |    95|
-|15    |FDPE       |     6|
-|16    |LD         |    37|
-|17    |IBUF       |     2|
-|18    |OBUF       |     1|
-+------+-----------+------+
++------+------------+------+
+|      |Cell        |Count |
++------+------------+------+
+|1     |BUFG        |     3|
+|2     |CARRY4      |    54|
+|3     |LUT1        |    69|
+|4     |LUT2        |    94|
+|5     |LUT3        |   170|
+|6     |LUT4        |   281|
+|7     |LUT5        |   206|
+|8     |LUT6        |   516|
+|9     |MMCME2_ADV  |     1|
+|10    |MUXF7       |    62|
+|11    |MUXF8       |    29|
+|12    |RAM32M      |    12|
+|13    |RAMB36E1    |     2|
+|14    |RAMB36E1_1  |     2|
+|15    |RAMB36E1_10 |     2|
+|16    |RAMB36E1_11 |     2|
+|17    |RAMB36E1_12 |     2|
+|18    |RAMB36E1_13 |     2|
+|19    |RAMB36E1_14 |     2|
+|20    |RAMB36E1_15 |     2|
+|21    |RAMB36E1_2  |     2|
+|22    |RAMB36E1_3  |     2|
+|23    |RAMB36E1_4  |     2|
+|24    |RAMB36E1_5  |     2|
+|25    |RAMB36E1_6  |     2|
+|26    |RAMB36E1_7  |     2|
+|27    |RAMB36E1_8  |     2|
+|28    |RAMB36E1_9  |     2|
+|29    |FDCE        |   143|
+|30    |FDPE        |     6|
+|31    |LD          |    37|
+|32    |IBUF        |    18|
+|33    |OBUF        |    17|
++------+------------+------+
 
 Report Instance Areas: 
 +------+---------------+------------------------+------+
 |      |Instance       |Module                  |Cells |
 +------+---------------+------------------------+------+
-|1     |top            |                        |  1648|
-|2     |  U_CPU        |nanorv32                |  1445|
+|1     |top            |                        |  1750|
+|2     |  U_CPU        |nanorv32                |  1426|
 |3     |    U_REG_FILE |nanorv32_regfile        |    77|
 |4     |    U_ALU      |nanorv32_alu            |   717|
-|5     |  U_TCM_DATA   |nanorv32_tcm_ctrl__1    |    12|
-|6     |    U_MEM      |bytewrite_ram_32bits__1 |     8|
-|7     |  U_TCM_CODE   |nanorv32_tcm_ctrl       |    12|
-|8     |    U_MEM      |bytewrite_ram_32bits    |     8|
-|9     |  U_ARBITRER   |nanorv32_tcm_arbitrer   |   172|
-|10    |  U_CLK_GEN    |nanorv32_clkgen         |     5|
-|11    |    U_MCM      |arty_mmcm               |     5|
-|12    |      inst     |arty_mmcm_clk_wiz       |     5|
+|5     |  U_TCM_DATA   |nanorv32_tcm_ctrl__1    |    20|
+|6     |    U_MEM      |bytewrite_ram_32bits__1 |    16|
+|7     |  U_TCM_CODE   |nanorv32_tcm_ctrl       |    20|
+|8     |    U_MEM      |bytewrite_ram_32bits    |    16|
+|9     |  U_ARBITRER   |nanorv32_tcm_arbitrer   |   195|
+|10    |  U_GPIO_CTRL  |nanorv32_gpio_ctrl      |    50|
+|11    |  U_CLK_GEN    |nanorv32_clkgen         |     5|
+|12    |    U_MCM      |arty_mmcm               |     5|
+|13    |      inst     |arty_mmcm_clk_wiz       |     5|
 +------+---------------+------------------------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:25 ; elapsed = 00:00:25 . Memory (MB): peak = 1423.410 ; gain = 554.117 ; free physical = 2583 ; free virtual = 20095
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:43 ; elapsed = 00:00:44 . Memory (MB): peak = 1440.465 ; gain = 592.145 ; free physical = 7792 ; free virtual = 21672
 ---------------------------------------------------------------------------------
-Synthesis finished with 0 errors, 0 critical warnings and 181 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:20 ; elapsed = 00:00:21 . Memory (MB): peak = 1423.410 ; gain = 109.969 ; free physical = 2583 ; free virtual = 20094
-Synthesis Optimization Complete : Time (s): cpu = 00:00:25 ; elapsed = 00:00:25 . Memory (MB): peak = 1423.410 ; gain = 554.117 ; free physical = 2583 ; free virtual = 20094
+Synthesis finished with 0 errors, 0 critical warnings and 147 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:37 ; elapsed = 00:00:38 . Memory (MB): peak = 1440.465 ; gain = 209.016 ; free physical = 7793 ; free virtual = 21673
+Synthesis Optimization Complete : Time (s): cpu = 00:00:43 ; elapsed = 00:00:44 . Memory (MB): peak = 1440.465 ; gain = 592.145 ; free physical = 7793 ; free virtual = 21673
 INFO: [Project 1-571] Translating synthesized netlist
-INFO: [Netlist 29-17] Analyzing 122 Unisim elements for replacement
+INFO: [Netlist 29-17] Analyzing 154 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
-Parsing XDC File [/home/roba/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc]
-Finished Parsing XDC File [/home/roba/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc]
+Parsing XDC File [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc]
+Finished Parsing XDC File [/home/ronan/perso/github/nanorv32/synt/fpga/xilinx_constraints.xdc]
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
 INFO: [Project 1-111] Unisim Transformation Summary:
   A total of 49 instances were transformed.
@@ -2366,19 +2275,19 @@ INFO: [Project 1-111] Unisim Transformation Summary:
   RAM32M => RAM32M (RAMD32, RAMD32, RAMD32, RAMD32, RAMD32, RAMD32, RAMS32, RAMS32): 12 instances
 
 INFO: [Common 17-83] Releasing license: Synthesis
-142 Infos, 246 Warnings, 1 Critical Warnings and 0 Errors encountered.
+128 Infos, 154 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:00:25 ; elapsed = 00:00:25 . Memory (MB): peak = 1455.426 ; gain = 514.910 ; free physical = 2577 ; free virtual = 20092
+synth_design: Time (s): cpu = 00:00:45 ; elapsed = 00:00:46 . Memory (MB): peak = 1440.469 ; gain = 520.812 ; free physical = 8054 ; free virtual = 21943
 # set outputDir ./rpt
 # file mkdir $outputDir
 # report_timing_summary -file $outputDir/post_synth_timing_summary.rpt
 INFO: [Timing 38-35] Done setting XDC timing constraints.
 INFO: [Timing 38-2] Deriving generated clocks
 INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -1, Delay Type: min_max.
-INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 8 CPUs
-report_timing_summary: Time (s): cpu = 00:00:08 ; elapsed = 00:00:08 . Memory (MB): peak = 1782.625 ; gain = 327.199 ; free physical = 2373 ; free virtual = 19898
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 4 CPUs
+report_timing_summary: Time (s): cpu = 00:00:22 ; elapsed = 00:00:21 . Memory (MB): peak = 1698.633 ; gain = 258.164 ; free physical = 7753 ; free virtual = 21688
 # report_utilization -file $outputDir/post_synth_util.rpt
-report_utilization: Time (s): cpu = 00:00:00.10 ; elapsed = 00:00:00.15 . Memory (MB): peak = 1782.625 ; gain = 0.000 ; free physical = 2373 ; free virtual = 19897
+report_utilization: Time (s): cpu = 00:00:00.18 ; elapsed = 00:00:00.22 . Memory (MB): peak = 1698.633 ; gain = 0.000 ; free physical = 7744 ; free virtual = 21683
 # check_timing -override_defaults loops -verbose > post_synt_loops.rpt
 
 check_timing report
@@ -2399,42 +2308,42 @@ INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc
 Running DRC as a precondition to command opt_design
 
 Starting DRC Task
-INFO: [DRC 23-27] Running DRC with 8 threads
+INFO: [DRC 23-27] Running DRC with 4 threads
 INFO: [Project 1-461] DRC finished with 0 Errors
 INFO: [Project 1-462] Please refer to the DRC report (report_drc) for more information.
 
-Time (s): cpu = 00:00:00.10 ; elapsed = 00:00:00.10 . Memory (MB): peak = 1850.656 ; gain = 68.031 ; free physical = 2370 ; free virtual = 19895
+Time (s): cpu = 00:00:00.26 ; elapsed = 00:00:00.24 . Memory (MB): peak = 1734.648 ; gain = 36.016 ; free physical = 7739 ; free virtual = 21678
 
 Starting Logic Optimization Task
-Implement Debug Cores | Checksum: 1316c412c
+Implement Debug Cores | Checksum: 1c90cc236
 
 Phase 1 Retarget
 INFO: [Opt 31-138] Pushed 1 inverter(s) to 1 load pin(s).
 INFO: [Opt 31-49] Retargeted 0 cell(s).
-Phase 1 Retarget | Checksum: 1a95eccd3
+Phase 1 Retarget | Checksum: 130f5a5f6
 
-Time (s): cpu = 00:00:00.13 ; elapsed = 00:00:00.13 . Memory (MB): peak = 1850.656 ; gain = 0.000 ; free physical = 2370 ; free virtual = 19895
+Time (s): cpu = 00:00:00.25 ; elapsed = 00:00:00.25 . Memory (MB): peak = 1734.648 ; gain = 0.000 ; free physical = 7739 ; free virtual = 21679
 
 Phase 2 Constant Propagation
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
 INFO: [Opt 31-10] Eliminated 0 cells.
-Phase 2 Constant Propagation | Checksum: 1a95eccd3
+Phase 2 Constant Propagation | Checksum: 130f5a5f6
 
-Time (s): cpu = 00:00:00.19 ; elapsed = 00:00:00.19 . Memory (MB): peak = 1850.656 ; gain = 0.000 ; free physical = 2370 ; free virtual = 19895
+Time (s): cpu = 00:00:00.38 ; elapsed = 00:00:00.38 . Memory (MB): peak = 1734.648 ; gain = 0.000 ; free physical = 7739 ; free virtual = 21679
 
 Phase 3 Sweep
-INFO: [Opt 31-12] Eliminated 165 unconnected nets.
-INFO: [Opt 31-11] Eliminated 6 unconnected cells.
-Phase 3 Sweep | Checksum: 19bfe66e6
+INFO: [Opt 31-12] Eliminated 166 unconnected nets.
+INFO: [Opt 31-11] Eliminated 7 unconnected cells.
+Phase 3 Sweep | Checksum: 1561d6e0d
 
-Time (s): cpu = 00:00:00.26 ; elapsed = 00:00:00.27 . Memory (MB): peak = 1850.656 ; gain = 0.000 ; free physical = 2370 ; free virtual = 19895
+Time (s): cpu = 00:00:00.59 ; elapsed = 00:00:00.60 . Memory (MB): peak = 1734.648 ; gain = 0.000 ; free physical = 7739 ; free virtual = 21679
 
 Starting Connectivity Check Task
 
-Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1850.656 ; gain = 0.000 ; free physical = 2370 ; free virtual = 19895
-Ending Logic Optimization Task | Checksum: 19bfe66e6
+Time (s): cpu = 00:00:00.02 ; elapsed = 00:00:00.01 . Memory (MB): peak = 1734.648 ; gain = 0.000 ; free physical = 7739 ; free virtual = 21679
+Ending Logic Optimization Task | Checksum: 1561d6e0d
 
-Time (s): cpu = 00:00:00.27 ; elapsed = 00:00:00.28 . Memory (MB): peak = 1850.656 ; gain = 0.000 ; free physical = 2370 ; free virtual = 19895
+Time (s): cpu = 00:00:00.63 ; elapsed = 00:00:00.63 . Memory (MB): peak = 1734.648 ; gain = 0.000 ; free physical = 7739 ; free virtual = 21679
 
 Starting Power Optimization Task
 INFO: [Pwropt 34-132] Skipping clock gating for clocks with a period < 2.00 ns.
@@ -2447,15 +2356,15 @@ INFO: [Pwropt 34-10] Applying ODC optimizations ...
 
 
 Starting PowerOpt Patch Enables Task
-INFO: [Pwropt 34-162] WRITE_MODE attribute of 0 BRAM(s) out of a total of 16 has been updated to save power. Run report_power_opt to get a complete listing of the BRAMs updated.
+INFO: [Pwropt 34-162] WRITE_MODE attribute of 0 BRAM(s) out of a total of 32 has been updated to save power. Run report_power_opt to get a complete listing of the BRAMs updated.
 INFO: [Pwropt 34-201] Structural ODC has moved 0 WE to EN ports
-Number of BRAM Ports augmented: 0 newly gated: 0 Total Ports: 32
-Ending PowerOpt Patch Enables Task | Checksum: 19bfe66e6
+Number of BRAM Ports augmented: 0 newly gated: 0 Total Ports: 64
+Ending PowerOpt Patch Enables Task | Checksum: 1561d6e0d
 
-Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.01 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2263 ; free virtual = 19795
-Ending Power Optimization Task | Checksum: 19bfe66e6
+Time (s): cpu = 00:00:00.03 ; elapsed = 00:00:00.03 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7592 ; free virtual = 21532
+Ending Power Optimization Task | Checksum: 1561d6e0d
 
-Time (s): cpu = 00:00:02 ; elapsed = 00:00:01 . Memory (MB): peak = 2076.766 ; gain = 226.109 ; free physical = 2263 ; free virtual = 19795
+Time (s): cpu = 00:00:05 ; elapsed = 00:00:04 . Memory (MB): peak = 1897.734 ; gain = 163.086 ; free physical = 7592 ; free virtual = 21532
 INFO: [Common 17-83] Releasing license: Implementation
 17 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
 opt_design completed successfully
@@ -2530,230 +2439,226 @@ Table of Contents
 Command: place_design
 Attempting to get a license for feature 'Implementation' and/or device 'xc7a35t'
 INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7a35t'
-INFO: [DRC 23-27] Running DRC with 8 threads
+INFO: [DRC 23-27] Running DRC with 4 threads
 INFO: [Vivado_Tcl 4-198] DRC finished with 0 Errors
 INFO: [Vivado_Tcl 4-199] Please refer to the DRC report (report_drc) for more information.
 Running DRC as a precondition to command place_design
-INFO: [DRC 23-27] Running DRC with 8 threads
+INFO: [DRC 23-27] Running DRC with 4 threads
 INFO: [Vivado_Tcl 4-198] DRC finished with 0 Errors
 INFO: [Vivado_Tcl 4-199] Please refer to the DRC report (report_drc) for more information.
 
 Starting Placer Task
-INFO: [Place 30-611] Multithreading enabled for place_design using a maximum of 8 CPUs
+INFO: [Place 30-611] Multithreading enabled for place_design using a maximum of 4 CPUs
 
 Phase 1 Placer Initialization
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2257 ; free virtual = 19793
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2256 ; free virtual = 19793
+Netlist sorting complete. Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7585 ; free virtual = 21528
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7585 ; free virtual = 21528
 
 Phase 1.1 IO Placement/ Clock Placement/ Build Placer Device
 
 Phase 1.1.1 Pre-Place Cells
-Phase 1.1.1 Pre-Place Cells | Checksum: 393038d6
+Phase 1.1.1 Pre-Place Cells | Checksum: 229deee3
 
-Time (s): cpu = 00:00:00.03 ; elapsed = 00:00:00.03 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2256 ; free virtual = 19793
+Time (s): cpu = 00:00:00.04 ; elapsed = 00:00:00.05 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7585 ; free virtual = 21528
 
 Phase 1.1.2 IO and Clk Clean Up
-Phase 1.1.2 IO and Clk Clean Up | Checksum: 393038d6
+Phase 1.1.2 IO and Clk Clean Up | Checksum: 229deee3
 
-Time (s): cpu = 00:00:00.68 ; elapsed = 00:00:00.42 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2251 ; free virtual = 19792
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.91 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7583 ; free virtual = 21529
 
 Phase 1.1.3 Implementation Feasibility check On IDelay
-Phase 1.1.3 Implementation Feasibility check On IDelay | Checksum: 393038d6
+Phase 1.1.3 Implementation Feasibility check On IDelay | Checksum: 229deee3
 
-Time (s): cpu = 00:00:00.69 ; elapsed = 00:00:00.43 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2251 ; free virtual = 19792
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.92 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7588 ; free virtual = 21528
 
 Phase 1.1.4 Commit IO Placement
-Phase 1.1.4 Commit IO Placement | Checksum: 5352c070
+Phase 1.1.4 Commit IO Placement | Checksum: 4d27a93c
 
-Time (s): cpu = 00:00:00.69 ; elapsed = 00:00:00.43 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2251 ; free virtual = 19792
-Phase 1.1 IO Placement/ Clock Placement/ Build Placer Device | Checksum: 13b8f24c3
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:00.93 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7588 ; free virtual = 21528
+Phase 1.1 IO Placement/ Clock Placement/ Build Placer Device | Checksum: 66bb7fb4
 
-Time (s): cpu = 00:00:00.69 ; elapsed = 00:00:00.43 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2251 ; free virtual = 19792
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:00.93 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7588 ; free virtual = 21528
 
 Phase 1.2 Build Placer Netlist Model
 
 Phase 1.2.1 Place Init Design
 
 Phase 1.2.1.1 Init Lut Pin Assignment
-Phase 1.2.1.1 Init Lut Pin Assignment | Checksum: 19aa784d4
+Phase 1.2.1.1 Init Lut Pin Assignment | Checksum: 13b86c7d6
 
-Time (s): cpu = 00:00:00.83 ; elapsed = 00:00:00.52 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2249 ; free virtual = 19792
-Phase 1.2.1 Place Init Design | Checksum: 1dec50379
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:01 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7588 ; free virtual = 21528
+Phase 1.2.1 Place Init Design | Checksum: 112c0bc76
 
-Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.77 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2248 ; free virtual = 19792
-Phase 1.2 Build Placer Netlist Model | Checksum: 1dec50379
+Time (s): cpu = 00:00:03 ; elapsed = 00:00:02 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7588 ; free virtual = 21528
+Phase 1.2 Build Placer Netlist Model | Checksum: 112c0bc76
 
-Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.77 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2248 ; free virtual = 19792
+Time (s): cpu = 00:00:03 ; elapsed = 00:00:02 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7588 ; free virtual = 21528
 
 Phase 1.3 Constrain Clocks/Macros
 
 Phase 1.3.1 Constrain Global/Regional Clocks
-Phase 1.3.1 Constrain Global/Regional Clocks | Checksum: 1dec50379
+Phase 1.3.1 Constrain Global/Regional Clocks | Checksum: 112c0bc76
 
-Time (s): cpu = 00:00:02 ; elapsed = 00:00:00.77 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2248 ; free virtual = 19792
-Phase 1.3 Constrain Clocks/Macros | Checksum: 1dec50379
+Time (s): cpu = 00:00:03 ; elapsed = 00:00:02 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7588 ; free virtual = 21528
+Phase 1.3 Constrain Clocks/Macros | Checksum: 112c0bc76
 
-Time (s): cpu = 00:00:02 ; elapsed = 00:00:00.77 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2248 ; free virtual = 19792
-Phase 1 Placer Initialization | Checksum: 1dec50379
+Time (s): cpu = 00:00:03 ; elapsed = 00:00:02 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7588 ; free virtual = 21528
+Phase 1 Placer Initialization | Checksum: 112c0bc76
 
-Time (s): cpu = 00:00:02 ; elapsed = 00:00:00.78 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2248 ; free virtual = 19792
+Time (s): cpu = 00:00:03 ; elapsed = 00:00:02 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7588 ; free virtual = 21528
 
 Phase 2 Global Placement
-SimPL: WL = 109163 (10558, 98605)
-SimPL: WL = 110908 (10608, 100300)
-SimPL: WL = 110467 (10572, 99895)
-SimPL: WL = 110567 (10582, 99985)
-SimPL: WL = 110468 (10572, 99896)
-Phase 2 Global Placement | Checksum: 13aab830d
+Phase 2 Global Placement | Checksum: 76c9a9e7
 
-Time (s): cpu = 00:00:07 ; elapsed = 00:00:02 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2245 ; free virtual = 19790
+Time (s): cpu = 00:00:08 ; elapsed = 00:00:04 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7588 ; free virtual = 21528
 
 Phase 3 Detail Placement
 
 Phase 3.1 Commit Multi Column Macros
-Phase 3.1 Commit Multi Column Macros | Checksum: 13aab830d
+Phase 3.1 Commit Multi Column Macros | Checksum: 76c9a9e7
 
-Time (s): cpu = 00:00:07 ; elapsed = 00:00:02 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2245 ; free virtual = 19790
+Time (s): cpu = 00:00:08 ; elapsed = 00:00:04 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7588 ; free virtual = 21528
 
 Phase 3.2 Commit Most Macros & LUTRAMs
-Phase 3.2 Commit Most Macros & LUTRAMs | Checksum: 14e5625ae
+Phase 3.2 Commit Most Macros & LUTRAMs | Checksum: 1433b9d4b
 
-Time (s): cpu = 00:00:08 ; elapsed = 00:00:03 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2245 ; free virtual = 19791
+Time (s): cpu = 00:00:09 ; elapsed = 00:00:05 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7588 ; free virtual = 21528
 
 Phase 3.3 Area Swap Optimization
-Phase 3.3 Area Swap Optimization | Checksum: 1b7fd1a7b
+Phase 3.3 Area Swap Optimization | Checksum: 7ba75ba0
 
-Time (s): cpu = 00:00:08 ; elapsed = 00:00:03 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2246 ; free virtual = 19791
+Time (s): cpu = 00:00:09 ; elapsed = 00:00:05 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7588 ; free virtual = 21528
 
 Phase 3.4 updateClock Trees: DP
-Phase 3.4 updateClock Trees: DP | Checksum: 1b7fd1a7b
+Phase 3.4 updateClock Trees: DP | Checksum: 7ba75ba0
 
-Time (s): cpu = 00:00:08 ; elapsed = 00:00:03 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2246 ; free virtual = 19791
+Time (s): cpu = 00:00:09 ; elapsed = 00:00:05 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7588 ; free virtual = 21528
 
 Phase 3.5 Timing Path Optimizer
-Phase 3.5 Timing Path Optimizer | Checksum: 19fbc132e
+Phase 3.5 Timing Path Optimizer | Checksum: abfd8cb8
 
-Time (s): cpu = 00:00:08 ; elapsed = 00:00:03 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2245 ; free virtual = 19791
+Time (s): cpu = 00:00:09 ; elapsed = 00:00:06 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7588 ; free virtual = 21528
 
 Phase 3.6 Fast Optimization
-Phase 3.6 Fast Optimization | Checksum: 19fbc132e
+Phase 3.6 Fast Optimization | Checksum: abfd8cb8
 
-Time (s): cpu = 00:00:08 ; elapsed = 00:00:03 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2245 ; free virtual = 19791
+Time (s): cpu = 00:00:09 ; elapsed = 00:00:06 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7588 ; free virtual = 21528
 
 Phase 3.7 Small Shape Detail Placement
 
 Phase 3.7.1 Commit Small Macros and Core Logic
 
 Phase 3.7.1.1 Commit Slice Clusters
-Phase 3.7.1.1 Commit Slice Clusters | Checksum: 121ae5162
+Phase 3.7.1.1 Commit Slice Clusters | Checksum: 91494a5b
 
-Time (s): cpu = 00:00:08 ; elapsed = 00:00:03 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2244 ; free virtual = 19790
-Phase 3.7.1 Commit Small Macros and Core Logic | Checksum: 121ae5162
+Time (s): cpu = 00:00:10 ; elapsed = 00:00:07 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7588 ; free virtual = 21528
+Phase 3.7.1 Commit Small Macros and Core Logic | Checksum: 91494a5b
 
-Time (s): cpu = 00:00:08 ; elapsed = 00:00:03 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2244 ; free virtual = 19790
+Time (s): cpu = 00:00:10 ; elapsed = 00:00:07 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7588 ; free virtual = 21528
 
 Phase 3.7.2 Clock Restriction Legalization for Leaf Columns
-Phase 3.7.2 Clock Restriction Legalization for Leaf Columns | Checksum: 121ae5162
+Phase 3.7.2 Clock Restriction Legalization for Leaf Columns | Checksum: 91494a5b
 
-Time (s): cpu = 00:00:08 ; elapsed = 00:00:03 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2244 ; free virtual = 19790
+Time (s): cpu = 00:00:10 ; elapsed = 00:00:07 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7587 ; free virtual = 21528
 
 Phase 3.7.3 Clock Restriction Legalization for Non-Clock Pins
-Phase 3.7.3 Clock Restriction Legalization for Non-Clock Pins | Checksum: 121ae5162
+Phase 3.7.3 Clock Restriction Legalization for Non-Clock Pins | Checksum: 91494a5b
 
-Time (s): cpu = 00:00:08 ; elapsed = 00:00:03 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2244 ; free virtual = 19790
-Phase 3.7 Small Shape Detail Placement | Checksum: 121ae5162
+Time (s): cpu = 00:00:10 ; elapsed = 00:00:07 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7587 ; free virtual = 21528
+Phase 3.7 Small Shape Detail Placement | Checksum: 91494a5b
 
-Time (s): cpu = 00:00:08 ; elapsed = 00:00:03 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2244 ; free virtual = 19790
+Time (s): cpu = 00:00:11 ; elapsed = 00:00:07 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7587 ; free virtual = 21528
 
 Phase 3.8 Re-assign LUT pins
-Phase 3.8 Re-assign LUT pins | Checksum: 1022392c3
+Phase 3.8 Re-assign LUT pins | Checksum: 99401021
 
-Time (s): cpu = 00:00:08 ; elapsed = 00:00:03 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2244 ; free virtual = 19790
-Phase 3 Detail Placement | Checksum: 1022392c3
+Time (s): cpu = 00:00:11 ; elapsed = 00:00:07 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7587 ; free virtual = 21528
+Phase 3 Detail Placement | Checksum: 99401021
 
-Time (s): cpu = 00:00:08 ; elapsed = 00:00:03 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2244 ; free virtual = 19790
+Time (s): cpu = 00:00:11 ; elapsed = 00:00:07 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7587 ; free virtual = 21528
 
 Phase 4 Post Placement Optimization and Clean-Up
 
 Phase 4.1 Post Commit Optimization
 
 Phase 4.1.1 callUpdateTimingBeforePCO
-Phase 4.1.1 callUpdateTimingBeforePCO | Checksum: 11706b156
+Phase 4.1.1 callUpdateTimingBeforePCO | Checksum: b5555a04
 
-Time (s): cpu = 00:00:09 ; elapsed = 00:00:03 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2244 ; free virtual = 19789
+Time (s): cpu = 00:00:12 ; elapsed = 00:00:08 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7587 ; free virtual = 21528
 
 Phase 4.1.2 updateClock Trees: PCOPT
-Phase 4.1.2 updateClock Trees: PCOPT | Checksum: 11706b156
+Phase 4.1.2 updateClock Trees: PCOPT | Checksum: b5555a04
 
-Time (s): cpu = 00:00:09 ; elapsed = 00:00:03 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2244 ; free virtual = 19789
+Time (s): cpu = 00:00:12 ; elapsed = 00:00:08 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7587 ; free virtual = 21528
 
 Phase 4.1.3 Post Placement Optimization
 
 Phase 4.1.3.1 PCOPT Shape updates
 
 Phase 4.1.3.1.1 removeOptionalFFsFromShapes
-Phase 4.1.3.1.1 removeOptionalFFsFromShapes | Checksum: 11706b156
+Phase 4.1.3.1.1 removeOptionalFFsFromShapes | Checksum: b5555a04
 
-Time (s): cpu = 00:00:09 ; elapsed = 00:00:03 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2244 ; free virtual = 19789
+Time (s): cpu = 00:00:12 ; elapsed = 00:00:08 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7587 ; free virtual = 21528
 
 Phase 4.1.3.1.2 deleteLutnmShapes
 
 Phase 4.1.3.1.2.1 deleteShapes
-Phase 4.1.3.1.2.1 deleteShapes | Checksum: e796ffeb
+Phase 4.1.3.1.2.1 deleteShapes | Checksum: e0e7e098
 
-Time (s): cpu = 00:00:09 ; elapsed = 00:00:03 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2244 ; free virtual = 19789
-Phase 4.1.3.1.2 deleteLutnmShapes | Checksum: e796ffeb
+Time (s): cpu = 00:00:12 ; elapsed = 00:00:08 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7587 ; free virtual = 21528
+Phase 4.1.3.1.2 deleteLutnmShapes | Checksum: e0e7e098
 
-Time (s): cpu = 00:00:09 ; elapsed = 00:00:03 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2244 ; free virtual = 19789
-Phase 4.1.3.1 PCOPT Shape updates | Checksum: e796ffeb
+Time (s): cpu = 00:00:12 ; elapsed = 00:00:08 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7587 ; free virtual = 21528
+Phase 4.1.3.1 PCOPT Shape updates | Checksum: e0e7e098
 
-Time (s): cpu = 00:00:09 ; elapsed = 00:00:03 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2244 ; free virtual = 19789
+Time (s): cpu = 00:00:12 ; elapsed = 00:00:08 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7587 ; free virtual = 21528
 
 Phase 4.1.3.2 Post Placement Timing Optimization
-INFO: [Place 30-746] Post Placement Timing Summary WNS=5.813. For the most accurate timing information please run report_timing.
-Phase 4.1.3.2 Post Placement Timing Optimization | Checksum: 12b0bc464
+INFO: [Place 30-746] Post Placement Timing Summary WNS=6.031. For the most accurate timing information please run report_timing.
+Phase 4.1.3.2 Post Placement Timing Optimization | Checksum: 10b78eb26
 
-Time (s): cpu = 00:00:09 ; elapsed = 00:00:03 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2244 ; free virtual = 19789
-Phase 4.1.3 Post Placement Optimization | Checksum: 12b0bc464
+Time (s): cpu = 00:00:12 ; elapsed = 00:00:08 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7587 ; free virtual = 21528
+Phase 4.1.3 Post Placement Optimization | Checksum: 10b78eb26
 
-Time (s): cpu = 00:00:09 ; elapsed = 00:00:03 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2244 ; free virtual = 19789
-Phase 4.1 Post Commit Optimization | Checksum: 12b0bc464
+Time (s): cpu = 00:00:12 ; elapsed = 00:00:08 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7587 ; free virtual = 21528
+Phase 4.1 Post Commit Optimization | Checksum: 10b78eb26
 
-Time (s): cpu = 00:00:09 ; elapsed = 00:00:03 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2244 ; free virtual = 19789
+Time (s): cpu = 00:00:12 ; elapsed = 00:00:08 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7587 ; free virtual = 21528
 
 Phase 4.2 Sweep Clock Roots: Post-Placement
-Phase 4.2 Sweep Clock Roots: Post-Placement | Checksum: 12b0bc464
+Phase 4.2 Sweep Clock Roots: Post-Placement | Checksum: 10b78eb26
 
-Time (s): cpu = 00:00:09 ; elapsed = 00:00:03 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2244 ; free virtual = 19789
+Time (s): cpu = 00:00:13 ; elapsed = 00:00:08 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7587 ; free virtual = 21528
 
 Phase 4.3 Post Placement Cleanup
-Phase 4.3 Post Placement Cleanup | Checksum: 12b0bc464
+Phase 4.3 Post Placement Cleanup | Checksum: 10b78eb26
 
-Time (s): cpu = 00:00:09 ; elapsed = 00:00:03 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2244 ; free virtual = 19789
+Time (s): cpu = 00:00:13 ; elapsed = 00:00:08 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7587 ; free virtual = 21528
 
 Phase 4.4 Placer Reporting
 
 Phase 4.4.1 Restore STA
-Phase 4.4.1 Restore STA | Checksum: 12b0bc464
+Phase 4.4.1 Restore STA | Checksum: 10b78eb26
 
-Time (s): cpu = 00:00:09 ; elapsed = 00:00:03 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2244 ; free virtual = 19789
-Phase 4.4 Placer Reporting | Checksum: 12b0bc464
+Time (s): cpu = 00:00:13 ; elapsed = 00:00:08 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7587 ; free virtual = 21528
+Phase 4.4 Placer Reporting | Checksum: 10b78eb26
 
-Time (s): cpu = 00:00:09 ; elapsed = 00:00:03 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2244 ; free virtual = 19789
+Time (s): cpu = 00:00:13 ; elapsed = 00:00:08 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7587 ; free virtual = 21528
 
 Phase 4.5 Final Placement Cleanup
-Phase 4.5 Final Placement Cleanup | Checksum: 161373c3a
+Phase 4.5 Final Placement Cleanup | Checksum: 17a85271e
 
-Time (s): cpu = 00:00:09 ; elapsed = 00:00:03 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2244 ; free virtual = 19789
-Phase 4 Post Placement Optimization and Clean-Up | Checksum: 161373c3a
+Time (s): cpu = 00:00:13 ; elapsed = 00:00:08 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7587 ; free virtual = 21528
+Phase 4 Post Placement Optimization and Clean-Up | Checksum: 17a85271e
 
-Time (s): cpu = 00:00:09 ; elapsed = 00:00:03 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2244 ; free virtual = 19789
-Ending Placer Task | Checksum: 9ba7b2c9
+Time (s): cpu = 00:00:13 ; elapsed = 00:00:08 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7587 ; free virtual = 21528
+Ending Placer Task | Checksum: dc216897
 
-Time (s): cpu = 00:00:09 ; elapsed = 00:00:03 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2244 ; free virtual = 19789
+Time (s): cpu = 00:00:13 ; elapsed = 00:00:08 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7587 ; free virtual = 21528
 INFO: [Common 17-83] Releasing license: Implementation
 10 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
 place_design completed successfully
+place_design: Time (s): cpu = 00:00:14 ; elapsed = 00:00:09 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7587 ; free virtual = 21528
 # report_clock_utilization -file $outputDir/clock_util.rpt
 # check_timing -override_defaults loops -verbose > post_place_loops.rpt
 
@@ -2777,115 +2682,115 @@ Writing placer database...
 Writing XDEF routing.
 Writing XDEF routing logical nets.
 Writing XDEF routing special nets.
-Write XDEF Complete: Time (s): cpu = 00:00:00.27 ; elapsed = 00:00:00.09 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2238 ; free virtual = 19787
+Write XDEF Complete: Time (s): cpu = 00:00:00.76 ; elapsed = 00:00:00.26 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7592 ; free virtual = 21535
 # report_utilization -file $outputDir/post_place_util.rpt
-report_utilization: Time (s): cpu = 00:00:00.12 ; elapsed = 00:00:00.16 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2241 ; free virtual = 19787
+report_utilization: Time (s): cpu = 00:00:00.13 ; elapsed = 00:00:00.18 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7591 ; free virtual = 21531
 # report_timing_summary -file $outputDir/post_place_timing_summary.rpt
 # route_design
 Command: route_design
 Attempting to get a license for feature 'Implementation' and/or device 'xc7a35t'
 INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7a35t'
 Running DRC as a precondition to command route_design
-INFO: [DRC 23-27] Running DRC with 8 threads
+INFO: [DRC 23-27] Running DRC with 4 threads
 INFO: [Vivado_Tcl 4-198] DRC finished with 0 Errors
 INFO: [Vivado_Tcl 4-199] Please refer to the DRC report (report_drc) for more information.
 
 
 Starting Routing Task
-INFO: [Route 35-254] Multithreading enabled for route_design using a maximum of 8 CPUs
-Checksum: PlaceDB: e9ddcb7 ConstDB: 0 ShapeSum: 8d09d612 RouteDB: 0
+INFO: [Route 35-254] Multithreading enabled for route_design using a maximum of 4 CPUs
+Checksum: PlaceDB: 3dd3e25b ConstDB: 0 ShapeSum: 9e4d863c RouteDB: 0
 
 Phase 1 Build RT Design
-Phase 1 Build RT Design | Checksum: 13d98c4f4
+Phase 1 Build RT Design | Checksum: e720ee17
 
-Time (s): cpu = 00:00:14 ; elapsed = 00:00:11 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2208 ; free virtual = 19747
+Time (s): cpu = 00:00:34 ; elapsed = 00:00:29 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7448 ; free virtual = 21422
 
 Phase 2 Router Initialization
 
 Phase 2.1 Create Timer
-Phase 2.1 Create Timer | Checksum: 13d98c4f4
+Phase 2.1 Create Timer | Checksum: e720ee17
 
-Time (s): cpu = 00:00:14 ; elapsed = 00:00:11 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2208 ; free virtual = 19748
+Time (s): cpu = 00:00:34 ; elapsed = 00:00:29 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7448 ; free virtual = 21422
 
 Phase 2.2 Pre Route Cleanup
-Phase 2.2 Pre Route Cleanup | Checksum: 13d98c4f4
+Phase 2.2 Pre Route Cleanup | Checksum: e720ee17
 
-Time (s): cpu = 00:00:14 ; elapsed = 00:00:11 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2180 ; free virtual = 19721
+Time (s): cpu = 00:00:34 ; elapsed = 00:00:29 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7448 ; free virtual = 21422
  Number of Nodes with overlaps = 0
 
 Phase 2.3 Update Timing
-Phase 2.3 Update Timing | Checksum: 157633dc0
+Phase 2.3 Update Timing | Checksum: 1dbdc4451
 
-Time (s): cpu = 00:00:15 ; elapsed = 00:00:12 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2175 ; free virtual = 19716
-INFO: [Route 35-416] Intermediate Timing Summary | WNS=6.156  | TNS=0.000  | WHS=-0.116 | THS=-5.096 |
+Time (s): cpu = 00:00:37 ; elapsed = 00:00:31 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7407 ; free virtual = 21388
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=6.465  | TNS=0.000  | WHS=-0.114 | THS=-5.375 |
 
-Phase 2 Router Initialization | Checksum: 1765adf83
+Phase 2 Router Initialization | Checksum: 2303bdcb6
 
-Time (s): cpu = 00:00:16 ; elapsed = 00:00:12 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2175 ; free virtual = 19716
+Time (s): cpu = 00:00:38 ; elapsed = 00:00:32 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7404 ; free virtual = 21385
 
 Phase 3 Initial Routing
-Phase 3 Initial Routing | Checksum: 2442d7c38
+Phase 3 Initial Routing | Checksum: 23fbcf918
 
-Time (s): cpu = 00:00:18 ; elapsed = 00:00:12 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2157 ; free virtual = 19698
+Time (s): cpu = 00:00:44 ; elapsed = 00:00:34 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7368 ; free virtual = 21349
 
 Phase 4 Rip-up And Reroute
 
 Phase 4.1 Global Iteration 0
- Number of Nodes with overlaps = 210
+ Number of Nodes with overlaps = 224
  Number of Nodes with overlaps = 0
 
 Phase 4.1.1 Update Timing
-Phase 4.1.1 Update Timing | Checksum: 79ddacf9
+Phase 4.1.1 Update Timing | Checksum: 1127947d7
 
-Time (s): cpu = 00:00:21 ; elapsed = 00:00:13 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2155 ; free virtual = 19697
-INFO: [Route 35-416] Intermediate Timing Summary | WNS=5.967  | TNS=0.000  | WHS=N/A    | THS=N/A    |
+Time (s): cpu = 00:00:58 ; elapsed = 00:00:39 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7342 ; free virtual = 21327
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=4.980  | TNS=0.000  | WHS=N/A    | THS=N/A    |
 
-Phase 4.1 Global Iteration 0 | Checksum: b2058afa
+Phase 4.1 Global Iteration 0 | Checksum: ee1f6190
 
-Time (s): cpu = 00:00:21 ; elapsed = 00:00:13 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2155 ; free virtual = 19697
-Phase 4 Rip-up And Reroute | Checksum: b2058afa
+Time (s): cpu = 00:00:58 ; elapsed = 00:00:39 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7342 ; free virtual = 21327
+Phase 4 Rip-up And Reroute | Checksum: ee1f6190
 
-Time (s): cpu = 00:00:21 ; elapsed = 00:00:13 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2155 ; free virtual = 19697
+Time (s): cpu = 00:00:58 ; elapsed = 00:00:39 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7342 ; free virtual = 21327
 
 Phase 5 Delay and Skew Optimization
 
 Phase 5.1 Delay CleanUp
 
 Phase 5.1.1 Update Timing
-Phase 5.1.1 Update Timing | Checksum: b6124686
+Phase 5.1.1 Update Timing | Checksum: 1068bcdd5
 
-Time (s): cpu = 00:00:21 ; elapsed = 00:00:13 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2155 ; free virtual = 19697
-INFO: [Route 35-416] Intermediate Timing Summary | WNS=6.060  | TNS=0.000  | WHS=N/A    | THS=N/A    |
+Time (s): cpu = 00:00:58 ; elapsed = 00:00:39 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7341 ; free virtual = 21326
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=5.059  | TNS=0.000  | WHS=N/A    | THS=N/A    |
 
-Phase 5.1 Delay CleanUp | Checksum: b6124686
+Phase 5.1 Delay CleanUp | Checksum: 1068bcdd5
 
-Time (s): cpu = 00:00:21 ; elapsed = 00:00:13 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2155 ; free virtual = 19697
+Time (s): cpu = 00:00:58 ; elapsed = 00:00:39 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7341 ; free virtual = 21326
 
 Phase 5.2 Clock Skew Optimization
-Phase 5.2 Clock Skew Optimization | Checksum: b6124686
+Phase 5.2 Clock Skew Optimization | Checksum: 1068bcdd5
 
-Time (s): cpu = 00:00:21 ; elapsed = 00:00:13 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2155 ; free virtual = 19697
-Phase 5 Delay and Skew Optimization | Checksum: b6124686
+Time (s): cpu = 00:00:58 ; elapsed = 00:00:39 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7341 ; free virtual = 21326
+Phase 5 Delay and Skew Optimization | Checksum: 1068bcdd5
 
-Time (s): cpu = 00:00:21 ; elapsed = 00:00:13 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2155 ; free virtual = 19697
+Time (s): cpu = 00:00:58 ; elapsed = 00:00:39 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7341 ; free virtual = 21326
 
 Phase 6 Post Hold Fix
 
 Phase 6.1 Update Timing
-Phase 6.1 Update Timing | Checksum: 9697ae04
+Phase 6.1 Update Timing | Checksum: 102acb6a6
 
-Time (s): cpu = 00:00:21 ; elapsed = 00:00:13 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2155 ; free virtual = 19697
-INFO: [Route 35-416] Intermediate Timing Summary | WNS=6.060  | TNS=0.000  | WHS=0.149  | THS=0.000  |
+Time (s): cpu = 00:00:59 ; elapsed = 00:00:40 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7341 ; free virtual = 21326
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=5.059  | TNS=0.000  | WHS=0.131  | THS=0.000  |
 
-Phase 6 Post Hold Fix | Checksum: 9697ae04
+Phase 6 Post Hold Fix | Checksum: 102acb6a6
 
-Time (s): cpu = 00:00:21 ; elapsed = 00:00:13 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2155 ; free virtual = 19697
+Time (s): cpu = 00:00:59 ; elapsed = 00:00:40 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7341 ; free virtual = 21326
 
 Phase 7 Route finalize
 
 Router Utilization Summary
-  Global Vertical Routing Utilization    = 0.570836 %
-  Global Horizontal Routing Utilization  = 0.763274 %
+  Global Vertical Routing Utilization    = 0.955513 %
+  Global Horizontal Routing Utilization  = 1.0393 %
   Routable Net Status*
   *Does not include unroutable nets such as driverless and loadless.
   Run report_route_status for detailed report.
@@ -2894,44 +2799,44 @@ Router Utilization Summary
   Number of Partially Routed Nets     = 0
   Number of Node Overlaps             = 0
 
-Phase 7 Route finalize | Checksum: fd10dded
+Phase 7 Route finalize | Checksum: ff85d38b
 
-Time (s): cpu = 00:00:22 ; elapsed = 00:00:13 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2155 ; free virtual = 19697
+Time (s): cpu = 00:00:59 ; elapsed = 00:00:40 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7341 ; free virtual = 21326
 
 Phase 8 Verifying routed nets
 
  Verification completed successfully
-Phase 8 Verifying routed nets | Checksum: fd10dded
+Phase 8 Verifying routed nets | Checksum: ff85d38b
 
-Time (s): cpu = 00:00:22 ; elapsed = 00:00:13 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2155 ; free virtual = 19697
+Time (s): cpu = 00:00:59 ; elapsed = 00:00:40 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7341 ; free virtual = 21326
 
 Phase 9 Depositing Routes
-Phase 9 Depositing Routes | Checksum: 1704c8328
+Phase 9 Depositing Routes | Checksum: 5c9fb953
 
-Time (s): cpu = 00:00:22 ; elapsed = 00:00:13 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2155 ; free virtual = 19697
+Time (s): cpu = 00:00:59 ; elapsed = 00:00:40 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7340 ; free virtual = 21325
 
 Phase 10 Post Router Timing
-INFO: [Route 35-57] Estimated Timing Summary | WNS=6.060  | TNS=0.000  | WHS=0.149  | THS=0.000  |
+INFO: [Route 35-57] Estimated Timing Summary | WNS=5.059  | TNS=0.000  | WHS=0.131  | THS=0.000  |
 
 INFO: [Route 35-327] The final timing numbers are based on the router estimated timing analysis. For a complete and accurate timing signoff, please run report_timing_summary.
-Phase 10 Post Router Timing | Checksum: 1704c8328
+Phase 10 Post Router Timing | Checksum: 5c9fb953
 
-Time (s): cpu = 00:00:22 ; elapsed = 00:00:13 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2155 ; free virtual = 19697
+Time (s): cpu = 00:00:59 ; elapsed = 00:00:40 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7340 ; free virtual = 21325
 INFO: [Route 35-16] Router Completed Successfully
 
-Time (s): cpu = 00:00:22 ; elapsed = 00:00:13 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2155 ; free virtual = 19697
+Time (s): cpu = 00:00:59 ; elapsed = 00:00:40 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7340 ; free virtual = 21325
 
 Routing Is Done.
 INFO: [Common 17-83] Releasing license: Implementation
 13 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
 route_design completed successfully
-route_design: Time (s): cpu = 00:00:22 ; elapsed = 00:00:14 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2155 ; free virtual = 19697
+route_design: Time (s): cpu = 00:01:00 ; elapsed = 00:00:41 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7340 ; free virtual = 21325
 # write_checkpoint -force $outputDir/post_route.dcp
 Writing placer database...
 Writing XDEF routing.
 Writing XDEF routing logical nets.
 Writing XDEF routing special nets.
-Write XDEF Complete: Time (s): cpu = 00:00:00.45 ; elapsed = 00:00:00.19 . Memory (MB): peak = 2076.766 ; gain = 0.000 ; free physical = 2152 ; free virtual = 19697
+Write XDEF Complete: Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.49 . Memory (MB): peak = 1897.734 ; gain = 0.000 ; free physical = 7336 ; free virtual = 21324
 # report_route_status -file $outputDir/post_route_status.rpt
 # report_timing_summary -file $outputDir/post_route_timing_summary.rpt
 # report_power -file $outputDir/post_route_power.rpt
@@ -2939,13 +2844,13 @@ Running Vector-less Activity Propagation...
 
 Finished Running Vector-less Activity Propagation
 # report_drc -file $outputDir/post_imp_drc.rpt
-INFO: [DRC 23-27] Running DRC with 8 threads
-INFO: [Coretcl 2-168] The results of DRC are in file /home/roba/perso/github/nanorv32/synt/fpga/rpt/post_imp_drc.rpt.
+INFO: [DRC 23-27] Running DRC with 4 threads
+INFO: [Coretcl 2-168] The results of DRC are in file /home/ronan/perso/github/nanorv32/synt/fpga/rpt/post_imp_drc.rpt.
 # write_bitstream -force $outputDir/cpu.bit
 Attempting to get a license for feature 'Implementation' and/or device 'xc7a35t'
 INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7a35t'
 Running DRC as a precondition to command write_bitstream
-INFO: [DRC 23-27] Running DRC with 8 threads
+INFO: [DRC 23-27] Running DRC with 4 threads
 WARNING: [DRC 23-20] Rule violation (CFGBVS-1) Missing CFGBVS and CONFIG_VOLTAGE Design Properties - Neither the CFGBVS nor CONFIG_VOLTAGE voltage property is set in the current_design.  Configuration bank voltage select (CFGBVS) must be set to VCCO or GND, and CONFIG_VOLTAGE must be set to the correct configuration voltage, in order to determine the I/O voltage support for the pins in bank 0.  It is suggested to specify these either using the 'Edit Device Properties' function in the GUI or directly in the XDC file using the following syntax:
 
  set_property CFGBVS value1 [current_design]
@@ -2957,7 +2862,39 @@ WARNING: [DRC 23-20] Rule violation (CFGBVS-1) Missing CFGBVS and CONFIG_VOLTAGE
 Refer to the device configuration user guide for more information.
 WARNING: [DRC 23-20] Rule violation (PDRC-153) Gated clock check - Net U_CPU/datamem_size_write_sel_reg[1]_i_2_n_1 is a gated clock net sourced by a combinational pin U_CPU/datamem_size_write_sel_reg[1]_i_2/O, cell U_CPU/datamem_size_write_sel_reg[1]_i_2. This is not good design practice and will likely impact performance. For SLICE registers, for example, use the CE pin to control the loading of data.
 WARNING: [DRC 23-20] Rule violation (PDRC-153) Gated clock check - Net U_CPU/datamem_size_write_sel_reg[1]_i_2_n_1 is a gated clock net sourced by a combinational pin U_CPU/datamem_size_write_sel_reg[1]_i_2/O, cell U_CPU/datamem_size_write_sel_reg[1]_i_2. This is not good design practice and will likely impact performance. For SLICE registers, for example, use the CE pin to control the loading of data.
-INFO: [Vivado 12-3199] DRC finished with 0 Errors, 3 Warnings
+WARNING: [DRC 23-20] Rule violation (RPBF-3) IO port buffering is incomplete - Device port P0[0] expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC 23-20] Rule violation (RPBF-3) IO port buffering is incomplete - Device port P0[10] expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC 23-20] Rule violation (RPBF-3) IO port buffering is incomplete - Device port P0[11] expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC 23-20] Rule violation (RPBF-3) IO port buffering is incomplete - Device port P0[12] expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC 23-20] Rule violation (RPBF-3) IO port buffering is incomplete - Device port P0[13] expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC 23-20] Rule violation (RPBF-3) IO port buffering is incomplete - Device port P0[14] expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC 23-20] Rule violation (RPBF-3) IO port buffering is incomplete - Device port P0[15] expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC 23-20] Rule violation (RPBF-3) IO port buffering is incomplete - Device port P0[1] expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC 23-20] Rule violation (RPBF-3) IO port buffering is incomplete - Device port P0[2] expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC 23-20] Rule violation (RPBF-3) IO port buffering is incomplete - Device port P0[3] expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC 23-20] Rule violation (RPBF-3) IO port buffering is incomplete - Device port P0[4] expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC 23-20] Rule violation (RPBF-3) IO port buffering is incomplete - Device port P0[5] expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC 23-20] Rule violation (RPBF-3) IO port buffering is incomplete - Device port P0[6] expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC 23-20] Rule violation (RPBF-3) IO port buffering is incomplete - Device port P0[7] expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC 23-20] Rule violation (RPBF-3) IO port buffering is incomplete - Device port P0[8] expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC 23-20] Rule violation (RPBF-3) IO port buffering is incomplete - Device port P0[9] expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC 23-20] Rule violation (RPBF-3) IO port buffering is incomplete - Device port P1[0] expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC 23-20] Rule violation (RPBF-3) IO port buffering is incomplete - Device port P1[10] expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC 23-20] Rule violation (RPBF-3) IO port buffering is incomplete - Device port P1[11] expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC 23-20] Rule violation (RPBF-3) IO port buffering is incomplete - Device port P1[12] expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC 23-20] Rule violation (RPBF-3) IO port buffering is incomplete - Device port P1[13] expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC 23-20] Rule violation (RPBF-3) IO port buffering is incomplete - Device port P1[14] expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC 23-20] Rule violation (RPBF-3) IO port buffering is incomplete - Device port P1[15] expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC 23-20] Rule violation (RPBF-3) IO port buffering is incomplete - Device port P1[1] expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC 23-20] Rule violation (RPBF-3) IO port buffering is incomplete - Device port P1[2] expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC 23-20] Rule violation (RPBF-3) IO port buffering is incomplete - Device port P1[3] expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC 23-20] Rule violation (RPBF-3) IO port buffering is incomplete - Device port P1[4] expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC 23-20] Rule violation (RPBF-3) IO port buffering is incomplete - Device port P1[5] expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC 23-20] Rule violation (RPBF-3) IO port buffering is incomplete - Device port P1[6] expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC 23-20] Rule violation (RPBF-3) IO port buffering is incomplete - Device port P1[7] expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC 23-20] Rule violation (RPBF-3) IO port buffering is incomplete - Device port P1[8] expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC 23-20] Rule violation (RPBF-3) IO port buffering is incomplete - Device port P1[9] expects both input and output buffering but the buffers are incomplete.
+INFO: [Vivado 12-3199] DRC finished with 0 Errors, 35 Warnings
 INFO: [Vivado 12-3200] Please refer to the DRC report (report_drc) for more information.
 Loading data files...
 Loading site data...
@@ -2967,15 +2904,12 @@ Creating bitmap...
 Creating bitstream...
 Writing bitstream ./rpt/cpu.bit...
 INFO: [Vivado 12-1842] Bitgen Completed Successfully.
-INFO: [Project 1-118] WebTalk data collection is enabled (User setting is ON. Install Setting is ON.).
-INFO: [Common 17-186] '/home/roba/perso/github/nanorv32/synt/fpga/usage_statistics_webtalk.xml' has been successfully sent to Xilinx on Wed Feb 17 11:44:42 2016. For additional details about this file, please refer to the WebTalk help file at /opt/Xilinx/Vivado/2015.3/doc/webtalk_introduction.html.
 INFO: [Common 17-83] Releasing license: Implementation
-write_bitstream: Time (s): cpu = 00:00:12 ; elapsed = 00:00:14 . Memory (MB): peak = 2232.125 ; gain = 155.359 ; free physical = 1853 ; free virtual = 19413
+write_bitstream: Time (s): cpu = 00:00:23 ; elapsed = 00:00:21 . Memory (MB): peak = 2165.262 ; gain = 248.375 ; free physical = 7101 ; free virtual = 21080
 # write_verilog -force -mode timesim -sdf_anno true chip_layout.v
 # write_sdf -force chip_layout.sdf
 # source report_bram.tcl > bram.yaml
-WARNING: [Vivado 12-180] No cells matched 'get_cells -hierarchical -filter { PRIMITIVE_TYPE =~ BMEM.bram.*  &&  NAME =~  "*u_ahb_rom*" }'.
-## set all_rom_blocks [get_cells -hierarchical -filter { PRIMITIVE_TYPE =~ BMEM.bram.*  &&  NAME =~  "*u_ahb_rom*" }]
+## set all_rom_blocks [get_cells -hierarchical -filter { PRIMITIVE_TYPE =~ BMEM.bram.*  &&  NAME =~  "*U_TCM_CODE*" }]
 ## puts "# Block ram description"
 # Block ram description
 ## puts "---"
@@ -2987,5 +2921,53 @@ bram:
 ##     puts "  SITE: [get_property SITE $block]"
 ##     puts "  READ_WIDTH_A: [get_property READ_WIDTH_A $block]"
 ## }
+- NAME:  U_TCM_CODE/U_MEM/RAM_reg_0_0
+  SITE: RAMB36_X2Y3
+  READ_WIDTH_A: 2
+- NAME:  U_TCM_CODE/U_MEM/RAM_reg_0_1
+  SITE: RAMB36_X2Y4
+  READ_WIDTH_A: 2
+- NAME:  U_TCM_CODE/U_MEM/RAM_reg_0_2
+  SITE: RAMB36_X2Y5
+  READ_WIDTH_A: 2
+- NAME:  U_TCM_CODE/U_MEM/RAM_reg_0_3
+  SITE: RAMB36_X2Y0
+  READ_WIDTH_A: 2
+- NAME:  U_TCM_CODE/U_MEM/RAM_reg_1_0
+  SITE: RAMB36_X0Y1
+  READ_WIDTH_A: 2
+- NAME:  U_TCM_CODE/U_MEM/RAM_reg_1_1
+  SITE: RAMB36_X0Y2
+  READ_WIDTH_A: 2
+- NAME:  U_TCM_CODE/U_MEM/RAM_reg_1_2
+  SITE: RAMB36_X1Y4
+  READ_WIDTH_A: 2
+- NAME:  U_TCM_CODE/U_MEM/RAM_reg_1_3
+  SITE: RAMB36_X0Y3
+  READ_WIDTH_A: 2
+- NAME:  U_TCM_CODE/U_MEM/RAM_reg_2_0
+  SITE: RAMB36_X0Y5
+  READ_WIDTH_A: 2
+- NAME:  U_TCM_CODE/U_MEM/RAM_reg_2_1
+  SITE: RAMB36_X1Y10
+  READ_WIDTH_A: 2
+- NAME:  U_TCM_CODE/U_MEM/RAM_reg_2_2
+  SITE: RAMB36_X2Y10
+  READ_WIDTH_A: 2
+- NAME:  U_TCM_CODE/U_MEM/RAM_reg_2_3
+  SITE: RAMB36_X2Y9
+  READ_WIDTH_A: 2
+- NAME:  U_TCM_CODE/U_MEM/RAM_reg_3_0
+  SITE: RAMB36_X0Y9
+  READ_WIDTH_A: 2
+- NAME:  U_TCM_CODE/U_MEM/RAM_reg_3_1
+  SITE: RAMB36_X1Y8
+  READ_WIDTH_A: 2
+- NAME:  U_TCM_CODE/U_MEM/RAM_reg_3_2
+  SITE: RAMB36_X0Y6
+  READ_WIDTH_A: 2
+- NAME:  U_TCM_CODE/U_MEM/RAM_reg_3_3
+  SITE: RAMB36_X2Y8
+  READ_WIDTH_A: 2
 exit
-INFO: [Common 17-206] Exiting Vivado at Wed Feb 17 11:45:33 2016...
+INFO: [Common 17-206] Exiting Vivado at Wed Feb 17 20:48:10 2016...
