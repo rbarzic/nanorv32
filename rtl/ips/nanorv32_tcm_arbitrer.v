@@ -67,7 +67,7 @@ module nanorv32_tcm_arbitrer (/*AUTOARG*/
 
 
    // Peripheral bus
-   output [ADDR_WIDTH-1:0]     periph_addr;           // To U_TCM_DATA of nanorv32_tcm_ctrl.v
+   output [NANORV32_PERIPH_ADDR_MSB:0]     periph_addr;           // To U_TCM_DATA of nanorv32_tcm_ctrl.v
    output [3:0]                periph_bytesel;        // To U_TCM_DATA of nanorv32_tcm_ctrl.v
    output [NANORV32_DATA_MSB:0] periph_din;        // To U_TCM_DATA of nanorv32_tcm_ctrl.v
    output                       periph_en;             // To U_TCM_DATA of nanorv32_tcm_ctrl.v
@@ -106,7 +106,7 @@ module nanorv32_tcm_arbitrer (/*AUTOARG*/
    reg                  codeif_cpu_ready_r;
    reg                  dataif_cpu_early_ready;
    reg                  dataif_cpu_ready_r;
-   reg [ADDR_WIDTH-1:0] periph_addr;
+   reg [NANORV32_PERIPH_ADDR_MSB:0] periph_addr;
    reg [3:0]            periph_bytesel;
    reg [NANORV32_DATA_MSB:0] periph_din;
    reg                  periph_en;

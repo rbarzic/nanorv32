@@ -74,7 +74,7 @@ module nanorv32_simple (/*AUTOARG*/
    wire                 dataif_cpu_ready_r;     // From U_ARBITRER of nanorv32_tcm_arbitrer.v
    wire [31:0]          gpio_bus_dout;          // From U_GPIO_CTRL of nanorv32_gpio_ctrl.v
    wire                 gpio_bus_ready_nxt;     // From U_GPIO_CTRL of nanorv32_gpio_ctrl.v
-   wire [ADDR_WIDTH-1:0] periph_addr;           // From U_ARBITRER of nanorv32_tcm_arbitrer.v
+   wire [NANORV32_PERIPH_ADDR_MSB:0] periph_addr;// From U_ARBITRER of nanorv32_tcm_arbitrer.v
    wire [3:0]           periph_bytesel;         // From U_ARBITRER of nanorv32_tcm_arbitrer.v
    wire [NANORV32_DATA_MSB:0] periph_din;       // From U_ARBITRER of nanorv32_tcm_arbitrer.v
    wire                 periph_en;              // From U_ARBITRER of nanorv32_tcm_arbitrer.v
@@ -154,7 +154,7 @@ module nanorv32_simple (/*AUTOARG*/
      .bytesel               (tcmdata_bytesel[3:0]),
      ); */
    nanorv32_tcm_ctrl
-     #(.SIZE(1<<(AW-2)),.ADDR_WIDTH(AW-2))
+     #(.SIZE(1<<(AW-2)),.ADDR_WIDTH(AW))
      U_TCM_DATA (
                  .fast_hanshaking(1'b1),
                            /*AUTOINST*/
@@ -182,7 +182,7 @@ module nanorv32_simple (/*AUTOARG*/
      .bytesel               (tcmcode_bytesel[3:0]),
      ); */
    nanorv32_tcm_ctrl
-     #(.SIZE(1<<(AW-2)),.ADDR_WIDTH(AW-2))
+     #(.SIZE(1<<(AW-2)),.ADDR_WIDTH(AW))
      U_TCM_CODE (
                  .fast_hanshaking(1'b1),
                            /*AUTOINST*/
@@ -203,7 +203,7 @@ module nanorv32_simple (/*AUTOARG*/
     /* nanorv32_tcm_arbitrer AUTO_TEMPLATE(
      ); */
    nanorv32_tcm_arbitrer
-     #(.ADDR_WIDTH(AW-2))
+     #(.ADDR_WIDTH(AW))
      U_ARBITRER (
                            /*AUTOINST*/
                  // Outputs
@@ -215,7 +215,7 @@ module nanorv32_simple (/*AUTOARG*/
                  .tcmdata_bytesel       (tcmdata_bytesel[3:0]),
                  .tcmdata_din           (tcmdata_din[NANORV32_DATA_MSB:0]),
                  .tcmdata_en            (tcmdata_en),
-                 .periph_addr           (periph_addr[ADDR_WIDTH-1:0]),
+                 .periph_addr           (periph_addr[NANORV32_PERIPH_ADDR_MSB:0]),
                  .periph_bytesel        (periph_bytesel[3:0]),
                  .periph_din            (periph_din[NANORV32_DATA_MSB:0]),
                  .periph_en             (periph_en),
