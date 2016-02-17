@@ -1,6 +1,6 @@
         .section .isr_vector
 loop_counter = x8
-loop_max     = 8
+loop_max     = 10000000
 
         li t1,0x1
         li t2,0xF0000000

@@ -130,7 +130,8 @@ xelab:
 xsim:
 	xsim work.tb_nanorv32#work.glbl  -runall
 
-xsim work.tb_nanorv32#work.glbl  -runallxsim work.tb_nanorv32#work.glbl  -runall
+xsim_gui:
+	xsim work.tb_nanorv32#work.glbl  -gui
 
 
 
