@@ -28,6 +28,8 @@
 //
 //****************************************************************************/
 
+`include "nanorv32_defines.v"
+
 module nanorv32_gpio_ctrl (/*AUTOARG*/
    // Outputs
    gpio_bus_dout, gpio_bus_ready_nxt, gpio_pad_out,
@@ -37,6 +39,7 @@ module nanorv32_gpio_ctrl (/*AUTOARG*/
    );
 
 `include "nanorv32_parameters.v"
+
 
    input [NANORV32_PERIPH_ADDR_MSB:0] bus_gpio_addr;           // To U_TCM_DATA of nanorv32_tcm_ctrl.v
    input [3:0]                        bus_gpio_bytesel;        // To U_TCM_DATA of nanorv32_tcm_ ctrl.v
@@ -96,8 +99,9 @@ assign gpio_bus_dout = gpio_in_r;
 assign gpio_pad_out = gpio_out_r;
 
 
-
-   assign gpio_bus_ready_nxt =  bus_gpio_en;
+ // If the delay is not present, iverilog behaves incorrectly
+ // in the arbitrer
+ assign `_DD_ gpio_bus_ready_nxt =  bus_gpio_en;
 
 
 

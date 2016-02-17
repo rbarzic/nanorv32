@@ -209,26 +209,42 @@ module nanorv32_tcm_arbitrer (/*AUTOARG*/
    reg swap_dout_a;
    reg swap_dout_r;
    event dbg_evt1,dbg_evt2,dbg_evt3,dbg_evt4;
-   event dbg_evt5,dbg_evt6;
+   event dbg_evt5,dbg_evt6,dbg_evt7;
    integer debug;
 
    // For Code TCM
-   always @* begin
-
-
-
-      if(cpu_data_data_access & cpu_code_data_access) begin
-
-
+   // Code here looks a bit strange but I struggled a bit with iverilog
+   // to get it correct
+   always @(*) begin
+      if(cpu_data_data_access & cpu_code_data_access & !cpu_data_periph_access) begin
          // CPU code port try to access data ram while CPU data port is accessing it
          // line #2 in the table above
-         codeif_cpu_early_ready = 0; // Instruction fetch has to wait
-         debug =1;
 
+         // TCM DATA
+         dataif_cpu_early_ready = tcmdata_ready_nxt;
+         tcmdata_addr = cpu_dataif_addr[ADDR_WIDTH-1:0];
+         tcmdata_din  = cpu_dataif_wdata;
+         tcmdata_bytesel  = cpu_dataif_bytesel;
+         tcmdata_en       = cpu_dataif_req;
+         // TCM CODE
+         codeif_cpu_early_ready = 0; // Instruction fetch has to wait
+         tcmcode_addr = cpu_codeif_addr[ADDR_WIDTH-1:0];
+         tcmcode_din  = 0; // Read only
+         tcmcode_bytesel  = 0;
+         tcmcode_en       = cpu_codeif_req;
+
+         // PERIPH Bus
+         periph_addr = 0;
+         periph_din  = 0;
+         periph_bytesel  = 0;
+         periph_en       = 0;
+
+
+         swap_dout_a = 0;
 
       end
-      else if(cpu_data_code_access & cpu_code_data_access) begin
-         debug =2;
+      else if(cpu_data_code_access & cpu_code_data_access & !cpu_data_periph_access) begin
+
          swap_dout_a = 1;
 
          // codeif_cpu_rdata[NANORV32_DATA_MSB:0] = tcmdata_dout[NANORV32_DATA_MSB:0];
@@ -245,61 +261,131 @@ module nanorv32_tcm_arbitrer (/*AUTOARG*/
          tcmcode_din  = cpu_dataif_wdata;
          tcmcode_bytesel  = cpu_dataif_bytesel;
          tcmcode_en       = cpu_dataif_req;
+
+         // PERIPH Bus
+         periph_addr = 0;
+         periph_din  = 0;
+         periph_bytesel  = 0;
+         periph_en       = 0;
       end
-      else if(cpu_data_code_access & cpu_code_code_access) begin
-         debug =3;
+      else if(cpu_data_code_access & cpu_code_code_access & !cpu_data_periph_access) begin
+
          // CPU code port try to access code ram while CPU data port is accessing it
          // line #4 in the table above
          swap_dout_a = 1;
 
          // dataif_cpu_rdata[NANORV32_DATA_MSB:0] = tcmcode_dout[NANORV32_DATA_MSB:0];
+         codeif_cpu_early_ready = 0; // Instruction fetch has to wait
          dataif_cpu_early_ready = tcmcode_ready_nxt;
+
          tcmcode_addr = cpu_dataif_addr[ADDR_WIDTH-1:0];
          tcmcode_din  = cpu_dataif_wdata;
          tcmcode_bytesel  = cpu_dataif_bytesel;
          tcmcode_en       = cpu_dataif_req;
 
-         codeif_cpu_early_ready = 0; // Instruction fetch has to wait
+
+
+         // TCM Data
+         // Mostly default value except for the enable (CODE is accessed)
+         tcmdata_addr = cpu_dataif_addr[ADDR_WIDTH-1:0];
+         tcmdata_din  = cpu_dataif_wdata;
+         tcmdata_bytesel  = cpu_dataif_bytesel;
+         tcmdata_en       = 0;
+
+
+         // PERIPH Bus
+         periph_addr = 0;
+         periph_din  = 0;
+         periph_bytesel  = 0;
+         periph_en       = 0;
+
+
 
       end
-      else if(cpu_data_code_access) begin
-         debug =4;
+      else if(cpu_data_code_access & !cpu_data_periph_access) begin
+
          // Data access to code mem, no access from cpu code port
          swap_dout_a = 1;
          // dataif_cpu_rdata[NANORV32_DATA_MSB:0] = tcmcode_dout[NANORV32_DATA_MSB:0];
          dataif_cpu_early_ready = tcmcode_ready_nxt;
+         codeif_cpu_early_ready = 0;
+
          tcmcode_addr = cpu_dataif_addr[ADDR_WIDTH-1:0];
          tcmcode_din  = cpu_dataif_wdata;
          tcmcode_bytesel  = cpu_dataif_bytesel;
          tcmcode_en       = cpu_dataif_req;
 
+         // TCM Data
+         // Mostly default value except for the enable (CODE is accessed)
+         tcmdata_addr = cpu_dataif_addr[ADDR_WIDTH-1:0];
+         tcmdata_din  = cpu_dataif_wdata;
+         tcmdata_bytesel  = cpu_dataif_bytesel;
+         tcmdata_en       = 0;
+
+
+         // PERIPH Bus
+         periph_addr = 0;
+         periph_din  = 0;
+         periph_bytesel  = 0;
+         periph_en       = 0;
+
       end
-      else if(cpu_code_data_access) begin
-         debug =5;
+      else if(cpu_code_data_access & !cpu_data_periph_access) begin
+
          // cpu code port accessing data mem, no conflict
          swap_dout_a = 1;
          // codeif_cpu_rdata[NANORV32_DATA_MSB:0] = tcmcode_dout[NANORV32_DATA_MSB:0];
          codeif_cpu_early_ready = tcmdata_ready_nxt;
+         dataif_cpu_early_ready = 0;
          tcmdata_addr = cpu_codeif_addr[ADDR_WIDTH-1:0];
          tcmdata_din  = 0; // Read only
          tcmdata_bytesel  = 0;
          tcmdata_en       = cpu_codeif_req;
+
+         // TCM CODE is not accessed
+
+         tcmcode_addr = cpu_codeif_addr[ADDR_WIDTH-1:0];
+         tcmcode_din  = 0; // Read only
+         tcmcode_bytesel  = 0;
+         tcmcode_en       = 0;
+
+         // PERIPH Bus
+         periph_addr = 0;
+         periph_din  = 0;
+         periph_bytesel  = 0;
+         periph_en       = 0;
+
+
       end // if (cpu_code_data_access)
       else if(cpu_data_periph_access) begin
 
-         debug =6;
          dataif_cpu_early_ready = periph_ready_nxt;
          periph_addr = cpu_dataif_addr[ADDR_WIDTH-1:0];
          periph_din  = cpu_dataif_wdata;
          periph_bytesel  = cpu_dataif_bytesel;
          periph_en       = cpu_dataif_req;
 
+         // TCM data not accessed
+
+         tcmdata_addr = cpu_dataif_addr[ADDR_WIDTH-1:0];
+         tcmdata_din  = cpu_dataif_wdata;
+         tcmdata_bytesel  = cpu_dataif_bytesel;
+         tcmdata_en       = 0;
+
+         // TCM Code <-> CPU codeif_cpu_rdata
+         // Default setup
+         codeif_cpu_early_ready = tcmcode_ready_nxt;
+         tcmcode_addr = cpu_codeif_addr[ADDR_WIDTH-1:0];
+         tcmcode_din  = 0; // Read only
+         tcmcode_bytesel  = 0;
+         tcmcode_en       = cpu_codeif_req;
+         swap_dout_a = 0;
+
+
       end
       else begin
-         // default
-         // TCM Data <-> CPU Code
-         // dataif_cpu_rdata[NANORV32_DATA_MSB:0] = tcmdata_dout[NANORV32_DATA_MSB:0];
-         debug =7;
+         // Default settings
+
          dataif_cpu_early_ready = tcmdata_ready_nxt;
          tcmdata_addr = cpu_dataif_addr[ADDR_WIDTH-1:0];
          tcmdata_din  = cpu_dataif_wdata;
@@ -320,7 +406,7 @@ module nanorv32_tcm_arbitrer (/*AUTOARG*/
          periph_bytesel  = 0;
          periph_en       = 0;
 
-         debug =0;
+
          swap_dout_a = 0;
 
 
