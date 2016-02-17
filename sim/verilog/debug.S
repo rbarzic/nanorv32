@@ -1,16 +1,26 @@
         .section .isr_vector
-        li x1,0x1
-        li x2,0xF0000000
+loop_counter = x8
+loop_max     = 8
+
+        li t1,0x1
+        li t2,0xF0000000
         nop
-        sw x1,0(x2)
+gpio_loop:
+        sw t1,0(t2)
+        jal ra,delay
         nop
+        sw x0,0(t2)
         nop
-        sw x0,0(x2)
-        nop
-	nop
-        lw x3,0(x2)
-        bne x3,x0,fail
-        beq x3,x0,pass
+
+        jal ra,delay
+        j gpio_loop
+
+
+delay:  li t3,loop_max
+delay_loop:
+        addi t3,t3,-1
+        bne x0,t3,delay_loop
+        jalr x0,ra
 
 pass:
 	lui	a0,0xcaffe
