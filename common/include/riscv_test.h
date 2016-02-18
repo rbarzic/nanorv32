@@ -11,8 +11,8 @@
 #define TESTNUM x28
 
 #define RVTEST_CODE_BEGIN \
-    .global start;\
-start:\
+    .global main;\
+main:\
      lui a0,0x5A5A5;                                 \
 
 
