@@ -10,3 +10,6 @@ Still under development
   - No interrupt support yet
   
 FPGA version available (Digilent ARTY board - Xilinx Artix7)
+
+
+See http://rbarzic.github.io/nanorv32 for more information
