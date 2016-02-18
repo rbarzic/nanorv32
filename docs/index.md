@@ -1,14 +1,18 @@
-# Welcome to the nanoRV32  project
+# Welcome to the NanoRv32  project
 
 _Under construction_
 
+A small 32-bit implementation of the RISC-V architecture
+Highlights :
+    - 2-stage pipeline (fetch, execute)
+    - lot of code is generated from a high level description
+    - written in verilog (using iverilog or Xilinx xvsim as simulator)
 
-In addition to allow synthesis of the designstart to a Xilinx target,
-this project allows also simulations using the simulation tools :
+Still under development
+  - currently supporting only RV32I base instructions (no scall,sbreak,rd*)
+  - No interrupt support yet
 
-  - Icarus iverilog
-  - Xilinx simulation tools (xvlog/xelab/xsim)
-  - Verilator
+FPGA version available (Digilent ARTY board - Xilinx Artix7)
 
 
 
@@ -16,7 +20,23 @@ this project allows also simulations using the simulation tools :
 
 _Outdated_
 
-    common        # shared files for configuring the projects
+    common/files  # scripts to generate list of verilog files needed for the various targets (simulation, synthesis)
+    common/generators # generator for some verilog constructs (like decoder, parameters,...)
+    common/include    # C/asm include files (for riscv-tests for example)
+    common/instructions # text files listing instructions, for regression testing
+    common/linker_scripts # linker script(s) for C and asm programs
+    common/makefile # shared Makefile
+    common/scripts  # Miscelaneous scripts
+    common/spec # architecture/instruction specification as Python data structures
+    common/startup # C/asm startup file
+    ctests/* # Various tests written in C
+    doc_riscv # General Riscv documentation from Internet (when Internet is not available :-) )
+    docs # mkdocs source files (this documentation !) see (www.mkdocs.org)
+    generated # various generated files from generators
+
+
+    riscv-opcodes
+
     ips           # Modules created using Xilinx Vivado
     rtl           # Verilog RTL files for the project
     sim           # Verilog simulation directory
