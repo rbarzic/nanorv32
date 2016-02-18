@@ -1,18 +1,20 @@
         .section .isr_vector
 loop_counter = x8
-loop_max     = 10000000
+loop_max     = 2000000
 
+        li t0,0x1
         li t1,0x1
+        li t4,0x1
         li t2,0xF0000000
         nop
 gpio_loop:
-        sw t1,0(t2)
+        sw t0,0(t2)
         jal ra,delay
-        nop
-        sw x0,0(t2)
-        nop
 
-        jal ra,delay
+
+        addi t1,t1,1
+        andi t1,t1,0x0F         //  4 bits only (16 leds)
+        sll t0,t4,t1
         j gpio_loop
 
 
