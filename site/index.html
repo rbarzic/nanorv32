@@ -9,7 +9,7 @@
         
         <link rel="shortcut icon" href="./img/favicon.ico">
 
-	<title>My Docs</title>
+	<title>NanoRv32</title>
 
         <link href="./css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="./css/font-awesome-4.0.3.css" rel="stylesheet">
@@ -41,7 +41,7 @@
             </button>
 
             <!-- Main title -->
-            <a class="navbar-brand" href=".">My Docs</a>
+            <a class="navbar-brand" href=".">NanoRv32</a>
         </div>
 
         <!-- Expanded navigation -->
@@ -59,11 +59,6 @@
 
             <!-- Search, Navigation and Repo links -->
             <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
-                        <i class="fa fa-search"></i> Search
-                    </a>
-                </li>
                 <li class="disabled">
                     <a rel="next" >
                         <i class="fa fa-arrow-left"></i> Previous
@@ -92,8 +87,6 @@
         
             <li><a href="#simulation-using-icarus-iverilog">Simulation  using Icarus iverilog</a></li>
         
-            <li><a href="#simulation-using-icarus-iverilog_1">Simulation  using Icarus iverilog</a></li>
-        
             <li><a href="#synthesis-using-vivado">Synthesis using Vivado</a></li>
         
             <li><a href="#simulation-using-vivado">Simulation  using Vivado</a></li>
@@ -121,7 +114,6 @@ Highlights :</p>
   - no RVC support (16-bit instructions)</p>
 <p>FPGA version available (Digilent ARTY board - Xilinx Artix7)</p>
 <h2 id="project-layout">Project layout</h2>
-<p><em>Outdated</em></p>
 <pre><code>common/files  # scripts to generate list of verilog files needed for the various targets (simulation, synthesis)
 common/generators # generator for some verilog constructs (like decoder, parameters,...)
 common/include    # C/asm include files (for riscv-tests for example)
@@ -137,9 +129,9 @@ docs # mkdocs source files (this documentation !) see (www.mkdocs.org)
 generated # various generated files from generators
 riscv-opcodes # imported github module, used to create some spec files
 riscv-test    # imported github module, various test programs for the riscv architecture
-rtl/cores     # the nanorv32 CPU files 
+rtl/cores     # the nanorv32 CPU files
 rtl/ips       # "IP" verilog models (memory, peripherals, bus interfaces,....)
-rtl/chips     # top-level and "chip" specific files 
+rtl/chips     # top-level and "chip" specific files
 sim/verilog   # main directory for verilog simulation using iverilog or Xilinx
 synt/fpga     # main directory for FPGA synthesis using Xilinx Vivado
 </code></pre>
@@ -149,16 +141,24 @@ synt/fpga     # main directory for FPGA synthesis using Xilinx Vivado
 <pre><code class="bash">git clone --recursive git@github.com:rbarzic/nanorv32.git nanorv32-clean
 </code></pre>
 
-<h3 id="prerequist">Prerequist</h3>
+<h3 id="optriscv32i">/opt/riscv32i</h3>
+<p>On debian/Unbuntu :</p>
+<pre><code class="bash">sudo apt-get install build-essential gtkwave
+</code></pre>
+
 <h4 id="icarus-verilog">Icarus verilog</h4>
 <p>Using  the latest version from github is recommended.</p>
 <p>See https://github.com/steveicarus/iverilog</p>
 <h4 id="riscv32-gcc">Riscv32 gcc</h4>
-<p>A 32-bit version of the toolchain is needed. See </p>
-<pre><code class="bash">$ git clone git@github.com:riscv/riscv-gnu-toolchain.git
+<p>A 32-bit version of the toolchain is needed.</p>
+<p>See https://github.com/ucb-bar/riscv-sodor#building-a-rv32i-toolchain.</p>
+<p>For example :</p>
+<pre><code class="bash">$ sudo mkdir -p /opt/riscv32i
+$ sudo chown $USER /opt/riscv32i
+$ git clone git@github.com:riscv/riscv-gnu-toolchain.git
 $ cd riscv-gnu-toolchain
 $ mkdir build; cd build
-$ ../configure --prefix=$RISCV --disable-float --disable-atomic --with-xlen=32 --with-arch=I
+$ ../configure --prefix=/opt/riscv32i  --disable-float --disable-atomic --with-xlen=32 --with-arch=I
 $ make install
 </code></pre>
 
@@ -170,30 +170,70 @@ $ make install
 
 <h2 id="simulation-using-icarus-iverilog">Simulation  using Icarus iverilog</h2>
 <h3 id="verilog-compilation">Verilog compilation</h3>
-<pre><code class="bash">make compile
+<pre><code class="bash">cd sim/verilog
+make compile
 </code></pre>
 
-<h2 id="simulation-using-icarus-iverilog_1">Simulation  using Icarus iverilog</h2>
-<h3 id="verilog-compilation_1">Verilog compilation</h3>
-<pre><code class="bash">make compile
+<p>Note : the file iverilog_file_list.txt is generated from the file common/files/nanorv32_fl.py.
+If you need to add verilog files to the project, you should add them to the nanorv32_fl.py file instead and run :</p>
+<pre><code class="bash">make iverilog_file_list.txt
 </code></pre>
 
-<pre><code class="bash"># Compile C code
-make all
-# build iverilog simulator files
-make comp
-# run the simulation
-make run
+<h3 id="simulation">Simulation</h3>
+<h4 id="running-a-test-from-the-riscv-testsisarv32ui-list">Running a test from the riscv-tests/isa/rv32ui list</h4>
+<p>Under sim/verilog :</p>
+<pre><code class="bash">make run_rv32ui TEST=&lt;test_name&gt;
 
-# optionaly, you can look at waveform using gtkwave
-make wave
 </code></pre>
 
-<p>Note : there is no way to stop the simulation from the C code
-currently. Hit Ctrl-c then type $finish to exit simulation</p>
+<p>For example :</p>
+<pre><code class="bash">make run_rv32ui TEST=addi
+</code></pre>
+
+<h4 id="running-a-c-based-test">Running a C-based test</h4>
+<p>C programs are expected to be stored under the ctests/<test_name>/<test_name>.c</p>
+<p>Under sim/verilog :</p>
+<pre><code class="bash">make run_ctest TEST=&lt;test_name&gt;
+
+</code></pre>
+
+<p>For example :</p>
+<pre><code class="bash">make run_ctest TEST=gpio_toggle
+</code></pre>
+
+<h3 id="viewing-the-waveform">Viewing the waveform</h3>
+<p>Using gtkwave :</p>
+<pre><code class="bash">make wave
+</code></pre>
+
 <h2 id="synthesis-using-vivado">Synthesis using Vivado</h2>
+<p>First, set-up Vivado environment :</p>
+<pre><code class="bash">source /opt/Xilinx/Vivado/&lt;vivado version&gt;/settings64.sh
+</code></pre>
+
+<p>Then</p>
+<pre><code class="bash">make synt
+</code></pre>
+
+<p>Note : The code is loaded in the ROM using the file
+synt/fpga/code.hex. So you must make a link between a existing *.hex2 file to
+the code.hex before launching the synthesis.</p>
 <h2 id="simulation-using-vivado">Simulation  using Vivado</h2>
-<h2 id="simulation-using-verilator">Simulation  using Verilator</h2></div>
+<h3 id="compilation">Compilation</h3>
+<pre><code class="bash">make xcomp
+make xelab
+</code></pre>
+
+<h3 id="simulation-batch-mode">Simulation (Batch mode)</h3>
+<pre><code class="bash">make xsim
+</code></pre>
+
+<h3 id="simulation-gui">Simulation (GUI)</h3>
+<pre><code class="bash">make xsim_gui
+</code></pre>
+
+<h2 id="simulation-using-verilator">Simulation  using Verilator</h2>
+<p>TBD</p></div>
         </div>
 
         <footer class="col-md-12">
@@ -205,33 +245,6 @@ currently. Hit Ctrl-c then type $finish to exit simulation</p>
         <script src="./js/jquery-1.10.2.min.js"></script>
         <script src="./js/bootstrap-3.0.3.min.js"></script>
         <script src="./js/highlight.pack.js"></script>
-        <script>var base_url = '.';</script>
-        <script data-main="./mkdocs/js/search.js" src="./mkdocs/js/require.js"></script>
         <script src="./js/base.js"></script>
-
-        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <h4 class="modal-title" id="exampleModalLabel">Search</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>
-                            From here you can search these documents. Enter
-                            your search terms below.
-                        </p>
-                        <form role="form">
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
-                            </div>
-                        </form>
-                        <div id="mkdocs-search-results"></div>
-                    </div>
-                    <div class="modal-footer">
-                    </div>
-                </div>
-            </div>
-        </div>
     </body>
 </html>

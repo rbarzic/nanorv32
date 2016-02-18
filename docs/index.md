@@ -37,9 +37,9 @@ FPGA version available (Digilent ARTY board - Xilinx Artix7)
     generated # various generated files from generators
     riscv-opcodes # imported github module, used to create some spec files
     riscv-test    # imported github module, various test programs for the riscv architecture
-    rtl/cores     # the nanorv32 CPU files 
+    rtl/cores     # the nanorv32 CPU files
     rtl/ips       # "IP" verilog models (memory, peripherals, bus interfaces,....)
-    rtl/chips     # top-level and "chip" specific files 
+    rtl/chips     # top-level and "chip" specific files
     sim/verilog   # main directory for verilog simulation using iverilog or Xilinx
     synt/fpga     # main directory for FPGA synthesis using Xilinx Vivado
 
@@ -56,7 +56,15 @@ This project uses submodules. To clone it you need to run the following commands
 git clone --recursive git@github.com:rbarzic/nanorv32.git nanorv32-clean
 ```
 
-### Prerequist
+### /opt/riscv32i
+
+On debian/Unbuntu :
+
+```bash
+sudo apt-get install build-essential gtkwave
+```
+
+
 
 #### Icarus verilog
 
@@ -66,13 +74,19 @@ See https://github.com/steveicarus/iverilog
 
 #### Riscv32 gcc
 
-A 32-bit version of the toolchain is needed. See 
+A 32-bit version of the toolchain is needed.
+
+See https://github.com/ucb-bar/riscv-sodor#building-a-rv32i-toolchain.
+
+For example :
 
 ```bash
+$ sudo mkdir -p /opt/riscv32i
+$ sudo chown $USER /opt/riscv32i
 $ git clone git@github.com:riscv/riscv-gnu-toolchain.git
 $ cd riscv-gnu-toolchain
 $ mkdir build; cd build
-$ ../configure --prefix=$RISCV --disable-float --disable-atomic --with-xlen=32 --with-arch=I
+$ ../configure --prefix=/opt/riscv32i  --disable-float --disable-atomic --with-xlen=32 --with-arch=I
 $ make install
 ```
 
@@ -88,43 +102,113 @@ On debian/Unbuntu :
 sudo apt-get install parallel
 ```
 
-## Simulation  using Icarus iverilog
-
-### Verilog compilation
-```bash
-make compile
-```
-
 
 ## Simulation  using Icarus iverilog
 
 ### Verilog compilation
 ```bash
+cd sim/verilog
 make compile
 ```
 
-
-
+Note : the file iverilog_file_list.txt is generated from the file common/files/nanorv32_fl.py.
+If you need to add verilog files to the project, you should add them to the nanorv32_fl.py file instead and run :
 
 ```bash
-# Compile C code
-make all
-# build iverilog simulator files
-make comp
-# run the simulation
-make run
+make iverilog_file_list.txt
+```
 
-# optionaly, you can look at waveform using gtkwave
+### Simulation
+
+#### Running a test from the riscv-tests/isa/rv32ui list
+
+Under sim/verilog :
+
+```bash
+make run_rv32ui TEST=<test_name>
+
+```
+
+For example :
+
+```bash
+make run_rv32ui TEST=addi
+```
+
+
+#### Running a C-based test
+
+C programs are expected to be stored under the ctests/<test_name>/<test_name>.c
+
+Under sim/verilog :
+
+```bash
+make run_ctest TEST=<test_name>
+
+```
+
+For example :
+
+```bash
+make run_ctest TEST=gpio_toggle
+```
+
+### Viewing the waveform
+
+
+Using gtkwave :
+
+```bash
 make wave
 ```
 
-Note : there is no way to stop the simulation from the C code
-currently. Hit Ctrl-c then type $finish to exit simulation
 
 ## Synthesis using Vivado
+
+First, set-up Vivado environment :
+```bash
+source /opt/Xilinx/Vivado/<vivado version>/settings64.sh
+```
+
+Then
+
+```bash
+make synt
+```
+
+Note : The code is loaded in the ROM using the file
+synt/fpga/code.hex. So you must make a link between a existing *.hex2 file to
+the code.hex before launching the synthesis.
+
+
+
+
 
 ## Simulation  using Vivado
 
 
+### Compilation
+
+```bash
+make xcomp
+make xelab
+```
+### Simulation (Batch mode)
+
+```bash
+make xsim
+```
+
+### Simulation (GUI)
+
+```bash
+make xsim_gui
+```
+
+
+
+
 
 ## Simulation  using Verilator
+
+TBD
