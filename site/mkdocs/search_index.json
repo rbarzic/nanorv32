@@ -1,0 +1,84 @@
+{
+    "docs": [
+        {
+            "location": "/", 
+            "text": "Welcome to the NanoRv32  project\n\n\nUnder construction\n\n\nA small 32-bit implementation of the RISC-V architecture\nHighlights :\n\n\n\n\n2-stage pipeline (fetch, execute)\n\n\nlot of code is generated from a high level description\n\n\nwritten in verilog (using iverilog or Xilinx xvsim as simulator)\n\n\n\n\nStill under development :\n  - currently supporting only RV32I base instructions (no scall,sbreak,rd*)\n  - no system register implemented\n  - No interrupt support yet\n  - no RVC support (16-bit instructions)\n\n\nFPGA version available (Digilent ARTY board - Xilinx Artix7)\n\n\nProject layout\n\n\nOutdated\n\n\ncommon/files  # scripts to generate list of verilog files needed for the various targets (simulation, synthesis)\ncommon/generators # generator for some verilog constructs (like decoder, parameters,...)\ncommon/include    # C/asm include files (for riscv-tests for example)\ncommon/instructions # text files listing instructions, for regression testing\ncommon/linker_scripts # linker script(s) for C and asm programs\ncommon/makefile # shared Makefile\ncommon/scripts  # Miscelaneous scripts\ncommon/spec # architecture/instruction specification as Python data structures\ncommon/startup # C/asm startup file\nctests/* # Various tests written in C\ndoc_riscv # General Riscv documentation from Internet (when Internet is not available :-) )\ndocs # mkdocs source files (this documentation !) see (www.mkdocs.org)\ngenerated # various generated files from generators\nriscv-opcodes # imported github module, used to create some spec files\nriscv-test    # imported github module, various test programs for the riscv architecture\nrtl/cores     # the nanorv32 CPU files \nrtl/ips       # \"IP\" verilog models (memory, peripherals, bus interfaces,....)\nrtl/chips     # top-level and \"chip\" specific files \nsim/verilog   # main directory for verilog simulation using iverilog or Xilinx\nsynt/fpga     # main directory for FPGA synthesis using Xilinx Vivado\n\n\n\nInstallation\n\n\nCloning from github\n\n\nThis project uses submodules. To clone it you need to run the following commands :\n\n\ngit clone --recursive git@github.com:rbarzic/nanorv32.git nanorv32-clean\n\n\n\n\nPrerequist\n\n\nIcarus verilog\n\n\nUsing  the latest version from github is recommended.\n\n\nSee https://github.com/steveicarus/iverilog\n\n\nRiscv32 gcc\n\n\nA 32-bit version of the toolchain is needed. See \n\n\n$ git clone git@github.com:riscv/riscv-gnu-toolchain.git\n$ cd riscv-gnu-toolchain\n$ mkdir build; cd build\n$ ../configure --prefix=$RISCV --disable-float --disable-atomic --with-xlen=32 --with-arch=I\n$ make install\n\n\n\n\nOthers\n\n\nTo run the regression on multiple cores at a time, you need GNU parallel.\n\n\nOn debian/Unbuntu :\n\n\nsudo apt-get install parallel\n\n\n\n\nSimulation  using Icarus iverilog\n\n\nVerilog compilation\n\n\nmake compile\n\n\n\n\nSimulation  using Icarus iverilog\n\n\nVerilog compilation\n\n\nmake compile\n\n\n\n\n# Compile C code\nmake all\n# build iverilog simulator files\nmake comp\n# run the simulation\nmake run\n\n# optionaly, you can look at waveform using gtkwave\nmake wave\n\n\n\n\nNote : there is no way to stop the simulation from the C code\ncurrently. Hit Ctrl-c then type $finish to exit simulation\n\n\nSynthesis using Vivado\n\n\nSimulation  using Vivado\n\n\nSimulation  using Verilator", 
+            "title": "Home"
+        }, 
+        {
+            "location": "/#welcome-to-the-nanorv32-project", 
+            "text": "Under construction  A small 32-bit implementation of the RISC-V architecture\nHighlights :   2-stage pipeline (fetch, execute)  lot of code is generated from a high level description  written in verilog (using iverilog or Xilinx xvsim as simulator)   Still under development :\n  - currently supporting only RV32I base instructions (no scall,sbreak,rd*)\n  - no system register implemented\n  - No interrupt support yet\n  - no RVC support (16-bit instructions)  FPGA version available (Digilent ARTY board - Xilinx Artix7)", 
+            "title": "Welcome to the NanoRv32  project"
+        }, 
+        {
+            "location": "/#project-layout", 
+            "text": "Outdated  common/files  # scripts to generate list of verilog files needed for the various targets (simulation, synthesis)\ncommon/generators # generator for some verilog constructs (like decoder, parameters,...)\ncommon/include    # C/asm include files (for riscv-tests for example)\ncommon/instructions # text files listing instructions, for regression testing\ncommon/linker_scripts # linker script(s) for C and asm programs\ncommon/makefile # shared Makefile\ncommon/scripts  # Miscelaneous scripts\ncommon/spec # architecture/instruction specification as Python data structures\ncommon/startup # C/asm startup file\nctests/* # Various tests written in C\ndoc_riscv # General Riscv documentation from Internet (when Internet is not available :-) )\ndocs # mkdocs source files (this documentation !) see (www.mkdocs.org)\ngenerated # various generated files from generators\nriscv-opcodes # imported github module, used to create some spec files\nriscv-test    # imported github module, various test programs for the riscv architecture\nrtl/cores     # the nanorv32 CPU files \nrtl/ips       # \"IP\" verilog models (memory, peripherals, bus interfaces,....)\nrtl/chips     # top-level and \"chip\" specific files \nsim/verilog   # main directory for verilog simulation using iverilog or Xilinx\nsynt/fpga     # main directory for FPGA synthesis using Xilinx Vivado", 
+            "title": "Project layout"
+        }, 
+        {
+            "location": "/#installation", 
+            "text": "", 
+            "title": "Installation"
+        }, 
+        {
+            "location": "/#cloning-from-github", 
+            "text": "This project uses submodules. To clone it you need to run the following commands :  git clone --recursive git@github.com:rbarzic/nanorv32.git nanorv32-clean", 
+            "title": "Cloning from github"
+        }, 
+        {
+            "location": "/#prerequist", 
+            "text": "", 
+            "title": "Prerequist"
+        }, 
+        {
+            "location": "/#icarus-verilog", 
+            "text": "Using  the latest version from github is recommended.  See https://github.com/steveicarus/iverilog", 
+            "title": "Icarus verilog"
+        }, 
+        {
+            "location": "/#riscv32-gcc", 
+            "text": "A 32-bit version of the toolchain is needed. See   $ git clone git@github.com:riscv/riscv-gnu-toolchain.git\n$ cd riscv-gnu-toolchain\n$ mkdir build; cd build\n$ ../configure --prefix=$RISCV --disable-float --disable-atomic --with-xlen=32 --with-arch=I\n$ make install", 
+            "title": "Riscv32 gcc"
+        }, 
+        {
+            "location": "/#others", 
+            "text": "To run the regression on multiple cores at a time, you need GNU parallel.  On debian/Unbuntu :  sudo apt-get install parallel", 
+            "title": "Others"
+        }, 
+        {
+            "location": "/#simulation-using-icarus-iverilog", 
+            "text": "", 
+            "title": "Simulation  using Icarus iverilog"
+        }, 
+        {
+            "location": "/#verilog-compilation", 
+            "text": "make compile", 
+            "title": "Verilog compilation"
+        }, 
+        {
+            "location": "/#simulation-using-icarus-iverilog_1", 
+            "text": "", 
+            "title": "Simulation  using Icarus iverilog"
+        }, 
+        {
+            "location": "/#verilog-compilation_1", 
+            "text": "make compile  # Compile C code\nmake all\n# build iverilog simulator files\nmake comp\n# run the simulation\nmake run\n\n# optionaly, you can look at waveform using gtkwave\nmake wave  Note : there is no way to stop the simulation from the C code\ncurrently. Hit Ctrl-c then type $finish to exit simulation", 
+            "title": "Verilog compilation"
+        }, 
+        {
+            "location": "/#synthesis-using-vivado", 
+            "text": "", 
+            "title": "Synthesis using Vivado"
+        }, 
+        {
+            "location": "/#simulation-using-vivado", 
+            "text": "", 
+            "title": "Simulation  using Vivado"
+        }, 
+        {
+            "location": "/#simulation-using-verilator", 
+            "text": "", 
+            "title": "Simulation  using Verilator"
+        }
+    ]
+}

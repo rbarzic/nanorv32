@@ -4,13 +4,16 @@ _Under construction_
 
 A small 32-bit implementation of the RISC-V architecture
 Highlights :
-    - 2-stage pipeline (fetch, execute)
-    - lot of code is generated from a high level description
-    - written in verilog (using iverilog or Xilinx xvsim as simulator)
 
-Still under development
+- 2-stage pipeline (fetch, execute)
+- lot of code is generated from a high level description
+- written in verilog (using iverilog or Xilinx xvsim as simulator)
+
+Still under development :
   - currently supporting only RV32I base instructions (no scall,sbreak,rd*)
+  - no system register implemented
   - No interrupt support yet
+  - no RVC support (16-bit instructions)
 
 FPGA version available (Digilent ARTY board - Xilinx Artix7)
 
@@ -18,7 +21,6 @@ FPGA version available (Digilent ARTY board - Xilinx Artix7)
 
 ## Project layout
 
-_Outdated_
 
     common/files  # scripts to generate list of verilog files needed for the various targets (simulation, synthesis)
     common/generators # generator for some verilog constructs (like decoder, parameters,...)
@@ -33,19 +35,15 @@ _Outdated_
     doc_riscv # General Riscv documentation from Internet (when Internet is not available :-) )
     docs # mkdocs source files (this documentation !) see (www.mkdocs.org)
     generated # various generated files from generators
+    riscv-opcodes # imported github module, used to create some spec files
+    riscv-test    # imported github module, various test programs for the riscv architecture
+    rtl/cores     # the nanorv32 CPU files 
+    rtl/ips       # "IP" verilog models (memory, peripherals, bus interfaces,....)
+    rtl/chips     # top-level and "chip" specific files 
+    sim/verilog   # main directory for verilog simulation using iverilog or Xilinx
+    synt/fpga     # main directory for FPGA synthesis using Xilinx Vivado
 
 
-    riscv-opcodes
-
-    ips           # Modules created using Xilinx Vivado
-    rtl           # Verilog RTL files for the project
-    sim           # Verilog simulation directory
-    synt          # synthesis directory
-    verilator_sim # Verilator build/simulation directory
-    software      # Local testsuites (asm/c programs)
-    import        # imported github submodules (currently only amba_components)
-    docs          # the mkdocs/markdown sources for this site
-    site          # generated html/js files for this site
 
 
 ## Installation
@@ -55,29 +53,58 @@ _Outdated_
 This project uses submodules. To clone it you need to run the following commands :
 
 ```bash
- git clone git@github.com:rbarzic/nanorv32.git
- cd nanorv32
- git submodule init
- git submodule update
+git clone --recursive git@github.com:rbarzic/nanorv32.git nanorv32-clean
 ```
 
-TBD : check --recursive option for clone (from which git version this is available)
+### Prerequist
 
-### Setting environment variables
+#### Icarus verilog
+
+Using  the latest version from github is recommended.
+
+See https://github.com/steveicarus/iverilog
+
+#### Riscv32 gcc
+
+A 32-bit version of the toolchain is needed. See 
+
+```bash
+$ git clone git@github.com:riscv/riscv-gnu-toolchain.git
+$ cd riscv-gnu-toolchain
+$ mkdir build; cd build
+$ ../configure --prefix=$RISCV --disable-float --disable-atomic --with-xlen=32 --with-arch=I
+$ make install
+```
 
 
-## Compiling test programs
 
-Test programs are located under the software directory.
+#### Others
 
-To compile, enter the directory of the program and type :
-`make all`
+To run the regression on multiple cores at a time, you need GNU parallel.
 
-Several files (bin, hex, vmem and vmem32,..) should be created
+On debian/Unbuntu :
+
+```bash
+sudo apt-get install parallel
+```
 
 ## Simulation  using Icarus iverilog
 
-Go into a test program directory (under software/xxx) then :
+### Verilog compilation
+```bash
+make compile
+```
+
+
+## Simulation  using Icarus iverilog
+
+### Verilog compilation
+```bash
+make compile
+```
+
+
+
 
 ```bash
 # Compile C code
