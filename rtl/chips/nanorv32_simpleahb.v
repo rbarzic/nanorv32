@@ -94,6 +94,59 @@ module nanorv32_simple (/*AUTOARG*/
    // End of automatics
 
 
+
+
+io_tcm0_haddr       
+io_tcm0_hwrite      
+io_tcm0_hsize       
+io_tcm0_hburst      
+io_tcm0_hprot       
+io_tcm0_htrans      
+io_tcm0_hmastlock   
+io_tcm0_hwdata      
+io_tcm0_hrdata      
+io_tcm0_hsel        
+io_tcm0_hreadyin    
+io_tcm0_hreadyout   
+io_tcm0_hresp       
+                    
+io_tcm1_haddr       
+io_tcm1_hwrite      
+io_tcm1_hsize       
+io_tcm1_hburst      
+io_tcm1_hprot       
+io_tcm1_htrans      
+io_tcm1_hmastlock   
+io_tcm1_hwdata      
+io_tcm1_hrdata      
+io_tcm1_hsel        
+io_tcm1_hreadyin    
+io_tcm1_hreadyout   
+io_tcm1_hresp       
+                    
+io_periph_haddr     
+io_periph_hwrite    
+io_periph_hsize     
+io_periph_hburst    
+io_periph_hprot     
+io_periph_htrans    
+io_periph_hmastlock 
+io_periph_hwdata    
+io_periph_hrdata    
+io_periph_hsel      
+io_periph_hreadyin  
+io_periph_hreadyout 
+io_periph_hresp     
+
+
+
+
+
+
+
+
+
+
    wire [NANORV32_DATA_MSB:0] codemem_dout;   // From U_CODE_MEM of bytewrite_ram_32bits.v
    wire [NANORV32_DATA_MSB:0] datamem_dout;   // From U_DATA_MEM of bytewrite_ram_32bits.v
    wire [NANORV32_DATA_MSB:0] periph_dout;   // From U_DATA_MEM of bytewrite_ram_32bits.v
@@ -288,20 +341,27 @@ module nanorv32_simple (/*AUTOARG*/
 
     /* nanorv32_periph_mux AUTO_TEMPLATE(
      ); */
-   nanorv32_periph_mux U_PERIPH_MUX (
+   nanorv32_periph_mux_ahb U_PERIPH_MUX (
                            /*AUTOINST*/
                                      // Outputs
-                                     .periph_dout       (periph_dout[NANORV32_DATA_MSB:0]),
-                                     .periph_ready_nxt  (periph_ready_nxt),
+                                     .periph_hrdata     (io_periph_hrdata    ), 
+                                     .periph_hreadyout  (io_periph_hreadyout ),
+                                     .periph_hresp      (io_periph_hresp     ), 
                                      .bus_gpio_addr     (bus_gpio_addr[NANORV32_PERIPH_ADDR_MSB:0]),
                                      .bus_gpio_bytesel  (bus_gpio_bytesel[3:0]),
                                      .bus_gpio_din      (bus_gpio_din[NANORV32_DATA_MSB:0]),
                                      .bus_gpio_en       (bus_gpio_en),
                                      // Inputs
-                                     .periph_addr       (periph_addr[NANORV32_PERIPH_ADDR_MSB:0]),
-                                     .periph_bytesel    (periph_bytesel[3:0]),
-                                     .periph_din        (periph_din[NANORV32_DATA_MSB:0]),
-                                     .periph_en         (periph_en),
+                                     .periph_haddr      (io_periph_haddr      ), 
+                                     .periph_hwrite     (io_periph_hwrite     ), 
+                                     .periph_hsize      (io_periph_hsize      ), 
+                                     .periph_hburst     (io_periph_hburst     ), 
+                                     .periph_hprot      (io_periph_hprot      ), 
+                                     .periph_htrans     (io_periph_htrans     ), 
+                                     .periph_hmastlock  (io_periph_hmastlock  ), 
+                                     .periph_hwdata     (io_periph_hwdata     ), 
+                                     .periph_hsel       (io_periph_hsel       ), 
+                                     .periph_hreadyin   (io_periph_hreadyin   ), 
                                      .gpio_bus_dout     (gpio_bus_dout[NANORV32_DATA_MSB:0]),
                                      .gpio_bus_ready_nxt(gpio_bus_ready_nxt));
 
