@@ -42,7 +42,7 @@ module ahb_to_ssram (/*AUTOARG*/
 
    parameter AW = 12;
 
-`include "ahb_params.v"
+// `include "ahb_params.v"
 
    localparam AHB_ADDRESS_PHASE = 1;
    localparam AHB_DATA_PHASE    = 2;
@@ -118,17 +118,17 @@ module ahb_to_ssram (/*AUTOARG*/
       idle_cycle   = 0;
 
       case(HTRANS[1:0])
-        AMBA_AHB_HTRANS_SEQ : begin
+        2'b11 : begin
            seq_cycle = 1'b1;
 
         end
-        AMBA_AHB_HTRANS_NON_SEQ : begin
+        2'b10 : begin
            nonseq_cycle = 1'b1;
         end
-        AMBA_AHB_HTRANS_BUSY : begin
+        2'b01 : begin
            busy_cycle = 1'b1;
         end
-        AMBA_AHB_HTRANS_IDLE : begin
+        2'b00 : begin
            idle_cycle = 1'b1;
         end
       endcase
@@ -144,7 +144,7 @@ module ahb_to_ssram (/*AUTOARG*/
       byte_sel_a = 4'b1111;
       if (rw_cycle) begin
          case(HSIZE[2:0])
-           AMBA_AHB_HSIZE_8BITS : begin
+           3'b000 : begin
               case(HADDR[1:0])
                 0 : begin
                    byte_sel_a = 4'b0001;
@@ -163,10 +163,10 @@ module ahb_to_ssram (/*AUTOARG*/
 
               endcase
            end
-           AMBA_AHB_HSIZE_16BITS : begin
+           3'b001 : begin
               byte_sel_a = HADDR[1] ? 4'b1100 : 4'b0011;
            end
-           AMBA_AHB_HSIZE_32BITS : begin
+           3'b010 : begin
               byte_sel_a = 4'b1111;
            end
            default: begin

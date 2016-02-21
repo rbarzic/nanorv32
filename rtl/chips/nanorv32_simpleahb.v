@@ -32,7 +32,7 @@
 // Todo : memory mapping & arbitration (ROM : 0->32K - RAM 32K->64K)
 
 
-module nanorv32_simple (/*AUTOARG*/
+module nanorv32_simpleahb (/*AUTOARG*/
    // Outputs
    illegal_instruction,
    // Inouts
@@ -93,80 +93,72 @@ module nanorv32_simple (/*AUTOARG*/
    wire                 tcmdata_ready_nxt;      // From U_TCM_DATA of nanorv32_tcm_ctrl.v
    // End of automatics
 
+   wire [NANORV32_DATA_MSB:0] hrdatai; 
+   wire                       hrespi;
+   wire                       hreadyi; 
+   wire [NANORV32_DATA_MSB:0] haddri;
+   wire [3:0]                 hproti;
+   wire [2:0]                 hsizei;
+   wire                       hmasteri;
+   wire                       hmasterlocki;
+   wire [2:0]                 hbursti;
+   wire [NANORV32_DATA_MSB:0] hwdatai;
+   wire                       hwritei; 
 
 
+   wire [NANORV32_DATA_MSB:0] hrdatad; 
+   wire                       hrespd;
+   wire                       hreadyd; 
+   wire [NANORV32_DATA_MSB:0] haddrd;
+   wire [3:0]                 hprotd;
+   wire [2:0]                 hsized;
+   wire                       hmasterd;
+   wire                       hmasterlockd;
+   wire [2:0]                 hburstd;
+   wire [NANORV32_DATA_MSB:0] hwdatad;
+   wire                       hwrited; 
 
-io_tcm0_haddr       
-io_tcm0_hwrite      
-io_tcm0_hsize       
-io_tcm0_hburst      
-io_tcm0_hprot       
-io_tcm0_htrans      
-io_tcm0_hmastlock   
-io_tcm0_hwdata      
-io_tcm0_hrdata      
-io_tcm0_hsel        
-io_tcm0_hreadyin    
-io_tcm0_hreadyout   
-io_tcm0_hresp       
+   wire [31:0]  io_tcm0_haddr; 
+   wire         io_tcm0_hwrite; 
+   wire [2:0]   io_tcm0_hsize; 
+   wire [2:0]   io_tcm0_hburst; 
+   wire [3:0]   io_tcm0_hprot; 
+   wire [1:0]   io_tcm0_htrans; 
+   wire         io_tcm0_hmastlock; 
+   wire [31:0]  io_tcm0_hwdata; 
+   wire [31:0]  io_tcm0_hrdata; 
+   wire         io_tcm0_hsel; 
+   wire         io_tcm0_hreadyin; 
+   wire         io_tcm0_hreadyout; 
+   wire         io_tcm0_hresp; 
                     
-io_tcm1_haddr       
-io_tcm1_hwrite      
-io_tcm1_hsize       
-io_tcm1_hburst      
-io_tcm1_hprot       
-io_tcm1_htrans      
-io_tcm1_hmastlock   
-io_tcm1_hwdata      
-io_tcm1_hrdata      
-io_tcm1_hsel        
-io_tcm1_hreadyin    
-io_tcm1_hreadyout   
-io_tcm1_hresp       
-                    
-io_periph_haddr     
-io_periph_hwrite    
-io_periph_hsize     
-io_periph_hburst    
-io_periph_hprot     
-io_periph_htrans    
-io_periph_hmastlock 
-io_periph_hwdata    
-io_periph_hrdata    
-io_periph_hsel      
-io_periph_hreadyin  
-io_periph_hreadyout 
-io_periph_hresp     
+   wire [31:0]  io_tcm1_haddr; 
+   wire         io_tcm1_hwrite; 
+   wire [2:0]   io_tcm1_hsize; 
+   wire [2:0]   io_tcm1_hburst; 
+   wire [3:0]   io_tcm1_hprot; 
+   wire [1:0]   io_tcm1_htrans; 
+   wire         io_tcm1_hmastlock; 
+   wire [31:0]  io_tcm1_hwdata; 
+   wire [31:0]  io_tcm1_hrdata; 
+   wire         io_tcm1_hsel; 
+   wire         io_tcm1_hreadyin; 
+   wire         io_tcm1_hreadyout; 
+   wire         io_tcm1_hresp; 
 
-
-
-
-
-
-
-
-
-
-   wire [NANORV32_DATA_MSB:0] codemem_dout;   // From U_CODE_MEM of bytewrite_ram_32bits.v
-   wire [NANORV32_DATA_MSB:0] datamem_dout;   // From U_DATA_MEM of bytewrite_ram_32bits.v
-   wire [NANORV32_DATA_MSB:0] periph_dout;   // From U_DATA_MEM of bytewrite_ram_32bits.v
-
-   wire  [NANORV32_DATA_MSB:0]  cpu_codeif_addr;
-   wire                         cpu_codeif_req;
-   wire [NANORV32_DATA_MSB:0]   codeif_cpu_rdata;
-
-   wire  [NANORV32_DATA_MSB:0]  cpu_dataif_addr;
-   wire                         cpu_dataif_req;
-   wire  [NANORV32_DATA_MSB:0]  cpu_dataif_wdata;
-   wire [NANORV32_DATA_MSB:0]   dataif_cpu_rdata;
-
-
-
-
-   wire [3:0]                 cpu_dataif_bytesel;
-
-
-
+   wire [31:0]  io_periph_haddr; 
+   wire         io_periph_hwrite; 
+   wire [2:0]   io_periph_hsize; 
+   wire [2:0]   io_periph_hburst; 
+   wire [3:0]   io_periph_hprot; 
+   wire [1:0]   io_periph_htrans; 
+   wire         io_periph_hmastlock; 
+   wire [31:0]  io_periph_hwdata; 
+   wire [31:0]  io_periph_hrdata; 
+   wire         io_periph_hsel; 
+   wire         io_periph_hreadyin; 
+   wire         io_periph_hreadyout; 
+   wire         io_periph_hresp; 
 
     /* nanorv32 AUTO_TEMPLATE(
      ); */
@@ -221,19 +213,19 @@ io_periph_hresp
      ); */
  cmsdk_ahb_ram u_tcm0(/*AUTOARG*/
    // Outputs
-   HREADYOUT   (io_tcm0_hreadyout), 
-   HRDATA      (io_tcm0_hrdata), 
-   HRESP       (io_tcm0_hresp),
+   .HREADYOUT   (io_tcm0_hreadyout), 
+   .HRDATA      (io_tcm0_hrdata), 
+   .HRESP       (io_tcm0_hresp),
    // Inputs
-   HCLK        (clk_in), 
-   HRESETn     (rst_in), 
-   HSEL        (io_tcm0_hsel), 
-   HADDR       (io_tcm0_haddr), 
-   HTRANS      (io_tcm0_htrans), 
-   HSIZE       (io_tcm0_hsize), 
-   HWRITE      (io_tcm0_hwrite), 
-   HWDATA      (io_tcm0_hwdata), 
-   HREADY      (io_tcm0_hreadyin)
+   .HCLK        (clk_in), 
+   .HRESETn     (rst_in), 
+   .HSEL        (io_tcm0_hsel), 
+   .HADDR       (io_tcm0_haddr), 
+   .HTRANS      (io_tcm0_htrans), 
+   .HSIZE       (io_tcm0_hsize), 
+   .HWRITE      (io_tcm0_hwrite), 
+   .HWDATA      (io_tcm0_hwdata), 
+   .HREADY      (io_tcm0_hreadyin)
    );
 
 
@@ -250,19 +242,19 @@ io_periph_hresp
      ); */
  cmsdk_ahb_ram u_tcm1(/*AUTOARG*/
    // Outputs
-   HREADYOUT   (io_tcm1_hreadyout), 
-   HRDATA      (io_tcm1_hrdata), 
-   HRESP       (io_tcm1_hresp),
+   .HREADYOUT   (io_tcm1_hreadyout), 
+   .HRDATA      (io_tcm1_hrdata), 
+   .HRESP       (io_tcm1_hresp),
    // Inputs
-   HCLK        (clk_in), 
-   HRESETn     (rst_in), 
-   HSEL        (io_tcm1_hsel), 
-   HADDR       (io_tcm1_haddr), 
-   HTRANS      (io_tcm1_htrans), 
-   HSIZE       (io_tcm1_hsize), 
-   HWRITE      (io_tcm1_hwrite), 
-   HWDATA      (io_tcm1_hwdata), 
-   HREADY      (io_tcm1_hreadyin)
+   .HCLK        (clk_in), 
+   .HRESETn     (rst_in), 
+   .HSEL        (io_tcm1_hsel), 
+   .HADDR       (io_tcm1_haddr), 
+   .HTRANS      (io_tcm1_htrans), 
+   .HSIZE       (io_tcm1_hsize), 
+   .HWRITE      (io_tcm1_hwrite), 
+   .HWDATA      (io_tcm1_hwdata), 
+   .HREADY      (io_tcm1_hreadyin)
    );
 
     /* ahbmatrix AUTO_TEMPLATE(
@@ -276,7 +268,7 @@ io_periph_hresp
     .io_iside_hsize       (hsizei      ),
     .io_iside_hburst      (hbursti     ),
     .io_iside_hprot       (hproti      ),
-    .io_iside_htrans      (htransi     ),
+    .io_iside_htrans      ({htransi,1'b0}),
     .io_iside_hmastlock   (hmastlocki  ),
     .io_iside_hwdata      (hwdatai     ),
     .io_iside_hrdata      (hrdatai     ),
@@ -288,7 +280,7 @@ io_periph_hresp
     .io_dside_hsize       (hsized      ),
     .io_dside_hburst      (hburstd     ),
     .io_dside_hprot       (hprotd      ),
-    .io_dside_htrans      (htransd     ),
+    .io_dside_htrans      ({htransd,1'b0}     ),
     .io_dside_hmastlock   (hmastlockd  ),
     .io_dside_hwdata      (hwdatad     ),
     .io_dside_hrdata      (hrdatad     ),
@@ -352,6 +344,8 @@ io_periph_hresp
                                      .bus_gpio_din      (bus_gpio_din[NANORV32_DATA_MSB:0]),
                                      .bus_gpio_en       (bus_gpio_en),
                                      // Inputs
+                                     .clk_in            (clk_in), 
+                                     .rst_n             (rst_n),
                                      .periph_haddr      (io_periph_haddr      ), 
                                      .periph_hwrite     (io_periph_hwrite     ), 
                                      .periph_hsize      (io_periph_hsize      ), 

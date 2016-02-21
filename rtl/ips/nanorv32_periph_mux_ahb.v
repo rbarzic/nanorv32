@@ -30,15 +30,29 @@
 
 module nanorv32_periph_mux_ahb (/*AUTOARG*/
    // Outputs
-   periph_dout, periph_ready_nxt, 
+    periph_haddr, 
+    periph_hwrite, 
+    periph_hsize, 
+    periph_hburst, 
+    periph_hprot, 
+    periph_htrans, 
+    periph_hmastlock, 
+    periph_hwdata, 
+    periph_hrdata, 
+    periph_hsel, 
+    periph_hreadyin, 
+    periph_hreadyout,
+    periph_hresp, 
    bus_gpio_addr, bus_gpio_bytesel,
    bus_gpio_din, bus_gpio_en,
    // Inputs
+   clk_in, rst_n,
    gpio_bus_dout, gpio_bus_ready_nxt
    );
 
 `include "nanorv32_parameters.v"
-
+    input         clk_in;
+    input         rst_n;
     input  [31:0] periph_haddr; 
     input         periph_hwrite; 
     input  [2:0]  periph_hsize; 
@@ -100,7 +114,7 @@ module nanorv32_periph_mux_ahb (/*AUTOARG*/
    end 
   
    // No decoding for now
-   assign bus_gpio_addr    = periph_addr_reg;
+   assign bus_gpio_addr    = periph_haddr_reg;
    assign bus_gpio_bytesel = periph_bytesel_reg;
    assign bus_gpio_din     = periph_hwdata;
    assign bus_gpio_en      = periph_en_reg;
