@@ -55,7 +55,6 @@ module nanorv32 (/*AUTOARG*/
    codeif_cpu_ready_r, dataif_cpu_rdata, dataif_cpu_early_ready,
    dataif_cpu_ready_r
    `endif
-
    );
 
 `include "nanorv32_parameters.v"
@@ -130,7 +129,9 @@ module nanorv32 (/*AUTOARG*/
    wire [NANORV32_DATA_MSB:0]  dataif_cpu_rdata;
    wire                     dataif_cpu_early_ready;
    wire                     dataif_cpu_ready_r;
+   wire [1:0]               read_byte_sel;
    `endif
+   reg [NANORV32_DATA_MSB:0]                instruction_r;
 
    //@begin[mux_select_declarations]
 
@@ -173,7 +174,6 @@ module nanorv32 (/*AUTOARG*/
 
    reg [NANORV32_DATA_MSB:0]                next_pc;
 
-   reg [NANORV32_DATA_MSB:0]                instruction_r;
 
    wire [NANORV32_DATA_MSB:0]               rf_porta;
    wire [NANORV32_DATA_MSB:0]               rf_portb;
@@ -245,7 +245,7 @@ module nanorv32 (/*AUTOARG*/
    //===========================================================================
    // Instruction register / decoding
    //===========================================================================
-
+   reg force_stall_reset;
    always @(posedge clk or negedge rst_n) begin
       if(rst_n == 1'b0) begin
          instruction_r <= NANORV32_J0_INSTRUCTION;
@@ -949,7 +949,6 @@ module nanorv32 (/*AUTOARG*/
    // Flow management
    //===========================================================================
 
-   reg force_stall_reset;
    assign cpu_codeif_req = 1'b1;
    reg data_access_cycle; // Indicate when it is ok to access data space
    // (the first cycle normally)

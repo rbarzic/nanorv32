@@ -14,10 +14,10 @@ vivado_file_list.txt:
 
 
 compile:
-	iverilog  -g2005 -DIVERILOG=1 -f   iverilog_file_list.txt -o testbench.exe
+	iverilog -Wall -g2005 -DIVERILOG=1 -f   iverilog_file_list.txt -o testbench.exe
 
 compile_debug:
-	iverilog -pfileline=1  -DIVERILOG=1 -f   iverilog_file_list.txt -o testbench.exe
+	iverilog -W infloop -g2005 -p fileline=1  -DIVERILOG=1 -f   iverilog_file_list.txt -o testbench.exe
 
 
 
@@ -49,7 +49,7 @@ run_rv32ui: ../../riscv-tests/isa/rv32ui/$(TEST).S
 	hexdump -v -e ' 1/4 "%08x " "\n"' $(TEST).bin > $(TEST).vmem32 # Xilinx
 	hexdump -v -e '"@%08.8_ax  " 1/1 "%02x " "\n"' $(TEST).bin > $(TEST).vmem # iverilog
 	python3 ./makehex.py $(TEST).bin 16384 > $(TEST).hex2
-	vvp -N testbench.exe  +vcd +program_memory=$(TEST).vmem | tee -a logs/$(TEST).run.log
+	vvp testbench.exe  +vcd +program_memory=$(TEST).vmem | tee -a logs/$(TEST).run.log
 
 
 debug: TEST=debug
@@ -64,7 +64,7 @@ debug:
 	hexdump -v -e ' 1/4 "%08x " "\n"' $(TEST).bin > $(TEST).vmem32 # Xilinx
 	hexdump -v -e '"@%08.8_ax  " 1/1 "%02x " "\n"' $(TEST).bin > $(TEST).vmem # iverilog
 	python3 ./makehex.py $(TEST).bin 16384 > $(TEST).hex2
-	vvp -N testbench.exe  +vcd +program_memory=$(TEST).vmem
+	vvp  -l log.jb  testbench.exe  +vcd +program_memory=$(TEST).vmem
 
 
 wave:

@@ -89,7 +89,7 @@ module nanorv32_periph_mux_ahb (/*AUTOARG*/
    /*AUTOREG*/
    /*AUTOWIRE*/
    // AHB bridge 
-   reg  [31:0] periph_haddr_reg;
+   reg  [NANORV32_PERIPH_ADDR_MSB:0] periph_haddr_reg;
    reg  [ 3:0] periph_bytesel_reg;
    reg         periph_en_reg;
    reg         gpio_bus_ready_nxt_reg;
@@ -104,12 +104,12 @@ module nanorv32_periph_mux_ahb (/*AUTOARG*/
    always @(posedge clk_in or negedge rst_n) begin  
      if (rst_n == 1'b0) begin 
      periph_en_reg <= 1'b0;
-     periph_haddr_reg <= 32'b0;
+     periph_haddr_reg <= {NANORV32_PERIPH_ADDR_SIZE{1'b0}};
      periph_bytesel_reg <= 4'b0;
      end else begin 
-        if (periph_hreadyin & periph_hsel & periph_htrans) periph_en_reg <= periph_htrans;
-        if (periph_hreadyin & periph_hsel & periph_htrans) periph_haddr_reg <= periph_haddr;
-        if (periph_hreadyin & periph_hsel & periph_htrans & periph_hwrite ) periph_bytesel_reg <= bytesel;
+        if (periph_hreadyin  ) periph_en_reg      <= periph_htrans[1] & periph_hsel;
+        if (periph_hreadyin  ) periph_haddr_reg   <= periph_haddr[NANORV32_PERIPH_ADDR_MSB:0] & {NANORV32_PERIPH_ADDR_SIZE{periph_hsel & periph_htrans[1]}} ;
+        if (periph_hreadyin  ) periph_bytesel_reg <= bytesel & {4{periph_hsel & periph_htrans[1]  & periph_hwrite}} ;
      end
    end 
   
@@ -118,8 +118,9 @@ module nanorv32_periph_mux_ahb (/*AUTOARG*/
    assign bus_gpio_bytesel = periph_bytesel_reg;
    assign bus_gpio_din     = periph_hwdata;
    assign bus_gpio_en      = periph_en_reg;
-   assign periph_hrdata = gpio_bus_dout;
+   assign periph_hrdata    = gpio_bus_dout;
    assign periph_hreadyout = gpio_bus_ready_nxt;
+   assign periph_hresp = 1'b0;
 
 
 

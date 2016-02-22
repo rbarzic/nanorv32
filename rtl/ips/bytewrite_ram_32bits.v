@@ -35,9 +35,9 @@ reg	[NB_COL*COL_WIDTH-1:0] RAM [SIZE-1:0];
    wire [ADDR_WIDTH-1:0]      addr_dly;
    reg  [NB_COL*COL_WIDTH-1:0] dout_int;
 initial begin
-`ifndef IVERILOG
+//`ifndef IVERILOG
    $readmemh(filename,RAM);
-`endif
+//`endif
 //   #10;
 //   // Just for debugging readmemh in case it does not work as expected
 //   for(_i=0;_i<6;_i=_i+1) begin

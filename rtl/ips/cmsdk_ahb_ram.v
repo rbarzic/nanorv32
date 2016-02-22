@@ -38,7 +38,7 @@ module cmsdk_ahb_ram(/*AUTOARG*/
    HCLK, HRESETn, HSEL, HADDR, HTRANS, HSIZE, HWRITE, HWDATA, HREADY
    );
 
-   parameter AW       = 32;// Address width
+   parameter AW       = 16;// Address width
    parameter ROM      = 0;
    parameter filename = "";
 

@@ -104,6 +104,7 @@ module nanorv32_simpleahb (/*AUTOARG*/
    wire [2:0]                 hbursti;
    wire [NANORV32_DATA_MSB:0] hwdatai;
    wire                       hwritei; 
+   wire                       htransi; 
 
 
    wire [NANORV32_DATA_MSB:0] hrdatad; 
@@ -117,6 +118,7 @@ module nanorv32_simpleahb (/*AUTOARG*/
    wire [2:0]                 hburstd;
    wire [NANORV32_DATA_MSB:0] hwdatad;
    wire                       hwrited; 
+   wire                       htransd; 
 
    wire [31:0]  io_tcm0_haddr; 
    wire         io_tcm0_hwrite; 
@@ -164,7 +166,7 @@ module nanorv32_simpleahb (/*AUTOARG*/
      ); */
    nanorv32 U_CPU (
    .rst_n      (rst_n),
-   .clk        (clk_in),
+   .clk        (clk),
 
    .illegal_instruction      (illegal_instruction),
 
@@ -181,6 +183,7 @@ module nanorv32_simpleahb (/*AUTOARG*/
    .hbursti      (hbursti     ),
    .hwdatai      (hwdatai     ),
    .hwritei      (hwritei     ), 
+   .htransi      (htransi     ), 
    // Data memory interface
    .hrdatad      (hrdatad     ), 
    .hrespd       (hrespd      ),
@@ -192,7 +195,8 @@ module nanorv32_simpleahb (/*AUTOARG*/
    .hmasterlockd (hmasterlockd),
    .hburstd      (hburstd     ),
    .hwdatad      (hwdatad     ),
-   .hwrited      (hwrited     ) 
+   .hwrited      (hwrited     ), 
+   .htransd      (htransd     ) 
    ); 
 
 
@@ -217,10 +221,10 @@ module nanorv32_simpleahb (/*AUTOARG*/
    .HRDATA      (io_tcm0_hrdata), 
    .HRESP       (io_tcm0_hresp),
    // Inputs
-   .HCLK        (clk_in), 
-   .HRESETn     (rst_in), 
+   .HCLK        (clk), 
+   .HRESETn     (rst_n), 
    .HSEL        (io_tcm0_hsel), 
-   .HADDR       (io_tcm0_haddr), 
+   .HADDR       (io_tcm0_haddr[15:0]), 
    .HTRANS      (io_tcm0_htrans), 
    .HSIZE       (io_tcm0_hsize), 
    .HWRITE      (io_tcm0_hwrite), 
@@ -246,10 +250,10 @@ module nanorv32_simpleahb (/*AUTOARG*/
    .HRDATA      (io_tcm1_hrdata), 
    .HRESP       (io_tcm1_hresp),
    // Inputs
-   .HCLK        (clk_in), 
-   .HRESETn     (rst_in), 
+   .HCLK        (clk), 
+   .HRESETn     (rst_n), 
    .HSEL        (io_tcm1_hsel), 
-   .HADDR       (io_tcm1_haddr), 
+   .HADDR       (io_tcm1_haddr[15:0]), 
    .HTRANS      (io_tcm1_htrans), 
    .HSIZE       (io_tcm1_hsize), 
    .HWRITE      (io_tcm1_hwrite), 
@@ -259,9 +263,9 @@ module nanorv32_simpleahb (/*AUTOARG*/
 
     /* ahbmatrix AUTO_TEMPLATE(
      ); */
-    ZscaleSystem   u_ahbmatrix(
-    .clk         (clk_in), 
-    .reset       (rst_n),
+    ZscaleTop   u_ahbmatrix(
+    .clk         (clk), 
+    .reset       (~rst_n),
 
     .io_iside_haddr       (haddri      ),
     .io_iside_hwrite      (hwritei     ),
@@ -269,7 +273,7 @@ module nanorv32_simpleahb (/*AUTOARG*/
     .io_iside_hburst      (hbursti     ),
     .io_iside_hprot       (hproti      ),
     .io_iside_htrans      ({htransi,1'b0}),
-    .io_iside_hmastlock   (hmastlocki  ),
+    .io_iside_hmastlock   (hmasterlocki  ),
     .io_iside_hwdata      (hwdatai     ),
     .io_iside_hrdata      (hrdatai     ),
     .io_iside_hready      (hreadyi     ),
@@ -281,7 +285,7 @@ module nanorv32_simpleahb (/*AUTOARG*/
     .io_dside_hburst      (hburstd     ),
     .io_dside_hprot       (hprotd      ),
     .io_dside_htrans      ({htransd,1'b0}     ),
-    .io_dside_hmastlock   (hmastlockd  ),
+    .io_dside_hmastlock   (hmasterlockd  ),
     .io_dside_hwdata      (hwdatad     ),
     .io_dside_hrdata      (hrdatad     ),
     .io_dside_hready      (hreadyd     ),
@@ -341,10 +345,10 @@ module nanorv32_simpleahb (/*AUTOARG*/
                                      .periph_hresp      (io_periph_hresp     ), 
                                      .bus_gpio_addr     (bus_gpio_addr[NANORV32_PERIPH_ADDR_MSB:0]),
                                      .bus_gpio_bytesel  (bus_gpio_bytesel[3:0]),
-                                     .bus_gpio_din      (bus_gpio_din[NANORV32_DATA_MSB:0]),
+                                     .bus_gpio_din      (bus_gpio_din[31:0]),
                                      .bus_gpio_en       (bus_gpio_en),
                                      // Inputs
-                                     .clk_in            (clk_in), 
+                                     .clk_in            (clk), 
                                      .rst_n             (rst_n),
                                      .periph_haddr      (io_periph_haddr      ), 
                                      .periph_hwrite     (io_periph_hwrite     ), 
@@ -356,7 +360,7 @@ module nanorv32_simpleahb (/*AUTOARG*/
                                      .periph_hwdata     (io_periph_hwdata     ), 
                                      .periph_hsel       (io_periph_hsel       ), 
                                      .periph_hreadyin   (io_periph_hreadyin   ), 
-                                     .gpio_bus_dout     (gpio_bus_dout[NANORV32_DATA_MSB:0]),
+                                     .gpio_bus_dout     (gpio_bus_dout[31:0]),
                                      .gpio_bus_ready_nxt(gpio_bus_ready_nxt));
 
 
