@@ -131,7 +131,8 @@ module nanorv32 (/*AUTOARG*/
    wire                     dataif_cpu_ready_r;
    wire [1:0]               read_byte_sel;
    `endif
-   reg [NANORV32_DATA_MSB:0]                instruction_r;
+   
+   wire [NANORV32_DATA_MSB:0]                instruction_r;
 
    //@begin[mux_select_declarations]
 
@@ -246,6 +247,85 @@ module nanorv32 (/*AUTOARG*/
    // Instruction register / decoding
    //===========================================================================
    reg force_stall_reset;
+   `define INSTRUCTION_QUEUE
+   `ifdef INSTRUCTION_QUEUE 
+   reg  write_data;
+   reg  [1:0] wr_pt_r , rd_pt_r;
+   reg  [31:0] iq [3:0];
+   wire inst_ret = (!(stall_fetch | force_stall_reset));
+   always @(posedge clk or negedge rst_n) begin
+      if(rst_n == 1'b0) begin
+         write_data <= 1'b0;
+         /*AUTORESET*/
+      end
+      else begin
+         if(hreadyi) 
+           write_data <= htransi & hreadyi;
+      end
+   end
+   always @(posedge clk or negedge rst_n) begin
+      if(rst_n == 1'b0) begin
+         wr_pt_r <= 2'b00;
+         /*AUTORESET*/
+      end
+      else begin
+         if(write_data | branch_taken)
+           wr_pt_r <= branch_taken ? 2'b00 : wr_pt_r + 1;
+      end
+   end 
+   always @(posedge clk or negedge rst_n) begin
+      if(rst_n == 1'b0) begin
+         rd_pt_r <= 2'b00;
+         /*AUTORESET*/
+      end
+      else begin
+         if(inst_ret | branch_taken)
+           rd_pt_r <= branch_taken ? 2'b00 : rd_pt_r + 1;
+      end
+   end
+   always @(posedge clk or negedge rst_n) begin
+      if(rst_n == 1'b0) begin
+           iq[0] <= NANORV32_J0_INSTRUCTION;
+         /*AUTORESET*/
+      end
+      else begin
+         if(wr_pt_r == 0 & write_data) 
+           iq[0] <= codeif_cpu_rdata;
+      end
+   end
+   always @(posedge clk or negedge rst_n) begin
+      if(rst_n == 1'b0) begin
+           iq[1] <= NANORV32_J0_INSTRUCTION;
+         /*AUTORESET*/
+      end
+      else begin
+         if(wr_pt_r == 1 & write_data) 
+           iq[1] <= codeif_cpu_rdata;
+      end
+   end
+   always @(posedge clk or negedge rst_n) begin
+      if(rst_n == 1'b0) begin
+           iq[2] <= NANORV32_J0_INSTRUCTION;
+         /*AUTORESET*/
+      end
+      else begin
+         if(wr_pt_r == 2 & write_data) 
+           iq[2] <= codeif_cpu_rdata;
+      end
+   end
+   always @(posedge clk or negedge rst_n) begin
+      if(rst_n == 1'b0) begin
+           iq[3] <= NANORV32_J0_INSTRUCTION;
+         /*AUTORESET*/
+      end
+      else begin
+         if(wr_pt_r == 3 & write_data) 
+           iq[3] <= codeif_cpu_rdata;
+      end
+   end
+ 
+   assign instruction_r = iq[rd_pt_r];
+   `else
    always @(posedge clk or negedge rst_n) begin
       if(rst_n == 1'b0) begin
          instruction_r <= NANORV32_J0_INSTRUCTION;
@@ -256,7 +336,7 @@ module nanorv32 (/*AUTOARG*/
            instruction_r <= codeif_cpu_rdata;
       end
    end
-
+   `endif
    event evt_dbg1;
 
 
