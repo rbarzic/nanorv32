@@ -31,21 +31,31 @@ def nanor32_fl():
         'targets': 'synt,sim_rtl'
     })
     l.append({
-        'file': "{top}/rtl/ips/nanorv32_tcm_ctrl.v",
+        'file': "{top}/rtl/ips/cmsdk_ahb_ram.v",
         'targets': 'synt,sim_rtl'
     })
     l.append({
-        'file': "{top}/rtl/ips/nanorv32_tcm_arbitrer.v",
+        'file': "{top}/rtl/ips/ahb_to_ssram.v",
         'targets': 'synt,sim_rtl'
     })
     l.append({
-        'file': "{top}/rtl/ips/nanorv32_periph_mux.v",
+        'file': "{top}/rtl/ips/nanorv32_periph_mux_ahb.v",
         'targets': 'synt,sim_rtl'
     })
+    #l.append({
+    #    'file': "{top}/rtl/ips/Ahbmli.v",
+    #    'targets': 'synt,sim_rtl'
+    #})
+    l.append({
+        'file': "{top}/rtl/ips/Ahbmli.v",
+        'targets': 'synt,sim_rtl'
+    })
+
     l.append({
         'file': "{top}/rtl/ips/nanorv32_gpio_ctrl.v",
         'targets': 'synt,sim_rtl'
     })
+
 
     l.append({
         'file': "{top}/rtl/chips/nanorv32_clkgen.v",
@@ -67,7 +77,7 @@ def nanor32_fl():
     })
 
     l.append({
-        'file': "{top}/rtl/chips/nanorv32_simple.v",
+        'file': "{top}/rtl/chips/nanorv32_simpleahb.v",
         'targets': 'synt,sim_rtl'
     })
 

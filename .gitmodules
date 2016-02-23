@@ -4,3 +4,6 @@
 [submodule "riscv-opcodes"]
 	path = riscv-opcodes
 	url = https://github.com/riscv/riscv-opcodes.git
+[submodule "ml-ahb-gen"]
+	path = ml-ahb-gen
+	url = https://github.com/rbarzic/ml-ahb-gen.git
