@@ -28,12 +28,14 @@
 //
 //****************************************************************************/
 `timescale 1ns/1ps
+`define AHB_IF
 
 module tb_nanorv32;
 
    `include "nanorv32_parameters.v"
-   parameter ROM_ADDRESS_SIZE  = NANORV32_ADDR_SIZE-1; // Rom is half of the address space
 
+   parameter ROM_ADDRESS_SIZE  = NANORV32_ADDR_SIZE-1; // Rom is half of the address space
+   
 
    /*AUTOREG*/
    /*AUTOWIRE*/
@@ -50,7 +52,11 @@ module tb_nanorv32;
     /* nanorv32_simple AUTO_TEMPLATE(
      .clk_in                  (clk),
      ); */
+`ifdef AHB_IF
+   nanorv32_simpleahb U_DUT (
+`else
    nanorv32_simple U_DUT (
+`endif
                            /*AUTOINST*/
                           // Outputs
                           .illegal_instruction  (illegal_instruction),
@@ -113,7 +119,7 @@ module tb_nanorv32;
                tmp[23:16] = memory[i*4+2];
                tmp[31:24] = memory[i*4+3];
 
-               U_DUT.U_TCM_CODE.U_MEM.RAM[i]  = tmp;
+               U_DUT.u_tcm0.U_RAM.RAM[i]  = tmp;
 
             end
          end
