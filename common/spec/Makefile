@@ -23,3 +23,4 @@ insert:
 # Note : sbt must be in the PATH
 ahbmli:
 	make -C $(TOP)/ml-ahb-gen all JSON=$(TOP)/common/spec/nanorv32_ahbmli.json
+	cp $(TOP)/ml-ahb-gen/chisel/Ahbmli.v $(TOP)/rtl/ips
