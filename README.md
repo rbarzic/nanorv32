@@ -5,7 +5,7 @@ A small 32-bit implementation of the RISC-V architecture
 Highlights :
 
     - 2-stage pipeline (fetch, execute)
-    - 3 AHB master interfaces (Code, Data, Peripherals)
+    - 2 AHB-lite  master interfaces (Code &  Data)
     - lot of code is generated from a high level description
     - written in verilog (using iverilog or Xilinx xvsim as simulator)
 
@@ -18,4 +18,3 @@ FPGA version available (Digilent ARTY board - Xilinx Artix7)
 
 
 See http://rbarzic.github.io/nanorv32 for more information
-
