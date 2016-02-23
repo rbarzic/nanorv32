@@ -1,6 +1,8 @@
 [![Build Status](https://travis-ci.org/rbarzic/nanorv32.svg?branch=master)](https://travis-ci.org/rbarzic/nanorv32)
 
 # nanorv32
+
+[![Join the chat at https://gitter.im/rbarzic/nanorv32](https://badges.gitter.im/rbarzic/nanorv32.svg)](https://gitter.im/rbarzic/nanorv32?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 A small 32-bit implementation of the RISC-V architecture
 Highlights :
 
