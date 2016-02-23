@@ -18,3 +18,8 @@ extract:
 
 insert:
 	$(foreach FILE, $(FILES_WITH_GEN_CODE), $(INSERT) --input_dir=$(GENERATED) $(FILE); )
+
+# AHB Multilayer interconnect
+# Note : sbt must be in the PATH
+ahbmli:
+	make -C $(TOP)/ml-ahb-gen all JSON=$(TOP)/common/spec/nanorv32_ahbmli.json
