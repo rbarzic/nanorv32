@@ -4,7 +4,7 @@
 
 [![Stories in Ready](https://badge.waffle.io/rbarzic/nanorv32.png?label=Ready&title=Ready)](https://waffle.io/rbarzic/nanorv32)
 
-[![Stories in Backlog](https://badge.waffle.io/rbarzic/nanorv32.png?label=Backlog&title=Backlog)](https://waffle.io/rbarzic/nanorv32)
+[![Stories in Backlog](https://badge.waffle.io/rbarzic/nanorv32.png?label=backlog&title=Backlog)](https://waffle.io/rbarzic/nanorv32)
 
 # nanorv32
 
