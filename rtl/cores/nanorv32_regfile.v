@@ -35,7 +35,7 @@ module nanorv32_regfile (/*AUTOARG*/
    // Outputs
    porta, portb,
    // Inputs
-   sel_porta, sel_portb, sel_rd, rd, write_rd, clk, rst_n
+   sel_porta, sel_portb, sel_rd, sel_rd2, rd, write_rd, rd2, write_rd2,   clk, rst_n
    );
 
    parameter NUM_REGS=32;
@@ -45,11 +45,14 @@ module nanorv32_regfile (/*AUTOARG*/
    input  [NANORV32_RF_PORTA_MSB:0] sel_porta;
    input [NANORV32_RF_PORTB_MSB:0]  sel_portb;
    input [NANORV32_RF_PORTRD_MSB:0] sel_rd;
+   input [NANORV32_RF_PORTRD_MSB:0] sel_rd2;
    // Data ports
    output [NANORV32_DATA_MSB:0]     porta;
    output [NANORV32_DATA_MSB:0]     portb;
    input [NANORV32_DATA_MSB:0]      rd;
    input                            write_rd;
+   input [NANORV32_DATA_MSB:0]      rd2;
+   input                            write_rd2;
    input                            clk;
    input                            rst_n;
 
@@ -95,6 +98,11 @@ module nanorv32_regfile (/*AUTOARG*/
     end
   end
 
+  always @(posedge clk) begin
+    if((sel_rd2 != 0) && write_rd2) begin
+      regfile[sel_rd2] <= rd2;
+    end
+  end
 
 
   // For debugging
