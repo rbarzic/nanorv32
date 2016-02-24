@@ -7,6 +7,7 @@ GENERATED=$(TOP)/generated
 
 FILES_WITH_GEN_CODE += $(TOP)/rtl/cores/nanorv32_parameters.v
 FILES_WITH_GEN_CODE += $(TOP)/rtl/cores/nanorv32.v
+FILES_WITH_GEN_CODE += $(TOP)/rtl/cores/nanorv32_urom.v
 # FILES_WITH_GEN_CODE += $(TOP)/hdl/sync/j2_core.v
 
 

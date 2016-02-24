@@ -13,7 +13,7 @@ GCC_WARNS += -Wredundant-decls -Wstrict-prototypes -Wmissing-prototypes -pedanti
 LINKER_SCRIPT_PATH ?= $(TOP)/common/linker_scripts
 LINKER_SCRIPT_ROM_SRAM ?= $(LINKER_SCRIPT_PATH)/nanorv32_rom_sram.ld
 
-STARTUP_CODE=$(TOP)/common/startup/startup.S
+STARTUP_CODE ?= $(TOP)/common/startup/startup.S
 
 TOOLCHAIN_PREFIX ?= riscv32-unknown-elf-
 GNU_GCC ?= $(TOOLCHAIN_PREFIX)gcc

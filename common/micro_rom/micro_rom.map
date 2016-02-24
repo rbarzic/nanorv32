@@ -1,0 +1,28 @@
+
+micro_rom.elf:     file format elf32-littleriscv
+
+SYMBOL TABLE:
+00000000 l    d  .text	00000000 .text
+20000000 l    d  .data	00000000 .data
+20000000 l    d  .bss	00000000 .bss
+00000000 l    df *ABS*	00000000 /tmp/ccRObbte.o
+00000000 l       .text	00000000 main
+00000000 l       .text	00000000 _reset_seq_start_
+00000008 l       .text	00000000 _reset_seq_stop_
+00000008 l       .text	00000000 _int_entry_code_start_
+00000010 l       .text	00000000 _int_entry_code_stop_
+00000010 l       .text	00000000 _int_exit_code_start_
+00000018 l       .text	00000000 _int_exit_code_stop_
+20000000 g       .data	00000000 __data_start__
+00000018 g       .text	00000000 __etext
+20000000 g       .bss	00000000 __HeapLimit
+20000000 g       .bss	00000000 __bss_start__
+00000000         *UND*	00000000 Reset_Handler
+20000000 g       .bss	00000000 end
+20000000 g       .data	00000000 __data_end__
+20000000 g       .bss	00000000 __bss_end__
+20000000 g       .bss	00000000 __end__
+20001000 g       *ABS*	00000000 __StackTop
+20001000 g       *ABS*	00000000 __StackLimit
+
+
