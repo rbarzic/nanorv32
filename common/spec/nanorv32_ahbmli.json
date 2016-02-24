@@ -1,7 +1,7 @@
 {
     "masters": [
-        "iside",
-        "dside"
+        "dside",
+        "iside"
     ],
     "slaves": {
         "tcm0": {
