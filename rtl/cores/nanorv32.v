@@ -250,7 +250,15 @@ module nanorv32 (/*AUTOARG*/
    `define INSTRUCTION_QUEUE
    `ifdef INSTRUCTION_QUEUE 
    reg  write_data;
+   wire  branch_req_tmp;
+   wire  next_inst_en_tmp; 
+   wire  htransi_tmp; 
+   wire [31:0] branch_target_tmp = pc_next;
+   wire [31:0]  haddri_tmp;
+   reg  [31:0]  haddri_r;
    reg  [1:0] wr_pt_r , rd_pt_r;
+   wire  [2:0] wr_pt_r_plus1 = wr_pt_r + 1;
+   wire fifo_full = wr_pt_r_plus1[1:0] == rd_pt_r[1:0] & pstate_r != NANORV32_PSTATE_BRANCH;
    reg  [31:0] iq [3:0];
    wire inst_ret = (!(stall_exe | force_stall_reset));
    reg  branch_taken_reg;
@@ -261,7 +269,7 @@ module nanorv32 (/*AUTOARG*/
       end
       else begin
          if(hreadyi) 
-           branch_taken_reg <= branch_taken & hreadyi & ~reset_over;
+           branch_taken_reg <= branch_taken & hreadyi & ~reset_over &  pstate_r != NANORV32_PSTATE_BRANCH;
       end
    end
    always @(posedge clk or negedge rst_n) begin
@@ -281,7 +289,7 @@ module nanorv32 (/*AUTOARG*/
       end
       else begin
          if(write_data | branch_taken & ~ignore_branch)
-           wr_pt_r <= branch_taken & ~ignore_branch? 2'b00 : wr_pt_r + 1;
+           wr_pt_r <= branch_taken & ~ignore_branch &  pstate_r != NANORV32_PSTATE_BRANCH ? 2'b00 : wr_pt_r + 1;
       end
    end 
    always @(posedge clk or negedge rst_n) begin
@@ -290,17 +298,18 @@ module nanorv32 (/*AUTOARG*/
          /*AUTORESET*/
       end
       else begin
-         if(inst_ret)
+         if(inst_ret & ~reset_over)
            rd_pt_r <= branch_taken_reg ? 2'b00 : rd_pt_r + 1;
       end
    end
+   wire  cancel_data = branch_req_tmp;
    always @(posedge clk or negedge rst_n) begin
       if(rst_n == 1'b0) begin
            iq[0] <= NANORV32_J0_INSTRUCTION;
          /*AUTORESET*/
       end
       else begin
-         if(wr_pt_r == 0 & write_data) 
+         if(wr_pt_r == 0 & write_data & ~cancel_data) 
            iq[0] <= codeif_cpu_rdata;
       end
    end
@@ -310,7 +319,7 @@ module nanorv32 (/*AUTOARG*/
          /*AUTORESET*/
       end
       else begin
-         if(wr_pt_r == 1 & write_data) 
+         if(wr_pt_r == 1 & write_data & ~cancel_data) 
            iq[1] <= codeif_cpu_rdata;
       end
    end
@@ -320,7 +329,7 @@ module nanorv32 (/*AUTOARG*/
          /*AUTORESET*/
       end
       else begin
-         if(wr_pt_r == 2 & write_data) 
+         if(wr_pt_r == 2 & write_data & ~cancel_data) 
            iq[2] <= codeif_cpu_rdata;
       end
    end
@@ -330,7 +339,7 @@ module nanorv32 (/*AUTOARG*/
          /*AUTORESET*/
       end
       else begin
-         if(wr_pt_r == 3 & write_data) 
+         if(wr_pt_r == 3 & write_data & ~cancel_data) 
            iq[3] <= codeif_cpu_rdata;
       end
    end
@@ -341,7 +350,7 @@ module nanorv32 (/*AUTOARG*/
          /*AUTORESET*/
       end
       else begin
-         if( force_stall_reset | reset_over & htransi_tmp) 
+         if( force_stall_reset | reset_over & write_data) 
            reset_over <= force_stall_reset; 
       end
    end
@@ -357,12 +366,6 @@ module nanorv32 (/*AUTOARG*/
       end
    end
 
-   wire  branch_req_tmp;
-   wire  next_inst_en_tmp; 
-   wire  htransi_tmp; 
-   wire [31:0] branch_target_tmp = pc_next;
-   wire [31:0]  haddri_tmp;
-   reg  [31:0]  haddri_r;
    always @(posedge clk or negedge rst_n) begin
       if(rst_n == 1'b0) begin
           haddri_r  <= 32'b0;
@@ -372,10 +375,10 @@ module nanorv32 (/*AUTOARG*/
           haddri_r <= haddri_tmp;
       end
    end
-   assign branch_req_tmp =  branch_taken & ~ignore_branch;
-   assign next_inst_en_tmp = ~force_stall_reset; 
+   assign branch_req_tmp =  branch_taken & ~ignore_branch & pstate_r != NANORV32_PSTATE_BRANCH;
+   assign next_inst_en_tmp = ~force_stall_reset & ~fifo_full; 
    assign htransi_tmp  = (next_inst_en_tmp | branch_req_tmp) & ~force_stall_reset ; 
-   assign haddri_tmp  = branch_req_tmp & ~reset_over ? branch_target_tmp :( {32{~(~force_stall_reset & reset_over)}} & (haddri_r + 4));
+   assign haddri_tmp  = branch_req_tmp & ~reset_over ? branch_target_tmp : {32{~(force_stall_reset | reset_over & htransi_tmp & ~write_data)}} & (haddri_r + 4);
    
  
  
@@ -1070,12 +1073,12 @@ module nanorv32 (/*AUTOARG*/
          // End of automatics
       end
       else begin
-         if(codeif_cpu_ready_r)
-           pc_fetch_r <= pc_next;
+         if(inst_ret)
+           pc_fetch_r <= {32{~reset_over}} & pc_next;
 
          if(inst_ret) begin
 
-            pc_exe_r  <= pc_fetch_r;
+            pc_exe_r  <=  {32{~reset_over}} & pc_next;
          end
       end
    end
@@ -1125,7 +1128,7 @@ module nanorv32 (/*AUTOARG*/
         end
 
         NANORV32_PSTATE_BRANCH: begin
-           output_new_pc = 0;
+           output_new_pc = 1;
           if (codeif_cpu_ready_r) begin
               force_stall_pstate = 1'b0;
               pstate_next =  NANORV32_PSTATE_CONT;
@@ -1154,14 +1157,15 @@ module nanorv32 (/*AUTOARG*/
            //     pstate_next =  NANORV32_PSTATE_WAITLD;
            //  end
            //else begin
-              force_stall_pstate = 1'b0;
               data_started        = 1; 
               data_access_cycle  = 0; 
-              if(codeif_cpu_ready_r) begin
+              if(hreadyd) begin
                 pstate_next =  NANORV32_PSTATE_CONT;
+                force_stall_pstate = 1'b0;
               end
               else begin
-                 pstate_next =  NANORV32_PSTATE_STALL;
+                 pstate_next =  NANORV32_PSTATE_WAITLD;
+                 force_stall_pstate = 1'b1;
               end
            // end
         end // case: NANORV32_PSTATE_WAITLD
@@ -1216,8 +1220,8 @@ module nanorv32 (/*AUTOARG*/
 
    // Code memory interface
    `ifdef AHB_ISIDE_IF
-   assign haddri       = pc_next;  // addr is the next PC
-   assign htransi      = hreadyi & ~force_stall_reset;  // request is the AHB is free
+   assign haddri       = haddri_tmp;  // addr is the next PC
+   assign htransi      = hreadyi & ~force_stall_reset & ~fifo_full;  // request is the AHB is free
    assign hsizei       = 3'b010;   // word request
    assign hproti       = 4'b0001;  // instruction data
    assign hbursti      = 3'b000;   // Burst not supported
@@ -1253,7 +1257,12 @@ module nanorv32 (/*AUTOARG*/
    assign stall_fetch = force_stall_pstate | !codeif_cpu_ready_r;
    assign stall_exe = force_stall_pstate;
    assign read_byte_sel = cpu_dataif_addr[1:0];
-
+   wire  [2:0] hsized_tmp = (datamem_size_read_sel == NANORV32_MUX_SEL_DATAMEM_SIZE_READ_HALFWORD_UNSIGNED | 
+                             datamem_size_read_sel == NANORV32_MUX_SEL_DATAMEM_SIZE_READ_HALFWORD) & 3'b001 |
+                             (datamem_size_read_sel == NANORV32_MUX_SEL_DATAMEM_SIZE_READ_BYTE_UNSIGNED |
+                             datamem_size_read_sel == NANORV32_MUX_SEL_DATAMEM_SIZE_READ_BYTE) & 3'b000 |
+                             datamem_size_read_sel == NANORV32_MUX_SEL_DATAMEM_SIZE_READ_WORD & 3'b010;
+   
    always @* begin
       case(datamem_size_read_sel)
         NANORV32_MUX_SEL_DATAMEM_SIZE_READ_HALFWORD_UNSIGNED: begin
@@ -1323,7 +1332,7 @@ module nanorv32 (/*AUTOARG*/
       case(datamem_size_write_sel)
         NANORV32_MUX_SEL_DATAMEM_SIZE_WRITE_BYTE: begin
 
-           case(cpu_dataif_addr[1:0])
+           case(haddrd[1:0])
              2'b00: begin
                 cpu_dataif_wdata =  {24'b0,rf_portb[7:0]};
                 cpu_dataif_bytesel = {3'b0,datamem_write};
@@ -1347,7 +1356,7 @@ module nanorv32 (/*AUTOARG*/
            endcase
         end
         NANORV32_MUX_SEL_DATAMEM_SIZE_WRITE_HALFWORD: begin
-           case(cpu_dataif_addr[1])
+           case(haddrd[1])
              1'b0: begin
                 cpu_dataif_wdata =  {16'b0,rf_portb[15:0]};
                 cpu_dataif_bytesel = {2'b0,datamem_write,datamem_write};
@@ -1387,13 +1396,14 @@ module nanorv32 (/*AUTOARG*/
    assign hwdatad          = cpu_dataif_wdata_reg;
    assign htransd          = cpu_dataif_req; 
    assign hwrited          = datamem_write; 
-   assign hsized           = datamem_write ? datamem_size_write_sel : datamem_size_read_sel ; 
+   assign hsized           = datamem_write ? datamem_size_write_sel : hsized_tmp ; 
    assign hburstd          = 3'b000 ; 
    assign hmasterd         = 1'b0 ; 
    assign hmasterlockd     = 1'b0 ;
    assign hprotd           = 4'b0000; 
    assign dataif_cpu_rdata = hrdatad; 
    `endif 
+
 endmodule // nanorv32
 /*
  Local Variables:
