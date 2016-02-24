@@ -35,7 +35,7 @@ module tb_nanorv32;
    `include "nanorv32_parameters.v"
 
    parameter ROM_ADDRESS_SIZE  = NANORV32_ADDR_SIZE-1; // Rom is half of the address space
-   
+
 
    /*AUTOREG*/
    /*AUTOWIRE*/
@@ -140,7 +140,7 @@ module tb_nanorv32;
       load_program_memory();
       vcd_dump();
       #1000000;
-      $display("-E- Timeout !");
+      $display("-I- TEST FAILED Timeout !");
       $finish(2);
 
    end
