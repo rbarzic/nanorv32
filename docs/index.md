@@ -56,7 +56,7 @@ This project uses submodules. To clone it you need to run the following commands
 git clone --recursive git@github.com:rbarzic/nanorv32.git
 ```
 
-### /opt/riscv32i
+### Dependencies
 
 On debian/Unbuntu :
 
