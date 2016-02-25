@@ -169,7 +169,7 @@ module tb_nanorv32;
               $finish(0);
            end
          else
-           if(x10_a0 === 32'h0DEAD0000) begin
+           if(x10_a0 === 32'hDEAD0000) begin
               $display("-I- TEST FAILED");
               $finish(1);
            end

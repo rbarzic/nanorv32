@@ -86,6 +86,10 @@ module ahb_to_ssram (/*AUTOARG*/
 
 
 
+   wire         active_cycle;
+   wire         read_valid;
+   wire         write_valid;
+   wire         rw_cycle;
 
 
 
