@@ -40,33 +40,35 @@ module tb_nanorv32;
    /*AUTOREG*/
    /*AUTOWIRE*/
    // Beginning of automatic wires (for undeclared instantiated-module outputs)
-   wire [15:0]          P0;                     // To/From U_DUT of nanorv32_simple.v
-   wire [15:0]          P1;                     // To/From U_DUT of nanorv32_simple.v
+   wire [15:0]          P0;                     // To/From U_DUT of nanorv32_simpleahb.v
+   wire [15:0]          P1;                     // To/From U_DUT of nanorv32_simpleahb.v
    wire                 clk;                    // From U_CLOCK_GEN of clock_gen.v
-   wire                 illegal_instruction;    // From U_DUT of nanorv32_simple.v
+   wire                 illegal_instruction;    // From U_DUT of nanorv32_simpleahb.v
+   wire                 irq_ack;                // From U_DUT of nanorv32_simpleahb.v
    wire                 rst_n;                  // From U_RESET_GEN of reset_gen.v
    // End of automatics
 
    reg                  reset_a_n;
 
    reg [15:0]          P1reg;                     // To/From U_DUT of nanorv32_simple.v
-    /* nanorv32_simple AUTO_TEMPLATE(
+   reg                 irq;
+
+   /* nanorv32_simpleahb AUTO_TEMPLATE(
      .clk_in                  (clk),
      ); */
-`ifdef AHB_IF
    nanorv32_simpleahb U_DUT (
-`else
-   nanorv32_simple U_DUT (
-`endif
+
                            /*AUTOINST*/
-                          // Outputs
-                          .illegal_instruction  (illegal_instruction),
-                          // Inouts
-                          .P0                   (P0[15:0]),
-                          .P1                   (P1[15:0]),
-                          // Inputs
-                          .clk_in               (clk),           // Templated
-                          .rst_n                (rst_n));
+                             // Outputs
+                             .illegal_instruction(illegal_instruction),
+                             .irq_ack           (irq_ack),
+                             // Inouts
+                             .P0                (P0[15:0]),
+                             .P1                (P1[15:0]),
+                             // Inputs
+                             .clk_in            (clk),           // Templated
+                             .rst_n             (rst_n),
+                             .irq               (irq));
 
 
 
@@ -189,6 +191,8 @@ module tb_nanorv32;
 
    initial begin
       #0;
+      irq = 0;
+
       P1reg = 16'h0;
       reset_a_n = 0;
       #10;

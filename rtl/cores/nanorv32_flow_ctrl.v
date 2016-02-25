@@ -29,11 +29,12 @@
 //****************************************************************************/
 module nanorv32_flow_ctrl (/*AUTOARG*/
    // Outputs
-   force_stall_pstate, force_stall_pstate2, force_stall_reset, output_new_pc, valid_inst,
-   data_access_cycle, pstate_r,
+   force_stall_pstate, force_stall_pstate2, force_stall_reset,
+   output_new_pc, valid_inst, data_access_cycle, pstate_r, irq_ack,
+   irq_bypass_inst_reg, inst_irq,
    // Inputs
-   branch_taken, datamem_read, datamem_write,hreadyd,
-   codeif_cpu_ready_r, clk, rst_n
+   branch_taken, datamem_read, datamem_write, hreadyd,
+   codeif_cpu_ready_r, irq, clk, rst_n
    );
 
 `include "nanorv32_parameters.v"
@@ -53,6 +54,13 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
 
    input  codeif_cpu_ready_r;
 
+   // IRQ support
+   input  irq;
+   output irq_ack;
+   output irq_bypass_inst_reg;
+   output [NANORV32_DATA_MSB:0] inst_irq;       // From U_MICRO_ROM of nanorv32_urom.v
+
+
    input clk;
    input rst_n;
 
@@ -68,6 +76,8 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
    reg                  force_stall_pstate;
    reg                  force_stall_pstate2;
    reg                  force_stall_reset;
+   reg                  irq_ack;
+   reg                  irq_bypass_inst_reg;
    reg                  output_new_pc;
    reg                  valid_inst;
    // End of automatics
@@ -75,6 +85,13 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
    reg data_started;
    reg [NANORV32_PSTATE_MSB:0] pstate_next;
    reg [NANORV32_PSTATE_MSB:0] pstate_r;
+
+   // Counter for micro-rom address
+   reg [NANORV32_UROM_ADDR_MSB:0] urom_addr_r;
+   reg [NANORV32_UROM_ADDR_MSB:0] urom_addr_start_value;
+
+   reg                         urom_addr_load;
+   reg                         urom_addr_inc;
 
    // (the first cycle normally)
 
@@ -87,7 +104,7 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
       output_new_pc = 0;
       valid_inst = 1;
       data_access_cycle = 0;
- 
+
 
       case(pstate_r)
 
@@ -109,9 +126,11 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
              begin
                 // we use an early "ready",
                 // so we move to state WAITLD when the memory is ready
+
                 force_stall_pstate = 0;
                 force_stall_pstate2 = 1;
-                data_access_cycle  = 1; 
+                data_access_cycle  = 1;
+
                 pstate_next = NANORV32_PSTATE_WAITLD;
              end
         end
@@ -150,7 +169,9 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
            //     pstate_next =  NANORV32_PSTATE_WAITLD;
            //  end
            //else begin
-              data_started        = 1; 
+
+              data_started        = 1;
+
               if(hreadyd) begin
                  if((datamem_write || datamem_read))
                  begin
@@ -158,7 +179,7 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
                   // so we move to state WAITLD when the memory is ready
                   force_stall_pstate = 0;
                   force_stall_pstate2 = 1;
-                  data_access_cycle  = 1; 
+                  data_access_cycle  = 1;
                   pstate_next = NANORV32_PSTATE_WAITLD;
                  end else
                  if(branch_taken) begin
@@ -170,7 +191,7 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
                   pstate_next =  NANORV32_PSTATE_CONT;
                   force_stall_pstate = 1'b0;
                   force_stall_pstate2 = 0;
-                  data_access_cycle  = 0; 
+                  data_access_cycle  = 0;
                 end
               end
               else begin
@@ -203,6 +224,43 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
 
       end
    end
+
+
+   always @(posedge clk or negedge rst_n) begin
+      if(rst_n == 1'b0) begin
+         /*AUTORESET*/
+         // Beginning of autoreset for uninitialized flops
+         urom_addr_r <= {(1+(NANORV32_UROM_ADDR_MSB)){1'b0}};
+         // End of automatics
+      end
+      else begin
+         if(urom_addr_load) begin
+            urom_addr_r <= urom_addr_start_value;
+
+         end
+         else if(urom_addr_inc) begin
+            urom_addr_r <= urom_addr_r + 1'b1;
+         end
+
+      end
+   end
+
+
+
+
+    /* nanorv32_urom AUTO_TEMPLATE(
+     .dout             (inst_irq[NANORV32_DATA_MSB:0]),
+     ); */
+   nanorv32_urom U_MICRO_ROM (
+                              .addr             (urom_addr_r[NANORV32_UROM_ADDR_MSB:0]),
+                           /*AUTOINST*/
+                              // Outputs
+                              .dout             (inst_irq[NANORV32_DATA_MSB:0])); // Templated // Templated // Templated) // Templated)
+
+
+
+
+
 
 
 endmodule // nanorv32_flow_ctrl
