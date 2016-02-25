@@ -31,11 +31,15 @@
 
 module nanorv32 (/*AUTOARG*/
    // Outputs
+   valid_inst, pstate_r, output_new_pc, irq_bypass_inst_reg, inst_irq,
+   force_stall_reset, force_stall_pstate, data_access_cycle,
    illegal_instruction, haddri, hproti, hsizei, hmasteri,
    hmasterlocki, hbursti, hwdatai, hwritei, htransi, haddrd, hprotd,
    hsized, hmasterd, hmasterlockd, hburstd, hwdatad, hwrited, htransd,
+   irq_ack,
    // Inputs
-   rst_n, clk, hrdatai, hrespi, hreadyi, hrdatad, hrespd, hreadyd
+   rst_n, clk, hrdatai, hrespi, hreadyi, hrdatad, hrespd, hreadyd,
+   irq
    );
 
 `include "nanorv32_parameters.v"
@@ -78,8 +82,23 @@ module nanorv32 (/*AUTOARG*/
    output                       hwrited;
    output                       htransd;
 
+   input                        irq;                    // To U_FLOW_CTRL of nanorv32_flow_ctrl.v
+   output                       irq_ack;
+
+
+
    /*AUTOINPUT*/
    /*AUTOOUTPUT*/
+   // Beginning of automatic outputs (from unused autoinst outputs)
+   output               data_access_cycle;      // From U_FLOW_CTRL of nanorv32_flow_ctrl.v
+   output               force_stall_pstate;     // From U_FLOW_CTRL of nanorv32_flow_ctrl.v
+   output               force_stall_reset;      // From U_FLOW_CTRL of nanorv32_flow_ctrl.v
+   output [NANORV32_DATA_MSB:0] inst_irq;       // From U_FLOW_CTRL of nanorv32_flow_ctrl.v
+   output               irq_bypass_inst_reg;    // From U_FLOW_CTRL of nanorv32_flow_ctrl.v
+   output               output_new_pc;          // From U_FLOW_CTRL of nanorv32_flow_ctrl.v
+   output [NANORV32_PSTATE_MSB:0] pstate_r;     // From U_FLOW_CTRL of nanorv32_flow_ctrl.v
+   output               valid_inst;             // From U_FLOW_CTRL of nanorv32_flow_ctrl.v
+   // End of automatics
 
    /*AUTOREG*/
    /*AUTOWIRE*/
@@ -1094,21 +1113,27 @@ module nanorv32 (/*AUTOARG*/
 
 
 
-   nanorv32_flow_ctrl U_FLOW_CTRL (
-   .force_stall_pstate  (force_stall_pstate),
-   .force_stall_reset   (force_stall_reset),
-   .output_new_pc       (output_new_pc),
-   .valid_inst          (valid_inst),
-   .data_access_cycle   (data_access_cycle),
-   .pstate_r            (pstate_r),
-   // Inputs
-   .branch_taken        (branch_taken),
-   .datamem_read        (datamem_read),
-   .datamem_write       (datamem_write),
-   .hreadyd             (hreadyd),
-   .codeif_cpu_ready_r  (codeif_cpu_ready_r),
-   .clk                 (clk),
-   .rst_n               (rst_n));
+   nanorv32_flow_ctrl
+     U_FLOW_CTRL (/*AUTOINST*/
+                  // Outputs
+                  .force_stall_pstate   (force_stall_pstate),
+                  .force_stall_reset    (force_stall_reset),
+                  .output_new_pc        (output_new_pc),
+                  .valid_inst           (valid_inst),
+                  .data_access_cycle    (data_access_cycle),
+                  .pstate_r             (pstate_r[NANORV32_PSTATE_MSB:0]),
+                  .irq_ack              (irq_ack),
+                  .irq_bypass_inst_reg  (irq_bypass_inst_reg),
+                  .inst_irq             (inst_irq[NANORV32_DATA_MSB:0]),
+                  // Inputs
+                  .branch_taken         (branch_taken),
+                  .datamem_read         (datamem_read),
+                  .datamem_write        (datamem_write),
+                  .hreadyd              (hreadyd),
+                  .codeif_cpu_ready_r   (codeif_cpu_ready_r),
+                  .irq                  (irq),
+                  .clk                  (clk),
+                  .rst_n                (rst_n));
 
 
 

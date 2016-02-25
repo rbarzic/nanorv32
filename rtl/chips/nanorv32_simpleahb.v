@@ -34,11 +34,11 @@
 
 module nanorv32_simpleahb (/*AUTOARG*/
    // Outputs
-   illegal_instruction,
+   illegal_instruction, irq_ack,
    // Inouts
    P0, P1,
    // Inputs
-   clk_in, rst_n
+   clk_in, irq, rst_n
    );
 
 `include "nanorv32_parameters.v"
@@ -55,9 +55,14 @@ module nanorv32_simpleahb (/*AUTOARG*/
    inout  wire [15:0]   P0;
    inout  wire [15:0]   P1;
 
+   // irq support (preliminary)
+   input                irq;
+   output               irq_ack;
+
+
 
    // Code memory port
-/*AUTOINPUT*/
+   /*AUTOINPUT*/
    /*AUTOOUTPUT*/
 
    /*AUTOREG*/
@@ -196,7 +201,11 @@ module nanorv32_simpleahb (/*AUTOARG*/
    .hburstd      (hburstd     ),
    .hwdatad      (hwdatad     ),
    .hwrited      (hwrited     ),
-   .htransd      (htransd     )
+   .htransd      (htransd     ),
+   // IRQ support
+   .irq(irq),
+   .irq_ack(irq_ack)
+
    );
 
 
@@ -233,16 +242,20 @@ module nanorv32_simpleahb (/*AUTOARG*/
    );
 
    /* Data RAM */
-   /* nanorv32_tcm_ctrl AUTO_TEMPLATE(
-     .ready_nxt             (tcmcode_ready_nxt),
-     .dout                  (tcmcode_dout[NANORV32_DATA_MSB:0]),
+    /* cmsdk_ahb_ram AUTO_TEMPLATE(
+     .HREADYOUT   (io_tcm1_hreadyout),
+     .HRDATA      (io_tcm1_hrdata),
+     .HRESP       (io_tcm1_hresp),
      // Inputs
-     .clk                   (clk),
-     .rst_n                 (rst_n),
-     .en                    (tcmcode_en),
-     .din                   (tcmcode_din[NANORV32_DATA_MSB:0]),
-     .addr                  (tcmcode_addr[ADDR_WIDTH-1:0]),
-     .bytesel               (tcmcode_bytesel[3:0]),
+     .HCLK        (clk),
+     .HRESETn     (rst_n),
+     .HSEL        (io_tcm1_hsel),
+     .HADDR       (io_tcm1_haddr[15:0]),
+     .HTRANS      (io_tcm1_htrans),
+     .HSIZE       (io_tcm1_hsize),
+     .HWRITE      (io_tcm1_hwrite),
+     .HWDATA      (io_tcm1_hwdata),
+     .HREADY      (io_tcm1_hreadyin),
      ); */
  cmsdk_ahb_ram u_tcm1(/*AUTOARG*/
    // Outputs
@@ -262,6 +275,8 @@ module nanorv32_simpleahb (/*AUTOARG*/
    );
 
      /* Ahbmli AUTO_TEMPLATE(
+      .io_iside_htrans      ({htransi,1'b0}),
+      .io_dside_htrans      ({htransd,1'b0}),
      ); */
    Ahbmli   u_ahbmatrix(
     .clk         (clk),
