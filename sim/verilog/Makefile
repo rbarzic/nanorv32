@@ -14,7 +14,7 @@ vivado_file_list.txt:
 
 
 compile:
-	iverilog -Wall -g2005 -DIVERILOG=1 -f   iverilog_file_list.txt -o testbench.exe
+	iverilog -Wall -W no-timescale -g2005 -DIVERILOG=1 -f   iverilog_file_list.txt -o testbench.exe
 
 compile_debug:
 	iverilog -W infloop -g2005 -p fileline=1  -DIVERILOG=1 -f   iverilog_file_list.txt -o testbench.exe

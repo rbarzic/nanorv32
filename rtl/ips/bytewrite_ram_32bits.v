@@ -7,7 +7,7 @@
 //
 // bytewrite_ram_32bits.v
 //
-`timescale 1ns/1ps
+// `timescale 1ns/1ps
 
 module bytewrite_ram_32bits (clk, we, addr, din, dout);
 
@@ -56,7 +56,8 @@ always @(posedge clk)
      // $display("%t -D- reading code rom : addr %x ",$realtime,addr);
 end
 
-   assign #60 dout = dout_int;
+   // assign #60 dout = dout_int;
+   assign dout = dout_int;
 
 
 // Remove the original generate statement to ease Xilinx memory bitstream patching
