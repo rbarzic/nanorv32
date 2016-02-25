@@ -1,0 +1,17 @@
+
+micro_rom.elf:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00000000 <_reset_seq_start_>:
+   0:	00100093          	li	ra,1
+   4:	00000013          	nop
+
+00000008 <_int_entry_code_start_>:
+   8:	00200093          	li	ra,2
+   c:	00000013          	nop
+
+00000010 <_int_entry_code_stop_>:
+  10:	00300093          	li	ra,3
+  14:	00000013          	nop

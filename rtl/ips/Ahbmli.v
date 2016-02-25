@@ -170,7 +170,7 @@ module HastiBus(input clk, input reset,
   assign T3 = T25 | T4;
   assign T4 = T6 & T5;
   assign T5 = io_slaves_2_hreadyout ^ 1'h1;
-  assign T6 = T7[2'h2:2'h2];
+  assign T6 = T7[2'h2];
   assign T7 = T21 ? 3'h1 : T8;
   assign T8 = T17 ? 3'h2 : T9;
   assign T9 = T10 ? 3'h4 : 3'h0;
@@ -179,25 +179,25 @@ module HastiBus(input clk, input reset,
   assign master_htrans = skb_valid ? skb_htrans : io_master_htrans;
   assign T12 = T13 ? io_master_htrans : skb_htrans;
   assign T13 = master_hready & T2;
-  assign T14 = T15 == 4'hf;
+  assign T14 = T15 == 4'h2;
   assign T15 = master_haddr[5'h1f:5'h1c];
   assign master_haddr = skb_valid ? skb_haddr : io_master_haddr;
   assign T16 = T13 ? io_master_haddr : skb_haddr;
   assign T17 = T19 & T18;
   assign T18 = master_htrans != 2'h0;
-  assign T19 = T20 == 4'h2;
+  assign T19 = T20 == 4'h0;
   assign T20 = master_haddr[5'h1f:5'h1c];
   assign T21 = T23 & T22;
   assign T22 = master_htrans != 2'h0;
-  assign T23 = T24 == 4'h0;
+  assign T23 = T24 == 4'hf;
   assign T24 = master_haddr[5'h1f:5'h1c];
   assign T25 = T29 | T26;
   assign T26 = T28 & T27;
   assign T27 = io_slaves_1_hreadyout ^ 1'h1;
-  assign T28 = T7[1'h1:1'h1];
+  assign T28 = T7[1'h1];
   assign T29 = T31 & T30;
   assign T30 = io_slaves_0_hreadyout ^ 1'h1;
-  assign T31 = T7[1'h0:1'h0];
+  assign T31 = T7[1'h0];
   assign T32 = T35 | R33;
   assign T68 = reset ? 1'h0 : T34;
   assign T34 = master_hready ? T6 : R33;
@@ -509,7 +509,7 @@ module HastiSlaveMux(input clk, input reset,
   assign io_out_hreadyin = io_out_hreadyout;
   assign io_out_hsel = T0;
   assign T0 = T24 | T1;
-  assign T1 = T2[1'h1:1'h1];
+  assign T1 = T2[1'h1];
   assign T2 = requests_0 ? 2'h1 : T3;
   assign T3 = requests_1 ? 2'h2 : 2'h0;
   assign requests_1 = T13 | R4;
@@ -534,7 +534,7 @@ module HastiSlaveMux(input clk, input reset,
   assign T21 = R14 ^ 1'h1;
   assign T22 = T24 ^ 1'h1;
   assign T23 = io_ins_0_hsel & io_ins_0_hreadyin;
-  assign T24 = T2[1'h0:1'h0];
+  assign T24 = T2[1'h0];
   assign io_out_hwdata = T25;
   assign T25 = T29 | T26;
   assign T26 = R27 ? io_ins_1_hwdata : 32'h0;
@@ -1137,18 +1137,7 @@ module HastiXbar(input clk, input reset,
   );
 endmodule
 
-module ZscaleSystem(input clk, input reset,
-    input [31:0] io_iside_haddr,
-    input  io_iside_hwrite,
-    input [2:0] io_iside_hsize,
-    input [2:0] io_iside_hburst,
-    input [3:0] io_iside_hprot,
-    input [1:0] io_iside_htrans,
-    input  io_iside_hmastlock,
-    input [31:0] io_iside_hwdata,
-    output[31:0] io_iside_hrdata,
-    output io_iside_hready,
-    output io_iside_hresp,
+module Ahbmli(input clk, input reset,
     input [31:0] io_dside_haddr,
     input  io_dside_hwrite,
     input [2:0] io_dside_hsize,
@@ -1160,6 +1149,30 @@ module ZscaleSystem(input clk, input reset,
     output[31:0] io_dside_hrdata,
     output io_dside_hready,
     output io_dside_hresp,
+    input [31:0] io_iside_haddr,
+    input  io_iside_hwrite,
+    input [2:0] io_iside_hsize,
+    input [2:0] io_iside_hburst,
+    input [3:0] io_iside_hprot,
+    input [1:0] io_iside_htrans,
+    input  io_iside_hmastlock,
+    input [31:0] io_iside_hwdata,
+    output[31:0] io_iside_hrdata,
+    output io_iside_hready,
+    output io_iside_hresp,
+    output[31:0] io_periph_haddr,
+    output io_periph_hwrite,
+    output[2:0] io_periph_hsize,
+    output[2:0] io_periph_hburst,
+    output[3:0] io_periph_hprot,
+    output[1:0] io_periph_htrans,
+    output io_periph_hmastlock,
+    output[31:0] io_periph_hwdata,
+    input [31:0] io_periph_hrdata,
+    output io_periph_hsel,
+    output io_periph_hreadyin,
+    input  io_periph_hreadyout,
+    input  io_periph_hresp,
     output[31:0] io_tcm0_haddr,
     output io_tcm0_hwrite,
     output[2:0] io_tcm0_hsize,
@@ -1185,20 +1198,7 @@ module ZscaleSystem(input clk, input reset,
     output io_tcm1_hsel,
     output io_tcm1_hreadyin,
     input  io_tcm1_hreadyout,
-    input  io_tcm1_hresp,
-    output[31:0] io_periph_haddr,
-    output io_periph_hwrite,
-    output[2:0] io_periph_hsize,
-    output[2:0] io_periph_hburst,
-    output[3:0] io_periph_hprot,
-    output[1:0] io_periph_htrans,
-    output io_periph_hmastlock,
-    output[31:0] io_periph_hwdata,
-    input [31:0] io_periph_hrdata,
-    output io_periph_hsel,
-    output io_periph_hreadyin,
-    input  io_periph_hreadyout,
-    input  io_periph_hresp
+    input  io_tcm1_hresp
 );
 
   wire[31:0] xbar_io_masters_1_hrdata;
@@ -1239,62 +1239,62 @@ module ZscaleSystem(input clk, input reset,
   wire xbar_io_slaves_0_hreadyin;
 
 
-  assign io_periph_hreadyin = xbar_io_slaves_2_hreadyin;
-  assign io_periph_hsel = xbar_io_slaves_2_hsel;
-  assign io_periph_hwdata = xbar_io_slaves_2_hwdata;
-  assign io_periph_hmastlock = xbar_io_slaves_2_hmastlock;
-  assign io_periph_htrans = xbar_io_slaves_2_htrans;
-  assign io_periph_hprot = xbar_io_slaves_2_hprot;
-  assign io_periph_hburst = xbar_io_slaves_2_hburst;
-  assign io_periph_hsize = xbar_io_slaves_2_hsize;
-  assign io_periph_hwrite = xbar_io_slaves_2_hwrite;
-  assign io_periph_haddr = xbar_io_slaves_2_haddr;
-  assign io_tcm1_hreadyin = xbar_io_slaves_1_hreadyin;
-  assign io_tcm1_hsel = xbar_io_slaves_1_hsel;
-  assign io_tcm1_hwdata = xbar_io_slaves_1_hwdata;
-  assign io_tcm1_hmastlock = xbar_io_slaves_1_hmastlock;
-  assign io_tcm1_htrans = xbar_io_slaves_1_htrans;
-  assign io_tcm1_hprot = xbar_io_slaves_1_hprot;
-  assign io_tcm1_hburst = xbar_io_slaves_1_hburst;
-  assign io_tcm1_hsize = xbar_io_slaves_1_hsize;
-  assign io_tcm1_hwrite = xbar_io_slaves_1_hwrite;
-  assign io_tcm1_haddr = xbar_io_slaves_1_haddr;
-  assign io_tcm0_hreadyin = xbar_io_slaves_0_hreadyin;
-  assign io_tcm0_hsel = xbar_io_slaves_0_hsel;
-  assign io_tcm0_hwdata = xbar_io_slaves_0_hwdata;
-  assign io_tcm0_hmastlock = xbar_io_slaves_0_hmastlock;
-  assign io_tcm0_htrans = xbar_io_slaves_0_htrans;
-  assign io_tcm0_hprot = xbar_io_slaves_0_hprot;
-  assign io_tcm0_hburst = xbar_io_slaves_0_hburst;
-  assign io_tcm0_hsize = xbar_io_slaves_0_hsize;
-  assign io_tcm0_hwrite = xbar_io_slaves_0_hwrite;
-  assign io_tcm0_haddr = xbar_io_slaves_0_haddr;
-  assign io_dside_hresp = xbar_io_masters_1_hresp;
-  assign io_dside_hready = xbar_io_masters_1_hready;
-  assign io_dside_hrdata = xbar_io_masters_1_hrdata;
-  assign io_iside_hresp = xbar_io_masters_0_hresp;
-  assign io_iside_hready = xbar_io_masters_0_hready;
-  assign io_iside_hrdata = xbar_io_masters_0_hrdata;
+  assign io_tcm1_hreadyin = xbar_io_slaves_2_hreadyin;
+  assign io_tcm1_hsel = xbar_io_slaves_2_hsel;
+  assign io_tcm1_hwdata = xbar_io_slaves_2_hwdata;
+  assign io_tcm1_hmastlock = xbar_io_slaves_2_hmastlock;
+  assign io_tcm1_htrans = xbar_io_slaves_2_htrans;
+  assign io_tcm1_hprot = xbar_io_slaves_2_hprot;
+  assign io_tcm1_hburst = xbar_io_slaves_2_hburst;
+  assign io_tcm1_hsize = xbar_io_slaves_2_hsize;
+  assign io_tcm1_hwrite = xbar_io_slaves_2_hwrite;
+  assign io_tcm1_haddr = xbar_io_slaves_2_haddr;
+  assign io_tcm0_hreadyin = xbar_io_slaves_1_hreadyin;
+  assign io_tcm0_hsel = xbar_io_slaves_1_hsel;
+  assign io_tcm0_hwdata = xbar_io_slaves_1_hwdata;
+  assign io_tcm0_hmastlock = xbar_io_slaves_1_hmastlock;
+  assign io_tcm0_htrans = xbar_io_slaves_1_htrans;
+  assign io_tcm0_hprot = xbar_io_slaves_1_hprot;
+  assign io_tcm0_hburst = xbar_io_slaves_1_hburst;
+  assign io_tcm0_hsize = xbar_io_slaves_1_hsize;
+  assign io_tcm0_hwrite = xbar_io_slaves_1_hwrite;
+  assign io_tcm0_haddr = xbar_io_slaves_1_haddr;
+  assign io_periph_hreadyin = xbar_io_slaves_0_hreadyin;
+  assign io_periph_hsel = xbar_io_slaves_0_hsel;
+  assign io_periph_hwdata = xbar_io_slaves_0_hwdata;
+  assign io_periph_hmastlock = xbar_io_slaves_0_hmastlock;
+  assign io_periph_htrans = xbar_io_slaves_0_htrans;
+  assign io_periph_hprot = xbar_io_slaves_0_hprot;
+  assign io_periph_hburst = xbar_io_slaves_0_hburst;
+  assign io_periph_hsize = xbar_io_slaves_0_hsize;
+  assign io_periph_hwrite = xbar_io_slaves_0_hwrite;
+  assign io_periph_haddr = xbar_io_slaves_0_haddr;
+  assign io_iside_hresp = xbar_io_masters_1_hresp;
+  assign io_iside_hready = xbar_io_masters_1_hready;
+  assign io_iside_hrdata = xbar_io_masters_1_hrdata;
+  assign io_dside_hresp = xbar_io_masters_0_hresp;
+  assign io_dside_hready = xbar_io_masters_0_hready;
+  assign io_dside_hrdata = xbar_io_masters_0_hrdata;
   HastiXbar xbar(.clk(clk), .reset(reset),
-       .io_masters_1_haddr( io_dside_haddr ),
-       .io_masters_1_hwrite( io_dside_hwrite ),
-       .io_masters_1_hsize( io_dside_hsize ),
-       .io_masters_1_hburst( io_dside_hburst ),
-       .io_masters_1_hprot( io_dside_hprot ),
-       .io_masters_1_htrans( io_dside_htrans ),
-       .io_masters_1_hmastlock( io_dside_hmastlock ),
-       .io_masters_1_hwdata( io_dside_hwdata ),
+       .io_masters_1_haddr( io_iside_haddr ),
+       .io_masters_1_hwrite( io_iside_hwrite ),
+       .io_masters_1_hsize( io_iside_hsize ),
+       .io_masters_1_hburst( io_iside_hburst ),
+       .io_masters_1_hprot( io_iside_hprot ),
+       .io_masters_1_htrans( io_iside_htrans ),
+       .io_masters_1_hmastlock( io_iside_hmastlock ),
+       .io_masters_1_hwdata( io_iside_hwdata ),
        .io_masters_1_hrdata( xbar_io_masters_1_hrdata ),
        .io_masters_1_hready( xbar_io_masters_1_hready ),
        .io_masters_1_hresp( xbar_io_masters_1_hresp ),
-       .io_masters_0_haddr( io_iside_haddr ),
-       .io_masters_0_hwrite( io_iside_hwrite ),
-       .io_masters_0_hsize( io_iside_hsize ),
-       .io_masters_0_hburst( io_iside_hburst ),
-       .io_masters_0_hprot( io_iside_hprot ),
-       .io_masters_0_htrans( io_iside_htrans ),
-       .io_masters_0_hmastlock( io_iside_hmastlock ),
-       .io_masters_0_hwdata( io_iside_hwdata ),
+       .io_masters_0_haddr( io_dside_haddr ),
+       .io_masters_0_hwrite( io_dside_hwrite ),
+       .io_masters_0_hsize( io_dside_hsize ),
+       .io_masters_0_hburst( io_dside_hburst ),
+       .io_masters_0_hprot( io_dside_hprot ),
+       .io_masters_0_htrans( io_dside_htrans ),
+       .io_masters_0_hmastlock( io_dside_hmastlock ),
+       .io_masters_0_hwdata( io_dside_hwdata ),
        .io_masters_0_hrdata( xbar_io_masters_0_hrdata ),
        .io_masters_0_hready( xbar_io_masters_0_hready ),
        .io_masters_0_hresp( xbar_io_masters_0_hresp ),
@@ -1306,11 +1306,11 @@ module ZscaleSystem(input clk, input reset,
        .io_slaves_2_htrans( xbar_io_slaves_2_htrans ),
        .io_slaves_2_hmastlock( xbar_io_slaves_2_hmastlock ),
        .io_slaves_2_hwdata( xbar_io_slaves_2_hwdata ),
-       .io_slaves_2_hrdata( io_periph_hrdata ),
+       .io_slaves_2_hrdata( io_tcm1_hrdata ),
        .io_slaves_2_hsel( xbar_io_slaves_2_hsel ),
        .io_slaves_2_hreadyin( xbar_io_slaves_2_hreadyin ),
-       .io_slaves_2_hreadyout( io_periph_hreadyout ),
-       .io_slaves_2_hresp( io_periph_hresp ),
+       .io_slaves_2_hreadyout( io_tcm1_hreadyout ),
+       .io_slaves_2_hresp( io_tcm1_hresp ),
        .io_slaves_1_haddr( xbar_io_slaves_1_haddr ),
        .io_slaves_1_hwrite( xbar_io_slaves_1_hwrite ),
        .io_slaves_1_hsize( xbar_io_slaves_1_hsize ),
@@ -1319,11 +1319,11 @@ module ZscaleSystem(input clk, input reset,
        .io_slaves_1_htrans( xbar_io_slaves_1_htrans ),
        .io_slaves_1_hmastlock( xbar_io_slaves_1_hmastlock ),
        .io_slaves_1_hwdata( xbar_io_slaves_1_hwdata ),
-       .io_slaves_1_hrdata( io_tcm1_hrdata ),
+       .io_slaves_1_hrdata( io_tcm0_hrdata ),
        .io_slaves_1_hsel( xbar_io_slaves_1_hsel ),
        .io_slaves_1_hreadyin( xbar_io_slaves_1_hreadyin ),
-       .io_slaves_1_hreadyout( io_tcm1_hreadyout ),
-       .io_slaves_1_hresp( io_tcm1_hresp ),
+       .io_slaves_1_hreadyout( io_tcm0_hreadyout ),
+       .io_slaves_1_hresp( io_tcm0_hresp ),
        .io_slaves_0_haddr( xbar_io_slaves_0_haddr ),
        .io_slaves_0_hwrite( xbar_io_slaves_0_hwrite ),
        .io_slaves_0_hsize( xbar_io_slaves_0_hsize ),
@@ -1332,214 +1332,11 @@ module ZscaleSystem(input clk, input reset,
        .io_slaves_0_htrans( xbar_io_slaves_0_htrans ),
        .io_slaves_0_hmastlock( xbar_io_slaves_0_hmastlock ),
        .io_slaves_0_hwdata( xbar_io_slaves_0_hwdata ),
-       .io_slaves_0_hrdata( io_tcm0_hrdata ),
+       .io_slaves_0_hrdata( io_periph_hrdata ),
        .io_slaves_0_hsel( xbar_io_slaves_0_hsel ),
        .io_slaves_0_hreadyin( xbar_io_slaves_0_hreadyin ),
-       .io_slaves_0_hreadyout( io_tcm0_hreadyout ),
-       .io_slaves_0_hresp( io_tcm0_hresp )
-  );
-endmodule
-
-module ZscaleTop(input clk, input reset,
-    input [31:0] io_iside_haddr,
-    input  io_iside_hwrite,
-    input [2:0] io_iside_hsize,
-    input [2:0] io_iside_hburst,
-    input [3:0] io_iside_hprot,
-    input [1:0] io_iside_htrans,
-    input  io_iside_hmastlock,
-    input [31:0] io_iside_hwdata,
-    output[31:0] io_iside_hrdata,
-    output io_iside_hready,
-    output io_iside_hresp,
-    input [31:0] io_dside_haddr,
-    input  io_dside_hwrite,
-    input [2:0] io_dside_hsize,
-    input [2:0] io_dside_hburst,
-    input [3:0] io_dside_hprot,
-    input [1:0] io_dside_htrans,
-    input  io_dside_hmastlock,
-    input [31:0] io_dside_hwdata,
-    output[31:0] io_dside_hrdata,
-    output io_dside_hready,
-    output io_dside_hresp,
-    output[31:0] io_tcm0_haddr,
-    output io_tcm0_hwrite,
-    output[2:0] io_tcm0_hsize,
-    output[2:0] io_tcm0_hburst,
-    output[3:0] io_tcm0_hprot,
-    output[1:0] io_tcm0_htrans,
-    output io_tcm0_hmastlock,
-    output[31:0] io_tcm0_hwdata,
-    input [31:0] io_tcm0_hrdata,
-    output io_tcm0_hsel,
-    output io_tcm0_hreadyin,
-    input  io_tcm0_hreadyout,
-    input  io_tcm0_hresp,
-    output[31:0] io_tcm1_haddr,
-    output io_tcm1_hwrite,
-    output[2:0] io_tcm1_hsize,
-    output[2:0] io_tcm1_hburst,
-    output[3:0] io_tcm1_hprot,
-    output[1:0] io_tcm1_htrans,
-    output io_tcm1_hmastlock,
-    output[31:0] io_tcm1_hwdata,
-    input [31:0] io_tcm1_hrdata,
-    output io_tcm1_hsel,
-    output io_tcm1_hreadyin,
-    input  io_tcm1_hreadyout,
-    input  io_tcm1_hresp,
-    output[31:0] io_periph_haddr,
-    output io_periph_hwrite,
-    output[2:0] io_periph_hsize,
-    output[2:0] io_periph_hburst,
-    output[3:0] io_periph_hprot,
-    output[1:0] io_periph_htrans,
-    output io_periph_hmastlock,
-    output[31:0] io_periph_hwdata,
-    input [31:0] io_periph_hrdata,
-    output io_periph_hsel,
-    output io_periph_hreadyin,
-    input  io_periph_hreadyout,
-    input  io_periph_hresp
-);
-
-  wire[31:0] sys_io_iside_hrdata;
-  wire sys_io_iside_hready;
-  wire sys_io_iside_hresp;
-  wire[31:0] sys_io_dside_hrdata;
-  wire sys_io_dside_hready;
-  wire sys_io_dside_hresp;
-  wire[31:0] sys_io_tcm0_haddr;
-  wire sys_io_tcm0_hwrite;
-  wire[2:0] sys_io_tcm0_hsize;
-  wire[2:0] sys_io_tcm0_hburst;
-  wire[3:0] sys_io_tcm0_hprot;
-  wire[1:0] sys_io_tcm0_htrans;
-  wire sys_io_tcm0_hmastlock;
-  wire[31:0] sys_io_tcm0_hwdata;
-  wire sys_io_tcm0_hsel;
-  wire sys_io_tcm0_hreadyin;
-  wire[31:0] sys_io_tcm1_haddr;
-  wire sys_io_tcm1_hwrite;
-  wire[2:0] sys_io_tcm1_hsize;
-  wire[2:0] sys_io_tcm1_hburst;
-  wire[3:0] sys_io_tcm1_hprot;
-  wire[1:0] sys_io_tcm1_htrans;
-  wire sys_io_tcm1_hmastlock;
-  wire[31:0] sys_io_tcm1_hwdata;
-  wire sys_io_tcm1_hsel;
-  wire sys_io_tcm1_hreadyin;
-  wire[31:0] sys_io_periph_haddr;
-  wire sys_io_periph_hwrite;
-  wire[2:0] sys_io_periph_hsize;
-  wire[2:0] sys_io_periph_hburst;
-  wire[3:0] sys_io_periph_hprot;
-  wire[1:0] sys_io_periph_htrans;
-  wire sys_io_periph_hmastlock;
-  wire[31:0] sys_io_periph_hwdata;
-  wire sys_io_periph_hsel;
-  wire sys_io_periph_hreadyin;
-
-
-  assign io_periph_hreadyin = sys_io_periph_hreadyin;
-  assign io_periph_hsel = sys_io_periph_hsel;
-  assign io_periph_hwdata = sys_io_periph_hwdata;
-  assign io_periph_hmastlock = sys_io_periph_hmastlock;
-  assign io_periph_htrans = sys_io_periph_htrans;
-  assign io_periph_hprot = sys_io_periph_hprot;
-  assign io_periph_hburst = sys_io_periph_hburst;
-  assign io_periph_hsize = sys_io_periph_hsize;
-  assign io_periph_hwrite = sys_io_periph_hwrite;
-  assign io_periph_haddr = sys_io_periph_haddr;
-  assign io_tcm1_hreadyin = sys_io_tcm1_hreadyin;
-  assign io_tcm1_hsel = sys_io_tcm1_hsel;
-  assign io_tcm1_hwdata = sys_io_tcm1_hwdata;
-  assign io_tcm1_hmastlock = sys_io_tcm1_hmastlock;
-  assign io_tcm1_htrans = sys_io_tcm1_htrans;
-  assign io_tcm1_hprot = sys_io_tcm1_hprot;
-  assign io_tcm1_hburst = sys_io_tcm1_hburst;
-  assign io_tcm1_hsize = sys_io_tcm1_hsize;
-  assign io_tcm1_hwrite = sys_io_tcm1_hwrite;
-  assign io_tcm1_haddr = sys_io_tcm1_haddr;
-  assign io_tcm0_hreadyin = sys_io_tcm0_hreadyin;
-  assign io_tcm0_hsel = sys_io_tcm0_hsel;
-  assign io_tcm0_hwdata = sys_io_tcm0_hwdata;
-  assign io_tcm0_hmastlock = sys_io_tcm0_hmastlock;
-  assign io_tcm0_htrans = sys_io_tcm0_htrans;
-  assign io_tcm0_hprot = sys_io_tcm0_hprot;
-  assign io_tcm0_hburst = sys_io_tcm0_hburst;
-  assign io_tcm0_hsize = sys_io_tcm0_hsize;
-  assign io_tcm0_hwrite = sys_io_tcm0_hwrite;
-  assign io_tcm0_haddr = sys_io_tcm0_haddr;
-  assign io_dside_hresp = sys_io_dside_hresp;
-  assign io_dside_hready = sys_io_dside_hready;
-  assign io_dside_hrdata = sys_io_dside_hrdata;
-  assign io_iside_hresp = sys_io_iside_hresp;
-  assign io_iside_hready = sys_io_iside_hready;
-  assign io_iside_hrdata = sys_io_iside_hrdata;
-  ZscaleSystem sys(.clk(clk), .reset(reset),
-       .io_iside_haddr( io_iside_haddr ),
-       .io_iside_hwrite( io_iside_hwrite ),
-       .io_iside_hsize( io_iside_hsize ),
-       .io_iside_hburst( io_iside_hburst ),
-       .io_iside_hprot( io_iside_hprot ),
-       .io_iside_htrans( io_iside_htrans ),
-       .io_iside_hmastlock( io_iside_hmastlock ),
-       .io_iside_hwdata( io_iside_hwdata ),
-       .io_iside_hrdata( sys_io_iside_hrdata ),
-       .io_iside_hready( sys_io_iside_hready ),
-       .io_iside_hresp( sys_io_iside_hresp ),
-       .io_dside_haddr( io_dside_haddr ),
-       .io_dside_hwrite( io_dside_hwrite ),
-       .io_dside_hsize( io_dside_hsize ),
-       .io_dside_hburst( io_dside_hburst ),
-       .io_dside_hprot( io_dside_hprot ),
-       .io_dside_htrans( io_dside_htrans ),
-       .io_dside_hmastlock( io_dside_hmastlock ),
-       .io_dside_hwdata( io_dside_hwdata ),
-       .io_dside_hrdata( sys_io_dside_hrdata ),
-       .io_dside_hready( sys_io_dside_hready ),
-       .io_dside_hresp( sys_io_dside_hresp ),
-       .io_tcm0_haddr( sys_io_tcm0_haddr ),
-       .io_tcm0_hwrite( sys_io_tcm0_hwrite ),
-       .io_tcm0_hsize( sys_io_tcm0_hsize ),
-       .io_tcm0_hburst( sys_io_tcm0_hburst ),
-       .io_tcm0_hprot( sys_io_tcm0_hprot ),
-       .io_tcm0_htrans( sys_io_tcm0_htrans ),
-       .io_tcm0_hmastlock( sys_io_tcm0_hmastlock ),
-       .io_tcm0_hwdata( sys_io_tcm0_hwdata ),
-       .io_tcm0_hrdata( io_tcm0_hrdata ),
-       .io_tcm0_hsel( sys_io_tcm0_hsel ),
-       .io_tcm0_hreadyin( sys_io_tcm0_hreadyin ),
-       .io_tcm0_hreadyout( io_tcm0_hreadyout ),
-       .io_tcm0_hresp( io_tcm0_hresp ),
-       .io_tcm1_haddr( sys_io_tcm1_haddr ),
-       .io_tcm1_hwrite( sys_io_tcm1_hwrite ),
-       .io_tcm1_hsize( sys_io_tcm1_hsize ),
-       .io_tcm1_hburst( sys_io_tcm1_hburst ),
-       .io_tcm1_hprot( sys_io_tcm1_hprot ),
-       .io_tcm1_htrans( sys_io_tcm1_htrans ),
-       .io_tcm1_hmastlock( sys_io_tcm1_hmastlock ),
-       .io_tcm1_hwdata( sys_io_tcm1_hwdata ),
-       .io_tcm1_hrdata( io_tcm1_hrdata ),
-       .io_tcm1_hsel( sys_io_tcm1_hsel ),
-       .io_tcm1_hreadyin( sys_io_tcm1_hreadyin ),
-       .io_tcm1_hreadyout( io_tcm1_hreadyout ),
-       .io_tcm1_hresp( io_tcm1_hresp ),
-       .io_periph_haddr( sys_io_periph_haddr ),
-       .io_periph_hwrite( sys_io_periph_hwrite ),
-       .io_periph_hsize( sys_io_periph_hsize ),
-       .io_periph_hburst( sys_io_periph_hburst ),
-       .io_periph_hprot( sys_io_periph_hprot ),
-       .io_periph_htrans( sys_io_periph_htrans ),
-       .io_periph_hmastlock( sys_io_periph_hmastlock ),
-       .io_periph_hwdata( sys_io_periph_hwdata ),
-       .io_periph_hrdata( io_periph_hrdata ),
-       .io_periph_hsel( sys_io_periph_hsel ),
-       .io_periph_hreadyin( sys_io_periph_hreadyin ),
-       .io_periph_hreadyout( io_periph_hreadyout ),
-       .io_periph_hresp( io_periph_hresp )
+       .io_slaves_0_hreadyout( io_periph_hreadyout ),
+       .io_slaves_0_hresp( io_periph_hresp )
   );
 endmodule
 

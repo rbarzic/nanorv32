@@ -41,6 +41,9 @@ parameter NANORV32_INSTRUCTION_SIZE = 32;
 parameter NANORV32_INSTRUCTION_MSB = NANORV32_INSTRUCTION_SIZE -1;
 
 
+parameter NANORV32_PERIPH_ADDR_SIZE=16; // 64K
+parameter NANORV32_PERIPH_ADDR_MSB = NANORV32_PERIPH_ADDR_SIZE-1;
+
 
 // Regidter file selector size
 // 32 registers
@@ -61,6 +64,10 @@ parameter NANORV32_RF_PORTRD_MSB = NANORV32_RF_PORTRD_SIZE-1;
 
 //@begin[mux_select_definitions]
 //@end[mux_select_definitions]
+
+//@begin[micro_rom_param]
+//@end[micro_rom_param]
+
 
 // For the ALU shift amount (inputed on ALU port B)
 parameter NANORV32_SHAMT_FILL = NANORV32_DATA_SIZE-NANORV32_INST_FORMAT_SHAMT_SIZE;

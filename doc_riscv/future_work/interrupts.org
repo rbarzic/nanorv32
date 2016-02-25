@@ -1,0 +1,90 @@
+* Cortex-like interrupts (Interrupt functions in regular C)
+
+** Cortex-M0
+
+Registers saved : R0,R1,R2,R3,R12,R14, Return Address, xPSR
+
+
+| Register | Synonym | Callee saved | Caller Saved | Special  | Role in the procedure call standard                                                 |
+| r15      |         |              |              | PC       | The Program Counter.                                                                |
+| r14      |         |              |              | LR       | The Link Register.                                                                  |
+| r13      |         |              |              | SP       | The Stack Pointer                                                                   |
+| r12      |         |              |      X       | IP       | The Intra-Procedure-call scratch register.                                          |
+| r11      | v8      |      X       |              |          | Variable-register 8.                                                                |
+| r10      | v7      |      X       |              | v7       | Variable-register 7.                                                                |
+| r9       |         |      X       |              | v6,SB,TR | Platform register.The meaning of this register is defined by the platform standard. |
+| r8       | v5      |      X       |              |          | Variable-register 5.                                                                |
+| r7       | v4      |      X       |              |          | Variable register 4.                                                                |
+| r6       | v3      |      X       |              |          | Variable register 3.                                                                |
+| r5       | v2      |      X       |              |          | Variable register 2.                                                                |
+| r4       | v1      |      X       |              |          | Variable register 1.                                                                |
+| r3       | a4      |              |     X        |          | Argument / scratch register 4.                                                      |
+| r2       | a3      |              |     X        |          | Argument / scratch register 3.                                                      |
+| r1       | a2      |              |     X        |          | Argument / result / scratch register 2.                                             |
+| r0       | a1      |              |     X        |          | Argument / result / scratch register 1.                                             |
+
+
+
+
+** RISC-V
+
+
+| Register | ABI name | Callee saved | Caller Saved | Comments                      |
+| x0       |          |              |              | Always zero                   |
+| x1       | ra       |              | X            | Return Address/Link Register. |
+| x2       | sp       | X            |              | The Stack Pointer             |
+| x3       | gp       |              |              | Global pointer                |
+| x4       | tp       |              |              | Thread pointer                |
+| x5       | t0       |              | x            | Temporary                     |
+| x6       | t1       |              | x            | Temporary                     |
+| x7       | t2       |              | x            | Temporary                     |
+| x8       | s0/fp    | X            |              | Saved register/Frame pointer  |
+| x9       | s1       | X            |              | Saved register                |
+| x10      | a0       |              | x            | Func. args / return value     |
+| x11      | a1       |              | x            | Func. args / return value     |
+| x12      | a2       |              | X            | Func. args                    |
+| x13      | a3       |              | X            | Func. args                    |
+| x14      | a4       |              | X            | Func. args                    |
+| x15      | a5       |              | X            | Func. args                    |
+| x16-x17  | a6-a7    |              | x            | Func. args                    |
+| x18-27   | s2-s11   | x            |              | Saved registers               |
+| x28-x31  | t3-t6    |              | x            | Temporaries                   |
+
+
+So, in a RV32E context, we must save :
+
+x1(ra), x5-7(t0-2), x10-x15(a0-a15)
++ the return address
+Total : 11
+
+x1(ra) is loaded with a special code (a small negative number so that is can be implemented by the immediate field in a I-type intruction
+
+
+From the calling convention :
+"The stack pointer sp points to the first argument not passed in a register"
+
+In the standard RISC-V calling convention, the stack grows downward and the stack pointer is
+always kept 16-byte aligned. (4 words)
+
+As stack pointer may not be aligned when the interrupt occurs, sp will be pushed to be able to restore the stack without too much hassle
+
+
+12 registers to be saved
+
+Sequences to save register (unoptimized) :
+
+1.   sw x1,-4(sp)
+2.   sw x2,-8(sp)  // sp
+3.   sw x5,-12(sp)
+4.   sw x6,-16(sp)
+5.   sw x7,-20(sp)
+6.   sw x10,-24(sp)
+7.   sw x11,-28(sp)
+8.   sw x12,-32(sp)
+9.   sw x13,-36(sp)
+10.  sw x14,-40(sp)
+11.  sw x15,-44(sp)
+12.  add x1,x0,-1 // 0xFFFFFFFF in x1/ra
+13.  auipc r1,0  // get the pc of the current instruction (?)
+14.  sw x1,-48(sp)
+15.  add sp,sp,-48

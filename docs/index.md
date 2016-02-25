@@ -53,7 +53,7 @@ FPGA version available (Digilent ARTY board - Xilinx Artix7)
 This project uses submodules. To clone it you need to run the following commands :
 
 ```bash
-git clone --recursive git@github.com:rbarzic/nanorv32.git nanorv32-clean
+git clone --recursive git@github.com:rbarzic/nanorv32.git
 ```
 
 ### /opt/riscv32i

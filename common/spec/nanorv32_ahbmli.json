@@ -1,0 +1,29 @@
+{
+    "masters": [
+        "dside",
+        "iside"
+    ],
+    "slaves": {
+        "tcm0": {
+            "address_range": [
+                31,
+                28
+            ],
+            "address_value": 0
+        },
+        "tcm1": {
+            "address_range": [
+                31,
+                28
+            ],
+            "address_value": 2
+        },
+        "periph": {
+            "address_range": [
+                31,
+                28
+            ],
+            "address_value": 15
+        }
+    }
+}

@@ -93,9 +93,9 @@ module nanorv32_simpleahb (/*AUTOARG*/
    wire                 tcmdata_ready_nxt;      // From U_TCM_DATA of nanorv32_tcm_ctrl.v
    // End of automatics
 
-   wire [NANORV32_DATA_MSB:0] hrdatai; 
+   wire [NANORV32_DATA_MSB:0] hrdatai;
    wire                       hrespi;
-   wire                       hreadyi; 
+   wire                       hreadyi;
    wire [NANORV32_DATA_MSB:0] haddri;
    wire [3:0]                 hproti;
    wire [2:0]                 hsizei;
@@ -103,13 +103,13 @@ module nanorv32_simpleahb (/*AUTOARG*/
    wire                       hmasterlocki;
    wire [2:0]                 hbursti;
    wire [NANORV32_DATA_MSB:0] hwdatai;
-   wire                       hwritei; 
-   wire                       htransi; 
+   wire                       hwritei;
+   wire                       htransi;
 
 
-   wire [NANORV32_DATA_MSB:0] hrdatad; 
+   wire [NANORV32_DATA_MSB:0] hrdatad;
    wire                       hrespd;
-   wire                       hreadyd; 
+   wire                       hreadyd;
    wire [NANORV32_DATA_MSB:0] haddrd;
    wire [3:0]                 hprotd;
    wire [2:0]                 hsized;
@@ -117,50 +117,50 @@ module nanorv32_simpleahb (/*AUTOARG*/
    wire                       hmasterlockd;
    wire [2:0]                 hburstd;
    wire [NANORV32_DATA_MSB:0] hwdatad;
-   wire                       hwrited; 
-   wire                       htransd; 
+   wire                       hwrited;
+   wire                       htransd;
 
-   wire [31:0]  io_tcm0_haddr; 
-   wire         io_tcm0_hwrite; 
-   wire [2:0]   io_tcm0_hsize; 
-   wire [2:0]   io_tcm0_hburst; 
-   wire [3:0]   io_tcm0_hprot; 
-   wire [1:0]   io_tcm0_htrans; 
-   wire         io_tcm0_hmastlock; 
-   wire [31:0]  io_tcm0_hwdata; 
-   wire [31:0]  io_tcm0_hrdata; 
-   wire         io_tcm0_hsel; 
-   wire         io_tcm0_hreadyin; 
-   wire         io_tcm0_hreadyout; 
-   wire         io_tcm0_hresp; 
-                    
-   wire [31:0]  io_tcm1_haddr; 
-   wire         io_tcm1_hwrite; 
-   wire [2:0]   io_tcm1_hsize; 
-   wire [2:0]   io_tcm1_hburst; 
-   wire [3:0]   io_tcm1_hprot; 
-   wire [1:0]   io_tcm1_htrans; 
-   wire         io_tcm1_hmastlock; 
-   wire [31:0]  io_tcm1_hwdata; 
-   wire [31:0]  io_tcm1_hrdata; 
-   wire         io_tcm1_hsel; 
-   wire         io_tcm1_hreadyin; 
-   wire         io_tcm1_hreadyout; 
-   wire         io_tcm1_hresp; 
+   wire [31:0]  io_tcm0_haddr;
+   wire         io_tcm0_hwrite;
+   wire [2:0]   io_tcm0_hsize;
+   wire [2:0]   io_tcm0_hburst;
+   wire [3:0]   io_tcm0_hprot;
+   wire [1:0]   io_tcm0_htrans;
+   wire         io_tcm0_hmastlock;
+   wire [31:0]  io_tcm0_hwdata;
+   wire [31:0]  io_tcm0_hrdata;
+   wire         io_tcm0_hsel;
+   wire         io_tcm0_hreadyin;
+   wire         io_tcm0_hreadyout;
+   wire         io_tcm0_hresp;
 
-   wire [31:0]  io_periph_haddr; 
-   wire         io_periph_hwrite; 
-   wire [2:0]   io_periph_hsize; 
-   wire [2:0]   io_periph_hburst; 
-   wire [3:0]   io_periph_hprot; 
-   wire [1:0]   io_periph_htrans; 
-   wire         io_periph_hmastlock; 
-   wire [31:0]  io_periph_hwdata; 
-   wire [31:0]  io_periph_hrdata; 
-   wire         io_periph_hsel; 
-   wire         io_periph_hreadyin; 
-   wire         io_periph_hreadyout; 
-   wire         io_periph_hresp; 
+   wire [31:0]  io_tcm1_haddr;
+   wire         io_tcm1_hwrite;
+   wire [2:0]   io_tcm1_hsize;
+   wire [2:0]   io_tcm1_hburst;
+   wire [3:0]   io_tcm1_hprot;
+   wire [1:0]   io_tcm1_htrans;
+   wire         io_tcm1_hmastlock;
+   wire [31:0]  io_tcm1_hwdata;
+   wire [31:0]  io_tcm1_hrdata;
+   wire         io_tcm1_hsel;
+   wire         io_tcm1_hreadyin;
+   wire         io_tcm1_hreadyout;
+   wire         io_tcm1_hresp;
+
+   wire [31:0]  io_periph_haddr;
+   wire         io_periph_hwrite;
+   wire [2:0]   io_periph_hsize;
+   wire [2:0]   io_periph_hburst;
+   wire [3:0]   io_periph_hprot;
+   wire [1:0]   io_periph_htrans;
+   wire         io_periph_hmastlock;
+   wire [31:0]  io_periph_hwdata;
+   wire [31:0]  io_periph_hrdata;
+   wire         io_periph_hsel;
+   wire         io_periph_hreadyin;
+   wire         io_periph_hreadyout;
+   wire         io_periph_hresp;
 
     /* nanorv32 AUTO_TEMPLATE(
      ); */
@@ -172,9 +172,9 @@ module nanorv32_simpleahb (/*AUTOARG*/
 
 
    // Code memory interface
-   .hrdatai      (hrdatai     ), 
+   .hrdatai      (hrdatai     ),
    .hrespi       (hrespi      ),
-   .hreadyi      (hreadyi     ), 
+   .hreadyi      (hreadyi     ),
    .haddri       (haddri      ),
    .hproti       (hproti      ),
    .hsizei       (hsizei      ),
@@ -182,12 +182,12 @@ module nanorv32_simpleahb (/*AUTOARG*/
    .hmasterlocki (hmasterlocki),
    .hbursti      (hbursti     ),
    .hwdatai      (hwdatai     ),
-   .hwritei      (hwritei     ), 
-   .htransi      (htransi     ), 
+   .hwritei      (hwritei     ),
+   .htransi      (htransi     ),
    // Data memory interface
-   .hrdatad      (hrdatad     ), 
+   .hrdatad      (hrdatad     ),
    .hrespd       (hrespd      ),
-   .hreadyd      (hreadyd     ), 
+   .hreadyd      (hreadyd     ),
    .haddrd       (haddrd      ),
    .hprotd       (hprotd      ),
    .hsized       (hsized      ),
@@ -195,15 +195,15 @@ module nanorv32_simpleahb (/*AUTOARG*/
    .hmasterlockd (hmasterlockd),
    .hburstd      (hburstd     ),
    .hwdatad      (hwdatad     ),
-   .hwrited      (hwrited     ), 
-   .htransd      (htransd     ) 
-   ); 
+   .hwrited      (hwrited     ),
+   .htransd      (htransd     )
+   );
 
 
 
 
 
-
+   /* Code RAM */
     /* nanorv32_tcm_ctrl AUTO_TEMPLATE(
      .ready_nxt             (tcmdata_ready_nxt),
      .dout                  (tcmdata_dout[NANORV32_DATA_MSB:0]),
@@ -217,22 +217,22 @@ module nanorv32_simpleahb (/*AUTOARG*/
      ); */
  cmsdk_ahb_ram u_tcm0(/*AUTOARG*/
    // Outputs
-   .HREADYOUT   (io_tcm0_hreadyout), 
-   .HRDATA      (io_tcm0_hrdata), 
+   .HREADYOUT   (io_tcm0_hreadyout),
+   .HRDATA      (io_tcm0_hrdata),
    .HRESP       (io_tcm0_hresp),
    // Inputs
-   .HCLK        (clk), 
-   .HRESETn     (rst_n), 
-   .HSEL        (io_tcm0_hsel), 
-   .HADDR       (io_tcm0_haddr[15:0]), 
-   .HTRANS      (io_tcm0_htrans), 
-   .HSIZE       (io_tcm0_hsize), 
-   .HWRITE      (io_tcm0_hwrite), 
-   .HWDATA      (io_tcm0_hwdata), 
+   .HCLK        (clk),
+   .HRESETn     (rst_n),
+   .HSEL        (io_tcm0_hsel),
+   .HADDR       (io_tcm0_haddr[15:0]),
+   .HTRANS      (io_tcm0_htrans),
+   .HSIZE       (io_tcm0_hsize),
+   .HWRITE      (io_tcm0_hwrite),
+   .HWDATA      (io_tcm0_hwdata),
    .HREADY      (io_tcm0_hreadyin)
    );
 
-
+   /* Data RAM */
    /* nanorv32_tcm_ctrl AUTO_TEMPLATE(
      .ready_nxt             (tcmcode_ready_nxt),
      .dout                  (tcmcode_dout[NANORV32_DATA_MSB:0]),
@@ -246,25 +246,25 @@ module nanorv32_simpleahb (/*AUTOARG*/
      ); */
  cmsdk_ahb_ram u_tcm1(/*AUTOARG*/
    // Outputs
-   .HREADYOUT   (io_tcm1_hreadyout), 
-   .HRDATA      (io_tcm1_hrdata), 
+   .HREADYOUT   (io_tcm1_hreadyout),
+   .HRDATA      (io_tcm1_hrdata),
    .HRESP       (io_tcm1_hresp),
    // Inputs
-   .HCLK        (clk), 
-   .HRESETn     (rst_n), 
-   .HSEL        (io_tcm1_hsel), 
-   .HADDR       (io_tcm1_haddr[15:0]), 
-   .HTRANS      (io_tcm1_htrans), 
-   .HSIZE       (io_tcm1_hsize), 
-   .HWRITE      (io_tcm1_hwrite), 
-   .HWDATA      (io_tcm1_hwdata), 
+   .HCLK        (clk),
+   .HRESETn     (rst_n),
+   .HSEL        (io_tcm1_hsel),
+   .HADDR       (io_tcm1_haddr[15:0]),
+   .HTRANS      (io_tcm1_htrans),
+   .HSIZE       (io_tcm1_hsize),
+   .HWRITE      (io_tcm1_hwrite),
+   .HWDATA      (io_tcm1_hwdata),
    .HREADY      (io_tcm1_hreadyin)
    );
 
-    /* ahbmatrix AUTO_TEMPLATE(
+     /* Ahbmli AUTO_TEMPLATE(
      ); */
-    ZscaleTop   u_ahbmatrix(
-    .clk         (clk), 
+   Ahbmli   u_ahbmatrix(
+    .clk         (clk),
     .reset       (~rst_n),
 
     .io_iside_haddr       (haddri      ),
@@ -340,26 +340,26 @@ module nanorv32_simpleahb (/*AUTOARG*/
    nanorv32_periph_mux_ahb U_PERIPH_MUX (
                            /*AUTOINST*/
                                      // Outputs
-                                     .periph_hrdata     (io_periph_hrdata    ), 
+                                     .periph_hrdata     (io_periph_hrdata    ),
                                      .periph_hreadyout  (io_periph_hreadyout ),
-                                     .periph_hresp      (io_periph_hresp     ), 
+                                     .periph_hresp      (io_periph_hresp     ),
                                      .bus_gpio_addr     (bus_gpio_addr[NANORV32_PERIPH_ADDR_MSB:0]),
                                      .bus_gpio_bytesel  (bus_gpio_bytesel[3:0]),
                                      .bus_gpio_din      (bus_gpio_din[31:0]),
                                      .bus_gpio_en       (bus_gpio_en),
                                      // Inputs
-                                     .clk_in            (clk), 
+                                     .clk_in            (clk),
                                      .rst_n             (rst_n),
-                                     .periph_haddr      (io_periph_haddr      ), 
-                                     .periph_hwrite     (io_periph_hwrite     ), 
-                                     .periph_hsize      (io_periph_hsize      ), 
-                                     .periph_hburst     (io_periph_hburst     ), 
-                                     .periph_hprot      (io_periph_hprot      ), 
-                                     .periph_htrans     (io_periph_htrans     ), 
-                                     .periph_hmastlock  (io_periph_hmastlock  ), 
-                                     .periph_hwdata     (io_periph_hwdata     ), 
-                                     .periph_hsel       (io_periph_hsel       ), 
-                                     .periph_hreadyin   (io_periph_hreadyin   ), 
+                                     .periph_haddr      (io_periph_haddr      ),
+                                     .periph_hwrite     (io_periph_hwrite     ),
+                                     .periph_hsize      (io_periph_hsize      ),
+                                     .periph_hburst     (io_periph_hburst     ),
+                                     .periph_hprot      (io_periph_hprot      ),
+                                     .periph_htrans     (io_periph_htrans     ),
+                                     .periph_hmastlock  (io_periph_hmastlock  ),
+                                     .periph_hwdata     (io_periph_hwdata     ),
+                                     .periph_hsel       (io_periph_hsel       ),
+                                     .periph_hreadyin   (io_periph_hreadyin   ),
                                      .gpio_bus_dout     (gpio_bus_dout[31:0]),
                                      .gpio_bus_ready_nxt(gpio_bus_ready_nxt));
 

@@ -7,6 +7,7 @@ GENERATED=$(TOP)/generated
 
 FILES_WITH_GEN_CODE += $(TOP)/rtl/cores/nanorv32_parameters.v
 FILES_WITH_GEN_CODE += $(TOP)/rtl/cores/nanorv32.v
+FILES_WITH_GEN_CODE += $(TOP)/rtl/cores/nanorv32_urom.v
 # FILES_WITH_GEN_CODE += $(TOP)/hdl/sync/j2_core.v
 
 
@@ -18,3 +19,9 @@ extract:
 
 insert:
 	$(foreach FILE, $(FILES_WITH_GEN_CODE), $(INSERT) --input_dir=$(GENERATED) $(FILE); )
+
+# AHB Multilayer interconnect
+# Note : sbt must be in the PATH
+ahbmli:
+	make -C $(TOP)/ml-ahb-gen all JSON=$(TOP)/common/spec/nanorv32_ahbmli.json
+	cp $(TOP)/ml-ahb-gen/chisel/Ahbmli.v $(TOP)/rtl/ips

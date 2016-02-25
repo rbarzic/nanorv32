@@ -27,7 +27,6 @@ clean:
 TEST_FUNC_NAME=$(notdir $(basename $(TEST)))
 TEST_FUNC_TXT='"$(notdir $(basename $(TEST)))"'
 TEST_FUNC_RET=$(notdir $(basename $(TEST)))_ret
-
 TEST_FLAGS = -DTEST_FUNC_NAME=$(TEST_FUNC_NAME)
 TEST_FLAGS += -DTEST_FUNC_TXT=$(TEST_FUNC_TXT)
 TEST_FLAGS += -DTEST_FUNC_RET=$(TEST_FUNC_RET)
@@ -41,7 +40,7 @@ run_rv32ui: ../../riscv-tests/isa/rv32ui/$(TEST).S
 	($(GNU_GCC)  $(GNU_CC_FLAGS) $(TEST_FLAGS) \
 	-L $(LINKER_SCRIPT_PATH) \
 	-T $(LINKER_SCRIPT_ROM_SRAM) \
-	$< $(STARTUP_CODE) -o $(TEST).elf  || echo "-I- TEST FAILED (gcc compilation)" >> logs/$(TEST).run.log) | tee  logs/$(TEST).run.log
+	$< $(STARTUP_CODE) $(SRC) -o $(TEST).elf  || echo "-I- TEST FAILED (gcc compilation)" >> logs/$(TEST).run.log) | tee  logs/$(TEST).run.log
 	$(GNU_OBJCOPY) -O binary $(TEST).elf $(TEST).bin
 	$(GNU_OBJDUMP) -d $(TEST).elf > $(TEST).lst
 	$(GNU_OBJDUMP) -t $(TEST).elf > $(TEST).map
