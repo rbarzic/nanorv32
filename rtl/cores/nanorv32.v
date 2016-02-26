@@ -38,8 +38,8 @@ module nanorv32 (/*AUTOARG*/
    hsized, hmasterd, hmasterlockd, hburstd, hwdatad, hwrited, htransd,
    irq_ack,
    // Inputs
-   rst_n, clk, hrdatai, hrespi, hreadyi, hrdatad,
-   hrespd, hreadyd, irq
+   rst_n, clk, hrdatai, hrespi, hreadyi, hrdatad, hrespd, hreadyd,
+   irq
    );
 
 `include "nanorv32_parameters.v"
@@ -1175,7 +1175,6 @@ module nanorv32 (/*AUTOARG*/
                   .hreadyd              (hreadyd),
                   .codeif_cpu_ready_r   (codeif_cpu_ready_r),
                   .irq                  (irq),
-
                   .clk                  (clk),
                   .rst_n                (rst_n));
 

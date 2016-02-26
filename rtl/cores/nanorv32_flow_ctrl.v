@@ -59,8 +59,8 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
    output irq_ack;
    output irq_bypass_inst_reg;
    output [NANORV32_DATA_MSB:0] inst_irq;       // From U_MICRO_ROM of nanorv32_urom.v
-   input                        reti_inst_detected;
 
+   input                        reti_inst_detected;
 
    input clk;
    input rst_n;
@@ -112,12 +112,12 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
       output_new_pc = 0;
       valid_inst = 1;
       data_access_cycle = 0;
+
       // IRQ support
       irq_bypass_inst_a = 0;
       urom_addr_load    = 0;
       urom_addr_start_value = 0;
       urom_addr_inc = 0;
-
       case(pstate_r)
 
         NANORV32_PSTATE_RESET: begin
@@ -142,6 +142,7 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
                 force_stall_pstate = 0;
                 force_stall_pstate2 = 1;
                 data_access_cycle  = 1;
+
 
                 pstate_next = NANORV32_PSTATE_WAITLD;
              end
@@ -182,6 +183,7 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
            //     pstate_next =  NANORV32_PSTATE_WAITLD;
            //  end
            //else begin
+
 
               data_started        = 1;
 
@@ -306,10 +308,7 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
                               .addr             (urom_addr_r[NANORV32_UROM_ADDR_MSB:0]),
                            /*AUTOINST*/
                               // Outputs
-                              .dout             (inst_irq[NANORV32_DATA_MSB:0])); // Templated // Templated // Templated // Templated) // Templated)
-
-
-
+                              .dout             (inst_irq[NANORV32_DATA_MSB:0]));
 endmodule // nanorv32_flow_ctrl
 /*
  Local Variables:
