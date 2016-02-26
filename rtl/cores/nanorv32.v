@@ -244,7 +244,7 @@ module nanorv32 (/*AUTOARG*/
          /*AUTORESET*/
       end
       else begin
-         if(hreadyi) 
+         if(hreadyi)
            write_data <= htransi & hreadyi;
       end
    end
@@ -257,7 +257,7 @@ module nanorv32 (/*AUTOARG*/
          if(write_data | branch_taken & ~ignore_branch)
            wr_pt_r <= branch_taken & ~ignore_branch &  pstate_r != NANORV32_PSTATE_BRANCH ? 2'b00 : wr_pt_r + 1;
       end
-   end 
+   end
    always @(posedge clk or negedge rst_n) begin
       if(rst_n == 1'b0) begin
          rd_pt_r <= 2'b00;
@@ -315,8 +315,8 @@ module nanorv32 (/*AUTOARG*/
          /*AUTORESET*/
       end
       else begin
-         if( force_stall_reset | reset_over & write_data) 
-           reset_over <= force_stall_reset; 
+         if( force_stall_reset | reset_over & write_data)
+           reset_over <= force_stall_reset;
       end
    end
    always @(posedge clk or negedge rst_n) begin
