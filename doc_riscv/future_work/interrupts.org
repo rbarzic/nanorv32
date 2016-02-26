@@ -88,3 +88,7 @@ Sequences to save register (unoptimized) :
 13.  auipc r1,0  // get the pc of the current instruction (?)
 14.  sw x1,-48(sp)
 15.  add sp,sp,-48
+
+
+
+check inst_ret signal to block fetch unit

@@ -112,7 +112,7 @@ module nanorv32 (/*AUTOARG*/
    wire [NANORV32_DATA_MSB:0]                instruction_r;
 
 
-
+   reg [NANORV32_MUX_SEL_DATAMEM_SIZE_READ_MSB:0] datamem_size_read_sel_r;
    //@begin[mux_select_declarations]
    //@end[mux_select_declarations]
 
