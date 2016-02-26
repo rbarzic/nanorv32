@@ -279,7 +279,7 @@ module nanorv32 (/*AUTOARG*/
       end
       else begin
          if((write_data | branch_taken & ~ignore_branch) & hreadyi)
-           wr_pt_r <= branch_taken & ~ignore_branch &  pstate_r != NANORV32_PSTATE_BRANCH ? 2'b00 : wr_pt_r + 1;
+           wr_pt_r <= (branch_taken & ~ignore_branch &  (pstate_r != NANORV32_PSTATE_BRANCH)) ? 2'b00 : wr_pt_r + 1;
       end
    end
    always @(posedge clk or negedge rst_n) begin

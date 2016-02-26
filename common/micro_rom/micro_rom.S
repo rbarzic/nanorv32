@@ -6,17 +6,23 @@ _reset_seq_start_:
 _reset_seq_stop_:
 
 _int_entry_code_start_:
-	addi x1,x0,1
-	addi x2,x0,2
-	addi x3,x0,3
-	addi x4,x0,4
-	addi x5,x0,5
-	addi x6,x0,6
-	addi x7,x0,7
-	addi x8,x0,8
+          sw x1,-4(sp)
+	  sw x2,-8(sp)  // sp
+	  sw x5,-12(sp)
+	  sw x6,-16(sp)
+	  sw x7,-20(sp)
+	  sw x10,-24(sp)
+	  sw x11,-28(sp)
+	  sw x12,-32(sp)
+	  sw x13,-36(sp)
+	  sw x14,-40(sp)
+	  sw x15,-44(sp)
+	  add x1,x0,-1 // 0xFFFFFFFF in x1/ra
+	  auipc x1,0  // get the pc of the current instruction (?)
+	  sw x1,-48(sp)
+	  add sp,sp,-48
+          jalr x0,x0,0x80 // branch to the vector address
 
-	nop
-        nop
 _int_entry_code_stop_:
 
 

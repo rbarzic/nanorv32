@@ -102,6 +102,8 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
    assign reti_qual = reti_inst_detected && interrupt_state;
 
    assign interrupt_state = 0;
+   event                       dbg_evt1;
+   event                       dbg_evt2;
 
    always @* begin
 
@@ -228,18 +230,31 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
         NANORV32_PSTATE_IRQ_BEGIN: begin
            irq_bypass_inst_a = 1; // we are going to override the instruction register
            urom_addr_load    = 1;
-           urom_addr_start_value = NANORV32_INT_ENTRY_CODE_START_ADDR[NANORV32_UROM_ADDR_MSB:0]/4;
+           urom_addr_start_value = NANORV32_INT_ENTRY_CODE_START_ADDR[NANORV32_UROM_ADDR_MSB+2:0]/4;
            pstate_next =  NANORV32_PSTATE_IRQ_CONT;
         end
         NANORV32_PSTATE_IRQ_CONT: begin
-           irq_bypass_inst_a = 1; // we are going to override the instruction register
-           urom_addr_inc = 1;
-           if(urom_addr_r == NANORV32_INT_ENTRY_CODE_STOP_ADDR[NANORV32_UROM_ADDR_MSB:0]/4) begin
-              pstate_next =  NANORV32_PSTATE_IRQ_END;
+
+           if(branch_taken) begin // a jump should be the last instruction
+              // -> dbg_evt1;
+
+              urom_addr_inc = 0; // stop incrementing (we want to keep the instruction)
+              irq_bypass_inst_a = 1; // we keep the bypass because a branch uses 2 cycles
+              pstate_next =  NANORV32_PSTATE_BRANCH;
+              output_new_pc = 1;
            end
            else begin
+              // -> dbg_evt2;
+              urom_addr_inc = 1;
+              irq_bypass_inst_a = 1;
               pstate_next =  NANORV32_PSTATE_IRQ_CONT;
            end
+           //if(urom_addr_r == NANORV32_INT_ENTRY_CODE_STOP_ADDR[NANORV32_UROM_ADDR_MSB+2:0]/4-1) begin
+           //   pstate_next =  NANORV32_PSTATE_IRQ_END;
+           //end
+           //else begin
+           //   pstate_next =  NANORV32_PSTATE_IRQ_CONT;
+           //end
 
 
         end
@@ -249,19 +264,26 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
         NANORV32_PSTATE_RETI_BEGIN: begin
            irq_bypass_inst_a = 1; // we are going to override the instruction register
            urom_addr_load    = 1;
-           urom_addr_start_value = NANORV32_INT_EXIT_CODE_START_ADDR[NANORV32_UROM_ADDR_MSB:0]/4;
+           urom_addr_start_value = NANORV32_INT_EXIT_CODE_START_ADDR[NANORV32_UROM_ADDR_MSB+2:0]/4;
            pstate_next =  NANORV32_PSTATE_RETI_CONT;
         end
 
         NANORV32_PSTATE_RETI_CONT: begin
            irq_bypass_inst_a = 1; // we are going to override the instruction register
            urom_addr_inc = 1;
-           if(urom_addr_r == NANORV32_INT_EXIT_CODE_STOP_ADDR[NANORV32_UROM_ADDR_MSB:0]/4) begin
-              pstate_next =  NANORV32_PSTATE_RETI_END;
+           if(branch_taken) begin
+              pstate_next =  NANORV32_PSTATE_BRANCH;
            end
            else begin
               pstate_next =  NANORV32_PSTATE_RETI_CONT;
            end
+
+           //if(urom_addr_r == NANORV32_INT_EXIT_CODE_STOP_ADDR[NANORV32_UROM_ADDR_MSB+2:0]/4-1) begin
+           //   pstate_next =  NANORV32_PSTATE_RETI_END;
+           //end
+           //else begin
+           //   pstate_next =  NANORV32_PSTATE_RETI_CONT;
+           //end
 
 
         end
@@ -345,6 +367,20 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
                            /*AUTOINST*/
                               // Outputs
                               .dout             (inst_irq[NANORV32_DATA_MSB:0])); // Templated
+
+   // just for debug
+
+   wire [NANORV32_UROM_ADDR_MSB:0]dbg_entry_start;
+   wire [NANORV32_UROM_ADDR_MSB:0] dbg_entry_stop;
+   wire [NANORV32_UROM_ADDR_MSB:0] dbg_exit_start ;
+   wire [NANORV32_UROM_ADDR_MSB:0] dbg_exit_stop  ;
+
+   assign dbg_entry_start = NANORV32_INT_ENTRY_CODE_START_ADDR[NANORV32_UROM_ADDR_MSB+2:0]/4;
+   assign dbg_entry_stop  = NANORV32_INT_ENTRY_CODE_STOP_ADDR[NANORV32_UROM_ADDR_MSB+2:0]/4-1;
+   assign dbg_exit_start = NANORV32_INT_EXIT_CODE_START_ADDR[NANORV32_UROM_ADDR_MSB+2:0]/4;
+   assign dbg_exit_stop  = NANORV32_INT_EXIT_CODE_STOP_ADDR[NANORV32_UROM_ADDR_MSB+2:0]/4-1;
+
+
 endmodule // nanorv32_flow_ctrl
 /*
  Local Variables:

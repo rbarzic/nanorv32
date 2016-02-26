@@ -25,7 +25,8 @@ data_loop_done:
         // if main return 0 -> pass
         beq a0,x0,pass
         bne a0,x0,fail
-
+        // FIXME : should be only defined if running regression tests
+        // from riscv-tests (otherwise, there is a risk of name collision)
 fail:
 	lui	a0,0xdead
 	j	exit
@@ -33,7 +34,11 @@ fail:
 pass:
 	lui	a0,0xcaffe
 	j	exit
-
+        // Just for testing
+        .org 0x80
+irq_vector:
+        nop
+        j irq_vector
 
         .org 0x100
 exit:   nop
