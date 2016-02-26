@@ -38,8 +38,8 @@ module nanorv32 (/*AUTOARG*/
    hsized, hmasterd, hmasterlockd, hburstd, hwdatad, hwrited, htransd,
    irq_ack,
    // Inputs
-   rst_n, clk, hrdatai, hrespi, hreadyi, hrdatad, hrespd, hreadyd,
-   irq
+   rst_n, clk, hrdatai, hrespi, hreadyi, hrdatad,
+   hrespd, hreadyd, irq
    );
 
 `include "nanorv32_parameters.v"
@@ -88,6 +88,8 @@ module nanorv32 (/*AUTOARG*/
 
 
    /*AUTOINPUT*/
+   // Beginning of automatic inputs (from unused autoinst inputs)
+   // End of automatics
    /*AUTOOUTPUT*/
    // Beginning of automatic outputs (from unused autoinst outputs)
    output               data_access_cycle;      // From U_FLOW_CTRL of nanorv32_flow_ctrl.v
@@ -116,6 +118,8 @@ module nanorv32 (/*AUTOARG*/
    wire [1:0]               read_byte_sel;
 
    wire [NANORV32_DATA_MSB:0]                instruction_r;
+
+
 
    //@begin[mux_select_declarations]
 
@@ -197,6 +201,10 @@ module nanorv32 (/*AUTOARG*/
    wire                                     cpu_codeif_req;
    wire                                     valid_inst;
    wire             [NANORV32_PSTATE_MSB:0] pstate_r;
+
+   wire                                     reti_inst_detected; // an instruction equivalent
+   // to a "return from interrupt" as been detected
+
 
    //===========================================================================
    // Immediate value reconstruction
@@ -1084,6 +1092,11 @@ module nanorv32 (/*AUTOARG*/
    wire  data_access_cycle; // Indicate when it is ok to access data space
    // (the first cycle normally)
 
+   // Detection of return from interrupt
+   // jalr x0,x1,0  with x1/ra = -1
+   // with x1/ra coming from reg file port a
+   assign reti_inst_detected = (instruction_r ==NANORV32_RET_INSTRUCTION) &&
+                          (rf_porta == NANORV32_X1_RA_RETI_MAGIC_VALUE);
 
 
    nanorv32_regfile #(.NUM_REGS(32))
@@ -1141,7 +1154,9 @@ module nanorv32 (/*AUTOARG*/
 
 
    nanorv32_flow_ctrl
-     U_FLOW_CTRL (/*AUTOINST*/
+     U_FLOW_CTRL (
+                  .reti_inst_detected    (reti_inst_detected),
+                  /*AUTOINST*/
                   // Outputs
                   .force_stall_pstate   (force_stall_pstate),
                   .force_stall_pstate2  (force_stall_pstate2),
@@ -1160,6 +1175,7 @@ module nanorv32 (/*AUTOARG*/
                   .hreadyd              (hreadyd),
                   .codeif_cpu_ready_r   (codeif_cpu_ready_r),
                   .irq                  (irq),
+
                   .clk                  (clk),
                   .rst_n                (rst_n));
 

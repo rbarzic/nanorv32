@@ -34,7 +34,7 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
    irq_bypass_inst_reg, inst_irq,
    // Inputs
    branch_taken, datamem_read, datamem_write, hreadyd,
-   codeif_cpu_ready_r, irq, clk, rst_n
+   codeif_cpu_ready_r, irq, reti_inst_detected, clk, rst_n
    );
 
 `include "nanorv32_parameters.v"
@@ -59,6 +59,7 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
    output irq_ack;
    output irq_bypass_inst_reg;
    output [NANORV32_DATA_MSB:0] inst_irq;       // From U_MICRO_ROM of nanorv32_urom.v
+   input                        reti_inst_detected;
 
 
    input clk;
@@ -95,6 +96,13 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
 
    // (the first cycle normally)
 
+   wire                        interrupt_state;
+   reg                         irq_bypass_inst_a;
+
+   assign reti_qual = reti_inst_detected && interrupt_state;
+
+   assign interrupt_state = 0;
+
    always @* begin
 
 
@@ -104,7 +112,11 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
       output_new_pc = 0;
       valid_inst = 1;
       data_access_cycle = 0;
-
+      // IRQ support
+      irq_bypass_inst_a = 0;
+      urom_addr_load    = 0;
+      urom_addr_start_value = 0;
+      urom_addr_inc = 0;
 
       case(pstate_r)
 
@@ -133,35 +145,36 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
 
                 pstate_next = NANORV32_PSTATE_WAITLD;
              end
+           else if(irq) begin
+              pstate_next = NANORV32_PSTATE_IRQ_BEGIN;
+           end
+           else if(reti_qual) begin
+              pstate_next = NANORV32_PSTATE_RETI_BEGIN;
+           end
         end
 
         NANORV32_PSTATE_BRANCH: begin
            output_new_pc = 1;
           if (codeif_cpu_ready_r) begin
+             if(irq) begin
+                pstate_next = NANORV32_PSTATE_IRQ_BEGIN;
+             end
+             else if(reti_qual) begin
+                pstate_next = NANORV32_PSTATE_RETI_BEGIN;
+             end
+             else begin
               force_stall_pstate = 1'b0;
               force_stall_pstate2 = 0;
               pstate_next =  NANORV32_PSTATE_CONT;
-           end
-           else begin
+             end
+          end
+          else begin
               force_stall_pstate = 1'b1;
               force_stall_pstate2 = 0;
               pstate_next =  NANORV32_PSTATE_BRANCH;
            end
         end
-        NANORV32_PSTATE_STALL: begin
-           valid_inst = 0;
-           if (codeif_cpu_ready_r)
-             begin
-              force_stall_pstate = 1'b0;
-              force_stall_pstate2 = 0;
-              pstate_next =  NANORV32_PSTATE_CONT ;
-           end
-           else begin
-              force_stall_pstate = 1'b1;
-              force_stall_pstate2 = 0;
-              pstate_next =  NANORV32_PSTATE_STALL;
-           end
-        end // case: NANORV32_PSTATE_STALL
+
         NANORV32_PSTATE_WAITLD: begin
            //if (!dataif_cpu_early_ready)
            //  begin
@@ -173,6 +186,7 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
               data_started        = 1;
 
               if(hreadyd) begin
+
                  if((datamem_write || datamem_read))
                  begin
                   // we use an early "ready",
@@ -187,12 +201,19 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
                   force_stall_pstate2 = 0;
                   pstate_next =  NANORV32_PSTATE_BRANCH;
                   output_new_pc = 1;
-                 end else begin
-                  pstate_next =  NANORV32_PSTATE_CONT;
-                  force_stall_pstate = 1'b0;
-                  force_stall_pstate2 = 0;
-                  data_access_cycle  = 0;
-                end
+                 end
+                 else if(irq) begin
+                    pstate_next = NANORV32_PSTATE_IRQ_BEGIN;
+                 end
+                 else if(reti_qual) begin
+                    pstate_next = NANORV32_PSTATE_RETI_BEGIN;
+                 end
+                 else begin
+                    pstate_next =  NANORV32_PSTATE_CONT;
+                    force_stall_pstate = 1'b0;
+                    force_stall_pstate2 = 0;
+                    data_access_cycle  = 0;
+                 end
               end
               else begin
                  pstate_next =  NANORV32_PSTATE_WAITLD;
@@ -201,6 +222,28 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
               end
            // end
         end // case: NANORV32_PSTATE_WAITLD
+
+        NANORV32_PSTATE_IRQ_BEGIN: begin
+           irq_bypass_inst_a = 1; // we are going to override the instruction register
+           urom_addr_load    = 1;
+           urom_addr_start_value = NANORV32_INT_ENTRY_CODE_START_ADDR[NANORV32_UROM_ADDR_MSB:0];
+           pstate_next =  NANORV32_PSTATE_WAITLD;
+        end
+        NANORV32_PSTATE_IRQ_CONT: begin
+        end
+        NANORV32_PSTATE_IRQ_END: begin
+           pstate_next =  NANORV32_PSTATE_CONT;
+        end
+        NANORV32_PSTATE_RETI_BEGIN: begin
+        end
+
+        NANORV32_PSTATE_RETI_CONT: begin
+        end
+
+        NANORV32_PSTATE_RETI_END: begin
+           pstate_next =  NANORV32_PSTATE_CONT;
+        end
+
         default begin
 
            pstate_next =  NANORV32_PSTATE_CONT;
@@ -208,6 +251,14 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
            force_stall_pstate2 = 0;
            force_stall_reset = 0;
            output_new_pc = 0;
+
+           irq_bypass_inst_a = 0;
+           urom_addr_load    = 0;
+           urom_addr_start_value = 0;
+           urom_addr_inc = 0;
+
+
+
         end
 
      endcase // case (pstate_r)
@@ -255,11 +306,7 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
                               .addr             (urom_addr_r[NANORV32_UROM_ADDR_MSB:0]),
                            /*AUTOINST*/
                               // Outputs
-                              .dout             (inst_irq[NANORV32_DATA_MSB:0])); // Templated // Templated // Templated) // Templated)
-
-
-
-
+                              .dout             (inst_irq[NANORV32_DATA_MSB:0])); // Templated // Templated // Templated // Templated) // Templated)
 
 
 
