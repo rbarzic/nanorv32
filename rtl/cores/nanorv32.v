@@ -178,7 +178,7 @@ module nanorv32 (/*AUTOARG*/
    wire                                     cpu_codeif_req;
    wire                                     valid_inst;
    wire             [NANORV32_PSTATE_MSB:0] pstate_r;
-
+   genvar i;
    //===========================================================================
    // Immediate value reconstruction
    //===========================================================================
@@ -225,7 +225,7 @@ module nanorv32 (/*AUTOARG*/
    wire  [2:0] rd_pt_r_plus1 = rd_pt_r + 1;
    wire fifo_full = wr_pt_r_plus1[1:0] == rd_pt_r[1:0] & pstate_r != NANORV32_PSTATE_BRANCH;
    wire fifo_empty = wr_pt_r[1:0] == rd_pt_r[1:0] & pstate_r != NANORV32_PSTATE_BRANCH;
-   reg  [31:0] iq [3:0];
+   reg  [31:0] iq [0:3];
    wire inst_ret = (!(stall_exe | force_stall_reset));
    reg  branch_taken_reg;
    reg  ignore_branch;
@@ -273,44 +273,58 @@ module nanorv32 (/*AUTOARG*/
    wire  cancel_data = branch_req_tmp;
    always @(posedge clk or negedge rst_n) begin
       if(rst_n == 1'b0) begin
-           iq[0] <= NANORV32_J0_INSTRUCTION;
+           iq[0][31:0] <= NANORV32_J0_INSTRUCTION;
          /*AUTORESET*/
       end
       else begin
          if(wr_pt_r == 0 & write_data & ~cancel_data) 
-           iq[0] <= codeif_cpu_rdata;
+           iq[0][31:0] <= codeif_cpu_rdata[31:0];
       end
    end
-   always @(posedge clk or negedge rst_n) begin
-      if(rst_n == 1'b0) begin
-           iq[1] <= NANORV32_J0_INSTRUCTION;
-         /*AUTORESET*/
+//   always @(posedge clk or negedge rst_n) begin
+//      if(rst_n == 1'b0) begin
+//           iq[1][31:0] <= NANORV32_J0_INSTRUCTION;
+//         /*AUTORESET*/
+//      end
+//      else begin
+//         if(wr_pt_r == 1 & write_data & ~cancel_data) 
+//           iq[1][31:0] <= codeif_cpu_rdata[31:0];
+//      end
+//   end
+//   always @(posedge clk or negedge rst_n) begin
+//      if(rst_n == 1'b0) begin
+//           iq[2][31:0] <= NANORV32_J0_INSTRUCTION;
+//         /*AUTORESET*/
+//      end
+//      else begin
+//         if(wr_pt_r == 2 & write_data & ~cancel_data) 
+//           iq[2][31:0] <= codeif_cpu_rdata[31:0];
+//      end
+//   end
+//   always @(posedge clk or negedge rst_n) begin
+//      if(rst_n == 1'b0) begin
+//           iq[3][31:0] <= NANORV32_J0_INSTRUCTION;
+//         /*AUTORESET*/
+//      end
+//      else begin
+//         if(wr_pt_r == 3 & write_data & ~cancel_data) 
+//           iq[3][31:0] <= codeif_cpu_rdata[31:0];
+//      end
+//   end
+   generate
+      for (i = 0; i < 4; i = i + 1) begin
+        always @(posedge clk or negedge rst_n) begin
+          if(rst_n == 1'b0) begin
+                iq[i][31:0] <= NANORV32_J0_INSTRUCTION;
+             /*AUTORESET*/
+          end else begin 
+            if (wr_pt_r == i & write_data & ~cancel_data)  begin
+                iq[i][31:0] <= codeif_cpu_rdata[31:0];
+            end
+          end
+        end
       end
-      else begin
-         if(wr_pt_r == 1 & write_data & ~cancel_data) 
-           iq[1] <= codeif_cpu_rdata;
-      end
-   end
-   always @(posedge clk or negedge rst_n) begin
-      if(rst_n == 1'b0) begin
-           iq[2] <= NANORV32_J0_INSTRUCTION;
-         /*AUTORESET*/
-      end
-      else begin
-         if(wr_pt_r == 2 & write_data & ~cancel_data) 
-           iq[2] <= codeif_cpu_rdata;
-      end
-   end
-   always @(posedge clk or negedge rst_n) begin
-      if(rst_n == 1'b0) begin
-           iq[3] <= NANORV32_J0_INSTRUCTION;
-         /*AUTORESET*/
-      end
-      else begin
-         if(wr_pt_r == 3 & write_data & ~cancel_data) 
-           iq[3] <= codeif_cpu_rdata;
-      end
-   end
+   endgenerate
    always @(posedge clk or negedge rst_n) begin
       if(rst_n == 1'b0) begin
            reset_over <= 1'b1;

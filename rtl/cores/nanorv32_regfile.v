@@ -65,13 +65,13 @@ module nanorv32_regfile (/*AUTOARG*/
   reg [NANORV32_DATA_MSB:0] porta;
   reg [NANORV32_DATA_MSB:0] portb;
   // End of automatics
-
+  genvar i;
   /*AUTOWIRE*/
 
 
 
 
-  reg [NANORV32_DATA_MSB:0] regfile [0:NUM_REGS-1];
+  reg [NANORV32_DATA_MSB:0] regfile [NUM_REGS-1:0];
 
   always @(sel_porta or regfile[sel_porta])  begin
     if(sel_porta != 0) begin
@@ -92,17 +92,31 @@ module nanorv32_regfile (/*AUTOARG*/
     end
   end
 
-  always @(posedge clk) begin
-    if((sel_rd != 0) && write_rd) begin
-      regfile[sel_rd] <= rd;
+generate
+   for (i = 0; i < 32 ; i = i + 1) begin
+   always @(posedge clk) begin
+    if((sel_rd != 0) && (sel_rd == i) && write_rd) begin
+      regfile[i] <= rd;
     end
+    else if ((sel_rd2 != 0) && (sel_rd2 == i) && write_rd2) begin
+      regfile[i] <= rd2;
+    end
+   end
   end
+endgenerate
 
-  always @(posedge clk) begin
-    if((sel_rd2 != 0) && write_rd2) begin
-      regfile[sel_rd2] <= rd2;
-    end
-  end
+
+//  always @(posedge clk) begin
+//    if((sel_rd != 0) && write_rd) begin
+//      regfile[sel_rd] <= rd;
+//    end
+//  end
+//
+//  always @(posedge clk) begin
+//    if((sel_rd2 != 0) && write_rd2) begin
+//      regfile[sel_rd2] <= rd2;
+//    end
+//  end
 
 
   // For debugging
