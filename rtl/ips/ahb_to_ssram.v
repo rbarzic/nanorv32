@@ -219,7 +219,7 @@ module ahb_to_ssram (/*AUTOARG*/
 
 
 
-   assign ahb_sram_addr = write_en_r ? haddr_r : HADDR;
+   assign ahb_sram_addr = write_en_r | ~HREADYOUT ? haddr_r : HADDR;
    assign ahb_sram_en   = read_valid | write_en_r;
    assign ahb_sram_we   = write_en_r;
 

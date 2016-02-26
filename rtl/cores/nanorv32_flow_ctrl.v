@@ -160,7 +160,13 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
                   force_stall_pstate2 = 1;
                   data_access_cycle  = 1; 
                   pstate_next = NANORV32_PSTATE_WAITLD;
-                end else begin 
+                 end else
+                 if(branch_taken) begin
+                  force_stall_pstate = 1;
+                  force_stall_pstate2 = 0;
+                  pstate_next =  NANORV32_PSTATE_BRANCH;
+                  output_new_pc = 1;
+                 end else begin
                   pstate_next =  NANORV32_PSTATE_CONT;
                   force_stall_pstate = 1'b0;
                   force_stall_pstate2 = 0;

@@ -222,7 +222,9 @@ module nanorv32 (/*AUTOARG*/
    reg  [31:0]  haddri_r;
    reg  [1:0] wr_pt_r , rd_pt_r;
    wire  [2:0] wr_pt_r_plus1 = wr_pt_r + 1;
+   wire  [2:0] rd_pt_r_plus1 = rd_pt_r + 1;
    wire fifo_full = wr_pt_r_plus1[1:0] == rd_pt_r[1:0] & pstate_r != NANORV32_PSTATE_BRANCH;
+   wire fifo_empty = wr_pt_r[1:0] == rd_pt_r[1:0] & pstate_r != NANORV32_PSTATE_BRANCH;
    reg  [31:0] iq [3:0];
    wire inst_ret = (!(stall_exe | force_stall_reset));
    reg  branch_taken_reg;
@@ -254,7 +256,7 @@ module nanorv32 (/*AUTOARG*/
          /*AUTORESET*/
       end
       else begin
-         if(write_data | branch_taken & ~ignore_branch)
+         if((write_data | branch_taken & ~ignore_branch) & hreadyi)
            wr_pt_r <= branch_taken & ~ignore_branch &  pstate_r != NANORV32_PSTATE_BRANCH ? 2'b00 : wr_pt_r + 1;
       end
    end
@@ -264,8 +266,8 @@ module nanorv32 (/*AUTOARG*/
          /*AUTORESET*/
       end
       else begin
-         if(inst_ret & ~reset_over)
-           rd_pt_r <= branch_taken_reg ? 2'b00 : rd_pt_r + 1;
+         if(inst_ret & ~reset_over & ~(~hreadyi & (wr_pt_r[1:0] == rd_pt_r_plus1[1:0] )))
+           rd_pt_r <= branch_taken_reg ? 2'b00 : rd_pt_r_plus1[1:0];
       end
    end
    wire  cancel_data = branch_req_tmp;

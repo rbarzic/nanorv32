@@ -101,7 +101,8 @@ assign gpio_pad_out = gpio_out_r;
 
  // If the delay is not present, iverilog behaves incorrectly
  // in the arbitrer
- assign `_DD_ gpio_bus_ready_nxt = 1'b1; // bus_gpio_en;
+// assign `_DD_ gpio_bus_ready_nxt = bus_gpio_en;
+ assign  gpio_bus_ready_nxt = 1'b1;
 
 
 

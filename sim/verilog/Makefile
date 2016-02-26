@@ -111,7 +111,7 @@ run_ctest: ../../ctests/$(TEST)/$(TEST).c
 	hexdump -v -e ' 1/4 "%08x " "\n"' $(TEST).bin > $(TEST).vmem32 # Xilinx
 	hexdump -v -e '"@%08.8_ax  " 1/1 "%02x " "\n"' $(TEST).bin > $(TEST).vmem # iverilog
 	python3 ./makehex.py $(TEST).bin 16384 > $(TEST).hex2
-	vvp -N testbench.exe  +vcd +program_memory=$(TEST).vmem | tee -a logs/$(TEST).run.log
+	vvp testbench.exe  +vcd +program_memory=$(TEST).vmem | tee -a logs/$(TEST).run.log
 
 
 

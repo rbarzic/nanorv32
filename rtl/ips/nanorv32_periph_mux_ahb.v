@@ -103,7 +103,7 @@ module nanorv32_periph_mux_ahb (/*AUTOARG*/
 
    always @(posedge clk_in or negedge rst_n) begin  
      if (rst_n == 1'b0) begin 
-     periph_en_reg <= 1'b0;
+     periph_en_reg <= 1'b1;
      periph_haddr_reg <= {NANORV32_PERIPH_ADDR_SIZE{1'b0}};
      periph_bytesel_reg <= 4'b0;
      end else begin 
