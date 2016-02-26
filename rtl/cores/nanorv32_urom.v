@@ -58,10 +58,18 @@ module nanorv32_urom (/*AUTOARG*/
       //@begin[micro_rom]
         0: dout<= 32'h0010009;
         1: dout<= 32'h0000001;
-        2: dout<= 32'h0020009;
-        3: dout<= 32'h0000001;
-        4: dout<= 32'h0030009;
-        5: dout<= 32'h0000001;
+        2: dout<= 32'h0010009;
+        3: dout<= 32'h0020011;
+        4: dout<= 32'h0030019;
+        5: dout<= 32'h0040021;
+        6: dout<= 32'h0050029;
+        7: dout<= 32'h0060031;
+        8: dout<= 32'h0070039;
+        9: dout<= 32'h0080041;
+        10: dout<= 32'h0000001;
+        11: dout<= 32'h0000001;
+        12: dout<= 32'h0030009;
+        13: dout<= 32'h0000001;
       //@end[micro_rom]
         default: begin
            dout<= 32'h0000000;

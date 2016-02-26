@@ -228,18 +228,42 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
         NANORV32_PSTATE_IRQ_BEGIN: begin
            irq_bypass_inst_a = 1; // we are going to override the instruction register
            urom_addr_load    = 1;
-           urom_addr_start_value = NANORV32_INT_ENTRY_CODE_START_ADDR[NANORV32_UROM_ADDR_MSB:0];
-           pstate_next =  NANORV32_PSTATE_WAITLD;
+           urom_addr_start_value = NANORV32_INT_ENTRY_CODE_START_ADDR[NANORV32_UROM_ADDR_MSB:0]/4;
+           pstate_next =  NANORV32_PSTATE_IRQ_CONT;
         end
         NANORV32_PSTATE_IRQ_CONT: begin
+           irq_bypass_inst_a = 1; // we are going to override the instruction register
+           urom_addr_inc = 1;
+           if(urom_addr_r == NANORV32_INT_ENTRY_CODE_STOP_ADDR[NANORV32_UROM_ADDR_MSB:0]/4) begin
+              pstate_next =  NANORV32_PSTATE_IRQ_END;
+           end
+           else begin
+              pstate_next =  NANORV32_PSTATE_IRQ_CONT;
+           end
+
+
         end
         NANORV32_PSTATE_IRQ_END: begin
            pstate_next =  NANORV32_PSTATE_CONT;
         end
         NANORV32_PSTATE_RETI_BEGIN: begin
+           irq_bypass_inst_a = 1; // we are going to override the instruction register
+           urom_addr_load    = 1;
+           urom_addr_start_value = NANORV32_INT_EXIT_CODE_START_ADDR[NANORV32_UROM_ADDR_MSB:0]/4;
+           pstate_next =  NANORV32_PSTATE_RETI_CONT;
         end
 
         NANORV32_PSTATE_RETI_CONT: begin
+           irq_bypass_inst_a = 1; // we are going to override the instruction register
+           urom_addr_inc = 1;
+           if(urom_addr_r == NANORV32_INT_EXIT_CODE_STOP_ADDR[NANORV32_UROM_ADDR_MSB:0]/4) begin
+              pstate_next =  NANORV32_PSTATE_RETI_END;
+           end
+           else begin
+              pstate_next =  NANORV32_PSTATE_RETI_CONT;
+           end
+
+
         end
 
         NANORV32_PSTATE_RETI_END: begin
@@ -298,6 +322,18 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
       end
    end
 
+   always @(posedge clk or negedge rst_n) begin
+      if(rst_n == 1'b0) begin
+         /*AUTORESET*/
+         // Beginning of autoreset for uninitialized flops
+         irq_bypass_inst_reg <= 1'h0;
+         // End of automatics
+      end
+      else begin
+         irq_bypass_inst_reg <= irq_bypass_inst_a;
+
+      end
+   end
 
 
 
@@ -308,7 +344,7 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
                               .addr             (urom_addr_r[NANORV32_UROM_ADDR_MSB:0]),
                            /*AUTOINST*/
                               // Outputs
-                              .dout             (inst_irq[NANORV32_DATA_MSB:0]));
+                              .dout             (inst_irq[NANORV32_DATA_MSB:0])); // Templated
 endmodule // nanorv32_flow_ctrl
 /*
  Local Variables:

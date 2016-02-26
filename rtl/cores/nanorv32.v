@@ -31,8 +31,7 @@
 
 module nanorv32 (/*AUTOARG*/
    // Outputs
-   valid_inst, pstate_r, output_new_pc, irq_bypass_inst_reg, inst_irq,
-   force_stall_reset, force_stall_pstate, data_access_cycle,
+
    illegal_instruction, haddri, hproti, hsizei, hmasteri,
    hmasterlocki, hbursti, hwdatai, hwritei, htransi, haddrd, hprotd,
    hsized, hmasterd, hmasterlockd, hburstd, hwdatad, hwrited, htransd,
@@ -92,14 +91,7 @@ module nanorv32 (/*AUTOARG*/
    // End of automatics
    /*AUTOOUTPUT*/
    // Beginning of automatic outputs (from unused autoinst outputs)
-   output               data_access_cycle;      // From U_FLOW_CTRL of nanorv32_flow_ctrl.v
-   output               force_stall_pstate;     // From U_FLOW_CTRL of nanorv32_flow_ctrl.v
-   output               force_stall_reset;      // From U_FLOW_CTRL of nanorv32_flow_ctrl.v
-   output [NANORV32_DATA_MSB:0] inst_irq;       // From U_FLOW_CTRL of nanorv32_flow_ctrl.v
-   output               irq_bypass_inst_reg;    // From U_FLOW_CTRL of nanorv32_flow_ctrl.v
-   output               output_new_pc;          // From U_FLOW_CTRL of nanorv32_flow_ctrl.v
-   output [NANORV32_PSTATE_MSB:0] pstate_r;     // From U_FLOW_CTRL of nanorv32_flow_ctrl.v
-   output               valid_inst;             // From U_FLOW_CTRL of nanorv32_flow_ctrl.v
+
    // End of automatics
 
    /*AUTOREG*/
@@ -120,7 +112,7 @@ module nanorv32 (/*AUTOARG*/
    wire [NANORV32_DATA_MSB:0]                instruction_r;
 
 
-
+   reg [NANORV32_MUX_SEL_DATAMEM_SIZE_READ_MSB:0] datamem_size_read_sel_r;
    //@begin[mux_select_declarations]
 
     reg  [NANORV32_MUX_SEL_PC_NEXT_MSB:0] pc_next_sel;
@@ -128,7 +120,6 @@ module nanorv32 (/*AUTOARG*/
     reg  [NANORV32_MUX_SEL_ALU_PORTB_MSB:0] alu_portb_sel;
     reg  [NANORV32_MUX_SEL_ALU_PORTA_MSB:0] alu_porta_sel;
     reg  [NANORV32_MUX_SEL_DATAMEM_SIZE_READ_MSB:0] datamem_size_read_sel;
-    reg  [NANORV32_MUX_SEL_DATAMEM_SIZE_READ_MSB:0] datamem_size_read_sel_r;
     reg  [NANORV32_MUX_SEL_DATAMEM_WRITE_MSB:0] datamem_write_sel;
     reg  [NANORV32_MUX_SEL_DATAMEM_SIZE_WRITE_MSB:0] datamem_size_write_sel;
     reg  [NANORV32_MUX_SEL_DATAMEM_READ_MSB:0] datamem_read_sel;
@@ -202,7 +193,10 @@ module nanorv32 (/*AUTOARG*/
    wire                                     valid_inst;
    wire             [NANORV32_PSTATE_MSB:0] pstate_r;
 
+   wire [NANORV32_DATA_MSB:0]               inst_irq;
    wire                                     reti_inst_detected; // an instruction equivalent
+   wire                                     irq_bypass_inst_reg;
+
    // to a "return from interrupt" as been detected
 
 
@@ -215,6 +209,7 @@ module nanorv32 (/*AUTOARG*/
    wire [NANORV32_DATA_MSB:0]                   imm12sb_sext;
    wire [NANORV32_DATA_MSB:0]                   imm20u_sext;
    wire [NANORV32_DATA_MSB:0]                   imm20uj_sext;
+
 
    assign imm12_sext = {{20{dec_imm12 [11]}},dec_imm12[11:0]};
    assign imm12hilo_sext = {{20{dec_imm12hi[6]}},dec_imm12hi[6:0],dec_imm12lo[4:0]};
@@ -374,8 +369,9 @@ module nanorv32 (/*AUTOARG*/
    assign haddri_tmp  = branch_req_tmp & ~reset_over ? branch_target_tmp : {32{~(force_stall_reset | reset_over & htransi_tmp & ~write_data)}} & (haddri_r + 4);
 
 
-
-   assign instruction_r = iq[rd_pt_r];
+   // If an irq is detected, we override the instruction register with the code from
+   // the the micro-rom in the flow controller
+   assign instruction_r = irq_bypass_inst_reg ? inst_irq : iq[rd_pt_r];
 
 
    always @* begin
@@ -1156,7 +1152,7 @@ module nanorv32 (/*AUTOARG*/
    nanorv32_flow_ctrl
      U_FLOW_CTRL (
                   .reti_inst_detected    (reti_inst_detected),
-                  /*AUTOINST*/
+
                   // Outputs
                   .force_stall_pstate   (force_stall_pstate),
                   .force_stall_pstate2  (force_stall_pstate2),

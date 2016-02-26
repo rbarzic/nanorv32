@@ -30,6 +30,10 @@
 `timescale 1ns/1ps
 `define AHB_IF
 
+`ifndef VCD_EXTRA_MODULE
+`define VCD_EXTRA_MODULE
+`endif
+
 module tb_nanorv32;
 
    `include "nanorv32_parameters.v"
@@ -133,7 +137,7 @@ module tb_nanorv32;
       begin
          if ($test$plusargs("vcd")) begin
 	    $dumpfile("tb_nanorv32.vcd");
-	    $dumpvars(0, tb_nanorv32);
+	    $dumpvars(0, tb_nanorv32 `VCD_EXTRA_MODULE);
 	 end
       end
    endtask // if
