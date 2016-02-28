@@ -20,8 +20,9 @@ _int_entry_code_start_:
 	  add x1,x0,-1 // 0xFFFFFFFF in x1/ra
 	  auipc x1,0  // get the pc of the current instruction (?)
 	  sw x1,-48(sp)
-	  add sp,sp,-48
-          jalr x0,x0,0x80 // branch to the vector address
+	add sp,sp,-48
+        lw  x2,0x80(x0) 	// branch to the vector address (0x80 in byte address)
+        jalr x0,x2,0x0          // Get the vector address
 
 _int_entry_code_stop_:
 

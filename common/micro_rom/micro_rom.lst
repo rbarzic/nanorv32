@@ -24,8 +24,9 @@ Disassembly of section .text:
   38:	00000097          	auipc	ra,0x0
   3c:	fc112823          	sw	ra,-48(sp)
   40:	fd010113          	addi	sp,sp,-48
-  44:	08000067          	jr	zero,128
+  44:	08002103          	lw	sp,128(zero)
+  48:	00010067          	jr	sp
 
-00000048 <_int_entry_code_stop_>:
-  48:	00300093          	li	ra,3
-  4c:	00000013          	nop
+0000004c <_int_entry_code_stop_>:
+  4c:	00300093          	li	ra,3
+  50:	00000013          	nop

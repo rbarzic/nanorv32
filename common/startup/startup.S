@@ -37,8 +37,9 @@ pass:
         // Just for testing
         .org 0x80
 irq_vector:
-        nop
-        j irq_vector
+        .long IRQHandler
+//        nop
+//       j irq_vector
 
         .org 0x100
 exit:   nop
