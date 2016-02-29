@@ -34,7 +34,7 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
    irq_bypass_inst_reg_r, inst_irq,
    // Inputs
    branch_taken, datamem_read, datamem_write, hreadyd,
-   codeif_cpu_ready_r, irq, reti_inst_detected, clk, rst_n
+   codeif_cpu_ready_r, interlock, irq, reti_inst_detected, clk, rst_n
    );
 
 `include "nanorv32_parameters.v"
@@ -53,6 +53,7 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
    input  hreadyd;
 
    input  codeif_cpu_ready_r;
+   input  interlock;
 
    // IRQ support
    input  irq;
@@ -78,7 +79,6 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
    reg                  force_stall_pstate2;
    reg                  force_stall_reset;
    reg                  irq_ack;
-
    reg                  output_new_pc;
    reg                  valid_inst;
    // End of automatics
@@ -273,6 +273,7 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
          /*AUTORESET*/
       end
       else begin
+        if (~interlock)
          pstate_r <= pstate_next;
 
       end

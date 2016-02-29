@@ -1,0 +1,27 @@
+[*]
+[*] GTKWave Analyzer v3.3.64 (w)1999-2014 BSI
+[*] Mon Feb 29 09:35:17 2016
+[*]
+[dumpfile] "/home/roba/perso/github/nanorv32/sim/verilog/tb_nanorv32.vcd"
+[dumpfile_mtime] "Mon Feb 29 09:34:25 2016"
+[dumpfile_size] 217548
+[savefile] "/home/roba/perso/github/nanorv32/sim/verilog/irq_debug.gtkw"
+[timestart] 1000
+[size] 1920 1146
+[pos] -1 -1
+*-20.834137 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] tb_nanorv32.
+[treeopen] tb_nanorv32.U_DUT.
+[sst_width] 525
+[signals_width] 198
+[sst_expanded] 1
+[sst_vpaned_height] 347
+@22
+tb_nanorv32.U_DUT.U_CPU.pc_exe_r[31:0]
+@28
+tb_nanorv32.U_DUT.U_CPU.irq
+tb_nanorv32.U_DUT.U_CPU.irq_bypass_inst_reg_r
+@23
+tb_nanorv32.U_DUT.U_CPU.instruction_r[31:0]
+[pattern_trace] 1
+[pattern_trace] 0

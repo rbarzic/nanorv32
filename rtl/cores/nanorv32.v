@@ -182,6 +182,7 @@ module nanorv32 (/*AUTOARG*/
    reg [NANORV32_DATA_MSB:0]               mem2regfile;
 
    wire                                    stall_exe;
+   wire                                    interlock;
    wire                                    stall_fetch;
    wire                                    force_stall_pstate;
    wire                                    force_stall_pstate2;
@@ -193,12 +194,16 @@ module nanorv32 (/*AUTOARG*/
    wire                                     valid_inst;
    wire             [NANORV32_PSTATE_MSB:0] pstate_r;
 
+
    wire [NANORV32_DATA_MSB:0]               inst_irq;
    wire                                     reti_inst_detected; // an instruction equivalent
    wire                                     irq_bypass_inst_reg_r;
 
    // to a "return from interrupt" as been detected
 
+
+
+   genvar i;
 
    //===========================================================================
    // Immediate value reconstruction
@@ -247,7 +252,7 @@ module nanorv32 (/*AUTOARG*/
    wire  [2:0] rd_pt_r_plus1 = rd_pt_r + 1;
    wire fifo_full = wr_pt_r_plus1[1:0] == rd_pt_r[1:0] & pstate_r != NANORV32_PSTATE_BRANCH;
    wire fifo_empty = wr_pt_r[1:0] == rd_pt_r[1:0] & pstate_r != NANORV32_PSTATE_BRANCH;
-   reg  [31:0] iq [3:0];
+   reg  [31:0] iq [0:3];
    wire inst_ret = (!(stall_exe | force_stall_reset));
    reg  branch_taken_reg;
    reg  ignore_branch;
@@ -295,44 +300,60 @@ module nanorv32 (/*AUTOARG*/
    wire  cancel_data = branch_req_tmp;
    always @(posedge clk or negedge rst_n) begin
       if(rst_n == 1'b0) begin
-           iq[0] <= NANORV32_J0_INSTRUCTION;
+           iq[0][31:0] <= NANORV32_J0_INSTRUCTION;
          /*AUTORESET*/
       end
       else begin
+
          if(wr_pt_r == 0 & write_data & ~cancel_data)
-           iq[0] <= codeif_cpu_rdata;
+           iq[0][31:0] <= codeif_cpu_rdata[31:0];
       end
    end
-   always @(posedge clk or negedge rst_n) begin
-      if(rst_n == 1'b0) begin
-           iq[1] <= NANORV32_J0_INSTRUCTION;
-         /*AUTORESET*/
+//   always @(posedge clk or negedge rst_n) begin
+//      if(rst_n == 1'b0) begin
+//           iq[1][31:0] <= NANORV32_J0_INSTRUCTION;
+//         /*AUTORESET*/
+//      end
+//      else begin
+//         if(wr_pt_r == 1 & write_data & ~cancel_data)
+//           iq[1][31:0] <= codeif_cpu_rdata[31:0];
+//      end
+//   end
+//   always @(posedge clk or negedge rst_n) begin
+//      if(rst_n == 1'b0) begin
+//           iq[2][31:0] <= NANORV32_J0_INSTRUCTION;
+//         /*AUTORESET*/
+//      end
+//      else begin
+//         if(wr_pt_r == 2 & write_data & ~cancel_data)
+//           iq[2][31:0] <= codeif_cpu_rdata[31:0];
+//      end
+//   end
+//   always @(posedge clk or negedge rst_n) begin
+//      if(rst_n == 1'b0) begin
+//           iq[3][31:0] <= NANORV32_J0_INSTRUCTION;
+//         /*AUTORESET*/
+//      end
+//      else begin
+//         if(wr_pt_r == 3 & write_data & ~cancel_data)
+//           iq[3][31:0] <= codeif_cpu_rdata[31:0];
+//      end
+//   end
+   generate
+      for (i = 0; i < 4; i = i + 1) begin
+        always @(posedge clk or negedge rst_n) begin
+          if(rst_n == 1'b0) begin
+                iq[i][31:0] <= NANORV32_J0_INSTRUCTION;
+             /*AUTORESET*/
+          end else begin
+            if (wr_pt_r == i & write_data & ~cancel_data)  begin
+                iq[i][31:0] <= codeif_cpu_rdata[31:0];
+            end
+          end
+        end
       end
-      else begin
-         if(wr_pt_r == 1 & write_data & ~cancel_data)
-           iq[1] <= codeif_cpu_rdata;
-      end
-   end
-   always @(posedge clk or negedge rst_n) begin
-      if(rst_n == 1'b0) begin
-           iq[2] <= NANORV32_J0_INSTRUCTION;
-         /*AUTORESET*/
-      end
-      else begin
-         if(wr_pt_r == 2 & write_data & ~cancel_data)
-           iq[2] <= codeif_cpu_rdata;
-      end
-   end
-   always @(posedge clk or negedge rst_n) begin
-      if(rst_n == 1'b0) begin
-           iq[3] <= NANORV32_J0_INSTRUCTION;
-         /*AUTORESET*/
-      end
-      else begin
-         if(wr_pt_r == 3 & write_data & ~cancel_data)
-           iq[3] <= codeif_cpu_rdata;
-      end
-   end
+   endgenerate
+
    always @(posedge clk or negedge rst_n) begin
       if(rst_n == 1'b0) begin
            reset_over <= 1'b1;
@@ -364,8 +385,10 @@ module nanorv32 (/*AUTOARG*/
       end
    end
    assign branch_req_tmp =  branch_taken & ~ignore_branch & pstate_r != NANORV32_PSTATE_BRANCH;
+
    assign next_inst_en_tmp = ~force_stall_reset & ~fifo_full;
-   assign htransi_tmp  = (next_inst_en_tmp | branch_req_tmp) & ~force_stall_reset ;
+   assign htransi_tmp  = (next_inst_en_tmp | branch_req_tmp) & ~force_stall_reset & ~interlock;
+
    assign haddri_tmp  = branch_req_tmp & ~reset_over ? branch_target_tmp : {32{~(force_stall_reset | reset_over & htransi_tmp & ~write_data)}} & (haddri_r + 4);
 
 
@@ -1149,6 +1172,7 @@ module nanorv32 (/*AUTOARG*/
 
 
 
+
    nanorv32_flow_ctrl
      U_FLOW_CTRL (
                   .reti_inst_detected    (reti_inst_detected),
@@ -1165,6 +1189,7 @@ module nanorv32 (/*AUTOARG*/
                   .irq_bypass_inst_reg_r  (irq_bypass_inst_reg_r),
                   .inst_irq             (inst_irq[NANORV32_DATA_MSB:0]),
                   // Inputs
+                  .interlock           (interlock),
                   .branch_taken         (branch_taken),
                   .datamem_read         (datamem_read),
                   .datamem_write        (datamem_write),
@@ -1184,7 +1209,8 @@ module nanorv32 (/*AUTOARG*/
    assign cpu_dataif_req = (datamem_write || datamem_read) & data_access_cycle;
    // assign stall_fetch = !codeif_cpu_early_ready  | force_stall_pstate | !codeif_cpu_ready_r;
    assign stall_fetch = force_stall_pstate | !codeif_cpu_ready_r;
-   assign stall_exe = force_stall_pstate | write_rd2 & (dec_rd2 == dec_rs1 | dec_rd2 == dec_rs2) & ~(htransd & hreadyd & hwrited);
+   assign interlock   = write_rd2 & (dec_rd2 == dec_rs1 | dec_rd2 == dec_rs2) & ~(htransd & hreadyd & hwrited);
+   assign stall_exe = force_stall_pstate | interlock;
    assign read_byte_sel = cpu_dataif_addr[1:0];
    wire  [2:0] hsized_tmp = {3{(datamem_size_read_sel == NANORV32_MUX_SEL_DATAMEM_SIZE_READ_HALFWORD_UNSIGNED |
                              datamem_size_read_sel == NANORV32_MUX_SEL_DATAMEM_SIZE_READ_HALFWORD)}} & 3'b001 |
