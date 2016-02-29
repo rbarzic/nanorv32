@@ -34,12 +34,16 @@ fail:
 pass:
 	lui	a0,0xcaffe
 	j	exit
+
+#ifdef IRQ_SUPPORT
         // Just for testing
         .org 0x80
 irq_vector:
         .long IRQHandler
 //        nop
 //       j irq_vector
+
+#endif
 
         .org 0x100
 exit:   nop

@@ -195,7 +195,7 @@ module nanorv32 (/*AUTOARG*/
 
    wire [NANORV32_DATA_MSB:0]               inst_irq;
    wire                                     reti_inst_detected; // an instruction equivalent
-   wire                                     irq_bypass_inst_reg;
+   wire                                     irq_bypass_inst_reg_r;
 
    // to a "return from interrupt" as been detected
 
@@ -371,7 +371,7 @@ module nanorv32 (/*AUTOARG*/
 
    // If an irq is detected, we override the instruction register with the code from
    // the the micro-rom in the flow controller
-   assign instruction_r = irq_bypass_inst_reg ? inst_irq : iq[rd_pt_r];
+   assign instruction_r = irq_bypass_inst_reg_r ? inst_irq : iq[rd_pt_r];
 
 
    always @* begin
@@ -1162,7 +1162,7 @@ module nanorv32 (/*AUTOARG*/
                   .data_access_cycle    (data_access_cycle),
                   .pstate_r             (pstate_r[NANORV32_PSTATE_MSB:0]),
                   .irq_ack              (irq_ack),
-                  .irq_bypass_inst_reg  (irq_bypass_inst_reg),
+                  .irq_bypass_inst_reg_r  (irq_bypass_inst_reg_r),
                   .inst_irq             (inst_irq[NANORV32_DATA_MSB:0]),
                   // Inputs
                   .branch_taken         (branch_taken),
