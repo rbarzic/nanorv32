@@ -198,6 +198,10 @@ module nanorv32 (/*AUTOARG*/
    wire [NANORV32_DATA_MSB:0]               inst_irq;
    wire                                     reti_inst_detected; // an instruction equivalent
    wire                                     irq_bypass_inst_reg_r;
+   wire                                     interrupt_state_r;
+
+   wire                                     allow_hidden_use_of_x0;
+
 
    // to a "return from interrupt" as been detected
 
@@ -1076,8 +1080,11 @@ module nanorv32 (/*AUTOARG*/
            // Fixme - this may not be valid if there is some wait-state
            pc_next = output_new_pc  ? alu_res & 32'hFFFFFFFE : (pc_fetch_r + 4);
 
+           // We cancel the branch if we detect a "reti"
+           // while in interrupt state
+            // branch_taken = !(reti_inst_detected && interrupt_state_r);
+           branch_taken = 1'b1;
 
-           branch_taken = 1;
         end// Mux definitions for alu
         default begin
            pc_next = pc_fetch_r + 4;
@@ -1128,6 +1135,7 @@ module nanorv32 (/*AUTOARG*/
                .porta          (rf_porta[NANORV32_DATA_MSB:0]),
                .portb          (rf_portb[NANORV32_DATA_MSB:0]),
                // Inputs
+               .allow_hidden_use_of_x0  (allow_hidden_use_of_x0),
                .sel_porta               (dec_rs1[NANORV32_RF_PORTA_MSB:0]),
                .sel_portb               (dec_rs2[NANORV32_RF_PORTB_MSB:0]),
                .sel_rd                  (dec_rd[NANORV32_RF_PORTRD_MSB:0]),
@@ -1189,8 +1197,9 @@ module nanorv32 (/*AUTOARG*/
    nanorv32_flow_ctrl
      U_FLOW_CTRL (
                   .reti_inst_detected    (reti_inst_detected),
-
+                  .interrupt_state_r     (interrupt_state_r),
                   // Outputs
+                  .allow_hidden_use_of_x0  (allow_hidden_use_of_x0),
                   .force_stall_pstate   (force_stall_pstate),
                   .force_stall_pstate2  (force_stall_pstate2),
                   .force_stall_reset    (force_stall_reset),

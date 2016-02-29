@@ -30,8 +30,9 @@
 module nanorv32_flow_ctrl (/*AUTOARG*/
    // Outputs
    force_stall_pstate, force_stall_pstate2, force_stall_reset,
-   output_new_pc, valid_inst, data_access_cycle, pstate_r, irq_ack,
-   irq_bypass_inst_reg_r, inst_irq,
+   output_new_pc, valid_inst, data_access_cycle, pstate_r,
+   allow_hidden_use_of_x0, irq_ack, irq_bypass_inst_reg_r, inst_irq,
+   interrupt_state_r,
    // Inputs
    branch_taken, datamem_read, datamem_write, hreadyd,
    codeif_cpu_ready_r, interlock, irq, reti_inst_detected, clk, rst_n
@@ -46,6 +47,7 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
    output valid_inst;
    output data_access_cycle;
    output [NANORV32_PSTATE_MSB:0] pstate_r;
+   output                         allow_hidden_use_of_x0;
 
    input  branch_taken;
    input  datamem_read;
@@ -60,6 +62,7 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
    output irq_ack;
    output irq_bypass_inst_reg_r;
    output [NANORV32_DATA_MSB:0] inst_irq;       // From U_MICRO_ROM of nanorv32_urom.v
+   output                       interrupt_state_r;
 
    input                        reti_inst_detected;
 
@@ -96,14 +99,25 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
 
    // (the first cycle normally)
 
-   wire                        interrupt_state;
+
    reg                         irq_bypass_inst_reg_r;
    reg                         set_irq_bypass_inst;
    reg                         clear_irq_bypass_inst;
 
-   assign reti_qual = reti_inst_detected && interrupt_state;
+   reg                         interrupt_state_r;
+   reg                         set_interrupt_state;
+   reg                         clear_interrupt_state;
 
-   assign interrupt_state = 0;
+   reg                         irq_restore_r;
+   reg                         set_irq_restore;
+   reg                         clear_irq_restore;
+
+
+
+
+
+
+
    event                       dbg_evt1;
    event                       dbg_evt2;
 
@@ -134,6 +148,13 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
 
       set_irq_bypass_inst = 1'b0;
       clear_irq_bypass_inst = 1'b0;
+
+      set_interrupt_state = 1'b0;
+      clear_interrupt_state = 1'b0;
+
+      set_irq_restore = 1'b0;
+      clear_irq_restore = 1'b0;
+
 
       urom_addr_start_value = 0;
       urom_addr_inc = 0;
@@ -169,7 +190,15 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
            else if (irq && !irq_bypass_inst_reg_r) begin
               set_irq_bypass_inst = 1'b1;
               urom_addr_start_value = irq_entry_start;
+              set_interrupt_state <= 1;
+
            end
+           //else if ( reti_inst_detected  && interrupt_state_r) begin
+           //   set_irq_bypass_inst = 1'b1;
+           //   set_irq_restore     = 1'b1;
+           //   urom_addr_start_value = irq_exit_start;
+           //   clear_interrupt_state = 1;
+           //end
            else begin
               urom_addr_inc = irq_bypass_inst_reg_r;
            end
@@ -177,7 +206,15 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
 
         NANORV32_PSTATE_BRANCH: begin
            output_new_pc = 1;
-          if (codeif_cpu_ready_r) begin
+           // we are in the second cycle of the reti
+           // instruction
+           if ( reti_inst_detected  && interrupt_state_r) begin
+              set_irq_bypass_inst = 1'b1;
+              set_irq_restore     = 1'b1;
+              urom_addr_start_value = irq_exit_start;
+              clear_interrupt_state = 1;
+           end
+           else if (codeif_cpu_ready_r) begin
 
              force_stall_pstate = 1'b0;
              force_stall_pstate2 = 0;
@@ -213,6 +250,13 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
                     if (irq && !irq_bypass_inst_reg_r) begin
                        set_irq_bypass_inst = 1'b1;
                        urom_addr_start_value = irq_entry_start;
+                       set_interrupt_state <= 1;
+                    end
+                    else if ( reti_inst_detected  && interrupt_state_r) begin
+                       set_irq_bypass_inst = 1'b1;
+                       set_irq_restore     = 1'b1;
+                       urom_addr_start_value = irq_exit_start;
+                       clear_interrupt_state = 1;
                     end
                  end else
                  if(branch_taken) begin
@@ -231,7 +275,15 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
                     if (irq && !irq_bypass_inst_reg_r) begin
                        set_irq_bypass_inst = 1'b1;
                        urom_addr_start_value = irq_entry_start;
+                       set_interrupt_state <= 1;
                     end
+                    else if ( reti_inst_detected  && interrupt_state_r) begin
+                       set_irq_bypass_inst = 1'b1;
+                       set_irq_restore     = 1'b1;
+                       urom_addr_start_value = irq_exit_start;
+                       clear_interrupt_state = 1;
+                    end
+
                  end
               end
               else begin
@@ -284,6 +336,7 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
          /*AUTORESET*/
          // Beginning of autoreset for uninitialized flops
          irq_bypass_inst_reg_r <= 1'h0;
+         irq_restore_r <= 1'h0;
          // End of automatics
       end
       else begin
@@ -293,10 +346,36 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
          else if(clear_irq_bypass_inst) begin
             irq_bypass_inst_reg_r <= 1'b0;
          end
+
+         if(set_irq_restore) begin
+            irq_restore_r <= 1'b1;
+         end
+         else if(clear_irq_restore) begin
+            irq_restore_r <= 1'b0;
+         end
       end
    end
 
    assign urom_addr_load = set_irq_bypass_inst;
+   assign allow_hidden_use_of_x0 = irq_restore_r;
+
+
+   always @(posedge clk or negedge rst_n) begin
+      if(rst_n == 1'b0) begin
+         /*AUTORESET*/
+         // Beginning of autoreset for uninitialized flops
+         interrupt_state_r <= 1'h0;
+         // End of automatics
+      end
+      else begin
+         if(set_interrupt_state) begin
+            interrupt_state_r <= 1'b1;
+         end
+         else if(clear_interrupt_state) begin
+            interrupt_state_r  <= 1'b0;
+         end
+      end
+   end
 
 
 

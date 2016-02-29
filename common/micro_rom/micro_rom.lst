@@ -21,13 +21,23 @@ Disassembly of section .text:
   2c:	fce12a23          	sw	a4,-44(sp)
   30:	fcf12823          	sw	a5,-48(sp)
   34:	fff00093          	li	ra,-1
-  38:	00000097          	auipc	ra,0x0
-  3c:	fc112623          	sw	ra,-52(sp)
+  38:	00000297          	auipc	t0,0x0
+  3c:	fc512623          	sw	t0,-52(sp)
   40:	fcc10113          	addi	sp,sp,-52
-  44:	ffc17113          	andi	sp,sp,-4
-  48:	08002503          	lw	a0,128(zero)
-  4c:	00050067          	jr	a0
+  44:	08002503          	lw	a0,128(zero)
+  48:	00050067          	jr	a0
 
-00000050 <_int_entry_code_stop_>:
-  50:	00300093          	li	ra,3
-  54:	00000013          	nop
+0000004c <_int_entry_code_stop_>:
+  4c:	ff812083          	lw	ra,-8(sp)
+  50:	ff012283          	lw	t0,-16(sp)
+  54:	fec12303          	lw	t1,-20(sp)
+  58:	fe812383          	lw	t2,-24(sp)
+  5c:	fe412503          	lw	a0,-28(sp)
+  60:	fe012583          	lw	a1,-32(sp)
+  64:	fdc12603          	lw	a2,-36(sp)
+  68:	fd812683          	lw	a3,-40(sp)
+  6c:	fd412703          	lw	a4,-44(sp)
+  70:	fd012783          	lw	a5,-48(sp)
+  74:	fcc12003          	lw	zero,-52(sp)
+  78:	ff412103          	lw	sp,-12(sp)
+  7c:	00000067          	jr	zero

@@ -1,27 +1,74 @@
 [*]
 [*] GTKWave Analyzer v3.3.64 (w)1999-2014 BSI
-[*] Mon Feb 29 09:35:17 2016
+[*] Mon Feb 29 22:02:47 2016
 [*]
-[dumpfile] "/home/roba/perso/github/nanorv32/sim/verilog/tb_nanorv32.vcd"
-[dumpfile_mtime] "Mon Feb 29 09:34:25 2016"
-[dumpfile_size] 217548
-[savefile] "/home/roba/perso/github/nanorv32/sim/verilog/irq_debug.gtkw"
-[timestart] 1000
-[size] 1920 1146
+[dumpfile] "/home/ronan/perso/github/nanorv32/sim/verilog/tb_nanorv32.vcd"
+[dumpfile_mtime] "Mon Feb 29 20:10:04 2016"
+[dumpfile_size] 1521465
+[savefile] "/home/ronan/perso/github/nanorv32/sim/verilog/irq_debug.gtkw"
+[timestart] 7148000
+[size] 1600 851
 [pos] -1 -1
-*-20.834137 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-18.038229 7650000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] tb_nanorv32.
 [treeopen] tb_nanorv32.U_DUT.
-[sst_width] 525
-[signals_width] 198
+[treeopen] tb_nanorv32.U_DUT.U_CPU.
+[treeopen] tb_nanorv32.U_DUT.U_CPU.U_FLOW_CTRL.
+[treeopen] tb_nanorv32.U_DUT.u_tcm1.
+[sst_width] 242
+[signals_width] 272
 [sst_expanded] 1
-[sst_vpaned_height] 347
+[sst_vpaned_height] 516
 @22
 tb_nanorv32.U_DUT.U_CPU.pc_exe_r[31:0]
 @28
 tb_nanorv32.U_DUT.U_CPU.irq
 tb_nanorv32.U_DUT.U_CPU.irq_bypass_inst_reg_r
-@23
+@22
 tb_nanorv32.U_DUT.U_CPU.instruction_r[31:0]
+tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.a5[31:0]
+@28
+tb_nanorv32.U_DUT.U_CPU.reti_inst_detected
+@22
+tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.ra[31:0]
+tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.x1[31:0]
+@28
+tb_nanorv32.U_DUT.U_CPU.branch_taken
+tb_nanorv32.U_DUT.U_CPU.U_FLOW_CTRL.interrupt_state_r
+tb_nanorv32.U_DUT.U_CPU.U_FLOW_CTRL.clk
+tb_nanorv32.U_DUT.U_CPU.U_FLOW_CTRL.clear_interrupt_state
+tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.allow_hidden_use_of_x0
+@22
+tb_nanorv32.U_DUT.U_CPU.U_FLOW_CTRL.urom_addr_r[5:0]
+tb_nanorv32.U_DUT.U_CPU.U_FLOW_CTRL.U_MICRO_ROM.dout[31:0]
+@2024
+^1 /tmp/../home/ronan/perso/github/nanorv32/sim/verilog/../../../../../../../tmp/../home/ronan/perso/github/nanorv32/sim/verilog/pstate.txt
+tb_nanorv32.U_DUT.U_CPU.U_FLOW_CTRL.pstate_r[1:0]
+@22
+tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.x0[31:0]
+tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.x1[31:0]
+tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.x5[31:0]
+@28
+tb_nanorv32.U_DUT.U_CPU.write_rd
+@29
+tb_nanorv32.U_DUT.U_CPU.write_rd2
+@28
+tb_nanorv32.U_DUT.U_CPU.datamem_read
+tb_nanorv32.U_DUT.U_CPU.datamem_write
+tb_nanorv32.U_DUT.U_CPU.U_FLOW_CTRL.hreadyd
+tb_nanorv32.U_DUT.U_CPU.htransd
+tb_nanorv32.U_DUT.U_CPU.U_FLOW_CTRL.force_stall_pstate
+tb_nanorv32.U_DUT.U_CPU.U_FLOW_CTRL.force_stall_pstate2
+tb_nanorv32.U_DUT.U_CPU.U_FLOW_CTRL.branch_taken
+@22
+tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.sel_rd2[4:0]
+tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.sel_rd[4:0]
+tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.rd[31:0]
+tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.rd2[31:0]
+tb_nanorv32.U_DUT.U_CPU.mem2regfile[31:0]
+tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.x1[31:0]
+tb_nanorv32.U_DUT.u_tcm1.U_RAM.addr[13:0]
+tb_nanorv32.U_DUT.u_tcm1.U_RAM.dout[31:0]
+tb_nanorv32.U_DUT.U_CPU.U_REG_FILE.sp[31:0]
 [pattern_trace] 1
 [pattern_trace] 0
