@@ -33,7 +33,7 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
    data_access_cycle, pstate_r,
    // Inputs
    branch_taken, datamem_read, datamem_write,hreadyd,
-   codeif_cpu_ready_r, clk, rst_n
+   codeif_cpu_ready_r, interlock, clk, rst_n
    );
 
 `include "nanorv32_parameters.v"
@@ -52,6 +52,7 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
    input  hreadyd;
 
    input  codeif_cpu_ready_r;
+   input  interlock;
 
    input clk;
    input rst_n;
@@ -199,6 +200,7 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
          /*AUTORESET*/
       end
       else begin
+        if (~interlock) 
          pstate_r <= pstate_next;
 
       end

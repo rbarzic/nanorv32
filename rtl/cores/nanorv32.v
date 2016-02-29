@@ -357,7 +357,7 @@ module nanorv32 (/*AUTOARG*/
    end
    assign branch_req_tmp =  branch_taken & ~ignore_branch & pstate_r != NANORV32_PSTATE_BRANCH;
    assign next_inst_en_tmp = ~force_stall_reset & ~fifo_full; 
-   assign htransi_tmp  = (next_inst_en_tmp | branch_req_tmp) & ~force_stall_reset ; 
+   assign htransi_tmp  = (next_inst_en_tmp | branch_req_tmp) & ~force_stall_reset & ~interlock; 
    assign haddri_tmp  = branch_req_tmp & ~reset_over ? branch_target_tmp : {32{~(force_stall_reset | reset_over & htransi_tmp & ~write_data)}} & (haddri_r + 4);
    
  
@@ -1149,6 +1149,7 @@ module nanorv32 (/*AUTOARG*/
    .datamem_write       (datamem_write),
    .hreadyd             (hreadyd),
    .codeif_cpu_ready_r  (codeif_cpu_ready_r),
+   .interlock           (interlock),
    .clk                 (clk),
    .rst_n               (rst_n));
 
@@ -1161,7 +1162,8 @@ module nanorv32 (/*AUTOARG*/
    assign cpu_dataif_req = (datamem_write || datamem_read) & data_access_cycle;
    // assign stall_fetch = !codeif_cpu_early_ready  | force_stall_pstate | !codeif_cpu_ready_r;
    assign stall_fetch = force_stall_pstate | !codeif_cpu_ready_r;
-   assign stall_exe = force_stall_pstate | write_rd2 & (dec_rd2 == dec_rs1 | dec_rd2 == dec_rs2) & ~(htransd & hreadyd & hwrited);
+   assign interlock   = write_rd2 & (dec_rd2 == dec_rs1 | dec_rd2 == dec_rs2) & ~(htransd & hreadyd & hwrited);
+   assign stall_exe = force_stall_pstate | interlock;
    assign read_byte_sel = cpu_dataif_addr[1:0];
    wire  [2:0] hsized_tmp = {3{(datamem_size_read_sel == NANORV32_MUX_SEL_DATAMEM_SIZE_READ_HALFWORD_UNSIGNED | 
                              datamem_size_read_sel == NANORV32_MUX_SEL_DATAMEM_SIZE_READ_HALFWORD)}} & 3'b001 |
