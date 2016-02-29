@@ -9,24 +9,25 @@ Disassembly of section .text:
    4:	00000013          	nop
 
 00000008 <_int_entry_code_start_>:
-   8:	fe112e23          	sw	ra,-4(sp)
-   c:	fe212c23          	sw	sp,-8(sp)
-  10:	fe512a23          	sw	t0,-12(sp)
-  14:	fe612823          	sw	t1,-16(sp)
-  18:	fe712623          	sw	t2,-20(sp)
-  1c:	fea12423          	sw	a0,-24(sp)
-  20:	feb12223          	sw	a1,-28(sp)
-  24:	fec12023          	sw	a2,-32(sp)
-  28:	fcd12e23          	sw	a3,-36(sp)
-  2c:	fce12c23          	sw	a4,-40(sp)
-  30:	fcf12a23          	sw	a5,-44(sp)
+   8:	fe112c23          	sw	ra,-8(sp)
+   c:	fe212a23          	sw	sp,-12(sp)
+  10:	fe512823          	sw	t0,-16(sp)
+  14:	fe612623          	sw	t1,-20(sp)
+  18:	fe712423          	sw	t2,-24(sp)
+  1c:	fea12223          	sw	a0,-28(sp)
+  20:	feb12023          	sw	a1,-32(sp)
+  24:	fcc12e23          	sw	a2,-36(sp)
+  28:	fcd12c23          	sw	a3,-40(sp)
+  2c:	fce12a23          	sw	a4,-44(sp)
+  30:	fcf12823          	sw	a5,-48(sp)
   34:	fff00093          	li	ra,-1
   38:	00000097          	auipc	ra,0x0
-  3c:	fc112823          	sw	ra,-48(sp)
-  40:	fd010113          	addi	sp,sp,-48
-  44:	08002103          	lw	sp,128(zero)
-  48:	00010067          	jr	sp
+  3c:	fc112623          	sw	ra,-52(sp)
+  40:	fcc10113          	addi	sp,sp,-52
+  44:	ffc17113          	andi	sp,sp,-4
+  48:	08002503          	lw	a0,128(zero)
+  4c:	00050067          	jr	a0
 
-0000004c <_int_entry_code_stop_>:
-  4c:	00300093          	li	ra,3
-  50:	00000013          	nop
+00000050 <_int_entry_code_stop_>:
+  50:	00300093          	li	ra,3
+  54:	00000013          	nop

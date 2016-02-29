@@ -1,7 +1,8 @@
 #include <stdint.h>
 
 void IRQHandler(void) {
-    while(1);
+    volatile int i = 5;
+    while(--i);
 }
 
 

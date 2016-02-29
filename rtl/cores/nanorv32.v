@@ -387,7 +387,9 @@ module nanorv32 (/*AUTOARG*/
    assign branch_req_tmp =  branch_taken & ~ignore_branch & pstate_r != NANORV32_PSTATE_BRANCH;
 
    assign next_inst_en_tmp = ~force_stall_reset & ~fifo_full;
-   assign htransi_tmp  = (next_inst_en_tmp | branch_req_tmp) & ~force_stall_reset & ~interlock;
+   // We block eternal request on the bus if we are overriding
+   // the instruction register during a irq context save/restore operation
+   assign htransi_tmp  = (next_inst_en_tmp | branch_req_tmp) & ~force_stall_reset & ~interlock & (!irq_bypass_inst_reg_r ||  branch_taken);
 
    assign haddri_tmp  = branch_req_tmp & ~reset_over ? branch_target_tmp : {32{~(force_stall_reset | reset_over & htransi_tmp & ~write_data)}} & (haddri_r + 4);
 
@@ -1093,10 +1095,13 @@ module nanorv32 (/*AUTOARG*/
          // End of automatics
       end
       else begin
-         if(inst_ret)
+         if(inst_ret &&  (!irq_bypass_inst_reg_r ||  branch_taken))
+           // if we are overriding the intruction register with the micro-rom content
+           // we should not update the PC - except for the latest instruction
+           // that will be a branch
            pc_fetch_r <= {32{~reset_over}} & pc_next;
 
-         if(inst_ret) begin
+         if(inst_ret && (!irq_bypass_inst_reg_r  ||  branch_taken)) begin
 
             pc_exe_r  <=  {32{~reset_over}} & pc_next;
          end
@@ -1161,7 +1166,15 @@ module nanorv32 (/*AUTOARG*/
 
    // data memory interface
 
-   assign haddrd = alu_res;
+   assign haddrd[31:2] = alu_res[31:2];
+   // When we are pushing/stacking registers for interrupt entry/exit
+   // we realign the stack pointer the "hard way" :-)
+   // so that we don't have to do special computation or extra register
+   // so be careful, don't use -4(sp)
+   assign haddrd[1:0]  =  irq_bypass_inst_reg_r ? 2'b00 : alu_res[1:0];
+
+
+
    always @ (posedge clk or negedge rst_n) begin
    if (rst_n == 1'b0)
       cpu_dataif_addr <= 2'b00;
