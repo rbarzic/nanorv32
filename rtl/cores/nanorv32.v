@@ -168,6 +168,7 @@ module nanorv32 (/*AUTOARG*/
    reg [NANORV32_DATA_MSB:0]               mem2regfile;
 
    wire                                    stall_exe;
+   wire                                    interlock;
    wire                                    stall_fetch;
    wire                                    force_stall_pstate;
    wire                                    force_stall_pstate2;
