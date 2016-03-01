@@ -31,7 +31,6 @@
 
 module nanorv32 (/*AUTOARG*/
    // Outputs
-
    illegal_instruction, haddri, hproti, hsizei, hmasteri,
    hmasterlocki, hbursti, hwdatai, hwritei, htransi, haddrd, hprotd,
    hsized, hmasterd, hmasterlockd, hburstd, hwdatad, hwrited, htransd,
@@ -87,12 +86,7 @@ module nanorv32 (/*AUTOARG*/
 
 
    /*AUTOINPUT*/
-   // Beginning of automatic inputs (from unused autoinst inputs)
-   // End of automatics
    /*AUTOOUTPUT*/
-   // Beginning of automatic outputs (from unused autoinst outputs)
-
-   // End of automatics
 
    /*AUTOREG*/
    /*AUTOWIRE*/
@@ -110,6 +104,7 @@ module nanorv32 (/*AUTOARG*/
    wire [1:0]               read_byte_sel;
 
    wire [NANORV32_DATA_MSB:0]                instruction_r;
+   wire [NANORV32_DATA_MSB:0]                inst_from_buffer;
 
 
    //@begin[mux_select_declarations_as_wire]
@@ -188,6 +183,7 @@ module nanorv32 (/*AUTOARG*/
    wire                                    force_stall_pstate2;
    wire                                    force_stall_reset;
 
+   wire                                    inst_ret;
 
    wire                                     output_new_pc;
    wire                                     cpu_codeif_req;
@@ -198,6 +194,7 @@ module nanorv32 (/*AUTOARG*/
    wire                                     reti_inst_detected; // an instruction equivalent
    wire                                     irq_bypass_inst_reg_r;
    wire                                     interrupt_state_r;
+   wire                                     irq_ack;
 
    wire                                     allow_hidden_use_of_x0;
 
@@ -240,168 +237,45 @@ module nanorv32 (/*AUTOARG*/
                         1'b0};
 
 
+    /* nanorv32_prefetch AUTO_TEMPLATE(
+     ); */
+   nanorv32_prefetch
+     U_PREFETCH_BUFFER (
+                        .inst_ret       (inst_ret),
+                        .inst_from_buffer(inst_from_buffer[NANORV32_DATA_MSB:0]),
+                        .reset_over     (reset_over),
+                        /*AUTOINST*/
+                        // Outputs
+                        .haddri         (haddri[NANORV32_DATA_MSB:0]),
+                        .hproti         (hproti[3:0]),
+                        .hsizei         (hsizei[2:0]),
+                        .hmasteri       (hmasteri),
+                        .hmasterlocki   (hmasterlocki),
+                        .hbursti        (hbursti[2:0]),
+                        .hwdatai        (hwdatai[NANORV32_DATA_MSB:0]),
+                        .hwritei        (hwritei),
+                        .htransi        (htransi),
+                        // Inputs
+                        .branch_taken   (branch_taken),
+                        .pstate_r       (pstate_r[NANORV32_PSTATE_MSB:0]),
+                        .pc_next        (pc_next[NANORV32_DATA_MSB:0]),
+                        .hrdatai        (hrdatai[NANORV32_DATA_MSB:0]),
+                        .hrespi         (hrespi),
+                        .hreadyi        (hreadyi),
+                        .stall_exe      (stall_exe),
+                        .force_stall_reset(force_stall_reset),
+                        .rst_n          (rst_n),
+                        .clk            (clk),
+                        .irq_bypass_inst_reg_r(irq_bypass_inst_reg_r),
+                        .interlock      (interlock));
 
 
-   //===========================================================================
-   // Instruction register / decoding
-   //===========================================================================
-   reg  write_data;
-   wire  branch_req_tmp;
-   wire  next_inst_en_tmp;
-   wire  htransi_tmp;
-   wire [31:0] branch_target_tmp = pc_next;
-   wire [31:0]  haddri_tmp;
-   reg  [31:0]  haddri_r;
-   reg  [1:0] wr_pt_r , rd_pt_r;
-   wire  [2:0] wr_pt_r_plus1 = wr_pt_r + 1;
-   wire  [2:0] rd_pt_r_plus1 = rd_pt_r + 1;
-   wire fifo_full = wr_pt_r_plus1[1:0] == rd_pt_r[1:0] & pstate_r != NANORV32_PSTATE_BRANCH;
-   wire fifo_empty = wr_pt_r[1:0] == rd_pt_r[1:0] & pstate_r != NANORV32_PSTATE_BRANCH;
-   reg  [31:0] iq [0:3];
-   wire inst_ret = (!(stall_exe | force_stall_reset));
-   reg  branch_taken_reg;
-   reg  ignore_branch;
-   reg  reset_over;
-   always @(posedge clk or negedge rst_n) begin
-      if(rst_n == 1'b0) begin
-         branch_taken_reg <= 1'b0;
-         /*AUTORESET*/
-      end
-      else begin
-         if(hreadyi)
-           branch_taken_reg <= branch_taken & hreadyi & ~reset_over &  pstate_r != NANORV32_PSTATE_BRANCH;
-      end
-   end
-   always @(posedge clk or negedge rst_n) begin
-      if(rst_n == 1'b0) begin
-         write_data <= 1'b0;
-         /*AUTORESET*/
-      end
-      else begin
-         if(hreadyi)
-           write_data <= htransi & hreadyi;
-      end
-   end
-   always @(posedge clk or negedge rst_n) begin
-      if(rst_n == 1'b0) begin
-         wr_pt_r <= 2'b00;
-         /*AUTORESET*/
-      end
-      else begin
-         if((write_data | branch_taken & ~ignore_branch) & hreadyi)
-           wr_pt_r <= (branch_taken & ~ignore_branch &  (pstate_r != NANORV32_PSTATE_BRANCH)) ? 2'b00 : wr_pt_r + 1;
-      end
-   end
-   always @(posedge clk or negedge rst_n) begin
-      if(rst_n == 1'b0) begin
-         rd_pt_r <= 2'b00;
-         /*AUTORESET*/
-      end
-      else begin
-         if(inst_ret & ~reset_over & ~(~hreadyi & (wr_pt_r[1:0] == rd_pt_r_plus1[1:0] )))
-           rd_pt_r <= branch_taken_reg ? 2'b00 : rd_pt_r_plus1[1:0];
-      end
-   end
-   wire  cancel_data = branch_req_tmp;
-   always @(posedge clk or negedge rst_n) begin
-      if(rst_n == 1'b0) begin
-           iq[0][31:0] <= NANORV32_J0_INSTRUCTION;
-         /*AUTORESET*/
-      end
-      else begin
 
-         if(wr_pt_r == 0 & write_data & ~cancel_data)
-           iq[0][31:0] <= codeif_cpu_rdata[31:0];
-      end
-   end
-//   always @(posedge clk or negedge rst_n) begin
-//      if(rst_n == 1'b0) begin
-//           iq[1][31:0] <= NANORV32_J0_INSTRUCTION;
-//         /*AUTORESET*/
-//      end
-//      else begin
-//         if(wr_pt_r == 1 & write_data & ~cancel_data)
-//           iq[1][31:0] <= codeif_cpu_rdata[31:0];
-//      end
-//   end
-//   always @(posedge clk or negedge rst_n) begin
-//      if(rst_n == 1'b0) begin
-//           iq[2][31:0] <= NANORV32_J0_INSTRUCTION;
-//         /*AUTORESET*/
-//      end
-//      else begin
-//         if(wr_pt_r == 2 & write_data & ~cancel_data)
-//           iq[2][31:0] <= codeif_cpu_rdata[31:0];
-//      end
-//   end
-//   always @(posedge clk or negedge rst_n) begin
-//      if(rst_n == 1'b0) begin
-//           iq[3][31:0] <= NANORV32_J0_INSTRUCTION;
-//         /*AUTORESET*/
-//      end
-//      else begin
-//         if(wr_pt_r == 3 & write_data & ~cancel_data)
-//           iq[3][31:0] <= codeif_cpu_rdata[31:0];
-//      end
-//   end
-   generate
-      for (i = 0; i < 4; i = i + 1) begin
-        always @(posedge clk or negedge rst_n) begin
-          if(rst_n == 1'b0) begin
-                iq[i][31:0] <= NANORV32_J0_INSTRUCTION;
-             /*AUTORESET*/
-          end else begin
-            if (wr_pt_r == i & write_data & ~cancel_data)  begin
-                iq[i][31:0] <= codeif_cpu_rdata[31:0];
-            end
-          end
-        end
-      end
-   endgenerate
-
-   always @(posedge clk or negedge rst_n) begin
-      if(rst_n == 1'b0) begin
-           reset_over <= 1'b1;
-         /*AUTORESET*/
-      end
-      else begin
-         if( force_stall_reset | reset_over & write_data)
-           reset_over <= force_stall_reset;
-      end
-   end
-   always @(posedge clk or negedge rst_n) begin
-      if(rst_n == 1'b0) begin
-           ignore_branch <= 1'b1;
-         /*AUTORESET*/
-      end
-      else begin
-         if(write_data & reset_over )
-           ignore_branch <= ~write_data;
-      end
-   end
-
-   always @(posedge clk or negedge rst_n) begin
-      if(rst_n == 1'b0) begin
-          haddri_r  <= 32'b0;
-         /*AUTORESET*/
-      end
-      else if ((next_inst_en_tmp | branch_req_tmp & ~force_stall_reset) & hreadyi) begin
-          haddri_r <= haddri_tmp;
-      end
-   end
-   assign branch_req_tmp =  branch_taken & ~ignore_branch & pstate_r != NANORV32_PSTATE_BRANCH;
-
-   assign next_inst_en_tmp = ~force_stall_reset & ~fifo_full;
-   // We block eternal request on the bus if we are overriding
-   // the instruction register during a irq context save/restore operation
-   assign htransi_tmp  = (next_inst_en_tmp | branch_req_tmp) & ~force_stall_reset & ~interlock & (!irq_bypass_inst_reg_r ||  branch_taken);
-
-   assign haddri_tmp  = branch_req_tmp & ~reset_over ? branch_target_tmp : {32{~(force_stall_reset | reset_over & htransi_tmp & ~write_data)}} & (haddri_r + 4);
 
 
    // If an irq is detected, we override the instruction register with the code from
    // the the micro-rom in the flow controller
-   assign instruction_r = irq_bypass_inst_reg_r ? inst_irq : iq[rd_pt_r];
+   assign instruction_r = irq_bypass_inst_reg_r ? inst_irq : inst_from_buffer;
 
 
  /* module_name AUTO_TEMPLATE(
@@ -505,9 +379,9 @@ module nanorv32 (/*AUTOARG*/
       if(rst_n == 1'b0) begin
          /*AUTORESET*/
          // Beginning of autoreset for uninitialized flops
-         write_rd2 <= 1'b0;
-         dec_rd2   <= {NANORV32_INST_FORMAT_RD_SIZE{1'b0}};
-         datamem_size_read_sel_r <={NANORV32_MUX_SEL_DATAMEM_SIZE_READ_SIZE{1'b0}} ;
+         datamem_size_read_sel_r <= {(1+(NANORV32_MUX_SEL_DATAMEM_SIZE_READ_MSB)){1'b0}};
+         dec_rd2 <= {(1+(NANORV32_INST_FORMAT_RD_MSB)){1'b0}};
+         write_rd2 <= 1'h0;
          // End of automatics
       end
       else begin
@@ -665,17 +539,9 @@ module nanorv32 (/*AUTOARG*/
                        .alu_portb       (alu_portb[NANORV32_DATA_MSB:0]));
 
 
-   // Code memory interface
-   assign haddri       = haddri_tmp;  // addr is the next PC
-   assign htransi      = hreadyi & ~force_stall_reset & ~fifo_full;  // request is the AHB is free
-   assign hsizei       = 3'b010;   // word request
-   assign hproti       = 4'b0001;  // instruction data
-   assign hbursti      = 3'b000;   // Burst not supported
-   assign hmasteri     = 1'b0;     // Core is the 0 master ID
-   assign hmasterlocki = 1'b0;     // Master lock is not used
-   assign hwritei      = 1'b0;     // Iside is doing only reads
-   assign hwdatai      = 32'h0;    // Write data is not supported on Iside
-   wire   unused       = hrespi;
+
+
+
 
    // data memory interface
 
