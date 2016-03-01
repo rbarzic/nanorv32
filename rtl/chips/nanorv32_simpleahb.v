@@ -154,7 +154,7 @@ module nanorv32_simpleahb (/*AUTOARG*/
      .hmasterd            (),
      .hmasterlockd        (hmastlockd),
      ); */
-   nanorv32 U_CPU (
+   nanorv32_pil U_NANORV32_PIL (
                    /*AUTOINST*/
                    // Outputs
                    .illegal_instruction (illegal_instruction),

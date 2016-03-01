@@ -37,6 +37,7 @@
 module tb_nanorv32;
 
    `include "nanorv32_parameters.v"
+   `include "tb_defines.v"
 
    parameter ROM_ADDRESS_SIZE  = NANORV32_ADDR_SIZE-1; // Rom is half of the address space
 
@@ -126,7 +127,7 @@ module tb_nanorv32;
                tmp[23:16] = memory[i*4+2];
                tmp[31:24] = memory[i*4+3];
 
-               U_DUT.u_tcm0.U_RAM.RAM[i]  = tmp;
+               `CODE_RAM.RAM[i]  = tmp;
 
             end
          end
@@ -157,10 +158,10 @@ module tb_nanorv32;
    wire [NANORV32_DATA_MSB:0] pc;
    wire [NANORV32_DATA_MSB:0] x10_a0; // return value register
 
-   assign pc = U_DUT.U_CPU.pc_exe_r;
-   assign illegal_instruction  = U_DUT.U_CPU.illegal_instruction;
+   assign pc = `CPU.pc_exe_r;
+   assign illegal_instruction  = `CPU.illegal_instruction;
 
-   assign x10_a0 = U_DUT.U_CPU.U_REG_FILE.regfile[10];
+   assign x10_a0 = `RF.regfile[10];
 
    always @(posedge clk) begin
       if(rst_n) begin
