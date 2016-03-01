@@ -34,13 +34,11 @@
 
 module nanorv32_simpleahb (/*AUTOARG*/
    // Outputs
-   io_tcm1_hprot, io_tcm1_hmastlock, io_tcm1_hburst, io_tcm0_hprot,
-   io_tcm0_hmastlock, io_tcm0_hburst, hmasterlocki, hmasterlockd,
-   hmasteri, hmasterd, illegal_instruction, irq_ack,
+   illegal_instruction, irq_ack,
    // Inouts
    P0, P1,
    // Inputs
-   hmastlocki, hmastlockd, clk_in, rst_n, irq
+   clk_in, rst_n, irq
    );
 
 `include "nanorv32_parameters.v"
@@ -65,23 +63,7 @@ module nanorv32_simpleahb (/*AUTOARG*/
 
    // Code memory port
    /*AUTOINPUT*/
-   // Beginning of automatic inputs (from unused autoinst inputs)
-   input                hmastlockd;             // To u_ahbmatrix of Ahbmli.v
-   input                hmastlocki;             // To u_ahbmatrix of Ahbmli.v
-   // End of automatics
    /*AUTOOUTPUT*/
-   // Beginning of automatic outputs (from unused autoinst outputs)
-   output               hmasterd;               // From U_CPU of nanorv32.v
-   output               hmasteri;               // From U_CPU of nanorv32.v
-   output               hmasterlockd;           // From U_CPU of nanorv32.v
-   output               hmasterlocki;           // From U_CPU of nanorv32.v
-   output [2:0]         io_tcm0_hburst;         // From u_ahbmatrix of Ahbmli.v
-   output               io_tcm0_hmastlock;      // From u_ahbmatrix of Ahbmli.v
-   output [3:0]         io_tcm0_hprot;          // From u_ahbmatrix of Ahbmli.v
-   output [2:0]         io_tcm1_hburst;         // From u_ahbmatrix of Ahbmli.v
-   output               io_tcm1_hmastlock;      // From u_ahbmatrix of Ahbmli.v
-   output [3:0]         io_tcm1_hprot;          // From u_ahbmatrix of Ahbmli.v
-   // End of automatics
 
    /*AUTOREG*/
    /*AUTOWIRE*/
@@ -93,19 +75,8 @@ module nanorv32_simpleahb (/*AUTOARG*/
    wire                 clk;                    // From U_CLK_GEN of nanorv32_clkgen.v
    wire [31:0]          gpio_bus_dout;          // From U_GPIO_CTRL of nanorv32_gpio_ctrl.v
    wire                 gpio_bus_ready_nxt;     // From U_GPIO_CTRL of nanorv32_gpio_ctrl.v
-   wire                 periph_haddr;           // From u_ahbmatrix of Ahbmli.v
-   wire                 periph_hburst;          // From u_ahbmatrix of Ahbmli.v
-   wire                 periph_hmastlock;       // From u_ahbmatrix of Ahbmli.v
-   wire                 periph_hprot;           // From u_ahbmatrix of Ahbmli.v
-   wire [31:0]          periph_hrdata;          // From U_PERIPH_MUX of nanorv32_periph_mux_ahb.v
-   wire                 periph_hreadyin;        // From u_ahbmatrix of Ahbmli.v
-   wire                 periph_hreadyout;       // From U_PERIPH_MUX of nanorv32_periph_mux_ahb.v
-   wire                 periph_hresp;           // From U_PERIPH_MUX of nanorv32_periph_mux_ahb.v
-   wire                 periph_hsel;            // From u_ahbmatrix of Ahbmli.v
-   wire                 periph_hsize;           // From u_ahbmatrix of Ahbmli.v
-   wire                 periph_htrans;          // From u_ahbmatrix of Ahbmli.v
-   wire                 periph_hwdata;          // From u_ahbmatrix of Ahbmli.v
-   wire                 periph_hwrite;          // From u_ahbmatrix of Ahbmli.v
+   wire                 hmastlockd;             // From U_CPU of nanorv32.v
+   wire                 hmastlocki;             // From U_CPU of nanorv32.v
    // End of automatics
 
    wire [NANORV32_DATA_MSB:0] hrdatai;
@@ -163,21 +134,25 @@ module nanorv32_simpleahb (/*AUTOARG*/
    wire         io_tcm1_hreadyout;
    wire         io_tcm1_hresp;
 
-   wire [31:0]  io_periph_haddr;
-   wire         io_periph_hwrite;
-   wire [2:0]   io_periph_hsize;
-   wire [2:0]   io_periph_hburst;
-   wire [3:0]   io_periph_hprot;
-   wire [1:0]   io_periph_htrans;
-   wire         io_periph_hmastlock;
-   wire [31:0]  io_periph_hwdata;
-   wire [31:0]  io_periph_hrdata;
-   wire         io_periph_hsel;
-   wire         io_periph_hreadyin;
-   wire         io_periph_hreadyout;
-   wire         io_periph_hresp;
+   wire [31:0]  periph_haddr;
+   wire         periph_hwrite;
+   wire [2:0]   periph_hsize;
+   wire [2:0]   periph_hburst;
+   wire [3:0]   periph_hprot;
+   wire [1:0]   periph_htrans;
+   wire         periph_hmastlock;
+   wire [31:0]  periph_hwdata;
+   wire [31:0]  periph_hrdata;
+   wire         periph_hsel;
+   wire         periph_hreadyin;
+   wire         periph_hreadyout;
+   wire         periph_hresp;
 
     /* nanorv32 AUTO_TEMPLATE(
+     .hmasteri            (),
+     .hmasterlocki        (hmastlocki),
+     .hmasterd            (),
+     .hmasterlockd        (hmastlockd),
      ); */
    nanorv32 U_CPU (
                    /*AUTOINST*/
@@ -186,8 +161,8 @@ module nanorv32_simpleahb (/*AUTOARG*/
                    .haddri              (haddri[NANORV32_DATA_MSB:0]),
                    .hproti              (hproti[3:0]),
                    .hsizei              (hsizei[2:0]),
-                   .hmasteri            (hmasteri),
-                   .hmasterlocki        (hmasterlocki),
+                   .hmasteri            (),                      // Templated
+                   .hmasterlocki        (hmastlocki),            // Templated
                    .hbursti             (hbursti[2:0]),
                    .hwdatai             (hwdatai[NANORV32_DATA_MSB:0]),
                    .hwritei             (hwritei),
@@ -195,8 +170,8 @@ module nanorv32_simpleahb (/*AUTOARG*/
                    .haddrd              (haddrd[NANORV32_DATA_MSB:0]),
                    .hprotd              (hprotd[3:0]),
                    .hsized              (hsized[2:0]),
-                   .hmasterd            (hmasterd),
-                   .hmasterlockd        (hmasterlockd),
+                   .hmasterd            (),                      // Templated
+                   .hmasterlockd        (hmastlockd),            // Templated
                    .hburstd             (hburstd[2:0]),
                    .hwdatad             (hwdatad[NANORV32_DATA_MSB:0]),
                    .hwrited             (hwrited),
@@ -275,8 +250,14 @@ module nanorv32_simpleahb (/*AUTOARG*/
       .io_periph_\([a-z]+\)       (periph_\1),
      ); */
    Ahbmli   u_ahbmatrix(
-    .clk         (clk),
-    .reset       (~rst_n),
+                        .clk         (clk),
+                        .reset       (~rst_n),
+                        .io_tcm0_hprot  (),
+                        .io_tcm1_hprot  (),
+                        .io_tcm0_hmastlock(),
+                        .io_tcm1_hmastlock(),
+                        .io_tcm0_hburst(),
+                        .io_tcm1_hburst(),
                         /*AUTOINST*/
                         // Outputs
                         .io_dside_hrdata(hrdatad),               // Templated
@@ -298,20 +279,14 @@ module nanorv32_simpleahb (/*AUTOARG*/
                         .io_tcm0_haddr  (io_tcm0_haddr[31:0]),
                         .io_tcm0_hwrite (io_tcm0_hwrite),
                         .io_tcm0_hsize  (io_tcm0_hsize[2:0]),
-                        .io_tcm0_hburst (io_tcm0_hburst[2:0]),
-                        .io_tcm0_hprot  (io_tcm0_hprot[3:0]),
                         .io_tcm0_htrans (io_tcm0_htrans[1:0]),
-                        .io_tcm0_hmastlock(io_tcm0_hmastlock),
                         .io_tcm0_hwdata (io_tcm0_hwdata[31:0]),
                         .io_tcm0_hsel   (io_tcm0_hsel),
                         .io_tcm0_hreadyin(io_tcm0_hreadyin),
                         .io_tcm1_haddr  (io_tcm1_haddr[31:0]),
                         .io_tcm1_hwrite (io_tcm1_hwrite),
                         .io_tcm1_hsize  (io_tcm1_hsize[2:0]),
-                        .io_tcm1_hburst (io_tcm1_hburst[2:0]),
-                        .io_tcm1_hprot  (io_tcm1_hprot[3:0]),
                         .io_tcm1_htrans (io_tcm1_htrans[1:0]),
-                        .io_tcm1_hmastlock(io_tcm1_hmastlock),
                         .io_tcm1_hwdata (io_tcm1_hwdata[31:0]),
                         .io_tcm1_hsel   (io_tcm1_hsel),
                         .io_tcm1_hreadyin(io_tcm1_hreadyin),
