@@ -26,7 +26,7 @@ read_xdc ./xilinx_constraints.xdc
 
 # synth_design -include_dirs $include_dir -top cmsdk_mcu -part $xilinx_part
 # for debugging timing loops
-synth_design -include_dirs $include_dir -top nanorv32_simple  -part $xilinx_part -flatten_hierarchy none
+synth_design -include_dirs $include_dir -top nanorv32_simpleahb  -part $xilinx_part -flatten_hierarchy none
 
 set outputDir ./rpt
 file mkdir $outputDir
