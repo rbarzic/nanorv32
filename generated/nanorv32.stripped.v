@@ -562,7 +562,9 @@ module nanorv32 (/*AUTOARG*/
 
            // We cancel the branch if we detect a "reti"
            // while in interrupt state
-            branch_taken = !(reti_inst_detected && interrupt_state_r);
+            // branch_taken = !(reti_inst_detected && interrupt_state_r);
+           branch_taken = 1'b1;
+
         end// Mux definitions for alu
         default begin
            pc_next = pc_fetch_r + 4;

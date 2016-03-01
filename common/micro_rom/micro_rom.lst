@@ -28,16 +28,16 @@ Disassembly of section .text:
   48:	00050067          	jr	a0
 
 0000004c <_int_entry_code_stop_>:
-  4c:	ff812083          	lw	ra,-8(sp)
-  50:	ff012283          	lw	t0,-16(sp)
-  54:	fec12303          	lw	t1,-20(sp)
-  58:	fe812383          	lw	t2,-24(sp)
-  5c:	fe412503          	lw	a0,-28(sp)
-  60:	fe012583          	lw	a1,-32(sp)
-  64:	fdc12603          	lw	a2,-36(sp)
-  68:	fd812683          	lw	a3,-40(sp)
-  6c:	fd412703          	lw	a4,-44(sp)
-  70:	fd012783          	lw	a5,-48(sp)
-  74:	fcc12003          	lw	zero,-52(sp)
-  78:	ff412103          	lw	sp,-12(sp)
+  4c:	02c12083          	lw	ra,44(sp)
+  50:	02412283          	lw	t0,36(sp)
+  54:	02012303          	lw	t1,32(sp)
+  58:	01c12383          	lw	t2,28(sp)
+  5c:	01812503          	lw	a0,24(sp)
+  60:	01412583          	lw	a1,20(sp)
+  64:	01012603          	lw	a2,16(sp)
+  68:	00c12683          	lw	a3,12(sp)
+  6c:	00812703          	lw	a4,8(sp)
+  70:	00412783          	lw	a5,4(sp)
+  74:	00012003          	lw	zero,0(sp)
+  78:	02812103          	lw	sp,40(sp)
   7c:	00000067          	jr	zero

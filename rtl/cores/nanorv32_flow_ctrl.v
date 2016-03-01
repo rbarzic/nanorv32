@@ -221,6 +221,11 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
              pstate_next =  NANORV32_PSTATE_CONT;
              clear_irq_bypass_inst =  1;
              urom_addr_inc = 0;
+              // a valid branch should end the poping sequence
+              // when restoring the context during a interrupt
+             if(irq_restore_r) begin
+                clear_irq_restore <= 1;
+             end
 
 
           end

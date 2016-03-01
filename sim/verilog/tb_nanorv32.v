@@ -146,7 +146,7 @@ module tb_nanorv32;
       #1;
       load_program_memory();
       vcd_dump();
-      #1000000;
+      #2000000;
       $display("-I- TEST FAILED Timeout !");
       $finish(2);
 
