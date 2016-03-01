@@ -31,11 +31,14 @@
 
 module nanorv32 (/*AUTOARG*/
    // Outputs
+
    illegal_instruction, haddri, hproti, hsizei, hmasteri,
    hmasterlocki, hbursti, hwdatai, hwritei, htransi, haddrd, hprotd,
    hsized, hmasterd, hmasterlockd, hburstd, hwdatad, hwrited, htransd,
+   irq_ack,
    // Inputs
-   rst_n, clk, hrdatai, hrespi, hreadyi, hrdatad, hrespd, hreadyd
+   rst_n, clk, hrdatai, hrespi, hreadyi, hrdatad, hrespd, hreadyd,
+   irq
    );
 
 `include "nanorv32_parameters.v"
@@ -78,8 +81,18 @@ module nanorv32 (/*AUTOARG*/
    output                       hwrited;
    output                       htransd;
 
+   input                        irq;                    // To U_FLOW_CTRL of nanorv32_flow_ctrl.v
+   output                       irq_ack;
+
+
+
    /*AUTOINPUT*/
+   // Beginning of automatic inputs (from unused autoinst inputs)
+   // End of automatics
    /*AUTOOUTPUT*/
+   // Beginning of automatic outputs (from unused autoinst outputs)
+
+   // End of automatics
 
    /*AUTOREG*/
    /*AUTOWIRE*/
@@ -98,8 +111,10 @@ module nanorv32 (/*AUTOARG*/
 
    wire [NANORV32_DATA_MSB:0]                instruction_r;
 
+
    //@begin[mux_select_declarations_as_wire]
    //@end[mux_select_declarations_as_wire]
+
 
    //@begin[instruction_fields]
    //@end[instruction_fields]
@@ -151,11 +166,22 @@ module nanorv32 (/*AUTOARG*/
    wire                                     valid_inst;
    wire             [NANORV32_PSTATE_MSB:0] pstate_r;
 
+   wire [NANORV32_DATA_MSB:0]               inst_irq;
+   wire                                     reti_inst_detected; // an instruction equivalent
+   wire                                     irq_bypass_inst_reg_r;
+   wire                                     interrupt_state_r;
+
+   wire                                     allow_hidden_use_of_x0;
+
+
+   // to a "return from interrupt" as been detected
    reg [NANORV32_MUX_SEL_DATAMEM_SIZE_READ_MSB:0] datamem_size_read_sel_r;
 
 
 
+
    genvar i;
+
    //===========================================================================
    // Immediate value reconstruction
    //===========================================================================
@@ -165,6 +191,7 @@ module nanorv32 (/*AUTOARG*/
    wire [NANORV32_DATA_MSB:0]                   imm12sb_sext;
    wire [NANORV32_DATA_MSB:0]                   imm20u_sext;
    wire [NANORV32_DATA_MSB:0]                   imm20uj_sext;
+
 
    assign imm12_sext = {{20{dec_imm12 [11]}},dec_imm12[11:0]};
    assign imm12hilo_sext = {{20{dec_imm12hi[6]}},dec_imm12hi[6:0],dec_imm12lo[4:0]};
@@ -234,7 +261,7 @@ module nanorv32 (/*AUTOARG*/
       end
       else begin
          if((write_data | branch_taken & ~ignore_branch) & hreadyi)
-           wr_pt_r <= branch_taken & ~ignore_branch &  pstate_r != NANORV32_PSTATE_BRANCH ? 2'b00 : wr_pt_r + 1;
+           wr_pt_r <= (branch_taken & ~ignore_branch &  (pstate_r != NANORV32_PSTATE_BRANCH)) ? 2'b00 : wr_pt_r + 1;
       end
    end
    always @(posedge clk or negedge rst_n) begin
@@ -254,6 +281,7 @@ module nanorv32 (/*AUTOARG*/
          /*AUTORESET*/
       end
       else begin
+
          if(wr_pt_r == 0 & write_data & ~cancel_data)
            iq[0][31:0] <= codeif_cpu_rdata[31:0];
       end
@@ -302,6 +330,7 @@ module nanorv32 (/*AUTOARG*/
         end
       end
    endgenerate
+
    always @(posedge clk or negedge rst_n) begin
       if(rst_n == 1'b0) begin
            reset_over <= 1'b1;
@@ -333,13 +362,19 @@ module nanorv32 (/*AUTOARG*/
       end
    end
    assign branch_req_tmp =  branch_taken & ~ignore_branch & pstate_r != NANORV32_PSTATE_BRANCH;
+
    assign next_inst_en_tmp = ~force_stall_reset & ~fifo_full;
-   assign htransi_tmp  = (next_inst_en_tmp | branch_req_tmp) & ~force_stall_reset & ~interlock;
+   // We block eternal request on the bus if we are overriding
+   // the instruction register during a irq context save/restore operation
+   assign htransi_tmp  = (next_inst_en_tmp | branch_req_tmp) & ~force_stall_reset & ~interlock & (!irq_bypass_inst_reg_r ||  branch_taken);
+
    assign haddri_tmp  = branch_req_tmp & ~reset_over ? branch_target_tmp : {32{~(force_stall_reset | reset_over & htransi_tmp & ~write_data)}} & (haddri_r + 4);
 
 
+   // If an irq is detected, we override the instruction register with the code from
+   // the the micro-rom in the flow controller
+   assign instruction_r = irq_bypass_inst_reg_r ? inst_irq : iq[rd_pt_r];
 
-   assign instruction_r = iq[rd_pt_r];
 
  /* module_name AUTO_TEMPLATE(
   ); */
@@ -522,8 +557,11 @@ module nanorv32 (/*AUTOARG*/
            // Fixme - this may not be valid if there is some wait-state
            pc_next = output_new_pc  ? alu_res & 32'hFFFFFFFE : (pc_fetch_r + 4);
 
+           // We cancel the branch if we detect a "reti"
+           // while in interrupt state
+            // branch_taken = !(reti_inst_detected && interrupt_state_r);
+           branch_taken = 1'b1;
 
-           branch_taken = 1;
         end// Mux definitions for alu
         default begin
            pc_next = pc_fetch_r + 4;
@@ -541,10 +579,13 @@ module nanorv32 (/*AUTOARG*/
          // End of automatics
       end
       else begin
-         if(inst_ret)
+         if(inst_ret &&  (!irq_bypass_inst_reg_r ||  branch_taken))
+           // if we are overriding the intruction register with the micro-rom content
+           // we should not update the PC - except for the latest instruction
+           // that will be a branch
            pc_fetch_r <= {32{~reset_over}} & pc_next;
 
-         if(inst_ret) begin
+         if(inst_ret && (!irq_bypass_inst_reg_r  ||  branch_taken)) begin
 
             pc_exe_r  <=  {32{~reset_over}} & pc_next;
          end
@@ -559,6 +600,11 @@ module nanorv32 (/*AUTOARG*/
    wire  data_access_cycle; // Indicate when it is ok to access data space
    // (the first cycle normally)
 
+   // Detection of return from interrupt
+   // jalr x0,x1,0  with x1/ra = -1
+   // with x1/ra coming from reg file port a
+   assign reti_inst_detected = (instruction_r ==NANORV32_RET_INSTRUCTION) &&
+                          (rf_porta == NANORV32_X1_RA_RETI_MAGIC_VALUE);
 
 
    nanorv32_regfile #(.NUM_REGS(32))
@@ -566,6 +612,7 @@ module nanorv32 (/*AUTOARG*/
                .porta          (rf_porta[NANORV32_DATA_MSB:0]),
                .portb          (rf_portb[NANORV32_DATA_MSB:0]),
                // Inputs
+               .allow_hidden_use_of_x0  (allow_hidden_use_of_x0),
                .sel_porta               (dec_rs1[NANORV32_RF_PORTA_MSB:0]),
                .sel_portb               (dec_rs2[NANORV32_RF_PORTB_MSB:0]),
                .sel_rd                  (dec_rd[NANORV32_RF_PORTRD_MSB:0]),
@@ -604,7 +651,15 @@ module nanorv32 (/*AUTOARG*/
 
    // data memory interface
 
-   assign haddrd = alu_res;
+   assign haddrd[31:2] = alu_res[31:2];
+   // When we are pushing/stacking registers for interrupt entry/exit
+   // we realign the stack pointer the "hard way" :-)
+   // so that we don't have to do special computation or extra register
+   // so be careful, don't use -4(sp)
+   assign haddrd[1:0]  =  irq_bypass_inst_reg_r ? 2'b00 : alu_res[1:0];
+
+
+
    always @ (posedge clk or negedge rst_n) begin
    if (rst_n == 1'b0)
       cpu_dataif_addr <= 2'b00;
@@ -615,23 +670,34 @@ module nanorv32 (/*AUTOARG*/
 
 
 
-   nanorv32_flow_ctrl U_FLOW_CTRL (
-   .force_stall_pstate  (force_stall_pstate),
-   .force_stall_pstate2  (force_stall_pstate2),
-   .force_stall_reset   (force_stall_reset),
-   .output_new_pc       (output_new_pc),
-   .valid_inst          (valid_inst),
-   .data_access_cycle   (data_access_cycle),
-   .pstate_r            (pstate_r),
-   // Inputs
-   .branch_taken        (branch_taken),
-   .datamem_read        (datamem_read),
-   .datamem_write       (datamem_write),
-   .hreadyd             (hreadyd),
-   .codeif_cpu_ready_r  (codeif_cpu_ready_r),
-   .interlock           (interlock),
-   .clk                 (clk),
-   .rst_n               (rst_n));
+
+   nanorv32_flow_ctrl
+     U_FLOW_CTRL (
+                  .reti_inst_detected    (reti_inst_detected),
+                  .interrupt_state_r     (interrupt_state_r),
+                  // Outputs
+                  .allow_hidden_use_of_x0  (allow_hidden_use_of_x0),
+                  .force_stall_pstate   (force_stall_pstate),
+                  .force_stall_pstate2  (force_stall_pstate2),
+                  .force_stall_reset    (force_stall_reset),
+                  .output_new_pc        (output_new_pc),
+                  .valid_inst           (valid_inst),
+                  .data_access_cycle    (data_access_cycle),
+                  .pstate_r             (pstate_r[NANORV32_PSTATE_MSB:0]),
+                  .irq_ack              (irq_ack),
+                  .irq_bypass_inst_reg_r  (irq_bypass_inst_reg_r),
+                  .inst_irq             (inst_irq[NANORV32_DATA_MSB:0]),
+                  // Inputs
+                  .interlock           (interlock),
+                  .branch_taken         (branch_taken),
+                  .datamem_read         (datamem_read),
+                  .datamem_write        (datamem_write),
+                  .hreadyd              (hreadyd),
+                  .codeif_cpu_ready_r   (codeif_cpu_ready_r),
+                  .irq                  (irq),
+                  .clk                  (clk),
+                  .rst_n                (rst_n));
+
 
 
 

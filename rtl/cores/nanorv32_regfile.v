@@ -35,7 +35,8 @@ module nanorv32_regfile (/*AUTOARG*/
    // Outputs
    porta, portb,
    // Inputs
-   sel_porta, sel_portb, sel_rd, sel_rd2, rd, write_rd, rd2, write_rd2,   clk, rst_n
+   sel_porta, sel_portb, sel_rd, sel_rd2, rd, write_rd, rd2,
+   write_rd2, allow_hidden_use_of_x0, clk, rst_n
    );
 
    parameter NUM_REGS=32;
@@ -53,6 +54,12 @@ module nanorv32_regfile (/*AUTOARG*/
    input                            write_rd;
    input [NANORV32_DATA_MSB:0]      rd2;
    input                            write_rd2;
+
+   // only when using micro-rom code
+   // we use x0 as a temporary register
+   input                            allow_hidden_use_of_x0;
+
+
    input                            clk;
    input                            rst_n;
 
@@ -74,7 +81,7 @@ module nanorv32_regfile (/*AUTOARG*/
   reg [NANORV32_DATA_MSB:0] regfile [NUM_REGS-1:0];
 
   always @(sel_porta or regfile[sel_porta])  begin
-    if(sel_porta != 0) begin
+     if((sel_porta != 0) || allow_hidden_use_of_x0) begin
       porta <= regfile[sel_porta];
     end
     else begin
@@ -84,7 +91,7 @@ module nanorv32_regfile (/*AUTOARG*/
 
 
   always @(sel_portb or regfile[sel_portb])  begin
-    if(sel_portb != 0) begin
+     if((sel_portb != 0) || allow_hidden_use_of_x0) begin
       portb <= regfile[sel_portb];
     end
     else begin
@@ -95,10 +102,10 @@ module nanorv32_regfile (/*AUTOARG*/
 generate
    for (i = 0; i < 32 ; i = i + 1) begin
    always @(posedge clk) begin
-    if((sel_rd != 0) && (sel_rd == i) && write_rd) begin
+      if(((sel_rd != 0) || allow_hidden_use_of_x0) && (sel_rd == i) && write_rd) begin
       regfile[i] <= rd;
     end
-    else if ((sel_rd2 != 0) && (sel_rd2 == i) && write_rd2) begin
+      else if (((sel_rd2 != 0) || allow_hidden_use_of_x0) && (sel_rd2 == i) && write_rd2) begin
       regfile[i] <= rd2;
     end
    end

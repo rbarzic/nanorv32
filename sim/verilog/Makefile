@@ -1,6 +1,12 @@
 TOP:=$(shell cd ../..; pwd)
 
+EXTRA_V_SRC=$(wildcard ../../ctests/$(TEST)/*.v)
 
+ifeq ($(EXTRA_V_SRC),)
+VCD_EXTRA_MODULE=
+else
+VCD_EXTRA_MODULE=-DVCD_EXTRA_MODULE=,$(TEST)
+endif
 
 include ../../common/makefile/gcc.mk
 
@@ -12,12 +18,16 @@ iverilog_file_list.txt:
 vivado_file_list.txt:
 	make -C $(TOP)/common/files vivado_sim
 
+IVERILOG_OPTS =  -g2005 -DIVERILOG=1
+IVERILOG_OPTS += -DTB=tb_nanorv32
+IVERILOG_OPTS += $(VCD_EXTRA_MODULE) -f   iverilog_file_list.txt $(EXTRA_V_SRC)
+
 
 compile:
-	iverilog -Wall -W no-timescale -g2005 -DIVERILOG=1 -f   iverilog_file_list.txt -o testbench.exe
+	iverilog  -Wall -W no-timescale  $(IVERILOG_OPTS) -o testbench.exe
 
 compile_debug:
-	iverilog -W infloop -g2005 -p fileline=1  -DIVERILOG=1 -f   iverilog_file_list.txt -o testbench.exe
+	iverilog -W infloop -g2005 -p fileline=1 $(IVERILOG_OPTS) -o testbench.exe
 
 
 
@@ -99,9 +109,13 @@ find_failled:
 
 
 run_ctest: ../../ctests/$(TEST)/$(TEST).c
+run_ctest:
+	make compile
 	@echo  "===================== TEST $(TEST) ============================"
+
 	mkdir -p logs
 	($(GNU_GCC)  $(GNU_CC_FLAGS) $(TEST_FLAGS) \
+	-DIRQ_SUPPORT \
 	-L $(LINKER_SCRIPT_PATH) \
 	-T $(LINKER_SCRIPT_ROM_SRAM) \
 	$< $(STARTUP_CODE) -o $(TEST).elf  || echo "-I- TEST FAILED (gcc compilation)" >> logs/$(TEST).run.log) | tee  logs/$(TEST).run.log
