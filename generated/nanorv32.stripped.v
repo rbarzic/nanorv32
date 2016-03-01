@@ -92,14 +92,14 @@ module nanorv32 (/*AUTOARG*/
    reg  [3:0]              cpu_dataif_bytesel;
    wire                    cpu_dataif_req;
    wire [NANORV32_DATA_MSB:0]  dataif_cpu_rdata;
-   wire                     dataif_cpu_early_ready;
+   wire                     dataif_cpu_early_ready = hreadyd;
    wire                     dataif_cpu_ready_r;
    wire [1:0]               read_byte_sel;
 
-   reg [NANORV32_DATA_MSB:0]                instruction_r;
+   wire [NANORV32_DATA_MSB:0]                instruction_r;
 
-   //@begin[mux_select_declarations]
-   //@end[mux_select_declarations]
+   //@begin[mux_select_declarations_as_wire]
+   //@end[mux_select_declarations_as_wire]
 
    //@begin[instruction_fields]
    //@end[instruction_fields]
@@ -114,7 +114,8 @@ module nanorv32 (/*AUTOARG*/
 
    wire [NANORV32_DATA_MSB:0]               rf_porta;
    wire [NANORV32_DATA_MSB:0]               rf_portb;
-   reg [NANORV32_DATA_MSB:0]                rd;
+   reg [NANORV32_DATA_MSB:0]                rd_tmp;
+   wire [NANORV32_DATA_MSB:0]                rd;
 
    reg [NANORV32_DATA_MSB:0]                alu_porta;
    reg [NANORV32_DATA_MSB:0]                alu_portb;
@@ -133,19 +134,28 @@ module nanorv32 (/*AUTOARG*/
 
    wire                                    alu_cond;
 
-   reg                                     illegal_instruction;
+   wire                                     illegal_instruction;
 
-   reg [NANORV32_DATA_MSB:0]              mem2regfile;
+   reg [NANORV32_DATA_MSB:0]               mem2regfile;
 
-   wire                                     stall_exe;
-   wire                                     stall_fetch;
-   wire                                      force_stall_pstate;
+   wire                                    stall_exe;
+   wire                                    interlock;
+   wire                                    stall_fetch;
+   wire                                    force_stall_pstate;
+   wire                                    force_stall_pstate2;
+   wire                                    force_stall_reset;
 
 
    wire                                     output_new_pc;
-   wire                                      cpu_codeif_req;
-   wire                                       valid_inst;
+   wire                                     cpu_codeif_req;
+   wire                                     valid_inst;
+   wire             [NANORV32_PSTATE_MSB:0] pstate_r;
 
+   reg [NANORV32_MUX_SEL_DATAMEM_SIZE_READ_MSB:0] datamem_size_read_sel_r;
+
+
+
+   genvar i;
    //===========================================================================
    // Immediate value reconstruction
    //===========================================================================
@@ -180,46 +190,178 @@ module nanorv32 (/*AUTOARG*/
    //===========================================================================
    // Instruction register / decoding
    //===========================================================================
-   wire  force_stall_reset;
+   reg  write_data;
+   wire  branch_req_tmp;
+   wire  next_inst_en_tmp;
+   wire  htransi_tmp;
+   wire [31:0] branch_target_tmp = pc_next;
+   wire [31:0]  haddri_tmp;
+   reg  [31:0]  haddri_r;
+   reg  [1:0] wr_pt_r , rd_pt_r;
+   wire  [2:0] wr_pt_r_plus1 = wr_pt_r + 1;
+   wire  [2:0] rd_pt_r_plus1 = rd_pt_r + 1;
+   wire fifo_full = wr_pt_r_plus1[1:0] == rd_pt_r[1:0] & pstate_r != NANORV32_PSTATE_BRANCH;
+   wire fifo_empty = wr_pt_r[1:0] == rd_pt_r[1:0] & pstate_r != NANORV32_PSTATE_BRANCH;
+   reg  [31:0] iq [0:3];
+   wire inst_ret = (!(stall_exe | force_stall_reset));
+   reg  branch_taken_reg;
+   reg  ignore_branch;
+   reg  reset_over;
    always @(posedge clk or negedge rst_n) begin
       if(rst_n == 1'b0) begin
-         instruction_r <= NANORV32_J0_INSTRUCTION;
+         branch_taken_reg <= 1'b0;
          /*AUTORESET*/
       end
       else begin
-         if(!(stall_fetch | force_stall_reset))
-           instruction_r <= codeif_cpu_rdata;
+         if(hreadyi)
+           branch_taken_reg <= branch_taken & hreadyi & ~reset_over &  pstate_r != NANORV32_PSTATE_BRANCH;
+      end
+   end
+   always @(posedge clk or negedge rst_n) begin
+      if(rst_n == 1'b0) begin
+         write_data <= 1'b0;
+         /*AUTORESET*/
+      end
+      else begin
+         if(hreadyi)
+           write_data <= htransi & hreadyi;
+      end
+   end
+   always @(posedge clk or negedge rst_n) begin
+      if(rst_n == 1'b0) begin
+         wr_pt_r <= 2'b00;
+         /*AUTORESET*/
+      end
+      else begin
+         if((write_data | branch_taken & ~ignore_branch) & hreadyi)
+           wr_pt_r <= branch_taken & ~ignore_branch &  pstate_r != NANORV32_PSTATE_BRANCH ? 2'b00 : wr_pt_r + 1;
+      end
+   end
+   always @(posedge clk or negedge rst_n) begin
+      if(rst_n == 1'b0) begin
+         rd_pt_r <= 2'b00;
+         /*AUTORESET*/
+      end
+      else begin
+         if(inst_ret & ~reset_over & ~(~hreadyi & (wr_pt_r[1:0] == rd_pt_r_plus1[1:0] )))
+           rd_pt_r <= branch_taken_reg ? 2'b00 : rd_pt_r_plus1[1:0];
+      end
+   end
+   wire  cancel_data = branch_req_tmp;
+   always @(posedge clk or negedge rst_n) begin
+      if(rst_n == 1'b0) begin
+           iq[0][31:0] <= NANORV32_J0_INSTRUCTION;
+         /*AUTORESET*/
+      end
+      else begin
+         if(wr_pt_r == 0 & write_data & ~cancel_data)
+           iq[0][31:0] <= codeif_cpu_rdata[31:0];
+      end
+   end
+//   always @(posedge clk or negedge rst_n) begin
+//      if(rst_n == 1'b0) begin
+//           iq[1][31:0] <= NANORV32_J0_INSTRUCTION;
+//         /*AUTORESET*/
+//      end
+//      else begin
+//         if(wr_pt_r == 1 & write_data & ~cancel_data)
+//           iq[1][31:0] <= codeif_cpu_rdata[31:0];
+//      end
+//   end
+//   always @(posedge clk or negedge rst_n) begin
+//      if(rst_n == 1'b0) begin
+//           iq[2][31:0] <= NANORV32_J0_INSTRUCTION;
+//         /*AUTORESET*/
+//      end
+//      else begin
+//         if(wr_pt_r == 2 & write_data & ~cancel_data)
+//           iq[2][31:0] <= codeif_cpu_rdata[31:0];
+//      end
+//   end
+//   always @(posedge clk or negedge rst_n) begin
+//      if(rst_n == 1'b0) begin
+//           iq[3][31:0] <= NANORV32_J0_INSTRUCTION;
+//         /*AUTORESET*/
+//      end
+//      else begin
+//         if(wr_pt_r == 3 & write_data & ~cancel_data)
+//           iq[3][31:0] <= codeif_cpu_rdata[31:0];
+//      end
+//   end
+   generate
+      for (i = 0; i < 4; i = i + 1) begin
+        always @(posedge clk or negedge rst_n) begin
+          if(rst_n == 1'b0) begin
+                iq[i][31:0] <= NANORV32_J0_INSTRUCTION;
+             /*AUTORESET*/
+          end else begin
+            if (wr_pt_r == i & write_data & ~cancel_data)  begin
+                iq[i][31:0] <= codeif_cpu_rdata[31:0];
+            end
+          end
+        end
+      end
+   endgenerate
+   always @(posedge clk or negedge rst_n) begin
+      if(rst_n == 1'b0) begin
+           reset_over <= 1'b1;
+         /*AUTORESET*/
+      end
+      else begin
+         if( force_stall_reset | reset_over & write_data)
+           reset_over <= force_stall_reset;
+      end
+   end
+   always @(posedge clk or negedge rst_n) begin
+      if(rst_n == 1'b0) begin
+           ignore_branch <= 1'b1;
+         /*AUTORESET*/
+      end
+      else begin
+         if(write_data & reset_over )
+           ignore_branch <= ~write_data;
       end
    end
 
-   event evt_dbg1;
-
-
-   always @* begin
-      illegal_instruction = 0;
-      casez(instruction_r[NANORV32_INSTRUCTION_MSB:0])
-        //@begin[instruction_decoder]
-        //@end[instruction_decoder]
-        default begin
-           illegal_instruction = 1;
-
-           pc_next_sel = NANORV32_MUX_SEL_PC_NEXT_PLUS4;
-           alu_op_sel = NANORV32_MUX_SEL_ALU_OP_NOP;
-           alu_portb_sel = NANORV32_MUX_SEL_ALU_PORTB_RS2;
-           alu_porta_sel = NANORV32_MUX_SEL_ALU_PORTA_RS1;
-           datamem_write_sel = NANORV32_MUX_SEL_DATAMEM_WRITE_NO;
-           datamem_read_sel = NANORV32_MUX_SEL_DATAMEM_READ_NO;
-           regfile_source_sel = NANORV32_MUX_SEL_REGFILE_SOURCE_ALU;
-           regfile_write_sel = NANORV32_MUX_SEL_REGFILE_WRITE_NO;
-        end
-      endcase // casez (instruction[NANORV32_INSTRUCTION_MSB:0])
+   always @(posedge clk or negedge rst_n) begin
+      if(rst_n == 1'b0) begin
+          haddri_r  <= 32'b0;
+         /*AUTORESET*/
+      end
+      else if ((next_inst_en_tmp | branch_req_tmp & ~force_stall_reset) & hreadyi) begin
+          haddri_r <= haddri_tmp;
+      end
    end
+   assign branch_req_tmp =  branch_taken & ~ignore_branch & pstate_r != NANORV32_PSTATE_BRANCH;
+   assign next_inst_en_tmp = ~force_stall_reset & ~fifo_full;
+   assign htransi_tmp  = (next_inst_en_tmp | branch_req_tmp) & ~force_stall_reset & ~interlock;
+   assign haddri_tmp  = branch_req_tmp & ~reset_over ? branch_target_tmp : {32{~(force_stall_reset | reset_over & htransi_tmp & ~write_data)}} & (haddri_r + 4);
 
 
+
+   assign instruction_r = iq[rd_pt_r];
+
+ /* module_name AUTO_TEMPLATE(
+  ); */
+   nanorv32_decoder U_DECODER (
+                               .instruction_r(instruction_r),
+                               .illegal_instruction(illegal_instruction),
+
+                               .pc_next_sel(pc_next_sel),
+                               .alu_op_sel(alu_op_sel),
+                               .alu_portb_sel(alu_portb_sel),
+                               .alu_porta_sel(alu_porta_sel),
+                               .datamem_size_read_sel(datamem_size_read_sel),
+                               .datamem_write_sel(datamem_write_sel),
+                               .datamem_size_write_sel(datamem_size_write_sel),
+                               .datamem_read_sel(datamem_read_sel),
+                               .regfile_source_sel(regfile_source_sel),
+                               .regfile_write_sel(regfile_write_sel)
+                               );
    //===========================================================================
    // ALU input selection
    //===========================================================================
-   always @* begin
+   always@* begin
       case(alu_portb_sel)
         NANORV32_MUX_SEL_ALU_PORTB_IMM20U: begin
            alu_portb = imm20u_sext;
@@ -262,23 +404,25 @@ module nanorv32 (/*AUTOARG*/
    //===========================================================================
    // Register file write-back
    //===========================================================================
+   reg [NANORV32_INST_FORMAT_RD_MSB:0] dec_rd2;
+   reg write_rd2;
    always @* begin
       case(regfile_source_sel)
         NANORV32_MUX_SEL_REGFILE_SOURCE_PC_EXE_PLUS_4:begin
-           rd <= pc_exe_r + 4;
+           rd_tmp <= pc_exe_r + 4;
         end
         NANORV32_MUX_SEL_REGFILE_SOURCE_ALU: begin
-           rd <= alu_res;
+           rd_tmp <= alu_res;
         end
         NANORV32_MUX_SEL_REGFILE_SOURCE_DATAMEM: begin
-           rd <= mem2regfile ;
+           rd_tmp <= mem2regfile ;
         end
         default begin
-           rd <= alu_res;
+           rd_tmp <= alu_res;
         end
       endcase
    end // always @ *
-
+   assign rd = rd_tmp;
    always @* begin
       case(regfile_write_sel)
         NANORV32_MUX_SEL_REGFILE_WRITE_YES: begin
@@ -294,6 +438,25 @@ module nanorv32 (/*AUTOARG*/
       endcase // case (regfile_write)
 
    end
+   always @(posedge clk or negedge rst_n) begin
+      if(rst_n == 1'b0) begin
+         /*AUTORESET*/
+         // Beginning of autoreset for uninitialized flops
+         write_rd2 <= 1'b0;
+         dec_rd2   <= {NANORV32_INST_FORMAT_RD_SIZE{1'b0}};
+         datamem_size_read_sel_r <={NANORV32_MUX_SEL_DATAMEM_SIZE_READ_SIZE{1'b0}} ;
+         // End of automatics
+      end
+      else begin
+         if (hreadyd)
+           begin
+           write_rd2 <= (datamem_write || datamem_read) & write_rd;
+           dec_rd2   <= {NANORV32_INST_FORMAT_RD_SIZE{(datamem_write || datamem_read)}} & dec_rd;
+           datamem_size_read_sel_r <= {NANORV32_MUX_SEL_DATAMEM_SIZE_READ_SIZE{(datamem_write || datamem_read)}} & datamem_size_read_sel;
+           end
+      end
+   end
+   wire [31:0]  rd2 = mem2regfile;
 
    //===========================================================================
    // Data memory interface
@@ -378,12 +541,12 @@ module nanorv32 (/*AUTOARG*/
          // End of automatics
       end
       else begin
-         if(codeif_cpu_ready_r)
-           pc_fetch_r <= pc_next;
+         if(inst_ret)
+           pc_fetch_r <= {32{~reset_over}} & pc_next;
 
-         if(!stall_fetch) begin
+         if(inst_ret) begin
 
-            pc_exe_r  <= pc_fetch_r;
+            pc_exe_r  <=  {32{~reset_over}} & pc_next;
          end
       end
    end
@@ -406,8 +569,11 @@ module nanorv32 (/*AUTOARG*/
                .sel_porta               (dec_rs1[NANORV32_RF_PORTA_MSB:0]),
                .sel_portb               (dec_rs2[NANORV32_RF_PORTB_MSB:0]),
                .sel_rd                  (dec_rd[NANORV32_RF_PORTRD_MSB:0]),
+               .sel_rd2                 (dec_rd2[NANORV32_RF_PORTRD_MSB:0]),
                .rd                      (rd[NANORV32_DATA_MSB:0]),
+               .rd2                     (rd2[NANORV32_DATA_MSB:0]),
                .write_rd                (write_rd),
+               .write_rd2               (write_rd2),
                .clk                     (clk),
                .rst_n                   (rst_n));
 
@@ -425,9 +591,8 @@ module nanorv32 (/*AUTOARG*/
 
 
    // Code memory interface
-
-   assign haddri       = pc_next;  // addr is the next PC
-   assign htransi      = hreadyi;  // request is the AHB is free
+   assign haddri       = haddri_tmp;  // addr is the next PC
+   assign htransi      = hreadyi & ~force_stall_reset & ~fifo_full;  // request is the AHB is free
    assign hsizei       = 3'b010;   // word request
    assign hproti       = 4'b0001;  // instruction data
    assign hbursti      = 3'b000;   // Burst not supported
@@ -451,16 +616,20 @@ module nanorv32 (/*AUTOARG*/
 
 
    nanorv32_flow_ctrl U_FLOW_CTRL (
-     .force_stall_pstate  (force_stall_pstate),
+   .force_stall_pstate  (force_stall_pstate),
+   .force_stall_pstate2  (force_stall_pstate2),
    .force_stall_reset   (force_stall_reset),
    .output_new_pc       (output_new_pc),
    .valid_inst          (valid_inst),
    .data_access_cycle   (data_access_cycle),
+   .pstate_r            (pstate_r),
    // Inputs
    .branch_taken        (branch_taken),
    .datamem_read        (datamem_read),
-   .dataif_cpu_early_ready(dataif_cpu_early_ready),
+   .datamem_write       (datamem_write),
+   .hreadyd             (hreadyd),
    .codeif_cpu_ready_r  (codeif_cpu_ready_r),
+   .interlock           (interlock),
    .clk                 (clk),
    .rst_n               (rst_n));
 
@@ -473,11 +642,17 @@ module nanorv32 (/*AUTOARG*/
    assign cpu_dataif_req = (datamem_write || datamem_read) & data_access_cycle;
    // assign stall_fetch = !codeif_cpu_early_ready  | force_stall_pstate | !codeif_cpu_ready_r;
    assign stall_fetch = force_stall_pstate | !codeif_cpu_ready_r;
-   assign stall_exe = force_stall_pstate;
+   assign interlock   = write_rd2 & (dec_rd2 == dec_rs1 | dec_rd2 == dec_rs2) & ~(htransd & hreadyd & hwrited);
+   assign stall_exe = force_stall_pstate | interlock;
    assign read_byte_sel = cpu_dataif_addr[1:0];
+   wire  [2:0] hsized_tmp = {3{(datamem_size_read_sel == NANORV32_MUX_SEL_DATAMEM_SIZE_READ_HALFWORD_UNSIGNED |
+                             datamem_size_read_sel == NANORV32_MUX_SEL_DATAMEM_SIZE_READ_HALFWORD)}} & 3'b001 |
+                            {3{ (datamem_size_read_sel == NANORV32_MUX_SEL_DATAMEM_SIZE_READ_BYTE_UNSIGNED |
+                             datamem_size_read_sel == NANORV32_MUX_SEL_DATAMEM_SIZE_READ_BYTE)}} & 3'b000 |
+                            {3{ datamem_size_read_sel == NANORV32_MUX_SEL_DATAMEM_SIZE_READ_WORD }} & 3'b010;
 
    always @* begin
-      case(datamem_size_read_sel)
+      case(datamem_size_read_sel_r)
         NANORV32_MUX_SEL_DATAMEM_SIZE_READ_HALFWORD_UNSIGNED: begin
            case(cpu_dataif_addr[1])
              1'b0: begin
@@ -539,59 +714,59 @@ module nanorv32 (/*AUTOARG*/
         end // UNMATCHED !!
       endcase
    end
-
+  wire [31:0] wdata_nxt = (dec_rs2 == dec_rd2 & write_rd2 & htransd & hwrited & hreadyd) ? mem2regfile : rf_portb ;
    // fixme - we don't need to mux zeros in unwritten bytes
    always @* begin
       case(datamem_size_write_sel)
         NANORV32_MUX_SEL_DATAMEM_SIZE_WRITE_BYTE: begin
 
-           case(cpu_dataif_addr[1:0])
+           case(haddrd[1:0])
              2'b00: begin
-                cpu_dataif_wdata =  {24'b0,rf_portb[7:0]};
+                cpu_dataif_wdata =  {24'b0,wdata_nxt[7:0]};
                 cpu_dataif_bytesel = {3'b0,datamem_write};
              end
              2'b01: begin
-                cpu_dataif_wdata =  {16'b0,rf_portb[7:0],8'b0};
+                cpu_dataif_wdata =  {16'b0,wdata_nxt[7:0],8'b0};
                 cpu_dataif_bytesel = {2'b0,datamem_write,1'b0};
              end
              2'b10: begin
-                cpu_dataif_wdata =  {8'b0,rf_portb[7:0],16'b0};
+                cpu_dataif_wdata =  {8'b0,wdata_nxt[7:0],16'b0};
                 cpu_dataif_bytesel = {1'b0,datamem_write,2'b0};
              end
              2'b11: begin
-                cpu_dataif_wdata =  {rf_portb[7:0],24'b0};
+                cpu_dataif_wdata =  {wdata_nxt[7:0],24'b0};
                 cpu_dataif_bytesel = {datamem_write,3'b0};
              end
              default begin
                 cpu_dataif_bytesel = {4{datamem_write}};
-                cpu_dataif_wdata =  rf_portb;
+                cpu_dataif_wdata =  wdata_nxt;
              end
            endcase
         end
         NANORV32_MUX_SEL_DATAMEM_SIZE_WRITE_HALFWORD: begin
-           case(cpu_dataif_addr[1])
+           case(haddrd[1])
              1'b0: begin
-                cpu_dataif_wdata =  {16'b0,rf_portb[15:0]};
+                cpu_dataif_wdata =  {16'b0,wdata_nxt[15:0]};
                 cpu_dataif_bytesel = {2'b0,datamem_write,datamem_write};
              end
              1'b1: begin
-                cpu_dataif_wdata =  {rf_portb[15:0],16'b0};
+                cpu_dataif_wdata =  {wdata_nxt[15:0],16'b0};
                 cpu_dataif_bytesel = {datamem_write,datamem_write,2'b0};
              end
 
              default begin
                 cpu_dataif_bytesel = {4{datamem_write}};
-                cpu_dataif_wdata =  rf_portb;
+                cpu_dataif_wdata =  wdata_nxt;
              end
            endcase
 
         end
         NANORV32_MUX_SEL_DATAMEM_SIZE_WRITE_WORD: begin
-           cpu_dataif_wdata = rf_portb;
+           cpu_dataif_wdata = wdata_nxt;
            cpu_dataif_bytesel = {4{datamem_write}};
         end
         default begin
-           cpu_dataif_wdata = rf_portb;
+           cpu_dataif_wdata = wdata_nxt;
            cpu_dataif_bytesel = {4{datamem_write}};
         end
       endcase
@@ -609,7 +784,7 @@ module nanorv32 (/*AUTOARG*/
    assign hwdatad          = cpu_dataif_wdata_reg;
    assign htransd          = cpu_dataif_req;
    assign hwrited          = datamem_write;
-   assign hsized           = datamem_write ? datamem_size_write_sel : datamem_size_read_sel ;
+   assign hsized           = datamem_write ? datamem_size_write_sel : hsized_tmp ;
    assign hburstd          = 3'b000 ;
    assign hmasterd         = 1'b0 ;
    assign hmasterlockd     = 1'b0 ;

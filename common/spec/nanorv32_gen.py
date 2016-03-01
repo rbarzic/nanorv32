@@ -45,6 +45,12 @@ if True:
     rg.write_to_file("../../generated", "mux_select_declarations.generated.v",
                      rg.verilog_selector_declaration(sel_value_dic))
 
+    rg.write_to_file("../../generated", "mux_select_declarations_as_wire.generated.v",
+                     rg.verilog_selector_declaration(sel_value_dic, decl_type="wire"))
+
+    rg.write_to_file("../../generated", "mux_select_declarations_as_output.generated.v",
+                     rg.verilog_selector_declaration(sel_value_dic, decl_type="output"))
+
     rg.write_to_file("../../generated", "mux_template.v",
                      rg.verilog_selector_template(sel_value_dic))
 

@@ -23,10 +23,12 @@
 //  Filename        :  nanorv32_urom.v
 //
 //  Description     :  Micro ROM for reset sequence and interrupt entry/exit
-//
-//
+//                     The content of this ROM is generated from
+//                     common/micro_rom/micro_rom.S
 //
 //****************************************************************************/
+
+
 
 module nanorv32_urom (/*AUTOARG*/
    // Outputs
@@ -35,7 +37,7 @@ module nanorv32_urom (/*AUTOARG*/
    addr
    );
 
-`include "nanorv32_parameter.v"
+`include "nanorv32_parameters.v"
 
    input [NANORV32_UROM_ADDR_MSB:0] addr;
    output [NANORV32_DATA_MSB:0]     dout;
@@ -49,12 +51,14 @@ module nanorv32_urom (/*AUTOARG*/
    // End of automatics
    /*AUTOWIRE*/
 
+   // Very stupip async ROM - We let the synthesis tool
+   // choose the best implementation
    always @* begin
       case(addr)
       //@begin[micro_rom]
       //@end[micro_rom]
         default: begin
-           case 0: dout<= 32'h0000000;
+           dout<= 32'h0000000;
         end
 
       endcase
