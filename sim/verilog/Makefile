@@ -82,6 +82,7 @@ wave:
 regen:
 	make -C $(TOP)/common/spec gen_files
 	make -C $(TOP)/common/spec extract insert
+	make -C $(TOP)/common/spec emacs_auto
 
 check-syntax:
 	iverilog -f  iverilog_file_list.txt -o /dev/null

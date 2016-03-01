@@ -8,6 +8,7 @@ GENERATED=$(TOP)/generated
 FILES_WITH_GEN_CODE += $(TOP)/rtl/cores/nanorv32_parameters.v
 FILES_WITH_GEN_CODE += $(TOP)/rtl/cores/nanorv32.v
 FILES_WITH_GEN_CODE += $(TOP)/rtl/cores/nanorv32_urom.v
+FILES_WITH_GEN_CODE += $(TOP)/rtl/cores/nanorv32_decoder.v
 # FILES_WITH_GEN_CODE += $(TOP)/hdl/sync/j2_core.v
 
 
@@ -19,6 +20,9 @@ extract:
 
 insert:
 	$(foreach FILE, $(FILES_WITH_GEN_CODE), $(INSERT) --input_dir=$(GENERATED) $(FILE); )
+
+emacs_auto:
+	emacs --batch   $(TOP)/rtl/cores/nanorv32_decoder.v -f verilog-batch-auto
 
 # AHB Multilayer interconnect
 # Note : sbt must be in the PATH

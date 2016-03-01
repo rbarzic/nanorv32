@@ -2,6 +2,7 @@
 ../../rtl/cores/nanorv32_alu.v
 ../../rtl/cores/nanorv32_flow_ctrl.v
 ../../rtl/cores/nanorv32_regfile.v
+../../rtl/cores/nanorv32_decoder.v
 ../../rtl/cores/nanorv32_urom.v
 ../../rtl/cores/nanorv32.v
 ../../rtl/ips/bytewrite_ram_32bits.v

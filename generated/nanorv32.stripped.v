@@ -112,9 +112,9 @@ module nanorv32 (/*AUTOARG*/
    wire [NANORV32_DATA_MSB:0]                instruction_r;
 
 
-   reg [NANORV32_MUX_SEL_DATAMEM_SIZE_READ_MSB:0] datamem_size_read_sel_r;
-   //@begin[mux_select_declarations]
-   //@end[mux_select_declarations]
+   //@begin[mux_select_declarations_as_wire]
+   //@end[mux_select_declarations_as_wire]
+
 
    //@begin[instruction_fields]
    //@end[instruction_fields]
@@ -149,7 +149,7 @@ module nanorv32 (/*AUTOARG*/
 
    wire                                    alu_cond;
 
-   reg                                     illegal_instruction;
+   wire                                     illegal_instruction;
 
    reg [NANORV32_DATA_MSB:0]               mem2regfile;
 
@@ -166,7 +166,6 @@ module nanorv32 (/*AUTOARG*/
    wire                                     valid_inst;
    wire             [NANORV32_PSTATE_MSB:0] pstate_r;
 
-
    wire [NANORV32_DATA_MSB:0]               inst_irq;
    wire                                     reti_inst_detected; // an instruction equivalent
    wire                                     irq_bypass_inst_reg_r;
@@ -176,6 +175,8 @@ module nanorv32 (/*AUTOARG*/
 
 
    // to a "return from interrupt" as been detected
+   reg [NANORV32_MUX_SEL_DATAMEM_SIZE_READ_MSB:0] datamem_size_read_sel_r;
+
 
 
 
@@ -375,31 +376,27 @@ module nanorv32 (/*AUTOARG*/
    assign instruction_r = irq_bypass_inst_reg_r ? inst_irq : iq[rd_pt_r];
 
 
-   always @* begin
-      illegal_instruction = 0;
-      casez(instruction_r[NANORV32_INSTRUCTION_MSB:0])
-        //@begin[instruction_decoder]
-        //@end[instruction_decoder]
-        default begin
-           illegal_instruction = 1;
+ /* module_name AUTO_TEMPLATE(
+  ); */
+   nanorv32_decoder U_DECODER (
+                               .instruction_r(instruction_r),
+                               .illegal_instruction(illegal_instruction),
 
-           pc_next_sel = NANORV32_MUX_SEL_PC_NEXT_PLUS4;
-           alu_op_sel = NANORV32_MUX_SEL_ALU_OP_NOP;
-           alu_portb_sel = NANORV32_MUX_SEL_ALU_PORTB_RS2;
-           alu_porta_sel = NANORV32_MUX_SEL_ALU_PORTA_RS1;
-           datamem_write_sel = NANORV32_MUX_SEL_DATAMEM_WRITE_NO;
-           datamem_read_sel = NANORV32_MUX_SEL_DATAMEM_READ_NO;
-           regfile_source_sel = NANORV32_MUX_SEL_REGFILE_SOURCE_ALU;
-           regfile_write_sel = NANORV32_MUX_SEL_REGFILE_WRITE_NO;
-        end
-      endcase // casez (instruction[NANORV32_INSTRUCTION_MSB:0])
-   end
-
-
+                               .pc_next_sel(pc_next_sel),
+                               .alu_op_sel(alu_op_sel),
+                               .alu_portb_sel(alu_portb_sel),
+                               .alu_porta_sel(alu_porta_sel),
+                               .datamem_size_read_sel(datamem_size_read_sel),
+                               .datamem_write_sel(datamem_write_sel),
+                               .datamem_size_write_sel(datamem_size_write_sel),
+                               .datamem_read_sel(datamem_read_sel),
+                               .regfile_source_sel(regfile_source_sel),
+                               .regfile_write_sel(regfile_write_sel)
+                               );
    //===========================================================================
    // ALU input selection
    //===========================================================================
-   always @* begin
+   always@* begin
       case(alu_portb_sel)
         NANORV32_MUX_SEL_ALU_PORTB_IMM20U: begin
            alu_portb = imm20u_sext;
