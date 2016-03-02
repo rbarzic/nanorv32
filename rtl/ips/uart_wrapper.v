@@ -40,7 +40,6 @@ module uart_wrapper (/*AUTOARG*/
 
 
    input          apb_uart_psel;     // Peripheral select
-
    input   [11:0] apb_uart_paddr;    // Address
    input          apb_uart_penable;  // Transfer control
    input          apb_uart_pwrite;   // Write control

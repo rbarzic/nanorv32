@@ -58,10 +58,6 @@ def nanor32_fl():
         'file': "{top}/rtl/ips/ahb_to_ssram.v",
         'targets': 'synt,sim_rtl'
     })
-    l.append({
-        'file': "{top}/rtl/ips/nanorv32_periph_mux_ahb.v",
-        'targets': 'synt,sim_rtl'
-    })
 
     l.append({
         'file': "{top}/rtl/ips/Ahbmli.v",
@@ -86,7 +82,19 @@ def nanor32_fl():
         'targets': 'synt,sim_rtl'
     })
     l.append({
+        'file': "{top}/rtl/imported_from_ultraembedded/intr_periph.v",
+        'targets': 'synt,sim_rtl'
+    })
+    l.append({
         'file': "{top}/rtl/ips/uart_wrapper.v",
+        'targets': 'synt,sim_rtl'
+    })
+    l.append({
+        'file': "{top}/rtl/ips/nanorv32_intc.v",
+        'targets': 'synt,sim_rtl'
+    })
+    l.append({
+        'file': "{top}/rtl/chips/nanorv32_irq_mapper.v",
         'targets': 'synt,sim_rtl'
     })
 

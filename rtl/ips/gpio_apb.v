@@ -31,6 +31,7 @@
 module gpio_apb (/*AUTOARG*/
    // Outputs
    gpio_apb_prdata, gpio_apb_pready, gpio_apb_pslverr, gpio_pad_out,
+   gpio_irq,
    // Inputs
    apb_gpio_psel, apb_gpio_paddr, apb_gpio_penable, apb_gpio_pwrite,
    apb_gpio_pwdata, pad_gpio_in, clk_apb, rst_apb_n
@@ -56,6 +57,8 @@ module gpio_apb (/*AUTOARG*/
 
    input              clk_apb;
    input              rst_apb_n;
+
+   output             gpio_irq;
 
 
    /*AUTOINPUT*/
@@ -137,6 +140,7 @@ module gpio_apb (/*AUTOARG*/
 
    assign gpio_pad_out = gpio_out_r;
 
+   assign gpio_irq = 0;
 
 endmodule // gpio_apb
 /*
