@@ -35,3 +35,11 @@ srl
 sra
 or
 and
+mul
+mulh
+mulhu
+mulhsu
+div
+divu
+rem
+remu
