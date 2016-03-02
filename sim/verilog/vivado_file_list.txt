@@ -2,9 +2,12 @@
 ../../rtl/cores/nanorv32_alumuldiv.v
 ../../rtl/cores/nanorv32_div.v
 ../../rtl/cores/nanorv32_flow_ctrl.v
+../../rtl/cores/nanorv32_prefetch.v
 ../../rtl/cores/nanorv32_regfile.v
+../../rtl/cores/nanorv32_decoder.v
 ../../rtl/cores/nanorv32_urom.v
 ../../rtl/cores/nanorv32.v
+../../rtl/cores/nanorv32_pil.v
 ../../rtl/ips/bytewrite_ram_32bits.v
 ../../rtl/ips/cmsdk_ahb_ram.v
 ../../rtl/ips/ahb_to_ssram.v

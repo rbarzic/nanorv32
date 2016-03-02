@@ -33,7 +33,7 @@
 module nanorv32_prefetch (/*AUTOARG*/
    // Outputs
    haddri, hproti, hsizei, hmasteri, hmasterlocki, hbursti, hwdatai,
-   hwritei, htransi, inst_from_buffer, inst_ret, reset_over,
+   hwritei, htransi, inst_from_buffer, inst_ret, reset_over, fifo_empty,
    // Inputs
    branch_taken, pstate_r, pc_next, hrdatai, hrespi, hreadyi,
    stall_exe, force_stall_reset, rst_n, clk, irq_bypass_inst_reg_r,
@@ -78,6 +78,7 @@ module nanorv32_prefetch (/*AUTOARG*/
    output [NANORV32_DATA_MSB:0]  inst_from_buffer;
    output                        inst_ret;
    output                        reset_over;
+   output                        fifo_empty;
 
 
 
@@ -100,8 +101,9 @@ module nanorv32_prefetch (/*AUTOARG*/
    reg  [1:0] wr_pt_r , rd_pt_r;
    wire  [2:0] wr_pt_r_plus1 = wr_pt_r + 1;
    wire  [2:0] rd_pt_r_plus1 = rd_pt_r + 1;
+   reg fifo_full_reg;
    wire fifo_full = wr_pt_r_plus1[1:0] == rd_pt_r[1:0] & pstate_r != NANORV32_PSTATE_BRANCH;
-   wire fifo_empty = wr_pt_r[1:0] == rd_pt_r[1:0] & pstate_r != NANORV32_PSTATE_BRANCH;
+   wire fifo_empty = wr_pt_r[1:0] == rd_pt_r[1:0] & pstate_r != NANORV32_PSTATE_BRANCH & ~fifo_full_reg;
    reg  [31:0] iq [0:3];
    wire inst_ret = (!(stall_exe | force_stall_reset));
    reg  branch_taken_reg;
@@ -115,6 +117,16 @@ module nanorv32_prefetch (/*AUTOARG*/
       else begin
          if(hreadyi)
            branch_taken_reg <= branch_taken & hreadyi & ~reset_over &  pstate_r != NANORV32_PSTATE_BRANCH;
+      end
+   end
+    always @(posedge clk or negedge rst_n) begin
+       if(rst_n == 1'b0) begin
+         fifo_full_reg <= 1'b0;
+         /*AUTORESET*/
+      end
+      else begin
+         if(hreadyi & ( write_data | inst_ret)) 
+           fifo_full_reg <= fifo_full;
       end
    end
    always @(posedge clk or negedge rst_n) begin
@@ -143,7 +155,7 @@ module nanorv32_prefetch (/*AUTOARG*/
          /*AUTORESET*/
       end
       else begin
-         if(inst_ret & ~reset_over & ~(~hreadyi & (wr_pt_r[1:0] == rd_pt_r_plus1[1:0] )))
+         if(inst_ret & ~reset_over)
            rd_pt_r <= branch_taken_reg ? 2'b00 : rd_pt_r_plus1[1:0];
       end
    end
@@ -238,7 +250,7 @@ module nanorv32_prefetch (/*AUTOARG*/
    end
    assign branch_req_tmp =  branch_taken & ~ignore_branch & pstate_r != NANORV32_PSTATE_BRANCH;
 
-   assign next_inst_en_tmp = ~force_stall_reset & ~fifo_full;
+   assign next_inst_en_tmp = ~force_stall_reset & ~fifo_full & ~fifo_full_reg;
    // We block eternal request on the bus if we are overriding
    // the instruction register during a irq context save/restore operation
    assign htransi_tmp  = (next_inst_en_tmp | branch_req_tmp) & ~force_stall_reset & ~interlock & (!irq_bypass_inst_reg_r ||  branch_taken);
@@ -250,7 +262,7 @@ module nanorv32_prefetch (/*AUTOARG*/
 
    // Code memory interface
 
-   assign htransi      = hreadyi & ~force_stall_reset & ~fifo_full;  // request is the AHB is free
+   assign htransi      = hreadyi & ~force_stall_reset & ~fifo_full & ~fifo_full_reg;  // request is the AHB is free
    assign hsizei       = 3'b010;   // word request
    assign hproti       = 4'b0001;  // instruction data
    assign hbursti      = 3'b000;   // Burst not supported

@@ -129,21 +129,21 @@ run_ctest:
 	@vvp testbench.exe  +vcd +program_memory=$(TEST).vmem | tee -a logs/$(TEST).run.log
 
 
-run_dhry: ../../ctests/dhry/$(TEST).c
-	@echo  "===================== TEST $(TEST) ============================"
+run_dhry:
+	@echo  "===================== TEST dhry ============================"
 	mkdir -p logs
 	($(GNU_GCC)  $(GNU_CC_FLAGS) $(TEST_FLAGS) \
 	-L $(LINKER_SCRIPT_PATH) \
 	-T $(LINKER_SCRIPT_ROM_SRAM) \
-	../../ctests/dhry/dhry_1.c ../../ctests/dhry/dhry_2.c $(STARTUP_CODE) -o $(TEST).elf  || echo "-I- TEST FAILED (gcc compilation)" >> logs/$(TEST).run.log) | tee  logs/$(TEST).run.log
-	$(GNU_OBJCOPY) -O binary $(TEST).elf $(TEST).bin
-	$(GNU_OBJDUMP) -d $(TEST).elf > $(TEST).lst
-	$(GNU_OBJDUMP) -t $(TEST).elf > $(TEST).map
-	$(GNU_OBJCOPY) -S $(TEST).elf -O verilog $(TEST).hex
-	hexdump -v -e ' 1/4 "%08x " "\n"' $(TEST).bin > $(TEST).vmem32 # Xilinx
-	hexdump -v -e '"@%08.8_ax  " 1/1 "%02x " "\n"' $(TEST).bin > $(TEST).vmem # iverilog
-	python3 ./makehex.py $(TEST).bin 16384 > $(TEST).hex2
-	vvp testbench.exe  +vcd +program_memory=$(TEST).vmem | tee -a logs/$(TEST).run.log
+	../../ctests/dhry/dhry_1.c ../../ctests/dhry/dhry_2.c $(STARTUP_CODE) -o dhry.elf  || echo "-I- TEST FAILED (gcc compilation)" >> logs/dhry.run.log) | tee  logs/dhry.run.log
+	$(GNU_OBJCOPY) -O binary dhry.elf dhry.bin
+	$(GNU_OBJDUMP) -d dhry.elf > dhry.lst
+	$(GNU_OBJDUMP) -t dhry.elf > dhry.map
+	$(GNU_OBJCOPY) -S dhry.elf -O verilog dhry.hex
+	hexdump -v -e ' 1/4 "%08x " "\n"' dhry.bin > dhry.vmem32 # Xilinx
+	hexdump -v -e '"@%08.8_ax  " 1/1 "%02x " "\n"' dhry.bin > dhry.vmem # iverilog
+	python3 ./makehex.py dhry.bin 16384 > dhry.hex2
+	vvp testbench.exe  +vcd +program_memory=dhry.vmem | tee -a logs/dhry.run.log
 
 ###################  Xilinx simulation ###############################################
 # Xilinx :

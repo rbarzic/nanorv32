@@ -19,6 +19,15 @@
         NANORV32_MUX_SEL_ALU_OP_AND: begin
             alu_op <= ;
         end
+        NANORV32_MUX_SEL_ALU_OP_LSHIFT: begin
+            alu_op <= ;
+        end
+        NANORV32_MUX_SEL_ALU_OP_EQ: begin
+            alu_op <= ;
+        end
+        NANORV32_MUX_SEL_ALU_OP_MULHU: begin
+            alu_op <= ;
+        end
         NANORV32_MUX_SEL_ALU_OP_XOR: begin
             alu_op <= ;
         end
@@ -26,18 +35,6 @@
             alu_op <= ;
         end
         NANORV32_MUX_SEL_ALU_OP_LT_SIGNED: begin
-            alu_op <= ;
-        end
-        NANORV32_MUX_SEL_ALU_OP_GE_UNSIGNED: begin
-            alu_op <= ;
-        end
-        NANORV32_MUX_SEL_ALU_OP_NOP: begin
-            alu_op <= ;
-        end
-        NANORV32_MUX_SEL_ALU_OP_ARSHIFT: begin
-            alu_op <= ;
-        end
-        NANORV32_MUX_SEL_ALU_OP_GE_SIGNED: begin
             alu_op <= ;
         end
         NANORV32_MUX_SEL_ALU_OP_LT_UNSIGNED: begin
@@ -49,19 +46,46 @@
         NANORV32_MUX_SEL_ALU_OP_NOOP: begin
             alu_op <= ;
         end
-        NANORV32_MUX_SEL_ALU_OP_LSHIFT: begin
+        NANORV32_MUX_SEL_ALU_OP_REM: begin
+            alu_op <= ;
+        end
+        NANORV32_MUX_SEL_ALU_OP_MUL: begin
+            alu_op <= ;
+        end
+        NANORV32_MUX_SEL_ALU_OP_NEQ: begin
+            alu_op <= ;
+        end
+        NANORV32_MUX_SEL_ALU_OP_MULH: begin
             alu_op <= ;
         end
         NANORV32_MUX_SEL_ALU_OP_RSHIFT: begin
             alu_op <= ;
         end
-        NANORV32_MUX_SEL_ALU_OP_EQ: begin
+        NANORV32_MUX_SEL_ALU_OP_GE_SIGNED: begin
+            alu_op <= ;
+        end
+        NANORV32_MUX_SEL_ALU_OP_ARSHIFT: begin
+            alu_op <= ;
+        end
+        NANORV32_MUX_SEL_ALU_OP_MULHSU: begin
+            alu_op <= ;
+        end
+        NANORV32_MUX_SEL_ALU_OP_GE_UNSIGNED: begin
+            alu_op <= ;
+        end
+        NANORV32_MUX_SEL_ALU_OP_DIVU: begin
+            alu_op <= ;
+        end
+        NANORV32_MUX_SEL_ALU_OP_NOP: begin
+            alu_op <= ;
+        end
+        NANORV32_MUX_SEL_ALU_OP_REMU: begin
+            alu_op <= ;
+        end
+        NANORV32_MUX_SEL_ALU_OP_DIV: begin
             alu_op <= ;
         end
         NANORV32_MUX_SEL_ALU_OP_OR: begin
-            alu_op <= ;
-        end
-        NANORV32_MUX_SEL_ALU_OP_NEQ: begin
             alu_op <= ;
         end
 //========================================

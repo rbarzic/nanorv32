@@ -172,7 +172,7 @@ module nanorv32 (/*AUTOARG*/
 
 
    wire                                    alu_cond;
-
+   wire                                    fifo_empty;
    wire                                    illegal_instruction_tmp;
    wire                                    illegal_instruction = illegal_instruction & ~fifo_empty; 
 
