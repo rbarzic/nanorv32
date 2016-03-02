@@ -1,0 +1,67 @@
+* Debugging support
+
+** OpenOCD
+
+*** Target CPU types
+
+From http://openocd.org/doc/html/CPU-Configuration.html
+
+openrisc – this is an OpenRISC 1000 core. The current implementation supports three JTAG TAP cores:
+- OpenCores TAP (See: jtag)
+- Altera Virtual JTAG TAP (See: http://www.altera.com/literature/ug/ug_virtualjtag.pdf)
+- Xilinx BSCAN_* virtual JTAG interface (See: http://www.xilinx.com/support/documentation/sw_manuals/xilinx14_2/spartan6_hdl.pdf)
+And two debug interfaces cores:
+
+- Advanced debug interface (See: adv_debug_sys)
+- SoC Debug Interface (See: dbg_interface)
+
+**** adv_debug_sys
+
+Github : https://github.com/freecores/adv_debug_sys
+OpenCore : http://opencores.org/project,dbg_interface
+
+
+
+**** dbg_interface
+
+OpenCore :  http://opencores.org/project,dbg_interface
+Github : https://github.com/freecores/dbg_interface
+
+
+**** adv_dbg_if
+
+https://github.com/RoaLogic/adv_dbg_if
+
+From readme :
+
+
+Universal Advanced JTAG Debug Interface
+
+This is a fork of the work the ETH-Zurich did on the Advanced Debug Interface from Opencores.
+
+Changes compared to the Opencores version:
+
+Broke out the bus-interface. This allows easy adaptions to support multiple bus interfaces
+Supported Bus interfaces: -- Wishbone -- AHB3
+Bug fixes and coding fixes (mostly blocking vs. non-blocking)
+Migrated the code to SystemVerilog
+Removed dependency on define statements. Moved to parameters and SystemVerilog packages.
+Added support for non-32bit CPUs (e.g. 16bit, 64bit, ...).
+Added support for non-32bit bus interfaces
+Moved JSP to 8bit data interface
+
+
+
+** Useful
+
+*** Whishbone to AHB bridge
+
+
+Github : https://github.com/freecores/wisbone_2_ahb
+OpenCore : http://opencores.org/project,wisbone_2_ahb
+
+*** Cheap JTAG interface
+
+**** JTAgduino
+
+**** BusPirate
