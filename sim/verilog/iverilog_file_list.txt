@@ -17,7 +17,9 @@
 ../../rtl/imported_from_ultraembedded/uart.v
 ../../rtl/imported_from_ultraembedded/uart_periph.v
 ../../rtl/imported_from_ultraembedded/intr_periph.v
+../../rtl/imported_from_ultraembedded/timer_periph.v
 ../../rtl/ips/uart_wrapper.v
+../../rtl/ips/timer_wrapper.v
 ../../rtl/ips/nanorv32_intc.v
 ../../rtl/chips/nanorv32_irq_mapper.v
 ../../rtl/chips/nanorv32_clkgen.v

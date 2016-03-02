@@ -34,13 +34,15 @@ module nanorv32_irq_mapper (/*AUTOARG*/
    // Outputs
    irqs,
    // Inputs
-   uart_irq, gpio_irq
+   uart_irq, gpio_irq, timer_systick_irq, timer_hires_irq
    );
 
    output [7:0] irqs;
 
    input        uart_irq;
    input        gpio_irq;
+   input        timer_systick_irq;
+   input        timer_hires_irq;
 
 
    /*AUTOINPUT*/
@@ -53,6 +55,9 @@ module nanorv32_irq_mapper (/*AUTOARG*/
 
    assign irqs[0] = uart_irq;
    assign irqs[1] = gpio_irq;
+   assign irqs[2] = timer_systick_irq;
+   assign irqs[3] = timer_hires_irq;
+   assign irqs[7:4] = 0;
 
 
 endmodule // nanorv32_irq_mapper

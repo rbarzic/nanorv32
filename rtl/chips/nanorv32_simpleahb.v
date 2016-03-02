@@ -78,6 +78,11 @@ module nanorv32_simpleahb (/*AUTOARG*/
    wire                 apb_intc_psel;          // From U_APB_BRIDGE of Apbbridge.v
    wire [31:0]          apb_intc_pwdata;        // From U_APB_BRIDGE of Apbbridge.v
    wire                 apb_intc_pwrite;        // From U_APB_BRIDGE of Apbbridge.v
+   wire [31:0]          apb_timer_paddr;        // From U_APB_BRIDGE of Apbbridge.v
+   wire                 apb_timer_penable;      // From U_APB_BRIDGE of Apbbridge.v
+   wire                 apb_timer_psel;         // From U_APB_BRIDGE of Apbbridge.v
+   wire [31:0]          apb_timer_pwdata;       // From U_APB_BRIDGE of Apbbridge.v
+   wire                 apb_timer_pwrite;       // From U_APB_BRIDGE of Apbbridge.v
    wire [31:0]          apb_uart_paddr;         // From U_APB_BRIDGE of Apbbridge.v
    wire                 apb_uart_penable;       // From U_APB_BRIDGE of Apbbridge.v
    wire                 apb_uart_psel;          // From U_APB_BRIDGE of Apbbridge.v
@@ -96,6 +101,11 @@ module nanorv32_simpleahb (/*AUTOARG*/
    wire                 intc_cpu_irq;           // From U_INTC of nanorv32_intc.v
    wire                 irq_ack;                // From U_NANORV32_PIL of nanorv32_pil.v
    wire [7:0]           irqs;                   // From U_IRQ_MAPPER of nanorv32_irq_mapper.v
+   wire [31:0]          timer_apb_prdata;       // From U_TIMER of timer_wrapper.v
+   wire                 timer_apb_pready;       // From U_TIMER of timer_wrapper.v
+   wire                 timer_apb_pslverr;      // From U_TIMER of timer_wrapper.v
+   wire                 timer_hires_irq;        // From U_TIMER of timer_wrapper.v
+   wire                 timer_systick_irq;      // From U_TIMER of timer_wrapper.v
    wire [31:0]          uart_apb_prdata;        // From U_USART of uart_wrapper.v
    wire                 uart_apb_pready;        // From U_USART of uart_wrapper.v
    wire                 uart_apb_pslverr;       // From U_USART of uart_wrapper.v
@@ -387,6 +397,11 @@ module nanorv32_simpleahb (/*AUTOARG*/
                            .io_intc_psel        (apb_intc_psel), // Templated
                            .io_intc_penable     (apb_intc_penable), // Templated
                            .io_intc_pwdata      (apb_intc_pwdata[31:0]), // Templated
+                           .io_timer_paddr      (apb_timer_paddr[31:0]), // Templated
+                           .io_timer_pwrite     (apb_timer_pwrite), // Templated
+                           .io_timer_psel       (apb_timer_psel), // Templated
+                           .io_timer_penable    (apb_timer_penable), // Templated
+                           .io_timer_pwdata     (apb_timer_pwdata[31:0]), // Templated
                            // Inputs
                            .clk                 (clk),
                            .reset               (~rst_n),        // Templated
@@ -408,7 +423,10 @@ module nanorv32_simpleahb (/*AUTOARG*/
                            .io_gpio_pslverr     (gpio_apb_pslverr), // Templated
                            .io_intc_prdata      (intc_apb_prdata[31:0]), // Templated
                            .io_intc_pready      (intc_apb_pready), // Templated
-                           .io_intc_pslverr     (intc_apb_pslverr)); // Templated
+                           .io_intc_pslverr     (intc_apb_pslverr), // Templated
+                           .io_timer_prdata     (timer_apb_prdata[31:0]), // Templated
+                           .io_timer_pready     (timer_apb_pready), // Templated
+                           .io_timer_pslverr    (timer_apb_pslverr)); // Templated
 
 
 
@@ -457,6 +475,28 @@ module nanorv32_simpleahb (/*AUTOARG*/
                          .rst_n                 (rst_n));
 
 
+    /* timer_wrapper AUTO_TEMPLATE(
+     ); */
+   timer_wrapper U_TIMER (
+                           /*AUTOINST*/
+                          // Outputs
+                          .timer_apb_prdata     (timer_apb_prdata[31:0]),
+                          .timer_apb_pready     (timer_apb_pready),
+                          .timer_apb_pslverr    (timer_apb_pslverr),
+                          .timer_hires_irq      (timer_hires_irq),
+                          .timer_systick_irq    (timer_systick_irq),
+                          // Inputs
+                          .apb_timer_psel       (apb_timer_psel),
+                          .apb_timer_paddr      (apb_timer_paddr[11:0]),
+                          .apb_timer_penable    (apb_timer_penable),
+                          .apb_timer_pwrite     (apb_timer_pwrite),
+                          .apb_timer_pwdata     (apb_timer_pwdata[31:0]),
+                          .clk                  (clk),
+                          .rst_n                (rst_n));
+
+
+
+
     /* nanorv32_irq_mapper AUTO_TEMPLATE(
      ); */
    nanorv32_irq_mapper U_IRQ_MAPPER (
@@ -465,7 +505,9 @@ module nanorv32_simpleahb (/*AUTOARG*/
                                      .irqs              (irqs[7:0]),
                                      // Inputs
                                      .uart_irq          (uart_irq),
-                                     .gpio_irq          (gpio_irq));
+                                     .gpio_irq          (gpio_irq),
+                                     .timer_systick_irq (timer_systick_irq),
+                                     .timer_hires_irq   (timer_hires_irq));
 
 
 

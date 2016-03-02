@@ -86,7 +86,15 @@ def nanor32_fl():
         'targets': 'synt,sim_rtl'
     })
     l.append({
+        'file': "{top}/rtl/imported_from_ultraembedded/timer_periph.v",
+        'targets': 'synt,sim_rtl'
+    })
+    l.append({
         'file': "{top}/rtl/ips/uart_wrapper.v",
+        'targets': 'synt,sim_rtl'
+    })
+    l.append({
+        'file': "{top}/rtl/ips/timer_wrapper.v",
         'targets': 'synt,sim_rtl'
     })
     l.append({
