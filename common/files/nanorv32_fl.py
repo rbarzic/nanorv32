@@ -17,7 +17,15 @@ def nanor32_fl():
         'targets': 'synt,sim_rtl'
     })
     l.append({
+        'file': "{top}/rtl/cores/nanorv32_prefetch.v",
+        'targets': 'synt,sim_rtl'
+    })
+    l.append({
         'file': "{top}/rtl/cores/nanorv32_regfile.v",
+        'targets': 'synt,sim_rtl'
+    })
+    l.append({
+        'file': "{top}/rtl/cores/nanorv32_decoder.v",
         'targets': 'synt,sim_rtl'
     })
     l.append({
@@ -26,6 +34,10 @@ def nanor32_fl():
     })
     l.append({
         'file': "{top}/rtl/cores/nanorv32.v",
+        'targets': 'synt,sim_rtl'
+    })
+    l.append({
+        'file': "{top}/rtl/cores/nanorv32_pil.v",
         'targets': 'synt,sim_rtl'
     })
 

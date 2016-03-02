@@ -9,3 +9,8 @@ include ../../common/makefile/ccomp.mk
 
 urom_code:
 	./vmem2v.py --vmem32=micro_rom.vmem32 --map=micro_rom.map --outdir=$(TOP)/generated
+
+
+all:  micro_rom.elf urom_code
+
+.PHONY: urom_code

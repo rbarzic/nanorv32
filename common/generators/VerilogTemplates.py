@@ -21,6 +21,12 @@ parameter NANORV32_MUX_SEL_{port_uc}_MSB = {msb};
 mux_sel_declaration ="""
     reg  [NANORV32_MUX_SEL_{port_uc}_MSB:0] {port_lc}_sel;"""
 
+mux_sel_declaration_as_wire ="""
+    wire  [NANORV32_MUX_SEL_{port_uc}_MSB:0] {port_lc}_sel;"""
+
+mux_sel_declaration_as_output ="""
+    output  [NANORV32_MUX_SEL_{port_uc}_MSB:0] {port_lc}_sel;"""
+
 mux_constant_sel ="""
 parameter NANORV32_MUX_SEL_{name} = {idx};"""
 

@@ -30,9 +30,14 @@
 `timescale 1ns/1ps
 `define AHB_IF
 
+`ifndef VCD_EXTRA_MODULE
+`define VCD_EXTRA_MODULE
+`endif
+
 module tb_nanorv32;
 
    `include "nanorv32_parameters.v"
+   `include "tb_defines.v"
 
    parameter ROM_ADDRESS_SIZE  = NANORV32_ADDR_SIZE-1; // Rom is half of the address space
 
@@ -40,33 +45,35 @@ module tb_nanorv32;
    /*AUTOREG*/
    /*AUTOWIRE*/
    // Beginning of automatic wires (for undeclared instantiated-module outputs)
-   wire [15:0]          P0;                     // To/From U_DUT of nanorv32_simple.v
-   wire [15:0]          P1;                     // To/From U_DUT of nanorv32_simple.v
+   wire [15:0]          P0;                     // To/From U_DUT of nanorv32_simpleahb.v
+   wire [15:0]          P1;                     // To/From U_DUT of nanorv32_simpleahb.v
    wire                 clk;                    // From U_CLOCK_GEN of clock_gen.v
-   wire                 illegal_instruction;    // From U_DUT of nanorv32_simple.v
+   wire                 illegal_instruction;    // From U_DUT of nanorv32_simpleahb.v
+   wire                 irq_ack;                // From U_DUT of nanorv32_simpleahb.v
    wire                 rst_n;                  // From U_RESET_GEN of reset_gen.v
    // End of automatics
 
    reg                  reset_a_n;
 
    reg [15:0]          P1reg;                     // To/From U_DUT of nanorv32_simple.v
-    /* nanorv32_simple AUTO_TEMPLATE(
+   reg                 irq;
+
+   /* nanorv32_simpleahb AUTO_TEMPLATE(
      .clk_in                  (clk),
      ); */
-`ifdef AHB_IF
    nanorv32_simpleahb U_DUT (
-`else
-   nanorv32_simple U_DUT (
-`endif
+
                            /*AUTOINST*/
-                          // Outputs
-                          .illegal_instruction  (illegal_instruction),
-                          // Inouts
-                          .P0                   (P0[15:0]),
-                          .P1                   (P1[15:0]),
-                          // Inputs
-                          .clk_in               (clk),           // Templated
-                          .rst_n                (rst_n));
+                             // Outputs
+                             .illegal_instruction(illegal_instruction),
+                             .irq_ack           (irq_ack),
+                             // Inouts
+                             .P0                (P0[15:0]),
+                             .P1                (P1[15:0]),
+                             // Inputs
+                             .clk_in            (clk),           // Templated
+                             .rst_n             (rst_n),
+                             .irq               (irq));
 
 
 
@@ -120,7 +127,7 @@ module tb_nanorv32;
                tmp[23:16] = memory[i*4+2];
                tmp[31:24] = memory[i*4+3];
 
-               U_DUT.u_tcm0.U_RAM.RAM[i]  = tmp;
+               `CODE_RAM.RAM[i]  = tmp;
 
             end
          end
@@ -131,7 +138,7 @@ module tb_nanorv32;
       begin
          if ($test$plusargs("vcd")) begin
 	    $dumpfile("tb_nanorv32.vcd");
-	    $dumpvars(0, tb_nanorv32);
+	    $dumpvars(0, tb_nanorv32 `VCD_EXTRA_MODULE);
 	 end
       end
    endtask // if
@@ -151,10 +158,10 @@ module tb_nanorv32;
    wire [NANORV32_DATA_MSB:0] pc;
    wire [NANORV32_DATA_MSB:0] x10_a0; // return value register
 
-   assign pc = U_DUT.U_CPU.pc_exe_r;
-   assign illegal_instruction  = U_DUT.U_CPU.illegal_instruction;
+   assign pc = `CPU.pc_exe_r;
+   assign illegal_instruction  = `CPU.illegal_instruction;
 
-   assign x10_a0 = U_DUT.U_CPU.U_REG_FILE.regfile[10];
+   assign x10_a0 = `RF.regfile[10];
 
    always @(posedge clk) begin
       if(rst_n) begin
@@ -189,6 +196,8 @@ module tb_nanorv32;
 
    initial begin
       #0;
+      irq = 0;
+
       P1reg = 16'h0;
       reset_a_n = 0;
       #10;

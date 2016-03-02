@@ -85,6 +85,10 @@ Sequences to save register (unoptimized) :
 10.  sw x14,-40(sp)
 11.  sw x15,-44(sp)
 12.  add x1,x0,-1 // 0xFFFFFFFF in x1/ra
-13.  auipc r1,0  // get the pc of the current instruction (?)
+13.  auipc x1,0  // get the pc of the current instruction (?)
 14.  sw x1,-48(sp)
 15.  add sp,sp,-48
+
+
+
+check inst_ret signal to block fetch unit
