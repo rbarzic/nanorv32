@@ -115,7 +115,6 @@ run_ctest:
 
 	mkdir -p logs
 	@($(GNU_GCC)  $(GNU_CC_FLAGS) $(TEST_FLAGS) \
-	-DIRQ_SUPPORT \
 	-L $(LINKER_SCRIPT_PATH) \
 	-T $(LINKER_SCRIPT_ROM_SRAM) \
 	$< $(STARTUP_CODE) -o $(TEST).elf  || echo "-I- TEST FAILED (gcc compilation)" >> logs/$(TEST).run.log) | tee  logs/$(TEST).run.log

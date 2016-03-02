@@ -92,3 +92,11 @@ Sequences to save register (unoptimized) :
 
 
 check inst_ret signal to block fetch unit
+
+
+
+** Interrupts controller
+
+*** Parallela Programmable Interrupt Controller
+
+https://github.com/parallella/oh/blob/master/pic/
