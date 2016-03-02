@@ -248,6 +248,47 @@ spec['nanorv32']['rv32i']['impl']['inst']['addi'] = {
         'op' : 'add',
     },
 }
+spec['nanorv32']['rv32i']['impl']['inst']['mul'] = {
+     'alu' : {
+        'op' : 'mul',
+    },
+}
+spec['nanorv32']['rv32i']['impl']['inst']['mulh'] = {
+     'alu' : {
+        'op' : 'mulh',
+    },
+}
+spec['nanorv32']['rv32i']['impl']['inst']['mulhsu'] = {
+     'alu' : {
+        'op' : 'mulhsu',
+    },
+}
+spec['nanorv32']['rv32i']['impl']['inst']['mulhu'] = {
+     'alu' : {
+        'op' : 'mulhu',
+    },
+}
+
+spec['nanorv32']['rv32i']['impl']['inst']['div'] = {
+     'alu' : {
+        'op' : 'div',
+    },
+}
+spec['nanorv32']['rv32i']['impl']['inst']['divu'] = {
+     'alu' : {
+        'op' : 'divu',
+    },
+}
+spec['nanorv32']['rv32i']['impl']['inst']['rem'] = {
+     'alu' : {
+        'op' : 'rem',
+    },
+}
+spec['nanorv32']['rv32i']['impl']['inst']['remu'] = {
+     'alu' : {
+        'op' : 'remu',
+    },
+}
 
 
 spec['nanorv32']['rv32i']['impl']['inst']['slli'] = {

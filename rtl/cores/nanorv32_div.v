@@ -1,59 +1,107 @@
 module nanorv32_divide(
-ready,
-quotient,
-remainder,
-dividend,
-divider,
-sign,
-clk
-);
+                      input                         clk,
+                      input                         rst_n,
+                      input                         req_valid,
+                      input                         req_in_1_signed,
+                      input                         req_in_2_signed,
+                      input                         rem_op_sel,
+                      input [31:0]                  req_in_1,
+                      input [31:0]                  req_in_2,
+                      output                        resp_valid,
+                      output [31:0]                 resp_result,
+                      output                        req_ready
+                      );
 
-input clk;
-input sign;
-input [31:0] dividend, divider;
-output [31:0] quotient, remainder;
-output ready;
+   localparam md_state_width = 2;
+   localparam s_idle = 0;
+   localparam s_compute = 1;
+   localparam s_setup_output = 2;
+   localparam s_done = 3;
 
-reg [31:0] quotient, quotient_temp;
-reg [63:0] dividend_copy, divider_copy, diff;
-reg negative_output;
+   reg [md_state_width-1:0]                         state;
+   reg [md_state_width-1:0]                         next_state;
+   reg                                              rem_op;
+   reg                                              negate_output;
+   reg [63:0]                        a;
+   reg [63:0]                        b;
+   reg [4:0]                          counter;
+   reg [63:0]                        result;
 
-wire [31:0] remainder = (!negative_output) ?
-dividend_copy[31:0] :
-~dividend_copy[31:0] + 1'b1;
+   wire [31:0]                              abs_in_1;
+   wire                                             sign_in_1;
+   wire [31:0]                              abs_in_2;
+   wire                                             sign_in_2;
 
-reg [5:0] bit;
-wire ready = !bit;
+   wire                                             a_geq;
+   wire [63:0]                       result_muxed;
+   wire [63:0]                       result_muxed_negated;
+   wire [31:0]                              final_result;
 
-always @( posedge clk or negedge rst_n)
-   if (rst_n == 0) bgein 
-      bit             <= 6'b0;
-      quotient        <= 32'h0;
-      quotient_temp   <= 32'h0;
-      dividend_copy   <= 64'h0;
-      divider_copy    <= 64'h0; 
-      negative_output <= 1'b0;
-      diff            <= 64'h0;
-   end else 
-   if( ready ) begin
-      bit             <= 6'd32;
-      quotient        <= 32'h0;
-      quotient_temp   <= 32'h0;
-      dividend_copy   <= (!sign || !dividend[31]) ?  {32'd0,dividend} : {32'd0,~dividend + 1'b1};
-      divider_copy    <= (!sign || !divider[31]) ?   {1'b0,divider,31'd0} : {1'b0,~divider + 1'b1,31'd0};
-      negative_output <= sign &&  ((divider[31] && !dividend[31]) ||(!divider[31] && dividend[31]));
+   function [31:0] abs_input;
+      input [31:0]                          data;
+      input                                         is_signed;
+      begin
+         abs_input = (data[31] == 1'b1 && is_signed) ? -data : data;
+      end
+   endfunction // if
+
+   assign req_ready = (state == s_idle);
+   assign resp_valid = (state == s_done);
+   assign resp_result = result[31:0];
+
+   assign abs_in_1 = abs_input(req_in_1,req_in_1_signed);
+   assign sign_in_1 = req_in_1_signed && req_in_1[31];
+   assign abs_in_2 = abs_input(req_in_2,req_in_2_signed);
+   assign sign_in_2 = req_in_2_signed && req_in_2[31];
+
+   assign a_geq = a >= b;
+   assign result_muxed = rem_op ? a : result;
+   assign result_muxed_negated = (negate_output) ? -result_muxed : result_muxed;
+   assign final_result = result_muxed_negated[0+:32];
+
+   always @(posedge clk or negedge rst_n) begin
+      if (rst_n == 0) begin
+         state <= s_idle;
+      end else begin
+         state <= next_state;
+      end
    end
-else if ( bit > 0 ) begin
 
-     bit               <= bit - 1'b1;
-     quotient           <= (!negative_output) ? quotient_temp : ~quotient_temp + 1'b1;
-     quotient_temp     <= quotient_temp << 1;
-     if( !diff[63] ) begin
-        dividend_copy    <= diff;
-        quotient_temp[0] <= 1'd1;
-     end
-     divider_copy       <= divider_copy >> 1;
-     diff              <= dividend_copy - divider_copy;
-end
-endmodule
+   always @(*) begin
+      case (state)
+        s_idle         : next_state = (req_valid) ? s_compute : s_idle;
+        s_compute      : next_state = (counter == 0) ? s_setup_output : s_compute;
+        s_setup_output : next_state = s_done;
+        s_done         : next_state = s_idle;
+        default : next_state = s_idle;
+      endcase // case (state)
+   end
+
+   always @(posedge clk) begin
+      case (state)
+        s_idle : begin
+           if (req_valid) begin
+              result <= 0;
+              a <= {32'b0,abs_in_1};
+              b <= {abs_in_2,32'b0} >> 1;
+              negate_output <= rem_op_sel ? sign_in_1 : sign_in_1 ^ sign_in_2;
+              rem_op <= rem_op_sel;
+              counter <= 32 - 1;
+           end
+        end
+        s_compute : begin
+           counter <= counter - 1;
+           b <= b >> 1;
+           if (a_geq) begin
+              a <= a - b;
+              result <= (64'b1 << counter) | result;
+           end
+        end // case: s_compute
+        s_setup_output : begin
+           result <= {32'b0,final_result};
+        end
+      endcase // case (state)
+   end // always @ (posedge clk)
+
+endmodule // vscale_mul_div
 

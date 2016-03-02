@@ -445,6 +445,76 @@ spec['nanorv32']['rv32i']['and']['desc'] = {
         'func7'   : 0b0
     }
 }
+# MUL/DIV
+#-M inst : and of type R-type
+# -M-       R-type match found and 0 7 0x0C 3
+
+spec['nanorv32']['rv32i']['mul']['desc'] = {
+    'inst_type' : 'R-type',
+    'decode' : {
+        'opcode1' : 0b110011,
+        'func3'   : 0b000,
+        'func7'   : 0b0000001
+    }
+}
+spec['nanorv32']['rv32i']['mulh']['desc'] = {
+    'inst_type' : 'R-type',
+    'decode' : {
+        'opcode1' : 0b110011,
+        'func3'   : 0b001,
+        'func7'   : 0b0000001
+    }
+}
+spec['nanorv32']['rv32i']['mulhsu']['desc'] = {
+    'inst_type' : 'R-type',
+    'decode' : {
+        'opcode1' : 0b110011,
+        'func3'   : 0b010,
+        'func7'   : 0b0000001
+    }
+}
+spec['nanorv32']['rv32i']['mulhu']['desc'] = {
+    'inst_type' : 'R-type',
+    'decode' : {
+        'opcode1' : 0b110011,
+        'func3'   : 0b011,
+        'func7'   : 0b0000001
+    }
+}
+spec['nanorv32']['rv32i']['div']['desc'] = {
+    'inst_type' : 'R-type',
+    'decode' : {
+        'opcode1' : 0b110011,
+        'func3'   : 0b100,
+        'func7'   : 0b0000001
+    }
+}
+spec['nanorv32']['rv32i']['divu']['desc'] = {
+    'inst_type' : 'R-type',
+    'decode' : {
+        'opcode1' : 0b110011,
+        'func3'   : 0b101,
+        'func7'   : 0b0000001
+    }
+}
+spec['nanorv32']['rv32i']['rem']['desc'] = {
+    'inst_type' : 'R-type',
+    'decode' : {
+        'opcode1' : 0b110011,
+        'func3'   : 0b110,
+        'func7'   : 0b0000001
+    }
+}
+spec['nanorv32']['rv32i']['remu']['desc'] = {
+    'inst_type' : 'R-type',
+    'decode' : {
+        'opcode1' : 0b110011,
+        'func3'   : 0b111,
+        'func7'   : 0b0000001
+    }
+}
+
+
 #-I inst : lb of type I-type
 # -I-        I-type  match found lb 0 0x00 3
 
