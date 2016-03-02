@@ -437,58 +437,7 @@ module nanorv32_simpleahb (/*AUTOARG*/
 
 
 
-//--    /* nanorv32_periph_mux AUTO_TEMPLATE(
-//--     ); */
-//--   nanorv32_periph_mux_ahb U_PERIPH_MUX (
-//--                           /*AUTOINST*/
-//--                                         // Outputs
-//--                                         .periph_hrdata         (periph_hrdata[31:0]),
-//--                                         .periph_hreadyout      (periph_hreadyout),
-//--                                         .periph_hresp          (periph_hresp),
-//--                                         .bus_gpio_addr         (bus_gpio_addr[NANORV32_PERIPH_ADDR_MSB:0]),
-//--                                         .bus_gpio_bytesel      (bus_gpio_bytesel[3:0]),
-//--                                         .bus_gpio_din          (bus_gpio_din[NANORV32_DATA_MSB:0]),
-//--                                         .bus_gpio_en           (bus_gpio_en),
-//--                                         // Inputs
-//--                                         .clk_in                (clk_in),
-//--                                         .rst_n                 (rst_n),
-//--                                         .periph_haddr          (periph_haddr[31:0]),
-//--                                         .periph_hwrite         (periph_hwrite),
-//--                                         .periph_hsize          (periph_hsize[2:0]),
-//--                                         .periph_hburst         (periph_hburst[2:0]),
-//--                                         .periph_hprot          (periph_hprot[3:0]),
-//--                                         .periph_htrans         (periph_htrans[1:0]),
-//--                                         .periph_hmastlock      (periph_hmastlock),
-//--                                         .periph_hwdata         (periph_hwdata[31:0]),
-//--                                         .periph_hsel           (periph_hsel),
-//--                                         .periph_hreadyin       (periph_hreadyin),
-//--                                         .gpio_bus_dout         (gpio_bus_dout[NANORV32_DATA_MSB:0]),
-//--                                         .gpio_bus_ready_nxt    (gpio_bus_ready_nxt));
-//--
-//--
-//--
-//--   wire [31:0]                       gpio_pad_out;
-//--   wire [31:0]                       pad_gpio_in;
-//--
-//--    /* nanorv32_gpio_ctrl AUTO_TEMPLATE(
-//--
-//--     ); */
-//--   nanorv32_gpio_ctrl U_GPIO_CTRL (
-//--                                   .gpio_pad_out        (gpio_pad_out[31:0]),
-//--                                   .pad_gpio_in         (pad_gpio_in[31:0]),
-//--                           /*AUTOINST*/
-//--                                   // Outputs
-//--                                   .gpio_bus_dout       (gpio_bus_dout[31:0]),
-//--                                   .gpio_bus_ready_nxt  (gpio_bus_ready_nxt),
-//--                                   // Inputs
-//--                                   .bus_gpio_addr       (bus_gpio_addr[NANORV32_PERIPH_ADDR_MSB:0]),
-//--                                   .bus_gpio_bytesel    (bus_gpio_bytesel[3:0]),
-//--                                   .bus_gpio_din        (bus_gpio_din[31:0]),
-//--                                   .bus_gpio_en         (bus_gpio_en),
-//--                                   .clk                 (clk),
-//--                                   .rst_n               (rst_n));
-//--
-//--
+
 
 
 
