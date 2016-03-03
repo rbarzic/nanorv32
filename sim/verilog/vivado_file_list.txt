@@ -1,4 +1,5 @@
 --include ../../rtl/cores/
+--include ../../rtl/imported_from_ultraembedded
 ../../rtl/cores/nanorv32_alumuldiv.v
 ../../rtl/cores/nanorv32_div.v
 ../../rtl/cores/nanorv32_flow_ctrl.v
@@ -11,9 +12,17 @@
 ../../rtl/ips/bytewrite_ram_32bits.v
 ../../rtl/ips/cmsdk_ahb_ram.v
 ../../rtl/ips/ahb_to_ssram.v
-../../rtl/ips/nanorv32_periph_mux_ahb.v
 ../../rtl/ips/Ahbmli.v
-../../rtl/ips/nanorv32_gpio_ctrl.v
+../../rtl/ips/Apbbridge.v
+../../rtl/ips/gpio_apb.v
+../../rtl/imported_from_ultraembedded/uart.v
+../../rtl/imported_from_ultraembedded/uart_periph.v
+../../rtl/imported_from_ultraembedded/intr_periph.v
+../../rtl/imported_from_ultraembedded/timer_periph.v
+../../rtl/ips/uart_wrapper.v
+../../rtl/ips/timer_wrapper.v
+../../rtl/ips/nanorv32_intc.v
+../../rtl/chips/nanorv32_irq_mapper.v
 ../../rtl/chips/nanorv32_clkgen.v
 ../../rtl/chips/nanorv32_simpleahb.v
 ../../sim/verilog/reset_gen.v

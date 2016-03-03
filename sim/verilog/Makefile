@@ -137,7 +137,9 @@ run_dhry:
 	($(GNU_GCC)  $(GNU_CC_FLAGS) $(TEST_FLAGS) \
 	-L $(LINKER_SCRIPT_PATH) \
 	-T $(LINKER_SCRIPT_ROM_SRAM) \
-	../../ctests/dhry/dhry_1.c ../../ctests/dhry/dhry_2.c $(STARTUP_CODE) -o dhry.elf  || echo "-I- TEST FAILED (gcc compilation)" >> logs/dhry.run.log) | tee  logs/dhry.run.log
+	-DTIME \
+	$(TOP)/common/clib/printf-stdarg.c \
+	../../ctests/dhry/stdlib.c ../../ctests/dhry/dhry_1.c ../../ctests/dhry/dhry_2.c  	$(STARTUP_CODE) -o dhry.elf  || echo "-I- TEST FAILED (gcc compilation)" >> logs/dhry.run.log) | tee  logs/dhry.run.log
 	$(GNU_OBJCOPY) -O binary dhry.elf dhry.bin
 	$(GNU_OBJDUMP) -d dhry.elf > dhry.lst
 	$(GNU_OBJDUMP) -t dhry.elf > dhry.map
