@@ -75,3 +75,38 @@ https://github.com/freecores/wb_to_amba
 **** JTAgduino
 
 **** BusPirate
+
+
+* Code analysis
+
+
+** dbg_interface
+
+git clone https://github.com/freecores/dbg_interface
+
+
+Need a TAP (?) (JTAG Test Access Port project on opencores ?)
+Testbench seems to contain JTAG tasks
+
+Whisbone Master interface
+
+
+** adv_dbg_if
+
+git clone https://github.com/RoaLogic/adv_dbg_if
+
+
+System Verilog
+
+** adv_debug_sys
+
+git clone git@github.com:freecores/adv_debug_sys.git
+
+contains an adv_dbg_if module + a tap module
+
++ good testbench (lot of tasks, looks better that dbg_interface)
+
+** orpsoc-cores
+git clone git@github.com:openrisc/orpsoc-cores.git
+
+FuseSoc ?
