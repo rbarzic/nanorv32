@@ -3,6 +3,7 @@
         .global exit
         .global __data_start__
         .global __data_end__
+        .global _sim_printk
         .balign 4
 #ifdef _STARTUP_DATA_INIT_
         la sp,	__StackTop
@@ -59,6 +60,13 @@ irq_vector:
 //       j irq_vector
 
 #endif
+.org 0x88
+_sim_printk:
+	nop
+	nop
+	ret
+
+
 
         .org 0x100
 exit:   nop

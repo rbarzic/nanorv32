@@ -145,7 +145,7 @@ module tb_nanorv32;
       #1;
       load_program_memory();
       vcd_dump();
-      #2000000;
+      #200000;
       $display("-I- TEST FAILED Timeout !");
       $finish(2);
 
@@ -189,7 +189,21 @@ module tb_nanorv32;
       end
          end
    end
-
+   // printf support
+   event dbg_printf;
+   event dbg_printf_flush;
+   always @(posedge clk) begin
+      if (rst_n) begin
+         if(pc === 32'h00000088) begin
+            -> dbg_printf;
+            $write("%c",x10_a0);
+            if(x10_a0 == 10) begin
+               $fflush(32'h8000_0001);
+               -> dbg_printf_flush;
+            end
+         end
+      end
+   end
 
 
    initial begin
