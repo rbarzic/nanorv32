@@ -8,7 +8,7 @@ void delay(uint32_t d) {
 }
 
 int main(void) {
-    uint32_t * GPIO_P0 = (uint32_t*)0xF0000000;
+    volatile uint32_t * GPIO_P0 = (uint32_t*)0xF0000000;
     int i;
     for(i=0;i<5;i++) {
         *GPIO_P0 = 0x01;

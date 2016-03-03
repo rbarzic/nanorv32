@@ -118,7 +118,7 @@ run_ctest:
 	@($(GNU_GCC)  $(GNU_CC_FLAGS) $(TEST_FLAGS) -g  \
 	-L $(LINKER_SCRIPT_PATH) \
 	-T $(LINKER_SCRIPT_ROM_SRAM) \
-	$(TOP)/common/clib/printf-stdarg.c  \
+	$(TOP)/common/clib/printf-stdarg.c   \
 	$< $(STARTUP_CODE) -o $(TEST).elf  || echo "-I- TEST FAILED (gcc compilation)" >> logs/$(TEST).run.log) | tee  logs/$(TEST).run.log
 	@$(GNU_OBJCOPY) -O binary $(TEST).elf $(TEST).bin
 	@$(GNU_OBJDUMP) -d $(TEST).elf > $(TEST).lst
