@@ -277,6 +277,7 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
                     force_stall_pstate2 = 0;
                     data_access_cycle  = 0;
                     urom_addr_inc = irq_bypass_inst_reg_r;
+                    output_new_pc = 0;
                     if (irq && !irq_bypass_inst_reg_r) begin
                        set_irq_bypass_inst = 1'b1;
                        urom_addr_start_value = irq_entry_start;
@@ -296,6 +297,7 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
                  force_stall_pstate = 1'b1;
                  force_stall_pstate2 = 1;
                  urom_addr_inc = 0;
+                 output_new_pc = 0;
               end
            // end
         end // case: NANORV32_PSTATE_WAITLD

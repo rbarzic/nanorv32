@@ -8,7 +8,8 @@ spec = av.AutoVivification()
 # 'add','sub','sll','slt','sltu','xor','srl','sra','or','and'
 spec['nanorv32']['rv32i']['impl']['inst_type']['R-type'] = {
     'pc' : {
-        'next' : 'plus4'
+        'next' : 'plus4',
+        'branch' :'no'
     },
     'alu' : {
         'porta' : 'rs1',
@@ -35,7 +36,8 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['R-type'] = {
 # We define as a default the behaviour for arithmetic instruction
 spec['nanorv32']['rv32i']['impl']['inst_type']['I-type'] = {
     'pc' : {
-        'next' : 'plus4'
+        'next' : 'plus4',
+        'branch' :'no'
     },
     'alu' : {
         'porta' : 'rs1',
@@ -58,7 +60,8 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['I-type'] = {
 # S-Type : 'sb','sh','sw','sd' (Store instructions)
 spec['nanorv32']['rv32i']['impl']['inst_type']['S-type'] = {
     'pc' : {
-        'next' : 'plus4'
+        'next' : 'plus4',
+        'branch' :'no'
     },
     'alu' : {
         'porta' : 'rs1',
@@ -82,7 +85,8 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['S-type'] = {
 #
 spec['nanorv32']['rv32i']['impl']['inst_type']['SB-type'] = {
     'pc' : {
-        'next' : 'cond_pc_plus_immsb' # conditional branch
+        'next' : 'cond_pc_plus_immsb', # conditional branch
+        'branch' :'yes'
     },
     'alu' : {
         'porta' : 'rs1',
@@ -106,7 +110,8 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['SB-type'] = {
 # U-Type : ['lui','auipc']
 spec['nanorv32']['rv32i']['impl']['inst_type']['U-type'] = {
     'pc' : {
-        'next' : 'plus4'
+        'next' : 'plus4',
+        'branch' :'no'
     },
     'alu' : {
         'porta' : 'pc_exe',
@@ -129,7 +134,8 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['U-type'] = {
 # UJ-Type : jal
 spec['nanorv32']['rv32i']['impl']['inst_type']['UJ-type'] = {
     'pc' : {
-        'next' : 'alu_res'
+        'next' : 'alu_res',
+        'branch' :'yes'
     },
     'alu' : {
         'porta' : 'pc_exe',
@@ -153,7 +159,8 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['UJ-type'] = {
 # AS-type': 'slli','slti','srli','srai'
 spec['nanorv32']['rv32i']['impl']['inst_type']['AS-type'] = {
     'pc' : {
-        'next' : 'plus4'
+        'next' : 'plus4',
+        'branch' :'no'
     },
     'alu' : {
         'porta' : 'rs1',
@@ -177,7 +184,8 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['AS-type'] = {
 # F-type : fence, fence.i
 spec['nanorv32']['rv32i']['impl']['inst_type']['F-type'] = {
     'pc' : {
-        'next' : 'plus4'
+        'next' : 'plus4',
+        'branch' :'no'
     },
     'alu' : {
         'porta' : 'rs1',
@@ -200,7 +208,8 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['F-type'] = {
 # SYS-type : scall, sbreak
 spec['nanorv32']['rv32i']['impl']['inst_type']['SYS-type'] = {
     'pc' : {
-        'next' : 'plus4'
+        'next' : 'plus4',
+        'branch' :'no'
     },
     'alu' : {
         'porta' : 'rs1',
@@ -226,7 +235,7 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['SYS-type'] = {
 
 spec['nanorv32']['rv32i']['impl']['inst']['jalr'] = {
     'pc' : {
-        'next' : 'alu_res'
+        'next' : 'alu_res',
     },
     'alu' : {
         'porta' : 'rs1',
