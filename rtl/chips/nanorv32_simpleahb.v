@@ -34,14 +34,19 @@
 
 module nanorv32_simpleahb (/*AUTOARG*/
    // Outputs
+   update_dr_o, test_logic_reset_o, tdi_o, shift_dr_o,
+   sample_preload_select_o, run_test_idle_o, pause_dr_o,
+   mbist_select_o, extest_select_o, debug_select_o, capture_dr_o,
    illegal_instruction,
    // Inouts
    P0, P1,
    // Inputs
-   clk_in, rst_n, irq_ext
+   mbist_tdo_i, debug_tdo_i, bs_chain_tdo_i, clk_in, rst_n, irq_ext
    );
 
 `include "nanorv32_parameters.v"
+`include "chip_params.v"
+
 
    parameter AW = 16; // 64K per RAM
    localparam ADDR_WIDTH = AW;
@@ -63,11 +68,34 @@ module nanorv32_simpleahb (/*AUTOARG*/
 
    // Code memory port
    /*AUTOINPUT*/
+   // Beginning of automatic inputs (from unused autoinst inputs)
+   input                bs_chain_tdo_i;         // To U_TAP_TOP of tap_top.v
+   input                debug_tdo_i;            // To U_TAP_TOP of tap_top.v
+   input                mbist_tdo_i;            // To U_TAP_TOP of tap_top.v
+   // End of automatics
    /*AUTOOUTPUT*/
+   // Beginning of automatic outputs (from unused autoinst outputs)
+   output               capture_dr_o;           // From U_TAP_TOP of tap_top.v
+   output               debug_select_o;         // From U_TAP_TOP of tap_top.v
+   output               extest_select_o;        // From U_TAP_TOP of tap_top.v
+   output               mbist_select_o;         // From U_TAP_TOP of tap_top.v
+   output               pause_dr_o;             // From U_TAP_TOP of tap_top.v
+   output               run_test_idle_o;        // From U_TAP_TOP of tap_top.v
+   output               sample_preload_select_o;// From U_TAP_TOP of tap_top.v
+   output               shift_dr_o;             // From U_TAP_TOP of tap_top.v
+   output               tdi_o;                  // From U_TAP_TOP of tap_top.v
+   output               test_logic_reset_o;     // From U_TAP_TOP of tap_top.v
+   output               update_dr_o;            // From U_TAP_TOP of tap_top.v
+   // End of automatics
 
    /*AUTOREG*/
    /*AUTOWIRE*/
    // Beginning of automatic wires (for undeclared instantiated-module outputs)
+   wire [CHIP_PORT_A_WIDTH-1:0] PA;             // To/From U_TOP_IO of top_io.v
+   wire                 TCK;                    // To/From U_TOP_IO of top_io.v
+   wire                 TDI;                    // To/From U_TOP_IO of top_io.v
+   wire                 TDO;                    // To/From U_TOP_IO of top_io.v
+   wire                 TMS;                    // To/From U_TOP_IO of top_io.v
    wire [31:0]          apb_gpio_paddr;         // From U_APB_BRIDGE of Apbbridge.v
    wire                 apb_gpio_penable;       // From U_APB_BRIDGE of Apbbridge.v
    wire                 apb_gpio_psel;          // From U_APB_BRIDGE of Apbbridge.v
@@ -101,6 +129,16 @@ module nanorv32_simpleahb (/*AUTOARG*/
    wire                 intc_cpu_irq;           // From U_INTC of nanorv32_intc.v
    wire                 irq_ack;                // From U_NANORV32_PIL of nanorv32_pil.v
    wire [7:0]           irqs;                   // From U_IRQ_MAPPER of nanorv32_irq_mapper.v
+   wire [CHIP_PORT_A_WIDTH-1:0] pad_pmux_din;   // From U_PORT_MUX of port_mux.v
+   wire                 pad_tap_tck;            // From U_TOP_IO of top_io.v
+   wire                 pad_tap_tdi;            // From U_TOP_IO of top_io.v
+   wire                 pad_tap_tms;            // From U_TOP_IO of top_io.v
+   wire                 pad_uart_rx;            // From U_PORT_MUX of port_mux.v
+   wire [CHIP_PORT_A_WIDTH-1:0] pmux_pad_dout;  // From U_TOP_IO of top_io.v
+   wire [CHIP_PORT_A_WIDTH-1:0] pmux_pad_ie;    // From U_PORT_MUX of port_mux.v
+   wire [CHIP_PORT_A_WIDTH-1:0] pmux_pad_oe;    // From U_PORT_MUX of port_mux.v
+   wire                 tap_pad_tdo;            // From U_TAP_TOP of tap_top.v
+   wire                 tap_pad_tdo_oe;         // From U_TAP_TOP of tap_top.v
    wire [31:0]          timer_apb_prdata;       // From U_TIMER of timer_wrapper.v
    wire                 timer_apb_pready;       // From U_TIMER of timer_wrapper.v
    wire                 timer_apb_pslverr;      // From U_TIMER of timer_wrapper.v
@@ -110,6 +148,7 @@ module nanorv32_simpleahb (/*AUTOARG*/
    wire                 uart_apb_pready;        // From U_USART of uart_wrapper.v
    wire                 uart_apb_pslverr;       // From U_USART of uart_wrapper.v
    wire                 uart_irq;               // From U_USART of uart_wrapper.v
+   wire                 uart_pad_tx;            // From U_USART of uart_wrapper.v
    // End of automatics
 
    wire [NANORV32_DATA_MSB:0] hrdatai;
@@ -457,20 +496,21 @@ module nanorv32_simpleahb (/*AUTOARG*/
     /* uart_warpper AUTO_TEMPLATE(
      ); */
    uart_wrapper U_USART (
-                         .uart_pad_tx           (), // Fixme
-                         .pad_uart_rx           (),
+
                            /*AUTOINST*/
                          // Outputs
                          .uart_apb_prdata       (uart_apb_prdata[31:0]),
                          .uart_apb_pready       (uart_apb_pready),
                          .uart_apb_pslverr      (uart_apb_pslverr),
                          .uart_irq              (uart_irq),
+                         .uart_pad_tx           (uart_pad_tx),
                          // Inputs
                          .apb_uart_psel         (apb_uart_psel),
                          .apb_uart_paddr        (apb_uart_paddr[11:0]),
                          .apb_uart_penable      (apb_uart_penable),
                          .apb_uart_pwrite       (apb_uart_pwrite),
                          .apb_uart_pwdata       (apb_uart_pwdata[31:0]),
+                         .pad_uart_rx           (pad_uart_rx),
                          .clk                   (clk),
                          .rst_n                 (rst_n));
 
@@ -539,6 +579,82 @@ module nanorv32_simpleahb (/*AUTOARG*/
 
 
 
+    /* tap_top AUTO_TEMPLATE(
+     .tdo_pad_o        (tap_pad_tdo),
+     .tdo_padoe_o      (tap_pad_tdo_oe),
+     .tms_pad_i        (pad_tap_tms),
+     .tck_pad_i        (pad_tap_tck),
+     .tdi_pad_i        (pad_tap_tdi),
+     .trstn_pad_i      (rst_n), // ?? FIXME
+
+
+     ); */
+   tap_top U_TAP_TOP (
+                           /*AUTOINST*/
+                      // Outputs
+                      .tdo_pad_o        (tap_pad_tdo),           // Templated
+                      .tdo_padoe_o      (tap_pad_tdo_oe),        // Templated
+                      .test_logic_reset_o(test_logic_reset_o),
+                      .run_test_idle_o  (run_test_idle_o),
+                      .shift_dr_o       (shift_dr_o),
+                      .pause_dr_o       (pause_dr_o),
+                      .update_dr_o      (update_dr_o),
+                      .capture_dr_o     (capture_dr_o),
+                      .extest_select_o  (extest_select_o),
+                      .sample_preload_select_o(sample_preload_select_o),
+                      .mbist_select_o   (mbist_select_o),
+                      .debug_select_o   (debug_select_o),
+                      .tdi_o            (tdi_o),
+                      // Inputs
+                      .tms_pad_i        (pad_tap_tms),           // Templated
+                      .tck_pad_i        (pad_tap_tck),           // Templated
+                      .trstn_pad_i      (rst_n),                 // Templated
+                      .tdi_pad_i        (pad_tap_tdi),           // Templated
+                      .debug_tdo_i      (debug_tdo_i),
+                      .bs_chain_tdo_i   (bs_chain_tdo_i),
+                      .mbist_tdo_i      (mbist_tdo_i));
+
+
+    /* port_mux AUTO_TEMPLATE(
+     ); */
+   port_mux U_PORT_MUX (
+                           /*AUTOINST*/
+                        // Outputs
+                        .pad_pmux_din   (pad_pmux_din[CHIP_PORT_A_WIDTH-1:0]),
+                        .pmux_pad_ie    (pmux_pad_ie[CHIP_PORT_A_WIDTH-1:0]),
+                        .pmux_pad_oe    (pmux_pad_oe[CHIP_PORT_A_WIDTH-1:0]),
+                        .pad_uart_rx    (pad_uart_rx),
+                        // Inputs
+                        .pmux_pad_dout  (pmux_pad_dout[CHIP_PORT_A_WIDTH-1:0]),
+                        .uart_pad_tx    (uart_pad_tx));
+
+
+
+
+
+    /* top_io AUTO_TEMPLATE(
+     ); */
+   top_io U_TOP_IO (
+                           /*AUTOINST*/
+                    // Outputs
+                    .pmux_pad_dout      (pmux_pad_dout[CHIP_PORT_A_WIDTH-1:0]),
+                    .pad_tap_tdi        (pad_tap_tdi),
+                    .pad_tap_tms        (pad_tap_tms),
+                    .pad_tap_tck        (pad_tap_tck),
+                    // Inouts
+                    .PA                 (PA[CHIP_PORT_A_WIDTH-1:0]),
+                    .TMS                (TMS),
+                    .TDI                (TDI),
+                    .TCK                (TCK),
+                    .TDO                (TDO),
+                    // Inputs
+                    .pad_pmux_din       (pad_pmux_din[CHIP_PORT_A_WIDTH-1:0]),
+                    .pmux_pad_ie        (pmux_pad_ie[CHIP_PORT_A_WIDTH-1:0]),
+                    .pmux_pad_oe        (pmux_pad_oe[CHIP_PORT_A_WIDTH-1:0]),
+                    .tap_pad_tdo        (tap_pad_tdo),
+                    .tap_pad_tdo_oe     (tap_pad_tdo_oe));
+
+
 
 
 
@@ -571,6 +687,7 @@ endmodule // nanorv32_simple
  "../cores"
  "../ips"
  "../chips"
+ "../../adv_debug_sys/Hardware/jtag/tap/rtl/verilog"
  )
  End:
  */
