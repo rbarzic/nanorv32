@@ -21,6 +21,21 @@ data_loop_done:
 
 #endif
 
+#ifdef _STARTUP_BSS_INIT_
+	la t0,__bss_start__
+	la t1,__bss_end__
+	beq t0,t1,bss_loop_done
+bss_loop:
+	sw zero,0(t0)
+	addi t0,t0,4
+	bne      t0,t1, bss_loop
+bss_loop_done:
+
+#endif
+
+
+
+
         jal ra, main
         // if main return 0 -> pass
         beq a0,x0,pass

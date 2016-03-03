@@ -58,23 +58,54 @@ def nanor32_fl():
         'file': "{top}/rtl/ips/ahb_to_ssram.v",
         'targets': 'synt,sim_rtl'
     })
-    l.append({
-        'file': "{top}/rtl/ips/nanorv32_periph_mux_ahb.v",
-        'targets': 'synt,sim_rtl'
-    })
-    #l.append({
-    #    'file': "{top}/rtl/ips/Ahbmli.v",
-    #    'targets': 'synt,sim_rtl'
-    #})
+
     l.append({
         'file': "{top}/rtl/ips/Ahbmli.v",
         'targets': 'synt,sim_rtl'
     })
-
     l.append({
-        'file': "{top}/rtl/ips/nanorv32_gpio_ctrl.v",
+        'file': "{top}/rtl/ips/Apbbridge.v",
         'targets': 'synt,sim_rtl'
     })
+
+    l.append({
+        'file': "{top}/rtl/ips/gpio_apb.v",
+        'targets': 'synt,sim_rtl'
+    })
+
+    l.append({
+        'file': "{top}/rtl/imported_from_ultraembedded/uart.v",
+        'targets': 'synt,sim_rtl'
+    })
+    l.append({
+        'file': "{top}/rtl/imported_from_ultraembedded/uart_periph.v",
+        'targets': 'synt,sim_rtl'
+    })
+    l.append({
+        'file': "{top}/rtl/imported_from_ultraembedded/intr_periph.v",
+        'targets': 'synt,sim_rtl'
+    })
+    l.append({
+        'file': "{top}/rtl/imported_from_ultraembedded/timer_periph.v",
+        'targets': 'synt,sim_rtl'
+    })
+    l.append({
+        'file': "{top}/rtl/ips/uart_wrapper.v",
+        'targets': 'synt,sim_rtl'
+    })
+    l.append({
+        'file': "{top}/rtl/ips/timer_wrapper.v",
+        'targets': 'synt,sim_rtl'
+    })
+    l.append({
+        'file': "{top}/rtl/ips/nanorv32_intc.v",
+        'targets': 'synt,sim_rtl'
+    })
+    l.append({
+        'file': "{top}/rtl/chips/nanorv32_irq_mapper.v",
+        'targets': 'synt,sim_rtl'
+    })
+
 
 
     l.append({
@@ -119,6 +150,10 @@ def nanor32_fl():
 
     d.append({
         'dir': "{top}/rtl/cores/",
+        'targets': 'synt,sim_rtl'
+    })
+    d.append({
+        'dir': "{top}/rtl/imported_from_ultraembedded",
         'targets': 'synt,sim_rtl'
     })
     return l, d

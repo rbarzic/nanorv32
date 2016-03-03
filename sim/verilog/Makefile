@@ -43,6 +43,7 @@ TEST_FLAGS += -DTEST_FUNC_RET=$(TEST_FUNC_RET)
 TEST_FLAGS += -I$(TOP)/common/include
 TEST_FLAGS += -ffreestanding -nostdlib
 TEST_FLAGS += -D_STARTUP_DATA_INIT_
+TEST_FLAGS += -D_STARTUP_BSS_INIT_
 
 run_rv32ui: ../../riscv-tests/isa/rv32ui/$(TEST).S
 	@echo  "===================== TEST $(TEST) ============================"
@@ -115,7 +116,6 @@ run_ctest:
 
 	mkdir -p logs
 	@($(GNU_GCC)  $(GNU_CC_FLAGS) $(TEST_FLAGS) \
-	-DIRQ_SUPPORT \
 	-L $(LINKER_SCRIPT_PATH) \
 	-T $(LINKER_SCRIPT_ROM_SRAM) \
 	$< $(STARTUP_CODE) -o $(TEST).elf  || echo "-I- TEST FAILED (gcc compilation)" >> logs/$(TEST).run.log) | tee  logs/$(TEST).run.log

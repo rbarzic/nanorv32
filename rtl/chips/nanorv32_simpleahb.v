@@ -29,16 +29,16 @@
 //
 //****************************************************************************/
 
-// Todo : memory mapping & arbitration (ROM : 0->32K - RAM 32K->64K)
+
 
 
 module nanorv32_simpleahb (/*AUTOARG*/
    // Outputs
-   illegal_instruction, irq_ack,
+   illegal_instruction,
    // Inouts
    P0, P1,
    // Inputs
-   clk_in, rst_n, irq
+   clk_in, rst_n, irq_ext
    );
 
 `include "nanorv32_parameters.v"
@@ -56,8 +56,8 @@ module nanorv32_simpleahb (/*AUTOARG*/
    inout  wire [15:0]   P1;
 
    // irq support (preliminary)
-   input                irq;
-   output               irq_ack;
+
+   input               irq_ext;
 
 
 
@@ -68,15 +68,48 @@ module nanorv32_simpleahb (/*AUTOARG*/
    /*AUTOREG*/
    /*AUTOWIRE*/
    // Beginning of automatic wires (for undeclared instantiated-module outputs)
-   wire [NANORV32_PERIPH_ADDR_MSB:0] bus_gpio_addr;// From U_PERIPH_MUX of nanorv32_periph_mux_ahb.v
-   wire [3:0]           bus_gpio_bytesel;       // From U_PERIPH_MUX of nanorv32_periph_mux_ahb.v
-   wire [NANORV32_DATA_MSB:0] bus_gpio_din;     // From U_PERIPH_MUX of nanorv32_periph_mux_ahb.v
-   wire                 bus_gpio_en;            // From U_PERIPH_MUX of nanorv32_periph_mux_ahb.v
+   wire [31:0]          apb_gpio_paddr;         // From U_APB_BRIDGE of Apbbridge.v
+   wire                 apb_gpio_penable;       // From U_APB_BRIDGE of Apbbridge.v
+   wire                 apb_gpio_psel;          // From U_APB_BRIDGE of Apbbridge.v
+   wire [31:0]          apb_gpio_pwdata;        // From U_APB_BRIDGE of Apbbridge.v
+   wire                 apb_gpio_pwrite;        // From U_APB_BRIDGE of Apbbridge.v
+   wire [31:0]          apb_intc_paddr;         // From U_APB_BRIDGE of Apbbridge.v
+   wire                 apb_intc_penable;       // From U_APB_BRIDGE of Apbbridge.v
+   wire                 apb_intc_psel;          // From U_APB_BRIDGE of Apbbridge.v
+   wire [31:0]          apb_intc_pwdata;        // From U_APB_BRIDGE of Apbbridge.v
+   wire                 apb_intc_pwrite;        // From U_APB_BRIDGE of Apbbridge.v
+   wire [31:0]          apb_timer_paddr;        // From U_APB_BRIDGE of Apbbridge.v
+   wire                 apb_timer_penable;      // From U_APB_BRIDGE of Apbbridge.v
+   wire                 apb_timer_psel;         // From U_APB_BRIDGE of Apbbridge.v
+   wire [31:0]          apb_timer_pwdata;       // From U_APB_BRIDGE of Apbbridge.v
+   wire                 apb_timer_pwrite;       // From U_APB_BRIDGE of Apbbridge.v
+   wire [31:0]          apb_uart_paddr;         // From U_APB_BRIDGE of Apbbridge.v
+   wire                 apb_uart_penable;       // From U_APB_BRIDGE of Apbbridge.v
+   wire                 apb_uart_psel;          // From U_APB_BRIDGE of Apbbridge.v
+   wire [31:0]          apb_uart_pwdata;        // From U_APB_BRIDGE of Apbbridge.v
+   wire                 apb_uart_pwrite;        // From U_APB_BRIDGE of Apbbridge.v
    wire                 clk;                    // From U_CLK_GEN of nanorv32_clkgen.v
-   wire [31:0]          gpio_bus_dout;          // From U_GPIO_CTRL of nanorv32_gpio_ctrl.v
-   wire                 gpio_bus_ready_nxt;     // From U_GPIO_CTRL of nanorv32_gpio_ctrl.v
-   wire                 hmastlockd;             // From U_CPU of nanorv32.v
-   wire                 hmastlocki;             // From U_CPU of nanorv32.v
+   wire [31:0]          gpio_apb_prdata;        // From U_GPIO of gpio_apb.v
+   wire                 gpio_apb_pready;        // From U_GPIO of gpio_apb.v
+   wire                 gpio_apb_pslverr;       // From U_GPIO of gpio_apb.v
+   wire                 gpio_irq;               // From U_GPIO of gpio_apb.v
+   wire                 hmastlockd;             // From U_NANORV32_PIL of nanorv32_pil.v
+   wire                 hmastlocki;             // From U_NANORV32_PIL of nanorv32_pil.v
+   wire [31:0]          intc_apb_prdata;        // From U_INTC of nanorv32_intc.v
+   wire                 intc_apb_pready;        // From U_INTC of nanorv32_intc.v
+   wire                 intc_apb_pslverr;       // From U_INTC of nanorv32_intc.v
+   wire                 intc_cpu_irq;           // From U_INTC of nanorv32_intc.v
+   wire                 irq_ack;                // From U_NANORV32_PIL of nanorv32_pil.v
+   wire [7:0]           irqs;                   // From U_IRQ_MAPPER of nanorv32_irq_mapper.v
+   wire [31:0]          timer_apb_prdata;       // From U_TIMER of timer_wrapper.v
+   wire                 timer_apb_pready;       // From U_TIMER of timer_wrapper.v
+   wire                 timer_apb_pslverr;      // From U_TIMER of timer_wrapper.v
+   wire                 timer_hires_irq;        // From U_TIMER of timer_wrapper.v
+   wire                 timer_systick_irq;      // From U_TIMER of timer_wrapper.v
+   wire [31:0]          uart_apb_prdata;        // From U_USART of uart_wrapper.v
+   wire                 uart_apb_pready;        // From U_USART of uart_wrapper.v
+   wire                 uart_apb_pslverr;       // From U_USART of uart_wrapper.v
+   wire                 uart_irq;               // From U_USART of uart_wrapper.v
    // End of automatics
 
    wire [NANORV32_DATA_MSB:0] hrdatai;
@@ -148,45 +181,54 @@ module nanorv32_simpleahb (/*AUTOARG*/
    wire         periph_hreadyout;
    wire         periph_hresp;
 
-    /* nanorv32 AUTO_TEMPLATE(
+
+   wire [31:0] pad_gpio_in;            // To U_GPIO of gpio_apb.v
+   wire [31:0] gpio_pad_out;           // From U_GPIO of gpio_apb.v
+
+   wire         irq_ext;
+
+
+    /* nanorv32_pil AUTO_TEMPLATE(
      .hmasteri            (),
      .hmasterlocki        (hmastlocki),
      .hmasterd            (),
      .hmasterlockd        (hmastlockd),
+     .irq            (intc_cpu_irq),
      ); */
-   nanorv32_pil U_NANORV32_PIL (
-                   /*AUTOINST*/
-                   // Outputs
-                   .illegal_instruction (illegal_instruction),
-                   .haddri              (haddri[NANORV32_DATA_MSB:0]),
-                   .hproti              (hproti[3:0]),
-                   .hsizei              (hsizei[2:0]),
-                   .hmasteri            (),                      // Templated
-                   .hmasterlocki        (hmastlocki),            // Templated
-                   .hbursti             (hbursti[2:0]),
-                   .hwdatai             (hwdatai[NANORV32_DATA_MSB:0]),
-                   .hwritei             (hwritei),
-                   .htransi             (htransi),
-                   .haddrd              (haddrd[NANORV32_DATA_MSB:0]),
-                   .hprotd              (hprotd[3:0]),
-                   .hsized              (hsized[2:0]),
-                   .hmasterd            (),                      // Templated
-                   .hmasterlockd        (hmastlockd),            // Templated
-                   .hburstd             (hburstd[2:0]),
-                   .hwdatad             (hwdatad[NANORV32_DATA_MSB:0]),
-                   .hwrited             (hwrited),
-                   .htransd             (htransd),
-                   .irq_ack             (irq_ack),
-                   // Inputs
-                   .rst_n               (rst_n),
-                   .clk                 (clk),
-                   .hrdatai             (hrdatai[NANORV32_DATA_MSB:0]),
-                   .hrespi              (hrespi),
-                   .hreadyi             (hreadyi),
-                   .hrdatad             (hrdatad[NANORV32_DATA_MSB:0]),
-                   .hrespd              (hrespd),
-                   .hreadyd             (hreadyd),
-                   .irq                 (irq));
+   nanorv32_pil
+     U_NANORV32_PIL (
+                     /*AUTOINST*/
+                     // Outputs
+                     .haddrd            (haddrd[NANORV32_DATA_MSB:0]),
+                     .hburstd           (hburstd[2:0]),
+                     .hmasterlockd      (hmastlockd),            // Templated
+                     .hmasterd          (),                      // Templated
+                     .hprotd            (hprotd[3:0]),
+                     .hsized            (hsized[2:0]),
+                     .htransd           (htransd),
+                     .hwdatad           (hwdatad[NANORV32_DATA_MSB:0]),
+                     .hwrited           (hwrited),
+                     .haddri            (haddri[NANORV32_DATA_MSB:0]),
+                     .hbursti           (hbursti[2:0]),
+                     .hmasterlocki      (hmastlocki),            // Templated
+                     .hmasteri          (),                      // Templated
+                     .hproti            (hproti[3:0]),
+                     .hsizei            (hsizei[2:0]),
+                     .htransi           (htransi),
+                     .hwdatai           (hwdatai[NANORV32_DATA_MSB:0]),
+                     .hwritei           (hwritei),
+                     .illegal_instruction(illegal_instruction),
+                     .irq_ack           (irq_ack),
+                     // Inputs
+                     .clk               (clk),
+                     .rst_n             (rst_n),
+                     .hrdatad           (hrdatad[NANORV32_DATA_MSB:0]),
+                     .hreadyd           (hreadyd),
+                     .hrespd            (hrespd),
+                     .hrdatai           (hrdatai[NANORV32_DATA_MSB:0]),
+                     .hreadyi           (hreadyi),
+                     .hrespi            (hrespi),
+                     .irq               (intc_cpu_irq));          // Templated
 
 
 
@@ -318,56 +360,184 @@ module nanorv32_simpleahb (/*AUTOARG*/
                         .io_tcm1_hresp  (io_tcm1_hresp));
 
 
-    /* nanorv32_periph_mux AUTO_TEMPLATE(
-     ); */
-   nanorv32_periph_mux_ahb U_PERIPH_MUX (
-                           /*AUTOINST*/
-                                         // Outputs
-                                         .periph_hrdata         (periph_hrdata[31:0]),
-                                         .periph_hreadyout      (periph_hreadyout),
-                                         .periph_hresp          (periph_hresp),
-                                         .bus_gpio_addr         (bus_gpio_addr[NANORV32_PERIPH_ADDR_MSB:0]),
-                                         .bus_gpio_bytesel      (bus_gpio_bytesel[3:0]),
-                                         .bus_gpio_din          (bus_gpio_din[NANORV32_DATA_MSB:0]),
-                                         .bus_gpio_en           (bus_gpio_en),
-                                         // Inputs
-                                         .clk_in                (clk_in),
-                                         .rst_n                 (rst_n),
-                                         .periph_haddr          (periph_haddr[31:0]),
-                                         .periph_hwrite         (periph_hwrite),
-                                         .periph_hsize          (periph_hsize[2:0]),
-                                         .periph_hburst         (periph_hburst[2:0]),
-                                         .periph_hprot          (periph_hprot[3:0]),
-                                         .periph_htrans         (periph_htrans[1:0]),
-                                         .periph_hmastlock      (periph_hmastlock),
-                                         .periph_hwdata         (periph_hwdata[31:0]),
-                                         .periph_hsel           (periph_hsel),
-                                         .periph_hreadyin       (periph_hreadyin),
-                                         .gpio_bus_dout         (gpio_bus_dout[NANORV32_DATA_MSB:0]),
-                                         .gpio_bus_ready_nxt    (gpio_bus_ready_nxt));
 
 
+     /* Apbbridge AUTO_TEMPLATE(
+      .io_ahbport_\([a-z]+\)       (periph_\1),
+      .reset               (~rst_n),
+      .io_\([a-z]+\)_prdata      (\1_apb_prdata[31:0]),
+      .io_\([a-z]+\)_pready      (\1_apb_pready),
+      .io_\([a-z]+\)_pslverr      (\1_apb_pslverr),
+      .io_\([a-z]+\)_paddr       (apb_\1_paddr[31:0]),
+      .io_\([a-z]+\)_pwrite      (apb_\1_pwrite),
+      .io_\([a-z]+\)_psel        (apb_\1_psel),
+      .io_\([a-z]+\)_penable     (apb_\1_penable),
+      .io_\([a-z]+\)_pwdata      (apb_\1_pwdata[31:0]),
 
-   wire [31:0]                       gpio_pad_out;
-   wire [31:0]                       pad_gpio_in;
-
-    /* nanorv32_gpio_ctrl AUTO_TEMPLATE(
 
      ); */
-   nanorv32_gpio_ctrl U_GPIO_CTRL (
-                                   .gpio_pad_out        (gpio_pad_out[31:0]),
-                                   .pad_gpio_in         (pad_gpio_in[31:0]),
+   Apbbridge U_APB_BRIDGE (
                            /*AUTOINST*/
-                                   // Outputs
-                                   .gpio_bus_dout       (gpio_bus_dout[31:0]),
-                                   .gpio_bus_ready_nxt  (gpio_bus_ready_nxt),
-                                   // Inputs
-                                   .bus_gpio_addr       (bus_gpio_addr[NANORV32_PERIPH_ADDR_MSB:0]),
-                                   .bus_gpio_bytesel    (bus_gpio_bytesel[3:0]),
-                                   .bus_gpio_din        (bus_gpio_din[31:0]),
-                                   .bus_gpio_en         (bus_gpio_en),
-                                   .clk                 (clk),
-                                   .rst_n               (rst_n));
+                           // Outputs
+                           .io_ahbport_hrdata   (periph_hrdata), // Templated
+                           .io_ahbport_hreadyout(periph_hreadyout), // Templated
+                           .io_ahbport_hresp    (periph_hresp),  // Templated
+                           .io_uart_paddr       (apb_uart_paddr[31:0]), // Templated
+                           .io_uart_pwrite      (apb_uart_pwrite), // Templated
+                           .io_uart_psel        (apb_uart_psel), // Templated
+                           .io_uart_penable     (apb_uart_penable), // Templated
+                           .io_uart_pwdata      (apb_uart_pwdata[31:0]), // Templated
+                           .io_gpio_paddr       (apb_gpio_paddr[31:0]), // Templated
+                           .io_gpio_pwrite      (apb_gpio_pwrite), // Templated
+                           .io_gpio_psel        (apb_gpio_psel), // Templated
+                           .io_gpio_penable     (apb_gpio_penable), // Templated
+                           .io_gpio_pwdata      (apb_gpio_pwdata[31:0]), // Templated
+                           .io_intc_paddr       (apb_intc_paddr[31:0]), // Templated
+                           .io_intc_pwrite      (apb_intc_pwrite), // Templated
+                           .io_intc_psel        (apb_intc_psel), // Templated
+                           .io_intc_penable     (apb_intc_penable), // Templated
+                           .io_intc_pwdata      (apb_intc_pwdata[31:0]), // Templated
+                           .io_timer_paddr      (apb_timer_paddr[31:0]), // Templated
+                           .io_timer_pwrite     (apb_timer_pwrite), // Templated
+                           .io_timer_psel       (apb_timer_psel), // Templated
+                           .io_timer_penable    (apb_timer_penable), // Templated
+                           .io_timer_pwdata     (apb_timer_pwdata[31:0]), // Templated
+                           // Inputs
+                           .clk                 (clk),
+                           .reset               (~rst_n),        // Templated
+                           .io_ahbport_haddr    (periph_haddr),  // Templated
+                           .io_ahbport_hwrite   (periph_hwrite), // Templated
+                           .io_ahbport_hsize    (periph_hsize),  // Templated
+                           .io_ahbport_hburst   (periph_hburst), // Templated
+                           .io_ahbport_hprot    (periph_hprot),  // Templated
+                           .io_ahbport_htrans   (periph_htrans), // Templated
+                           .io_ahbport_hmastlock(periph_hmastlock), // Templated
+                           .io_ahbport_hwdata   (periph_hwdata), // Templated
+                           .io_ahbport_hsel     (periph_hsel),   // Templated
+                           .io_ahbport_hreadyin (periph_hreadyin), // Templated
+                           .io_uart_prdata      (uart_apb_prdata[31:0]), // Templated
+                           .io_uart_pready      (uart_apb_pready), // Templated
+                           .io_uart_pslverr     (uart_apb_pslverr), // Templated
+                           .io_gpio_prdata      (gpio_apb_prdata[31:0]), // Templated
+                           .io_gpio_pready      (gpio_apb_pready), // Templated
+                           .io_gpio_pslverr     (gpio_apb_pslverr), // Templated
+                           .io_intc_prdata      (intc_apb_prdata[31:0]), // Templated
+                           .io_intc_pready      (intc_apb_pready), // Templated
+                           .io_intc_pslverr     (intc_apb_pslverr), // Templated
+                           .io_timer_prdata     (timer_apb_prdata[31:0]), // Templated
+                           .io_timer_pready     (timer_apb_pready), // Templated
+                           .io_timer_pslverr    (timer_apb_pslverr)); // Templated
+
+
+
+ /* gpio_apb AUTO_TEMPLATE(
+  .clk_apb            (clk),
+  .rst_apb_n          (rst_n),
+  ); */
+   gpio_apb U_GPIO (
+                    .pad_gpio_in        (pad_gpio_in[31:0]),
+                    .gpio_pad_out       (gpio_pad_out[31:0]),
+
+                           /*AUTOINST*/
+                    // Outputs
+                    .gpio_apb_prdata    (gpio_apb_prdata[31:0]),
+                    .gpio_apb_pready    (gpio_apb_pready),
+                    .gpio_apb_pslverr   (gpio_apb_pslverr),
+                    .gpio_irq           (gpio_irq),
+                    // Inputs
+                    .apb_gpio_psel      (apb_gpio_psel),
+                    .apb_gpio_paddr     (apb_gpio_paddr[11:0]),
+                    .apb_gpio_penable   (apb_gpio_penable),
+                    .apb_gpio_pwrite    (apb_gpio_pwrite),
+                    .apb_gpio_pwdata    (apb_gpio_pwdata[31:0]),
+                    .clk_apb            (clk),                   // Templated
+                    .rst_apb_n          (rst_n));                 // Templated
+
+
+    /* uart_warpper AUTO_TEMPLATE(
+     ); */
+   uart_wrapper U_USART (
+                         .uart_pad_tx           (), // Fixme
+                         .pad_uart_rx           (),
+                           /*AUTOINST*/
+                         // Outputs
+                         .uart_apb_prdata       (uart_apb_prdata[31:0]),
+                         .uart_apb_pready       (uart_apb_pready),
+                         .uart_apb_pslverr      (uart_apb_pslverr),
+                         .uart_irq              (uart_irq),
+                         // Inputs
+                         .apb_uart_psel         (apb_uart_psel),
+                         .apb_uart_paddr        (apb_uart_paddr[11:0]),
+                         .apb_uart_penable      (apb_uart_penable),
+                         .apb_uart_pwrite       (apb_uart_pwrite),
+                         .apb_uart_pwdata       (apb_uart_pwdata[31:0]),
+                         .clk                   (clk),
+                         .rst_n                 (rst_n));
+
+
+    /* timer_wrapper AUTO_TEMPLATE(
+     ); */
+   timer_wrapper U_TIMER (
+                           /*AUTOINST*/
+                          // Outputs
+                          .timer_apb_prdata     (timer_apb_prdata[31:0]),
+                          .timer_apb_pready     (timer_apb_pready),
+                          .timer_apb_pslverr    (timer_apb_pslverr),
+                          .timer_hires_irq      (timer_hires_irq),
+                          .timer_systick_irq    (timer_systick_irq),
+                          // Inputs
+                          .apb_timer_psel       (apb_timer_psel),
+                          .apb_timer_paddr      (apb_timer_paddr[11:0]),
+                          .apb_timer_penable    (apb_timer_penable),
+                          .apb_timer_pwrite     (apb_timer_pwrite),
+                          .apb_timer_pwdata     (apb_timer_pwdata[31:0]),
+                          .clk                  (clk),
+                          .rst_n                (rst_n));
+
+
+
+
+    /* nanorv32_irq_mapper AUTO_TEMPLATE(
+     ); */
+   nanorv32_irq_mapper U_IRQ_MAPPER (
+     /*AUTOINST*/
+                                     // Outputs
+                                     .irqs              (irqs[7:0]),
+                                     // Inputs
+                                     .uart_irq          (uart_irq),
+                                     .gpio_irq          (gpio_irq),
+                                     .timer_systick_irq (timer_systick_irq),
+                                     .timer_hires_irq   (timer_hires_irq));
+
+
+
+
+
+    /* nanorv32_intc AUTO_TEMPLATE(
+     .intc_irq              (intc_cpu_irq),
+     ); */
+   nanorv32_intc U_INTC (
+                         .irq_ext               (irq_ext),
+                           /*AUTOINST*/
+                         // Outputs
+                         .intc_apb_prdata       (intc_apb_prdata[31:0]),
+                         .intc_apb_pready       (intc_apb_pready),
+                         .intc_apb_pslverr      (intc_apb_pslverr),
+                         .intc_irq              (intc_cpu_irq),  // Templated
+                         // Inputs
+                         .apb_intc_psel         (apb_intc_psel),
+                         .apb_intc_paddr        (apb_intc_paddr[11:0]),
+                         .apb_intc_penable      (apb_intc_penable),
+                         .apb_intc_pwrite       (apb_intc_pwrite),
+                         .apb_intc_pwdata       (apb_intc_pwdata[31:0]),
+                         .irqs                  (irqs[7:0]),
+                         .irq_ack               (irq_ack),
+                         .clk                   (clk),
+                         .rst_n                 (rst_n));
+
+
+
+
 
 
 

@@ -1,0 +1,11 @@
+* Useful peripherals
+
+* UART
+
+
+https://github.com/ultraembedded/altor32/blob/master/rtl/peripheral/uart_periph.v
+
+https://github.com/freecores/wb_to_amba
+
+
+* GPIO
