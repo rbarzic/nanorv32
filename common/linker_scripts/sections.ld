@@ -76,7 +76,16 @@ SECTIONS
 		. = ALIGN(4);
 		__bss_end__ = .;
 	} > RAM
-/*
+
+        .noinit :
+        {
+                . = ALIGN(4);
+                __noinit_start__ = .;
+                *(.noinit*)
+                . = ALIGN(4);
+                __noinit_end__ = .;
+        } > RAM
+
 	.heap (COPY):
 	{
 		__end__ = .;
