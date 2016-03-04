@@ -36,20 +36,16 @@ module nanorv32_simpleahb (/*AUTOARG*/
    // Outputs
    wb_we_o, wb_stb_o, wb_sel_o, wb_jsp_err_o, wb_jsp_dat_o,
    wb_jsp_ack_o, wb_dat_o, wb_cyc_o, wb_cti_o, wb_cab_o, wb_bte_o,
-   wb_adr_o, update_dr_o, test_logic_reset_o, tdo_o, tdi_o,
-   shift_dr_o, sample_preload_select_o, run_test_idle_o, pause_dr_o,
-   mbist_select_o, int_o, extest_select_o, debug_select_o, cpu0_we_o,
-   cpu0_stb_o, cpu0_stall_o, cpu0_rst_o, cpu0_data_o, cpu0_addr_o,
-   capture_dr_o, illegal_instruction,
+   wb_adr_o, int_o, cpu0_we_o, cpu0_stb_o, cpu0_stall_o, cpu0_rst_o,
+   cpu0_data_o, cpu0_addr_o, illegal_instruction,
    // Inouts
    P0, P1,
    // Inputs
    wb_rst_i, wb_jsp_we_i, wb_jsp_stb_i, wb_jsp_sel_i, wb_jsp_dat_i,
    wb_jsp_cyc_i, wb_jsp_cti_i, wb_jsp_cab_i, wb_jsp_bte_i,
-   wb_jsp_adr_i, wb_err_i, wb_dat_i, wb_clk_i, wb_ack_i, update_dr_i,
-   tdi_i, tck_i, shift_dr_i, rst_i, pause_dr_i, mbist_tdo_i,
-   debug_tdo_i, debug_select_i, cpu0_data_i, cpu0_clk_i, cpu0_bp_i,
-   cpu0_ack_i, capture_dr_i, bs_chain_tdo_i, clk_in, rst_n, irq_ext
+   wb_jsp_adr_i, wb_err_i, wb_dat_i, wb_clk_i, wb_ack_i, pad_jtag_tck,
+   cpu0_data_i, cpu0_clk_i, cpu0_bp_i, cpu0_ack_i, clk_in, rst_n,
+   irq_ext
    );
 
 `include "nanorv32_parameters.v"
@@ -77,21 +73,11 @@ module nanorv32_simpleahb (/*AUTOARG*/
    // Code memory port
    /*AUTOINPUT*/
    // Beginning of automatic inputs (from unused autoinst inputs)
-   input                bs_chain_tdo_i;         // To U_TAP_TOP of tap_top.v
-   input                capture_dr_i;           // To U_ADBG_TOP of adbg_top.v
    input                cpu0_ack_i;             // To U_ADBG_TOP of adbg_top.v
    input                cpu0_bp_i;              // To U_ADBG_TOP of adbg_top.v
    input                cpu0_clk_i;             // To U_ADBG_TOP of adbg_top.v
    input [31:0]         cpu0_data_i;            // To U_ADBG_TOP of adbg_top.v
-   input                debug_select_i;         // To U_ADBG_TOP of adbg_top.v
-   input                debug_tdo_i;            // To U_TAP_TOP of tap_top.v
-   input                mbist_tdo_i;            // To U_TAP_TOP of tap_top.v
-   input                pause_dr_i;             // To U_ADBG_TOP of adbg_top.v
-   input                rst_i;                  // To U_ADBG_TOP of adbg_top.v
-   input                shift_dr_i;             // To U_ADBG_TOP of adbg_top.v
-   input                tck_i;                  // To U_ADBG_TOP of adbg_top.v
-   input                tdi_i;                  // To U_ADBG_TOP of adbg_top.v
-   input                update_dr_i;            // To U_ADBG_TOP of adbg_top.v
+   input                pad_jtag_tck;           // To U_ADBG_TOP of adbg_top.v
    input                wb_ack_i;               // To U_ADBG_TOP of adbg_top.v
    input                wb_clk_i;               // To U_ADBG_TOP of adbg_top.v
    input [31:0]         wb_dat_i;               // To U_ADBG_TOP of adbg_top.v
@@ -109,25 +95,13 @@ module nanorv32_simpleahb (/*AUTOARG*/
    // End of automatics
    /*AUTOOUTPUT*/
    // Beginning of automatic outputs (from unused autoinst outputs)
-   output               capture_dr_o;           // From U_TAP_TOP of tap_top.v
    output [31:0]        cpu0_addr_o;            // From U_ADBG_TOP of adbg_top.v
    output [31:0]        cpu0_data_o;            // From U_ADBG_TOP of adbg_top.v
    output               cpu0_rst_o;             // From U_ADBG_TOP of adbg_top.v
    output               cpu0_stall_o;           // From U_ADBG_TOP of adbg_top.v
    output               cpu0_stb_o;             // From U_ADBG_TOP of adbg_top.v
    output               cpu0_we_o;              // From U_ADBG_TOP of adbg_top.v
-   output               debug_select_o;         // From U_TAP_TOP of tap_top.v
-   output               extest_select_o;        // From U_TAP_TOP of tap_top.v
    output               int_o;                  // From U_ADBG_TOP of adbg_top.v
-   output               mbist_select_o;         // From U_TAP_TOP of tap_top.v
-   output               pause_dr_o;             // From U_TAP_TOP of tap_top.v
-   output               run_test_idle_o;        // From U_TAP_TOP of tap_top.v
-   output               sample_preload_select_o;// From U_TAP_TOP of tap_top.v
-   output               shift_dr_o;             // From U_TAP_TOP of tap_top.v
-   output               tdi_o;                  // From U_TAP_TOP of tap_top.v
-   output               tdo_o;                  // From U_ADBG_TOP of adbg_top.v
-   output               test_logic_reset_o;     // From U_TAP_TOP of tap_top.v
-   output               update_dr_o;            // From U_TAP_TOP of tap_top.v
    output [31:0]        wb_adr_o;               // From U_ADBG_TOP of adbg_top.v
    output [1:0]         wb_bte_o;               // From U_ADBG_TOP of adbg_top.v
    output               wb_cab_o;               // From U_ADBG_TOP of adbg_top.v
@@ -171,6 +145,7 @@ module nanorv32_simpleahb (/*AUTOARG*/
    wire [31:0]          apb_uart_pwdata;        // From U_APB_BRIDGE of Apbbridge.v
    wire                 apb_uart_pwrite;        // From U_APB_BRIDGE of Apbbridge.v
    wire                 clk;                    // From U_CLK_GEN of nanorv32_clkgen.v
+   wire                 debug_tap_tdo;          // From U_ADBG_TOP of adbg_top.v
    wire [31:0]          gpio_apb_prdata;        // From U_GPIO of gpio_apb.v
    wire                 gpio_apb_pready;        // From U_GPIO of gpio_apb.v
    wire                 gpio_apb_pslverr;       // From U_GPIO of gpio_apb.v
@@ -191,6 +166,13 @@ module nanorv32_simpleahb (/*AUTOARG*/
    wire [CHIP_PORT_A_WIDTH-1:0] pmux_pad_dout;  // From U_TOP_IO of top_io.v
    wire [CHIP_PORT_A_WIDTH-1:0] pmux_pad_ie;    // From U_PORT_MUX of port_mux.v
    wire [CHIP_PORT_A_WIDTH-1:0] pmux_pad_oe;    // From U_PORT_MUX of port_mux.v
+   wire                 tap_debug_capture_dr;   // From U_TAP_TOP of tap_top.v
+   wire                 tap_debug_debug_select; // From U_TAP_TOP of tap_top.v
+   wire                 tap_debug_pause_dr;     // From U_TAP_TOP of tap_top.v
+   wire                 tap_debug_rst;          // From U_TAP_TOP of tap_top.v
+   wire                 tap_debug_shift_dr;     // From U_TAP_TOP of tap_top.v
+   wire                 tap_debug_tdi;          // From U_TAP_TOP of tap_top.v
+   wire                 tap_debug_update_dr;    // From U_TAP_TOP of tap_top.v
    wire                 tap_pad_tdo;            // From U_TAP_TOP of tap_top.v
    wire                 tap_pad_tdo_oe;         // From U_TAP_TOP of tap_top.v
    wire [31:0]          timer_apb_prdata;       // From U_TIMER of timer_wrapper.v
@@ -640,42 +622,68 @@ module nanorv32_simpleahb (/*AUTOARG*/
      .tck_pad_i        (pad_tap_tck),
      .tdi_pad_i        (pad_tap_tdi),
      .trstn_pad_i      (rst_n), // ?? FIXME
+     // TAP state signals
+     .shift_dr_o       (tap_debug_shift_dr),
+     .pause_dr_o       (tap_debug_pause_dr),
+     .update_dr_o      (tap_debug_update_dr),
+     .capture_dr_o     (tap_debug_capture_dr),
+     .debug_select_o   (tap_debug_debug_select),
 
+     .debug_tdo_i      (debug_tap_tdo),
+     .tdi_o            (tap_debug_tdi),
+
+     .test_logic_reset_o(tap_debug_rst),
 
      ); */
-   tap_top U_TAP_TOP (
-                           /*AUTOINST*/
-                      // Outputs
-                      .tdo_pad_o        (tap_pad_tdo),           // Templated
-                      .tdo_padoe_o      (tap_pad_tdo_oe),        // Templated
-                      .test_logic_reset_o(test_logic_reset_o),
-                      .run_test_idle_o  (run_test_idle_o),
-                      .shift_dr_o       (shift_dr_o),
-                      .pause_dr_o       (pause_dr_o),
-                      .update_dr_o      (update_dr_o),
-                      .capture_dr_o     (capture_dr_o),
-                      .extest_select_o  (extest_select_o),
-                      .sample_preload_select_o(sample_preload_select_o),
-                      .mbist_select_o   (mbist_select_o),
-                      .debug_select_o   (debug_select_o),
-                      .tdi_o            (tdi_o),
-                      // Inputs
-                      .tms_pad_i        (pad_tap_tms),           // Templated
-                      .tck_pad_i        (pad_tap_tck),           // Templated
-                      .trstn_pad_i      (rst_n),                 // Templated
-                      .tdi_pad_i        (pad_tap_tdi),           // Templated
-                      .debug_tdo_i      (debug_tdo_i),
-                      .bs_chain_tdo_i   (bs_chain_tdo_i),
-                      .mbist_tdo_i      (mbist_tdo_i));
+   tap_top
+     U_TAP_TOP (
+                .bs_chain_tdo_i   (1'b0), // Boundary scan chain not used
+                .mbist_tdo_i      (1'b0),
+                // Unused
+                .run_test_idle_o        (),
+                .extest_select_o(),
+                .sample_preload_select_o(),
+                .mbist_select_o(),
+                /*AUTOINST*/
+                // Outputs
+                .tdo_pad_o              (tap_pad_tdo),           // Templated
+                .tdo_padoe_o            (tap_pad_tdo_oe),        // Templated
+                .test_logic_reset_o     (tap_debug_rst),         // Templated
+                .shift_dr_o             (tap_debug_shift_dr),    // Templated
+                .pause_dr_o             (tap_debug_pause_dr),    // Templated
+                .update_dr_o            (tap_debug_update_dr),   // Templated
+                .capture_dr_o           (tap_debug_capture_dr),  // Templated
+                .debug_select_o         (tap_debug_debug_select), // Templated
+                .tdi_o                  (tap_debug_tdi),         // Templated
+                // Inputs
+                .tms_pad_i              (pad_tap_tms),           // Templated
+                .tck_pad_i              (pad_tap_tck),           // Templated
+                .trstn_pad_i            (rst_n),                 // Templated
+                .tdi_pad_i              (pad_tap_tdi),           // Templated
+                .debug_tdo_i            (debug_tap_tdo));         // Templated
 
     /* adbg_top AUTO_TEMPLATE(
      .cpu1\(.*\)_o  (),  // One cpu0 interface is used
      .cpu1\(.*\)_i  (0),  // One cpu0 interface is used
+     .shift_dr_i     (tap_debug_shift_dr),
+     .pause_dr_i     (tap_debug_pause_dr),
+     .update_dr_i    (tap_debug_update_dr),
+     .capture_dr_i   (tap_debug_capture_dr),
+     .debug_select_i (tap_debug_debug_select),
+
+
+
+     .rst_i          (tap_debug_rst),
+
+     .tck_i          (pad_jtag_tck),
+     .tdo_o          (debug_tap_tdo),
+     .tdi_i          (tap_debug_tdi),
      ); */
    adbg_top U_ADBG_TOP (
+
                            /*AUTOINST*/
                         // Outputs
-                        .tdo_o          (tdo_o),
+                        .tdo_o          (debug_tap_tdo),         // Templated
                         .wb_adr_o       (wb_adr_o[31:0]),
                         .wb_dat_o       (wb_dat_o[31:0]),
                         .wb_cyc_o       (wb_cyc_o),
@@ -702,14 +710,14 @@ module nanorv32_simpleahb (/*AUTOARG*/
                         .wb_jsp_err_o   (wb_jsp_err_o),
                         .int_o          (int_o),
                         // Inputs
-                        .tck_i          (tck_i),
-                        .tdi_i          (tdi_i),
-                        .rst_i          (rst_i),
-                        .shift_dr_i     (shift_dr_i),
-                        .pause_dr_i     (pause_dr_i),
-                        .update_dr_i    (update_dr_i),
-                        .capture_dr_i   (capture_dr_i),
-                        .debug_select_i (debug_select_i),
+                        .tck_i          (pad_jtag_tck),          // Templated
+                        .tdi_i          (tap_debug_tdi),         // Templated
+                        .rst_i          (tap_debug_rst),         // Templated
+                        .shift_dr_i     (tap_debug_shift_dr),    // Templated
+                        .pause_dr_i     (tap_debug_pause_dr),    // Templated
+                        .update_dr_i    (tap_debug_update_dr),   // Templated
+                        .capture_dr_i   (tap_debug_capture_dr),  // Templated
+                        .debug_select_i (tap_debug_debug_select), // Templated
                         .wb_clk_i       (wb_clk_i),
                         .wb_rst_i       (wb_rst_i),
                         .wb_dat_i       (wb_dat_i[31:0]),
