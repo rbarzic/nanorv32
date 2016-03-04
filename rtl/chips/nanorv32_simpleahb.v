@@ -34,14 +34,22 @@
 
 module nanorv32_simpleahb (/*AUTOARG*/
    // Outputs
-   update_dr_o, test_logic_reset_o, tdi_o, shift_dr_o,
-   sample_preload_select_o, run_test_idle_o, pause_dr_o,
-   mbist_select_o, extest_select_o, debug_select_o, capture_dr_o,
-   illegal_instruction,
+   wb_we_o, wb_stb_o, wb_sel_o, wb_jsp_err_o, wb_jsp_dat_o,
+   wb_jsp_ack_o, wb_dat_o, wb_cyc_o, wb_cti_o, wb_cab_o, wb_bte_o,
+   wb_adr_o, update_dr_o, test_logic_reset_o, tdo_o, tdi_o,
+   shift_dr_o, sample_preload_select_o, run_test_idle_o, pause_dr_o,
+   mbist_select_o, int_o, extest_select_o, debug_select_o, cpu0_we_o,
+   cpu0_stb_o, cpu0_stall_o, cpu0_rst_o, cpu0_data_o, cpu0_addr_o,
+   capture_dr_o, illegal_instruction,
    // Inouts
    P0, P1,
    // Inputs
-   mbist_tdo_i, debug_tdo_i, bs_chain_tdo_i, clk_in, rst_n, irq_ext
+   wb_rst_i, wb_jsp_we_i, wb_jsp_stb_i, wb_jsp_sel_i, wb_jsp_dat_i,
+   wb_jsp_cyc_i, wb_jsp_cti_i, wb_jsp_cab_i, wb_jsp_bte_i,
+   wb_jsp_adr_i, wb_err_i, wb_dat_i, wb_clk_i, wb_ack_i, update_dr_i,
+   tdi_i, tck_i, shift_dr_i, rst_i, pause_dr_i, mbist_tdo_i,
+   debug_tdo_i, debug_select_i, cpu0_data_i, cpu0_clk_i, cpu0_bp_i,
+   cpu0_ack_i, capture_dr_i, bs_chain_tdo_i, clk_in, rst_n, irq_ext
    );
 
 `include "nanorv32_parameters.v"
@@ -70,22 +78,68 @@ module nanorv32_simpleahb (/*AUTOARG*/
    /*AUTOINPUT*/
    // Beginning of automatic inputs (from unused autoinst inputs)
    input                bs_chain_tdo_i;         // To U_TAP_TOP of tap_top.v
+   input                capture_dr_i;           // To U_ADBG_TOP of adbg_top.v
+   input                cpu0_ack_i;             // To U_ADBG_TOP of adbg_top.v
+   input                cpu0_bp_i;              // To U_ADBG_TOP of adbg_top.v
+   input                cpu0_clk_i;             // To U_ADBG_TOP of adbg_top.v
+   input [31:0]         cpu0_data_i;            // To U_ADBG_TOP of adbg_top.v
+   input                debug_select_i;         // To U_ADBG_TOP of adbg_top.v
    input                debug_tdo_i;            // To U_TAP_TOP of tap_top.v
    input                mbist_tdo_i;            // To U_TAP_TOP of tap_top.v
+   input                pause_dr_i;             // To U_ADBG_TOP of adbg_top.v
+   input                rst_i;                  // To U_ADBG_TOP of adbg_top.v
+   input                shift_dr_i;             // To U_ADBG_TOP of adbg_top.v
+   input                tck_i;                  // To U_ADBG_TOP of adbg_top.v
+   input                tdi_i;                  // To U_ADBG_TOP of adbg_top.v
+   input                update_dr_i;            // To U_ADBG_TOP of adbg_top.v
+   input                wb_ack_i;               // To U_ADBG_TOP of adbg_top.v
+   input                wb_clk_i;               // To U_ADBG_TOP of adbg_top.v
+   input [31:0]         wb_dat_i;               // To U_ADBG_TOP of adbg_top.v
+   input                wb_err_i;               // To U_ADBG_TOP of adbg_top.v
+   input [31:0]         wb_jsp_adr_i;           // To U_ADBG_TOP of adbg_top.v
+   input [1:0]          wb_jsp_bte_i;           // To U_ADBG_TOP of adbg_top.v
+   input                wb_jsp_cab_i;           // To U_ADBG_TOP of adbg_top.v
+   input [2:0]          wb_jsp_cti_i;           // To U_ADBG_TOP of adbg_top.v
+   input                wb_jsp_cyc_i;           // To U_ADBG_TOP of adbg_top.v
+   input [31:0]         wb_jsp_dat_i;           // To U_ADBG_TOP of adbg_top.v
+   input [3:0]          wb_jsp_sel_i;           // To U_ADBG_TOP of adbg_top.v
+   input                wb_jsp_stb_i;           // To U_ADBG_TOP of adbg_top.v
+   input                wb_jsp_we_i;            // To U_ADBG_TOP of adbg_top.v
+   input                wb_rst_i;               // To U_ADBG_TOP of adbg_top.v
    // End of automatics
    /*AUTOOUTPUT*/
    // Beginning of automatic outputs (from unused autoinst outputs)
    output               capture_dr_o;           // From U_TAP_TOP of tap_top.v
+   output [31:0]        cpu0_addr_o;            // From U_ADBG_TOP of adbg_top.v
+   output [31:0]        cpu0_data_o;            // From U_ADBG_TOP of adbg_top.v
+   output               cpu0_rst_o;             // From U_ADBG_TOP of adbg_top.v
+   output               cpu0_stall_o;           // From U_ADBG_TOP of adbg_top.v
+   output               cpu0_stb_o;             // From U_ADBG_TOP of adbg_top.v
+   output               cpu0_we_o;              // From U_ADBG_TOP of adbg_top.v
    output               debug_select_o;         // From U_TAP_TOP of tap_top.v
    output               extest_select_o;        // From U_TAP_TOP of tap_top.v
+   output               int_o;                  // From U_ADBG_TOP of adbg_top.v
    output               mbist_select_o;         // From U_TAP_TOP of tap_top.v
    output               pause_dr_o;             // From U_TAP_TOP of tap_top.v
    output               run_test_idle_o;        // From U_TAP_TOP of tap_top.v
    output               sample_preload_select_o;// From U_TAP_TOP of tap_top.v
    output               shift_dr_o;             // From U_TAP_TOP of tap_top.v
    output               tdi_o;                  // From U_TAP_TOP of tap_top.v
+   output               tdo_o;                  // From U_ADBG_TOP of adbg_top.v
    output               test_logic_reset_o;     // From U_TAP_TOP of tap_top.v
    output               update_dr_o;            // From U_TAP_TOP of tap_top.v
+   output [31:0]        wb_adr_o;               // From U_ADBG_TOP of adbg_top.v
+   output [1:0]         wb_bte_o;               // From U_ADBG_TOP of adbg_top.v
+   output               wb_cab_o;               // From U_ADBG_TOP of adbg_top.v
+   output [2:0]         wb_cti_o;               // From U_ADBG_TOP of adbg_top.v
+   output               wb_cyc_o;               // From U_ADBG_TOP of adbg_top.v
+   output [31:0]        wb_dat_o;               // From U_ADBG_TOP of adbg_top.v
+   output               wb_jsp_ack_o;           // From U_ADBG_TOP of adbg_top.v
+   output [31:0]        wb_jsp_dat_o;           // From U_ADBG_TOP of adbg_top.v
+   output               wb_jsp_err_o;           // From U_ADBG_TOP of adbg_top.v
+   output [3:0]         wb_sel_o;               // From U_ADBG_TOP of adbg_top.v
+   output               wb_stb_o;               // From U_ADBG_TOP of adbg_top.v
+   output               wb_we_o;                // From U_ADBG_TOP of adbg_top.v
    // End of automatics
 
    /*AUTOREG*/
@@ -614,6 +668,74 @@ module nanorv32_simpleahb (/*AUTOARG*/
                       .bs_chain_tdo_i   (bs_chain_tdo_i),
                       .mbist_tdo_i      (mbist_tdo_i));
 
+    /* adbg_top AUTO_TEMPLATE(
+     .cpu1\(.*\)_o  (),  // One cpu0 interface is used
+     .cpu1\(.*\)_i  (0),  // One cpu0 interface is used
+     ); */
+   adbg_top U_ADBG_TOP (
+                           /*AUTOINST*/
+                        // Outputs
+                        .tdo_o          (tdo_o),
+                        .wb_adr_o       (wb_adr_o[31:0]),
+                        .wb_dat_o       (wb_dat_o[31:0]),
+                        .wb_cyc_o       (wb_cyc_o),
+                        .wb_stb_o       (wb_stb_o),
+                        .wb_sel_o       (wb_sel_o[3:0]),
+                        .wb_we_o        (wb_we_o),
+                        .wb_cab_o       (wb_cab_o),
+                        .wb_cti_o       (wb_cti_o[2:0]),
+                        .wb_bte_o       (wb_bte_o[1:0]),
+                        .cpu0_addr_o    (cpu0_addr_o[31:0]),
+                        .cpu0_data_o    (cpu0_data_o[31:0]),
+                        .cpu0_stall_o   (cpu0_stall_o),
+                        .cpu0_stb_o     (cpu0_stb_o),
+                        .cpu0_we_o      (cpu0_we_o),
+                        .cpu0_rst_o     (cpu0_rst_o),
+                        .cpu1_addr_o    (),                      // Templated
+                        .cpu1_data_o    (),                      // Templated
+                        .cpu1_stall_o   (),                      // Templated
+                        .cpu1_stb_o     (),                      // Templated
+                        .cpu1_we_o      (),                      // Templated
+                        .cpu1_rst_o     (),                      // Templated
+                        .wb_jsp_dat_o   (wb_jsp_dat_o[31:0]),
+                        .wb_jsp_ack_o   (wb_jsp_ack_o),
+                        .wb_jsp_err_o   (wb_jsp_err_o),
+                        .int_o          (int_o),
+                        // Inputs
+                        .tck_i          (tck_i),
+                        .tdi_i          (tdi_i),
+                        .rst_i          (rst_i),
+                        .shift_dr_i     (shift_dr_i),
+                        .pause_dr_i     (pause_dr_i),
+                        .update_dr_i    (update_dr_i),
+                        .capture_dr_i   (capture_dr_i),
+                        .debug_select_i (debug_select_i),
+                        .wb_clk_i       (wb_clk_i),
+                        .wb_rst_i       (wb_rst_i),
+                        .wb_dat_i       (wb_dat_i[31:0]),
+                        .wb_ack_i       (wb_ack_i),
+                        .wb_err_i       (wb_err_i),
+                        .cpu0_clk_i     (cpu0_clk_i),
+                        .cpu0_data_i    (cpu0_data_i[31:0]),
+                        .cpu0_bp_i      (cpu0_bp_i),
+                        .cpu0_ack_i     (cpu0_ack_i),
+                        .cpu1_clk_i     (0),                     // Templated
+                        .cpu1_data_i    (0),                     // Templated
+                        .cpu1_bp_i      (0),                     // Templated
+                        .cpu1_ack_i     (0),                     // Templated
+                        .wb_jsp_adr_i   (wb_jsp_adr_i[31:0]),
+                        .wb_jsp_dat_i   (wb_jsp_dat_i[31:0]),
+                        .wb_jsp_cyc_i   (wb_jsp_cyc_i),
+                        .wb_jsp_stb_i   (wb_jsp_stb_i),
+                        .wb_jsp_sel_i   (wb_jsp_sel_i[3:0]),
+                        .wb_jsp_we_i    (wb_jsp_we_i),
+                        .wb_jsp_cab_i   (wb_jsp_cab_i),
+                        .wb_jsp_cti_i   (wb_jsp_cti_i[2:0]),
+                        .wb_jsp_bte_i   (wb_jsp_bte_i[1:0]));
+
+
+
+
 
     /* port_mux AUTO_TEMPLATE(
      ); */
@@ -688,6 +810,7 @@ endmodule // nanorv32_simple
  "../ips"
  "../chips"
  "../../adv_debug_sys/Hardware/jtag/tap/rtl/verilog"
+ "../../adv_debug_sys/Hardware/adv_dbg_if/rtl/verilog"
  )
  End:
  */
