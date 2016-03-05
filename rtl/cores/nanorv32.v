@@ -102,6 +102,7 @@ module nanorv32 (/*AUTOARG*/
    wire                     dataif_cpu_early_ready = hreadyd;
    wire                     dataif_cpu_ready_r;
    wire [1:0]               read_byte_sel;
+   reg                      pc_branch;
 
    wire [NANORV32_DATA_MSB:0]                instruction_r;
 
@@ -111,6 +112,7 @@ module nanorv32 (/*AUTOARG*/
    //@begin[mux_select_declarations_as_wire]
 
     wire  [NANORV32_MUX_SEL_PC_NEXT_MSB:0] pc_next_sel;
+    wire  [NANORV32_MUX_SEL_PC_BRANCH_MSB:0] pc_branch_sel;
     wire  [NANORV32_MUX_SEL_ALU_OP_MSB:0] alu_op_sel;
     wire  [NANORV32_MUX_SEL_ALU_PORTB_MSB:0] alu_portb_sel;
     wire  [NANORV32_MUX_SEL_ALU_PORTA_MSB:0] alu_porta_sel;
@@ -289,6 +291,7 @@ module nanorv32 (/*AUTOARG*/
                                .illegal_instruction(illegal_instruction_tmp),
 
                                .pc_next_sel(pc_next_sel),
+                               .pc_branch_sel(pc_branch_sel),
                                .alu_op_sel(alu_op_sel),
                                .alu_portb_sel(alu_portb_sel),
                                .alu_porta_sel(alu_porta_sel),
@@ -431,7 +434,21 @@ module nanorv32 (/*AUTOARG*/
       endcase
    end
 
+//========================================
 
+   always @* begin
+      case(pc_branch_sel)
+          NANORV32_MUX_SEL_PC_BRANCH_YES: begin
+              pc_branch <= 1'b1;
+          end
+          NANORV32_MUX_SEL_PC_BRANCH_NO: begin
+              pc_branch <= 1'b0;
+          end// Mux definitions for alu
+        default begin
+              pc_branch <= 1'b0;
+        end 
+      endcase
+   end
 
    //===========================================================================
    // PC management
@@ -441,9 +458,9 @@ module nanorv32 (/*AUTOARG*/
 
       case(pc_next_sel)
         NANORV32_MUX_SEL_PC_NEXT_COND_PC_PLUS_IMMSB: begin
-           pc_next = (alu_cond & output_new_pc ) ? (pc_exe_r + imm12sb_sext) : (pc_fetch_r + 4);
+           pc_next = (alu_cond & output_new_pc & pc_branch) ? (pc_exe_r + imm12sb_sext) : (pc_fetch_r + 4);
            // branch_taken = alu_cond & !stall_exe;
-           branch_taken = alu_cond;
+           branch_taken = alu_cond & pc_branch;
         end
         NANORV32_MUX_SEL_PC_NEXT_PLUS4: begin
            if(!stall_exe) begin

@@ -205,6 +205,13 @@ parameter NANORV32_MUX_SEL_PC_NEXT_MSB = 1;
 parameter NANORV32_MUX_SEL_PC_NEXT_COND_PC_PLUS_IMMSB = 0;
 parameter NANORV32_MUX_SEL_PC_NEXT_PLUS4 = 1;
 parameter NANORV32_MUX_SEL_PC_NEXT_ALU_RES = 2;
+//  pc_branch
+
+parameter NANORV32_MUX_SEL_PC_BRANCH_SIZE = 1;
+parameter NANORV32_MUX_SEL_PC_BRANCH_MSB = 0;
+ 
+parameter NANORV32_MUX_SEL_PC_BRANCH_YES = 0;
+parameter NANORV32_MUX_SEL_PC_BRANCH_NO = 1;
 // Mux definitions for alu
 
 //  alu_op

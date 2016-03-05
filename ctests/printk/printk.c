@@ -1,10 +1,11 @@
 #include <stdint.h>
 
 
-extern int printk(const char *format, ...);
+extern int printf(const char *format, ...);
+extern int sprintf(char* out, const char *format, ...);
 
 int main(void) {
-#if 0
+#if 1
     // Code copied from
     // http://www.menie.org/georges/embedded/printf-stdarg.html
     // for testing of the printf implementation
@@ -37,10 +38,10 @@ int main(void) {
 	sprintf(buf, "-3: %-4d left justif.\n", -3); printf("%s", buf);
 	sprintf(buf, "-3: %4d right justif.\n", -3); printf("%s", buf);
 #endif
-        int i = 5;
-        printk("-I Hello world !\n");
-        printk("-I Bonjour !\n");
-        printk("-I i=%d\n",i);
+     //   int i = 5;
+     //   printk("-I Hello world !\n");
+     //   printk("-I Bonjour !\n");
+     //   printk("-I i=%d\n",i);
 	return 0;
 }
 //

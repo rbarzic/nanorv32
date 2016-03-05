@@ -215,6 +215,31 @@ module tb_nanorv32;
       #10;
       reset_a_n = 1;
    end
+`define TRACE
+`ifdef TRACE
+  wire [31:0] pc_r =  U_DUT.U_NANORV32_PIL.U_CPU.pc_exe_r;
+  wire [31:0] data = U_DUT.U_NANORV32_PIL.U_CPU.instruction_r;
+  wire [6*8-1:0] ascii_chain;
+
+  nanorv32_ascii u_ascii(
+     .ascii_chain (ascii_chain),
+     .instruction_r (data)
+  );
+  integer f;
+  integer cur_time; 
+  initial
+    begin
+      f = $fopen("trace.txt","w");
+    end
+
+   always @ (posedge clk) begin 
+        cur_time = $time;
+        if (U_DUT.U_NANORV32_PIL.U_CPU.inst_ret)
+          $fwrite(f,"%d ns, PC : %x  : I : %s \n",cur_time, pc_r, ascii_chain) ;
+     end
+
+`endif
+
    assign P1[15:0] = P1reg[15:0];
 endmodule // tb_nanorv32
 /*

@@ -1,5 +1,6 @@
 
     output  [NANORV32_MUX_SEL_PC_NEXT_MSB:0] pc_next_sel;
+    output  [NANORV32_MUX_SEL_PC_BRANCH_MSB:0] pc_branch_sel;
     output  [NANORV32_MUX_SEL_ALU_OP_MSB:0] alu_op_sel;
     output  [NANORV32_MUX_SEL_ALU_PORTB_MSB:0] alu_portb_sel;
     output  [NANORV32_MUX_SEL_ALU_PORTA_MSB:0] alu_porta_sel;

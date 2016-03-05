@@ -104,7 +104,6 @@ module nanorv32 (/*AUTOARG*/
    wire [1:0]               read_byte_sel;
 
    wire [NANORV32_DATA_MSB:0]                instruction_r;
-   reg  [NANORV32_MUX_SEL_DATAMEM_SIZE_READ_MSB:0] datamem_size_read_sel_r;
 
    wire [NANORV32_DATA_MSB:0]                inst_from_buffer;
 
@@ -145,8 +144,9 @@ module nanorv32 (/*AUTOARG*/
 
 
    wire                                    alu_cond;
-
-   wire                                     illegal_instruction;
+   wire                                    fifo_empty;
+   wire                                    illegal_instruction_tmp;
+   wire                                    illegal_instruction = illegal_instruction & ~fifo_empty; 
 
    reg [NANORV32_DATA_MSB:0]               mem2regfile;
 
@@ -219,6 +219,7 @@ module nanorv32 (/*AUTOARG*/
                         .inst_ret       (inst_ret),
                         .inst_from_buffer(inst_from_buffer[NANORV32_DATA_MSB:0]),
                         .reset_over     (reset_over),
+                        .fifo_empty     (fifo_empty),
                         /*AUTOINST*/
                         // Outputs
                         .haddri         (haddri[NANORV32_DATA_MSB:0]),
@@ -257,7 +258,7 @@ module nanorv32 (/*AUTOARG*/
   ); */
    nanorv32_decoder U_DECODER (
                                .instruction_r(instruction_r),
-                               .illegal_instruction(illegal_instruction),
+                               .illegal_instruction(illegal_instruction_tmp),
 
                                .pc_next_sel(pc_next_sel),
                                .alu_op_sel(alu_op_sel),

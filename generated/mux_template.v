@@ -11,6 +11,15 @@
         end
         NANORV32_MUX_SEL_PC_NEXT_ALU_RES: begin
             pc_next <= ;
+        end
+//========================================
+
+    case(pc_branch)
+        NANORV32_MUX_SEL_PC_BRANCH_YES: begin
+            pc_branch <= ;
+        end
+        NANORV32_MUX_SEL_PC_BRANCH_NO: begin
+            pc_branch <= ;
         end// Mux definitions for alu
 
 //========================================
