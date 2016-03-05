@@ -1,8 +1,13 @@
+import glob
+import file_list as fl
+import pprint as pp
+import os
+
 context = {
     'top': '/home/ronan/perso/github/nanorv32',
 }
 
-def nanor32_fl():
+def nanor32_fl(context):
 
     l = list()
     d = list()
@@ -41,8 +46,46 @@ def nanor32_fl():
         'targets': 'synt,sim_rtl'
     })
 
+    # Debug system
+    ## TAP
+    l.append({
+        'file': "{top}/adv_debug_sys/Hardware/jtag/tap/rtl/verilog/tap_top.v",
+        'targets': 'synt,sim_rtl'
+    })
 
-
+    d.append({
+        'dir': "{top}/adv_debug_sys/Hardware/jtag/tap/rtl/verilog/",
+        'targets': 'synt,sim_rtl'
+    })
+    ############################################################################
+    # adv_debug_sys files - We use some helper functions
+    ############################################################################
+    dbg_fl = fl.glob_v_file(
+        "{top}/adv_debug_sys/Hardware/adv_dbg_if/rtl/verilog",
+        context,
+        exclude_list=[
+            "adbg_wb_defines.v",
+            "adbg_defines. v",
+            "adbg_or1k_defines.v",
+        ]
+    )
+    # everything from adv_debug_sys is ok for RTL or synt
+    for f in dbg_fl:
+        l.append({
+            'file' : f,
+            'targets': 'synt,sim_rtl',
+        })
+    ############################################################################
+    ## adv_dbg_if
+    #l.append({
+    #    'file': "{top}/adv_debug_sys/Hardware/adv_dbg_if/tap/rtl/verilog/tap_top.v",
+    #    'targets': 'synt,sim_rtl'
+    #})
+    #
+    #d.append({
+    #    'dir': "{top}/adv_debug_sys/Hardware/adv_dbg_if/tap/rtl/verilog/",
+    #    'targets': 'synt,sim_rtl'
+    #})
     # peripherals
 
     # Chip top levels
