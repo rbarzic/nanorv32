@@ -98,7 +98,7 @@ module nanorv32_divide(
    assign final_result = result_muxed_negated[0+:32];
    wire   [5:0] clz_a = clz_fnc (abs_in_1);
    wire   [5:0] clz_b = clz_fnc (abs_in_2);
-   wire   [5:0] clz_diff = clz_b -clz_a;
+   wire   [5:0] clz_diff = abs_in_1 < abs_in_2 ? 6'h0 : clz_b -clz_a;
    always @(posedge clk or negedge rst_n) begin
       if (rst_n == 0) begin
          state <= s_idle;
@@ -121,7 +121,7 @@ module nanorv32_divide(
       case (state)
         s_idle : begin
            if (req_valid) begin
-              result <= clz_b == 6'b100000 ? 64'hffff_ffff_ffff_ffff : 64'h0;
+              result <= (clz_b == 6'b100000)? 64'hffff_ffff_ffff_ffff : 64'h0;
               a <= {32'b0,abs_in_1};
               b <= {32'b0,abs_in_2} << clz_diff;
               negate_output <= rem_op_sel ? sign_in_1 : sign_in_1 ^ sign_in_2;

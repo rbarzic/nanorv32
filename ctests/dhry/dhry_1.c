@@ -125,10 +125,10 @@ main ()
   }
     int n = 5;
     Number_Of_Runs = n;
-//  printf ("Please give the number of runs through the benchmark: ");
-//  printf ("\n");
+  printf ("Please give the number of runs through the benchmark: ");
+  printf ("\n");
 
-//  printf ("Execution starts, %d runs through Dhrystone\n", Number_Of_Runs);
+  printf ("Execution starts, %d runs through Dhrystone\n", Number_Of_Runs);
 
   /***************/
   /* Start timer */
