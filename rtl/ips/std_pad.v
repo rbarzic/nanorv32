@@ -31,11 +31,11 @@
 
 module std_pad (/*AUTOARG*/
    // Outputs
-   dout,
+   din,
    // Inouts
    pad,
    // Inputs
-   din, outen, inpen
+   dout, oe, ie
    );
 
    output din;
@@ -50,9 +50,6 @@ module std_pad (/*AUTOARG*/
    /*AUTOOUTPUT*/
 
    /*AUTOREG*/
-   // Beginning of automatic regs (for this module's undeclared outputs)
-   reg                  dout;
-   // End of automatics
    /*AUTOWIRE*/
 
    assign pad = oe ? dout : 1'bz;

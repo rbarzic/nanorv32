@@ -31,9 +31,9 @@
 
 module port_mux (/*AUTOARG*/
    // Outputs
-   pad_pmux_din, pmux_pad_ie, pmux_pad_oe, pad_uart_rx,
+   pad_pmux_din, pmux_pad_ie, pmux_pad_oe, pad_gpio_in, pad_uart_rx,
    // Inputs
-   pmux_pad_dout, uart_pad_tx
+   pmux_pad_dout, gpio_pad_out, uart_pad_tx
    );
 
 
@@ -45,9 +45,14 @@ module port_mux (/*AUTOARG*/
    output [CHIP_PORT_A_WIDTH-1:0]      pmux_pad_oe;         // To U_PA0 of std_pad.v, ...
    input  [CHIP_PORT_A_WIDTH-1:0]      pmux_pad_dout;          // From U_PA0 of std_pad.v, ...
 
+   input [CHIP_PORT_A_WIDTH-1:0]       gpio_pad_out;
+   output [CHIP_PORT_A_WIDTH-1:0]      pad_gpio_in;
+
 
    input                               uart_pad_tx;
    output                              pad_uart_rx;
+
+
 
 
    /*AUTOINPUT*/
@@ -61,6 +66,11 @@ module port_mux (/*AUTOARG*/
    reg [CHIP_PORT_A_WIDTH-1:0] pmux_pad_oe;
    // End of automatics
    /*AUTOWIRE*/
+
+
+   assign pmux_pad_out = gpio_pad_out;
+   assign pad_gpio_in = pad_pmux_din;
+
 
 endmodule // port_mux
 /*

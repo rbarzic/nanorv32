@@ -282,7 +282,7 @@ module top_io (/*AUTOARG*/
    std_pad U_TDO (
                   .dout                (jtag_pad_tdo),     //
                   .pad                 (TDO),                //
-                  .din                 (1'b0),     //
+                  .din                 (),     //
                   .oe               (tap_pad_tdo_oe),    //
                   .ie               (1'b0));    //
    std_pad U_TMS (

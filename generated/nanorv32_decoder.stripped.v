@@ -32,10 +32,10 @@
 
 module nanorv32_decoder (/*AUTOARG*/
    // Outputs
-   illegal_instruction, pc_next_sel, alu_op_sel, alu_portb_sel,
-   alu_porta_sel, datamem_size_read_sel, datamem_write_sel,
-   datamem_size_write_sel, datamem_read_sel, regfile_source_sel,
-   regfile_write_sel,
+   illegal_instruction, pc_next_sel, pc_branch_sel, alu_op_sel,
+   alu_portb_sel, alu_porta_sel, datamem_size_read_sel,
+   datamem_write_sel, datamem_size_write_sel, datamem_read_sel,
+   regfile_source_sel, regfile_write_sel,
    // Inputs
    instruction_r
    );

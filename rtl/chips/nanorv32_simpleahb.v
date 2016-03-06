@@ -36,8 +36,8 @@ module nanorv32_simpleahb (/*AUTOARG*/
    // Outputs
    wb_we_o, wb_stb_o, wb_sel_o, wb_jsp_err_o, wb_jsp_dat_o,
    wb_jsp_ack_o, wb_dat_o, wb_cyc_o, wb_cti_o, wb_cab_o, wb_bte_o,
-   wb_adr_o, int_o, cpu0_we_o, cpu0_stb_o, cpu0_stall_o, cpu0_rst_o,
-   cpu0_data_o, cpu0_addr_o, illegal_instruction,
+   wb_adr_o, pad_gpio_in, int_o, cpu0_we_o, cpu0_stb_o, cpu0_stall_o,
+   cpu0_rst_o, cpu0_data_o, cpu0_addr_o, illegal_instruction,
    // Inouts
    P0, P1,
    // Inputs
@@ -102,6 +102,7 @@ module nanorv32_simpleahb (/*AUTOARG*/
    output               cpu0_stb_o;             // From U_ADBG_TOP of adbg_top.v
    output               cpu0_we_o;              // From U_ADBG_TOP of adbg_top.v
    output               int_o;                  // From U_ADBG_TOP of adbg_top.v
+   output [CHIP_PORT_A_WIDTH-1:0] pad_gpio_in;  // From U_PORT_MUX of port_mux.v
    output [31:0]        wb_adr_o;               // From U_ADBG_TOP of adbg_top.v
    output [1:0]         wb_bte_o;               // From U_ADBG_TOP of adbg_top.v
    output               wb_cab_o;               // From U_ADBG_TOP of adbg_top.v
@@ -257,7 +258,7 @@ module nanorv32_simpleahb (/*AUTOARG*/
    wire         periph_hresp;
 
 
-   wire [31:0] pad_gpio_in;            // To U_GPIO of gpio_apb.v
+   wire [15:0] pad_gpio_in;            // To U_GPIO of gpio_apb.v
    wire [31:0] gpio_pad_out;           // From U_GPIO of gpio_apb.v
 
    wire         irq_ext;
@@ -510,8 +511,8 @@ module nanorv32_simpleahb (/*AUTOARG*/
   .rst_apb_n          (rst_n),
   ); */
    gpio_apb U_GPIO (
-                    .pad_gpio_in        (pad_gpio_in[31:0]),
-                    .gpio_pad_out       (gpio_pad_out[31:0]),
+                    .pad_gpio_in        (pad_gpio_in[15:0]),
+                    .gpio_pad_out       (gpio_pad_out[15:0]),
 
                            /*AUTOINST*/
                     // Outputs
@@ -662,9 +663,11 @@ module nanorv32_simpleahb (/*AUTOARG*/
                 .tdi_pad_i              (pad_tap_tdi),           // Templated
                 .debug_tdo_i            (debug_tap_tdo));         // Templated
 
+
     /* adbg_top AUTO_TEMPLATE(
      .cpu1\(.*\)_o  (),  // One cpu0 interface is used
      .cpu1\(.*\)_i  (0),  // One cpu0 interface is used
+
      .shift_dr_i     (tap_debug_shift_dr),
      .pause_dr_i     (tap_debug_pause_dr),
      .update_dr_i    (tap_debug_update_dr),
@@ -753,9 +756,11 @@ module nanorv32_simpleahb (/*AUTOARG*/
                         .pad_pmux_din   (pad_pmux_din[CHIP_PORT_A_WIDTH-1:0]),
                         .pmux_pad_ie    (pmux_pad_ie[CHIP_PORT_A_WIDTH-1:0]),
                         .pmux_pad_oe    (pmux_pad_oe[CHIP_PORT_A_WIDTH-1:0]),
+                        .pad_gpio_in    (pad_gpio_in[CHIP_PORT_A_WIDTH-1:0]),
                         .pad_uart_rx    (pad_uart_rx),
                         // Inputs
                         .pmux_pad_dout  (pmux_pad_dout[CHIP_PORT_A_WIDTH-1:0]),
+                        .gpio_pad_out   (gpio_pad_out[CHIP_PORT_A_WIDTH-1:0]),
                         .uart_pad_tx    (uart_pad_tx));
 
 

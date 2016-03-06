@@ -14,7 +14,11 @@ def nanor32_fl(context):
 
     # Core
     l.append({
-        'file': "{top}/rtl/cores/nanorv32_alu.v",
+        'file': "{top}/rtl/cores/nanorv32_alumuldiv.v",
+        'targets': 'synt,sim_rtl'
+    })
+    l.append({
+        'file': "{top}/rtl/cores/nanorv32_div.v",
         'targets': 'synt,sim_rtl'
     })
     l.append({
@@ -35,6 +39,10 @@ def nanor32_fl(context):
     })
     l.append({
         'file': "{top}/rtl/cores/nanorv32_urom.v",
+        'targets': 'synt,sim_rtl'
+    })
+    l.append({
+        'file': "{top}/rtl/cores/nanorv32_ascii.v",
         'targets': 'synt,sim_rtl'
     })
     l.append({
@@ -75,17 +83,11 @@ def nanor32_fl(context):
             'file' : f,
             'targets': 'synt,sim_rtl',
         })
-    ############################################################################
-    ## adv_dbg_if
-    #l.append({
-    #    'file': "{top}/adv_debug_sys/Hardware/adv_dbg_if/tap/rtl/verilog/tap_top.v",
-    #    'targets': 'synt,sim_rtl'
-    #})
-    #
-    #d.append({
-    #    'dir': "{top}/adv_debug_sys/Hardware/adv_dbg_if/tap/rtl/verilog/",
-    #    'targets': 'synt,sim_rtl'
-    #})
+
+    d.append({
+        'dir': "{top}/adv_debug_sys/Hardware/adv_dbg_if/rtl/verilog/",
+        'targets': 'synt,sim_rtl'
+    })
     # peripherals
 
     # Chip top levels
@@ -156,6 +158,7 @@ def nanor32_fl(context):
         'targets': 'sim_rtl'
     })
 
+    # Arty specific file
     l.append({
         'file': "{top}/rtl/ips/clock_manager/arty_mmcm/arty_mmcm_clk_wiz.v",
         'targets': 'sim_xilinx,synt_xilinx'
@@ -171,11 +174,26 @@ def nanor32_fl(context):
     })
 
     l.append({
+        'file': "{top}/rtl/chips/port_mux.v",
+        'targets': 'synt,sim_rtl'
+    })
+    l.append({
+        'file': "{top}/rtl/ips/std_pad.v",
+        'targets': 'synt,sim_rtl'
+    })
+    l.append({
+        'file': "{top}/rtl/chips/top_io.v",
+        'targets': 'synt,sim_rtl'
+    })
+
+
+
+    l.append({
         'file': "{top}/rtl/chips/nanorv32_simpleahb.v",
         'targets': 'synt,sim_rtl'
     })
 
-    # Arty specific file
+
 
     # Testbench
     l.append({
@@ -193,6 +211,11 @@ def nanor32_fl(context):
 
     d.append({
         'dir': "{top}/rtl/cores/",
+        'targets': 'synt,sim_rtl'
+    })
+
+    d.append({
+        'dir': "{top}/rtl/chips/",
         'targets': 'synt,sim_rtl'
     })
     d.append({
