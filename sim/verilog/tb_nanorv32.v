@@ -219,11 +219,28 @@ module tb_nanorv32;
 `ifdef TRACE
   wire [31:0] pc_r =  U_DUT.U_NANORV32_PIL.U_CPU.pc_exe_r;
   wire [31:0] data = U_DUT.U_NANORV32_PIL.U_CPU.instruction_r;
+  wire [4:0]  rd   = U_DUT.U_NANORV32_PIL.U_CPU.dec_rd;
+  wire [4:0]  rd2   = U_DUT.U_NANORV32_PIL.U_CPU.dec_rd2;
+  wire [4:0]  rs1  = U_DUT.U_NANORV32_PIL.U_CPU.dec_rs1;
+  wire [4:0]  rs2  = U_DUT.U_NANORV32_PIL.U_CPU.dec_rs2;
   wire [6*8-1:0] ascii_chain;
+  wire [4*8-1:0] reg_to_ascii_rd;
+  wire [4*8-1:0] reg_to_ascii_rd2;
+  wire [4*8-1:0] reg_to_ascii_rs1;
+  wire [4*8-1:0] reg_to_ascii_rs2;
 
   nanorv32_ascii u_ascii(
      .ascii_chain (ascii_chain),
-     .instruction_r (data)
+     .reg_to_ascii_rd (reg_to_ascii_rd),
+     .reg_to_ascii_rd2 (reg_to_ascii_rd2),
+     .reg_to_ascii_rs1 (reg_to_ascii_rs1),
+     .reg_to_ascii_rs2 (reg_to_ascii_rs2),
+     .instruction_r (data),
+     .reg_rd        (rd),
+     .reg_rd2       (rd2),
+     .reg_rs1       (rs1),
+     .reg_rs2       (rs2)
+
   );
   integer f;
   integer cur_time; 
@@ -234,8 +251,13 @@ module tb_nanorv32;
 
    always @ (posedge clk) begin 
         cur_time = $time;
-        if (U_DUT.U_NANORV32_PIL.U_CPU.inst_ret)
-          $fwrite(f,"%d ns, PC : %x  : I : %s \n",cur_time, pc_r, ascii_chain) ;
+        if (U_DUT.U_NANORV32_PIL.U_CPU.inst_ret) begin 
+          $fwrite(f,"%d ns, PC : %x  : I : %s %s, %s, %s \n",cur_time, pc_r, ascii_chain, reg_to_ascii_rd, reg_to_ascii_rs1, reg_to_ascii_rs2 ) ;
+          if (U_DUT.U_NANORV32_PIL.U_CPU.write_rd) 
+          $fwrite(f,"%d ns, RD  %s <= %x \n",cur_time, reg_to_ascii_rd, U_DUT.U_NANORV32_PIL.U_CPU.rd ) ;
+          if (U_DUT.U_NANORV32_PIL.U_CPU.write_rd2) 
+          $fwrite(f,"%d ns, RD2 %s <= %x \n",cur_time, reg_to_ascii_rd2, U_DUT.U_NANORV32_PIL.U_CPU.rd2 ) ;
+        end
      end
 
 `endif
