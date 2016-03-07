@@ -100,7 +100,7 @@ module nanorv32_regfile (/*AUTOARG*/
   end
 
 generate
-   for (i = 0; i < 32 ; i = i + 1) begin
+   for (i = 0; i < 32 ; i = i + 1) begin : loop
    always @(posedge clk) begin
       if(((sel_rd != 0) || allow_hidden_use_of_x0) && (sel_rd == i) && write_rd) begin
       regfile[i] <= rd;

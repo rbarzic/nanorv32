@@ -97,7 +97,7 @@ spec['nanorv32']['inst_type']['CS2-type']['format'] = {
     'hint_rvc_rs2_is_zero'    : {'size': 1, 'offset': 34, 'decode': True, 'Hint' : True},
 }
 
-# Added to support C.SRLI, C.SRAI, A.ANDI
+# Added to support C.SRLI, C.SRAI, C.ADDI
 spec['nanorv32']['inst_type']['CB2-type']['format'] = {
     'opcodervc': {'size': 2, 'offset': 0, 'decode': True},
     'cb2_immlo': {'size': 5, 'offset': 2},

@@ -195,6 +195,9 @@
         NANORV32_MUX_SEL_REGFILE_PORTW_RD: begin
             regfile_portw <= ;
         end
+        NANORV32_MUX_SEL_REGFILE_PORTW_RS1_P: begin
+            regfile_portw <= ;
+        end
         NANORV32_MUX_SEL_REGFILE_PORTW_RS1: begin
             regfile_portw <= ;
         end
@@ -222,6 +225,9 @@
 //========================================
 
     case(regfile_port1)
+        NANORV32_MUX_SEL_REGFILE_PORT1_RS1_P: begin
+            regfile_port1 <= ;
+        end
         NANORV32_MUX_SEL_REGFILE_PORT1_RS1: begin
             regfile_port1 <= ;
         end

@@ -193,6 +193,22 @@ module nanorv32_decoder (/*AUTOARG*/
         regfile_port1_sel = NANORV32_MUX_SEL_REGFILE_PORT1_RS1;
         regfile_port2_sel = NANORV32_MUX_SEL_REGFILE_PORT2_RS2;
     end
+    NANORV32_DECODE_C_ADDI: begin
+        pc_next_sel = NANORV32_MUX_SEL_PC_NEXT_PLUS4;
+        pc_size_sel = NANORV32_MUX_SEL_PC_SIZE_16BITS;
+        pc_branch_sel = NANORV32_MUX_SEL_PC_BRANCH_NO;
+        alu_op_sel = NANORV32_MUX_SEL_ALU_OP_ADD;
+        alu_portb_sel = NANORV32_MUX_SEL_ALU_PORTB_RS2;
+        alu_porta_sel = NANORV32_MUX_SEL_ALU_PORTA_RS1;
+        datamem_size_read_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_READ_WORD;
+        datamem_write_sel = NANORV32_MUX_SEL_DATAMEM_WRITE_NO;
+        datamem_size_write_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_WRITE_WORD;
+        datamem_read_sel = NANORV32_MUX_SEL_DATAMEM_READ_NO;
+        regfile_portw_sel = NANORV32_MUX_SEL_REGFILE_PORTW_RS1_P;
+        regfile_source_sel = NANORV32_MUX_SEL_REGFILE_SOURCE_ALU;
+        regfile_write_sel = NANORV32_MUX_SEL_REGFILE_WRITE_YES;
+        regfile_port1_sel = NANORV32_MUX_SEL_REGFILE_PORT1_RS1_P;
+    end
     NANORV32_DECODE_SBREAK: begin
         pc_next_sel = NANORV32_MUX_SEL_PC_NEXT_PLUS4;
         pc_size_sel = NANORV32_MUX_SEL_PC_SIZE_32BITS;

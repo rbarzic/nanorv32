@@ -41,6 +41,7 @@ module nanorv32 (/*AUTOARG*/
    );
 
 `include "nanorv32_parameters.v"
+`include "nanorv32_rvc_func.v"
 
 
    input                     rst_n;
@@ -228,7 +229,11 @@ module nanorv32 (/*AUTOARG*/
    wire                                     irq_ack;
 
    wire                                     allow_hidden_use_of_x0;
+   wire                                     reset_over;
 
+   reg [4:0]                                     regfile_port1;
+   reg [4:0]                                     regfile_port2;
+   reg [4:0]                                     regfile_portw;
 
    // to a "return from interrupt" as been detected
    reg [NANORV32_MUX_SEL_DATAMEM_SIZE_READ_MSB:0] datamem_size_read_sel_r;
@@ -334,8 +339,60 @@ module nanorv32 (/*AUTOARG*/
                                .datamem_size_write_sel(datamem_size_write_sel),
                                .datamem_read_sel(datamem_read_sel),
                                .regfile_source_sel(regfile_source_sel),
-                               .regfile_write_sel(regfile_write_sel)
+                               .regfile_write_sel(regfile_write_sel),
+
+                               // Added for RVC support
+                               .regfile_port1_sel(regfile_port1_sel),
+                               .regfile_port2_sel(regfile_port2_sel),
+                               .regfile_portw_sel(regfile_portw_sel)
                                );
+
+   //===========================================================================
+   // Register file index - Addedd to support RVC
+   //===========================================================================
+   always @* begin
+      case(regfile_port1_sel)
+        NANORV32_MUX_SEL_REGFILE_PORT1_RS1_P: begin
+           regfile_port1 <= rvc_to_rv32_reg(dec_c_rs1_p);
+        end
+        NANORV32_MUX_SEL_REGFILE_PORT1_RS1: begin
+           regfile_port1 <= dec_rs1;
+        end
+        default: begin
+           regfile_port1 <= dec_rs1;
+        end
+      endcase
+   end
+
+   always @* begin
+      case(regfile_port2_sel)
+        NANORV32_MUX_SEL_REGFILE_PORT2_RS2: begin
+           regfile_port2 <= dec_rs2;
+        end
+        default: begin
+           regfile_port2 <= dec_rs2;
+        end
+      endcase
+   end
+   always @* begin
+      case(regfile_portw_sel)
+        NANORV32_MUX_SEL_REGFILE_PORTW_RD: begin
+           regfile_portw <= dec_rd;
+        end
+        NANORV32_MUX_SEL_REGFILE_PORTW_RS1_P: begin
+           regfile_portw <= rvc_to_rv32_reg(dec_c_rs1_p);
+        end
+        NANORV32_MUX_SEL_REGFILE_PORTW_RS1: begin
+           regfile_portw <= dec_rs1;
+        end
+        default: begin
+        end
+      endcase
+   end
+
+
+
+
    //===========================================================================
    // ALU input selection
    //===========================================================================
@@ -429,7 +486,7 @@ module nanorv32 (/*AUTOARG*/
          if (hreadyd)
            begin
            write_rd2 <= (datamem_write || datamem_read) & write_rd;
-           dec_rd2   <= {NANORV32_INST_FORMAT_RD_SIZE{(datamem_write || datamem_read)}} & dec_rd;
+           dec_rd2   <= {NANORV32_INST_FORMAT_RD_SIZE{(datamem_write || datamem_read)}} & regfile_portw;
            datamem_size_read_sel_r <= {NANORV32_MUX_SEL_DATAMEM_SIZE_READ_SIZE{(datamem_write || datamem_read)}} & datamem_size_read_sel;
            end
       end
@@ -570,9 +627,9 @@ module nanorv32 (/*AUTOARG*/
                .portb          (rf_portb[NANORV32_DATA_MSB:0]),
                // Inputs
                .allow_hidden_use_of_x0  (allow_hidden_use_of_x0),
-               .sel_porta               (dec_rs1[NANORV32_RF_PORTA_MSB:0]),
-               .sel_portb               (dec_rs2[NANORV32_RF_PORTB_MSB:0]),
-               .sel_rd                  (dec_rd[NANORV32_RF_PORTRD_MSB:0]),
+               .sel_porta               (regfile_port1[NANORV32_RF_PORTA_MSB:0]),
+               .sel_portb               (regfile_port2[NANORV32_RF_PORTB_MSB:0]),
+               .sel_rd                  (regfile_portw[NANORV32_RF_PORTRD_MSB:0]),
                .sel_rd2                 (dec_rd2[NANORV32_RF_PORTRD_MSB:0]),
                .rd                      (rd[NANORV32_DATA_MSB:0]),
                .rd2                     (rd2[NANORV32_DATA_MSB:0]),
@@ -656,7 +713,7 @@ module nanorv32 (/*AUTOARG*/
    assign cpu_dataif_req = (datamem_write || datamem_read) & data_access_cycle;
    // assign stall_fetch = !codeif_cpu_early_ready  | force_stall_pstate | !codeif_cpu_ready_r;
    assign stall_fetch = force_stall_pstate | !codeif_cpu_ready_r;
-   assign interlock   = write_rd2 & (dec_rd2 == dec_rs1 | dec_rd2 == dec_rs2) & ~(htransd & hreadyd & hwrited);
+   assign interlock   = write_rd2 & ((dec_rd2 == regfile_port1) | (dec_rd2 == regfile_port2)) & ~(htransd & hreadyd & hwrited);
    assign stall_exe = force_stall_pstate | interlock | ~div_ready | fifo_empty;
    assign read_byte_sel = cpu_dataif_addr[1:0];
    wire  [2:0] hsized_tmp = {3{(datamem_size_read_sel == NANORV32_MUX_SEL_DATAMEM_SIZE_READ_HALFWORD_UNSIGNED |
@@ -728,7 +785,7 @@ module nanorv32 (/*AUTOARG*/
         end // UNMATCHED !!
       endcase
    end
-  wire [31:0] wdata_nxt = (dec_rs2 == dec_rd2 & write_rd2 & htransd & hwrited & hreadyd) ? mem2regfile : rf_portb ;
+  wire [31:0] wdata_nxt = ((regfile_port2 == dec_rd2) & write_rd2 & htransd & hwrited & hreadyd) ? mem2regfile : rf_portb ;
    // fixme - we don't need to mux zeros in unwritten bytes
    always @* begin
       case(datamem_size_write_sel)

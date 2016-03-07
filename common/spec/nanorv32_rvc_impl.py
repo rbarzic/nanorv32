@@ -302,3 +302,10 @@ spec['nanorv32']['rvc_rv32']['impl']['inst']['c.add'] = {
         'op' : 'add',
     },
 }
+
+
+spec['nanorv32']['rvc_rv32']['impl']['inst']['c.addi'] = {
+     'alu' : {
+        'op' : 'add',
+    },
+}
