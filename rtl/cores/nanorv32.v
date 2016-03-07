@@ -106,12 +106,14 @@ module nanorv32 (/*AUTOARG*/
 
    wire [NANORV32_DATA_MSB:0]                instruction_r;
 
+
    wire [NANORV32_DATA_MSB:0]                inst_from_buffer;
 
 
    //@begin[mux_select_declarations_as_wire]
 
     wire  [NANORV32_MUX_SEL_PC_NEXT_MSB:0] pc_next_sel;
+    wire  [NANORV32_MUX_SEL_PC_SIZE_MSB:0] pc_size_sel;
     wire  [NANORV32_MUX_SEL_PC_BRANCH_MSB:0] pc_branch_sel;
     wire  [NANORV32_MUX_SEL_ALU_OP_MSB:0] alu_op_sel;
     wire  [NANORV32_MUX_SEL_ALU_PORTB_MSB:0] alu_portb_sel;
@@ -120,8 +122,11 @@ module nanorv32 (/*AUTOARG*/
     wire  [NANORV32_MUX_SEL_DATAMEM_WRITE_MSB:0] datamem_write_sel;
     wire  [NANORV32_MUX_SEL_DATAMEM_SIZE_WRITE_MSB:0] datamem_size_write_sel;
     wire  [NANORV32_MUX_SEL_DATAMEM_READ_MSB:0] datamem_read_sel;
+    wire  [NANORV32_MUX_SEL_REGFILE_PORTW_MSB:0] regfile_portw_sel;
     wire  [NANORV32_MUX_SEL_REGFILE_SOURCE_MSB:0] regfile_source_sel;
     wire  [NANORV32_MUX_SEL_REGFILE_WRITE_MSB:0] regfile_write_sel;
+    wire  [NANORV32_MUX_SEL_REGFILE_PORT1_MSB:0] regfile_port1_sel;
+    wire  [NANORV32_MUX_SEL_REGFILE_PORT2_MSB:0] regfile_port2_sel;
    //@end[mux_select_declarations_as_wire]
 
 
@@ -143,6 +148,27 @@ module nanorv32 (/*AUTOARG*/
     wire [NANORV32_INST_FORMAT_SHAMT_MSB:0] dec_shamt  = instruction_r[NANORV32_INST_FORMAT_SHAMT_OFFSET +: NANORV32_INST_FORMAT_SHAMT_SIZE];
     wire [NANORV32_INST_FORMAT_FUNC4_MSB:0] dec_func4  = instruction_r[NANORV32_INST_FORMAT_FUNC4_OFFSET +: NANORV32_INST_FORMAT_FUNC4_SIZE];
     wire [NANORV32_INST_FORMAT_FUNC12_MSB:0] dec_func12  = instruction_r[NANORV32_INST_FORMAT_FUNC12_OFFSET +: NANORV32_INST_FORMAT_FUNC12_SIZE];
+    wire [NANORV32_INST_FORMAT_OPCODERVC_MSB:0] dec_opcodervc  = instruction_r[NANORV32_INST_FORMAT_OPCODERVC_OFFSET +: NANORV32_INST_FORMAT_OPCODERVC_SIZE];
+    wire [NANORV32_INST_FORMAT_C_FUNC4_MSB:0] dec_c_func4  = instruction_r[NANORV32_INST_FORMAT_C_FUNC4_OFFSET +: NANORV32_INST_FORMAT_C_FUNC4_SIZE];
+    wire [NANORV32_INST_FORMAT_C_RS2_MSB:0] dec_c_rs2  = instruction_r[NANORV32_INST_FORMAT_C_RS2_OFFSET +: NANORV32_INST_FORMAT_C_RS2_SIZE];
+    wire [NANORV32_INST_FORMAT_C_RD_RS1_MSB:0] dec_c_rd_rs1  = instruction_r[NANORV32_INST_FORMAT_C_RD_RS1_OFFSET +: NANORV32_INST_FORMAT_C_RD_RS1_SIZE];
+    wire [NANORV32_INST_FORMAT_C_FUNC3_MSB:0] dec_c_func3  = instruction_r[NANORV32_INST_FORMAT_C_FUNC3_OFFSET +: NANORV32_INST_FORMAT_C_FUNC3_SIZE];
+    wire [NANORV32_INST_FORMAT_CI_IMMLO_MSB:0] dec_ci_immlo  = instruction_r[NANORV32_INST_FORMAT_CI_IMMLO_OFFSET +: NANORV32_INST_FORMAT_CI_IMMLO_SIZE];
+    wire [NANORV32_INST_FORMAT_CI_IMMHI_MSB:0] dec_ci_immhi  = instruction_r[NANORV32_INST_FORMAT_CI_IMMHI_OFFSET +: NANORV32_INST_FORMAT_CI_IMMHI_SIZE];
+    wire [NANORV32_INST_FORMAT_CSS_IMM_MSB:0] dec_css_imm  = instruction_r[NANORV32_INST_FORMAT_CSS_IMM_OFFSET +: NANORV32_INST_FORMAT_CSS_IMM_SIZE];
+    wire [NANORV32_INST_FORMAT_CIW_IMM_MSB:0] dec_ciw_imm  = instruction_r[NANORV32_INST_FORMAT_CIW_IMM_OFFSET +: NANORV32_INST_FORMAT_CIW_IMM_SIZE];
+    wire [NANORV32_INST_FORMAT_C_RD_P_MSB:0] dec_c_rd_p  = instruction_r[NANORV32_INST_FORMAT_C_RD_P_OFFSET +: NANORV32_INST_FORMAT_C_RD_P_SIZE];
+    wire [NANORV32_INST_FORMAT_C_RS1_P_MSB:0] dec_c_rs1_p  = instruction_r[NANORV32_INST_FORMAT_C_RS1_P_OFFSET +: NANORV32_INST_FORMAT_C_RS1_P_SIZE];
+    wire [NANORV32_INST_FORMAT_CL_IMMLO_MSB:0] dec_cl_immlo  = instruction_r[NANORV32_INST_FORMAT_CL_IMMLO_OFFSET +: NANORV32_INST_FORMAT_CL_IMMLO_SIZE];
+    wire [NANORV32_INST_FORMAT_CL_IMMHI_MSB:0] dec_cl_immhi  = instruction_r[NANORV32_INST_FORMAT_CL_IMMHI_OFFSET +: NANORV32_INST_FORMAT_CL_IMMHI_SIZE];
+    wire [NANORV32_INST_FORMAT_CS_IMMLO_MSB:0] dec_cs_immlo  = instruction_r[NANORV32_INST_FORMAT_CS_IMMLO_OFFSET +: NANORV32_INST_FORMAT_CS_IMMLO_SIZE];
+    wire [NANORV32_INST_FORMAT_C_RS2_P_MSB:0] dec_c_rs2_p  = instruction_r[NANORV32_INST_FORMAT_C_RS2_P_OFFSET +: NANORV32_INST_FORMAT_C_RS2_P_SIZE];
+    wire [NANORV32_INST_FORMAT_CS_IMMHI_MSB:0] dec_cs_immhi  = instruction_r[NANORV32_INST_FORMAT_CS_IMMHI_OFFSET +: NANORV32_INST_FORMAT_CS_IMMHI_SIZE];
+    wire [NANORV32_INST_FORMAT_CB_OFFSET_LO_MSB:0] dec_cb_offset_lo  = instruction_r[NANORV32_INST_FORMAT_CB_OFFSET_LO_OFFSET +: NANORV32_INST_FORMAT_CB_OFFSET_LO_SIZE];
+    wire [NANORV32_INST_FORMAT_CB_OFFSET_HI_MSB:0] dec_cb_offset_hi  = instruction_r[NANORV32_INST_FORMAT_CB_OFFSET_HI_OFFSET +: NANORV32_INST_FORMAT_CB_OFFSET_HI_SIZE];
+    wire [NANORV32_INST_FORMAT_CJ_IMM_MSB:0] dec_cj_imm  = instruction_r[NANORV32_INST_FORMAT_CJ_IMM_OFFSET +: NANORV32_INST_FORMAT_CJ_IMM_SIZE];
+    wire [NANORV32_INST_FORMAT_C_FUNC2_MSB:0] dec_c_func2  = instruction_r[NANORV32_INST_FORMAT_C_FUNC2_OFFSET +: NANORV32_INST_FORMAT_C_FUNC2_SIZE];
+    wire [NANORV32_INST_FORMAT_CB2_IMMLO_MSB:0] dec_cb2_immlo  = instruction_r[NANORV32_INST_FORMAT_CB2_IMMLO_OFFSET +: NANORV32_INST_FORMAT_CB2_IMMLO_SIZE];
    //@end[instruction_fields]
 
    reg                                       write_rd;
@@ -176,7 +202,7 @@ module nanorv32 (/*AUTOARG*/
    wire                                    alu_cond;
    wire                                    fifo_empty;
    wire                                    illegal_instruction_tmp;
-   wire                                    illegal_instruction = illegal_instruction & ~fifo_empty; 
+   wire                                    illegal_instruction = illegal_instruction & ~fifo_empty;
 
    reg [NANORV32_DATA_MSB:0]               mem2regfile;
 
@@ -281,12 +307,20 @@ module nanorv32 (/*AUTOARG*/
 
    // If an irq is detected, we override the instruction register with the code from
    // the the micro-rom in the flow controller
+
    assign instruction_r = irq_bypass_inst_reg_r ? inst_irq : inst_from_buffer;
+
+
+
+
 
 
  /* module_name AUTO_TEMPLATE(
   ); */
    nanorv32_decoder U_DECODER (
+
+                               .dec_c_rd_rs1(dec_c_rd_rs1),
+                               .dec_c_rs2(dec_c_rs2),
                                .instruction_r(instruction_r),
                                .illegal_instruction(illegal_instruction_tmp),
 
@@ -446,7 +480,7 @@ module nanorv32 (/*AUTOARG*/
           end// Mux definitions for alu
         default begin
               pc_branch <= 1'b0;
-        end 
+        end
       endcase
    end
 

@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-import AutoVivification as av
-spec = av.AutoVivification()
+#import AutoVivification as av
+#spec = av.AutoVivification()
 
 spec['nanorv32']['cpu']['num_std_regs'] = 32
 

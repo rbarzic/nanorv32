@@ -1,5 +1,5 @@
-import AutoVivification as av
-spec = av.AutoVivification()
+#import AutoVivification as av
+#spec = av.AutoVivification()
 
 
 
@@ -9,7 +9,8 @@ spec = av.AutoVivification()
 spec['nanorv32']['rv32i']['impl']['inst_type']['R-type'] = {
     'pc' : {
         'next' : 'plus4',
-        'branch' :'no'
+        'branch' :'no',
+        'size'   : '32bits'
     },
     'alu' : {
         'porta' : 'rs1',
@@ -21,6 +22,9 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['R-type'] = {
     'regfile' : {
         'write' : 'yes',
         'source' : 'alu',
+        'port1'  : 'rs1', # Added for RVC support
+        'port2'  : 'rs2', # Added for RVC support
+        'portw'  : 'rd',  # Added for RVC support
     },
     'datamem' : {
         'write' : 'no',
@@ -37,7 +41,9 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['R-type'] = {
 spec['nanorv32']['rv32i']['impl']['inst_type']['I-type'] = {
     'pc' : {
         'next' : 'plus4',
-        'branch' :'no'
+        'branch' :'no',
+        'size'   : '32bits'
+
     },
     'alu' : {
         'porta' : 'rs1',
@@ -47,6 +53,9 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['I-type'] = {
     'regfile' : {
         'write' : 'yes',
         'source' : 'alu',
+        'port1'  : 'rs1', # Added for RVC support
+        'port2'  : 'rs2', # Added for RVC support
+        'portw'  : 'rd',  # Added for RVC support
     },
     'datamem' : {
         'write' : 'no',
@@ -61,7 +70,8 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['I-type'] = {
 spec['nanorv32']['rv32i']['impl']['inst_type']['S-type'] = {
     'pc' : {
         'next' : 'plus4',
-        'branch' :'no'
+        'branch' :'no',
+        'size'   : '32bits'
     },
     'alu' : {
         'porta' : 'rs1',
@@ -71,6 +81,9 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['S-type'] = {
     'regfile' : {
         'write' : 'no',
         'source' : 'alu', # unused
+        'port1'  : 'rs1', # Added for RVC support
+        'port2'  : 'rs2', # Added for RVC support
+        'portw'  : 'rd',  # Added for RVC support
     },
     'datamem' : {
         'write' : 'word',
@@ -86,7 +99,8 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['S-type'] = {
 spec['nanorv32']['rv32i']['impl']['inst_type']['SB-type'] = {
     'pc' : {
         'next' : 'cond_pc_plus_immsb', # conditional branch
-        'branch' :'yes'
+        'branch' :'yes',
+        'size'   : '32bits'
     },
     'alu' : {
         'porta' : 'rs1',
@@ -96,6 +110,9 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['SB-type'] = {
     'regfile' : {
         'write' : 'no',
         'source' : 'alu', # unused
+        'port1'  : 'rs1', # Added for RVC support
+        'port2'  : 'rs2', # Added for RVC support
+        'portw'  : 'rd',  # Added for RVC support
     },
     'datamem' : {
         'write' : 'no',
@@ -111,7 +128,8 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['SB-type'] = {
 spec['nanorv32']['rv32i']['impl']['inst_type']['U-type'] = {
     'pc' : {
         'next' : 'plus4',
-        'branch' :'no'
+        'branch' :'no',
+        'size'   : '32bits'
     },
     'alu' : {
         'porta' : 'pc_exe',
@@ -121,6 +139,9 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['U-type'] = {
     'regfile' : {
         'write' : 'yes',
         'source' : 'alu', # unused
+        'port1'  : 'rs1', # Added for RVC support
+        'port2'  : 'rs2', # Added for RVC support
+        'portw'  : 'rd',  # Added for RVC support
     },
     'datamem' : {
         'write' : 'word',
@@ -135,7 +156,8 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['U-type'] = {
 spec['nanorv32']['rv32i']['impl']['inst_type']['UJ-type'] = {
     'pc' : {
         'next' : 'alu_res',
-        'branch' :'yes'
+        'branch' :'yes',
+        'size'   : '32bits'
     },
     'alu' : {
         'porta' : 'pc_exe',
@@ -145,6 +167,9 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['UJ-type'] = {
     'regfile' : {
         'write' : 'yes',
         'source' : 'pc_exe_plus_4',
+        'port1'  : 'rs1', # Added for RVC support
+        'port2'  : 'rs2', # Added for RVC support
+        'portw'  : 'rd',  # Added for RVC support
     },
     'datamem' : {
         'write' : 'no',
@@ -160,7 +185,8 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['UJ-type'] = {
 spec['nanorv32']['rv32i']['impl']['inst_type']['AS-type'] = {
     'pc' : {
         'next' : 'plus4',
-        'branch' :'no'
+        'branch' :'no',
+        'size'   : '32bits'
     },
     'alu' : {
         'porta' : 'rs1',
@@ -170,6 +196,9 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['AS-type'] = {
     'regfile' : {
         'write' : 'yes',
         'source' : 'alu',
+        'port1'  : 'rs1', # Added for RVC support
+        'port2'  : 'rs2', # Added for RVC support
+        'portw'  : 'rd',  # Added for RVC support
     },
     'datamem' : {
         'write' : 'no',
@@ -185,7 +214,8 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['AS-type'] = {
 spec['nanorv32']['rv32i']['impl']['inst_type']['F-type'] = {
     'pc' : {
         'next' : 'plus4',
-        'branch' :'no'
+        'branch' :'no',
+        'size'   : '32bits'
     },
     'alu' : {
         'porta' : 'rs1',
@@ -195,6 +225,9 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['F-type'] = {
     'regfile' : {
         'write' : 'no',
         'source' : 'alu',
+        'port1'  : 'rs1', # Added for RVC support
+        'port2'  : 'rs2', # Added for RVC support
+        'portw'  : 'rd',  # Added for RVC support
     },
     'datamem' : {
         'write' : 'no',
@@ -209,7 +242,8 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['F-type'] = {
 spec['nanorv32']['rv32i']['impl']['inst_type']['SYS-type'] = {
     'pc' : {
         'next' : 'plus4',
-        'branch' :'no'
+        'branch' :'no',
+        'size'   : '32bits'
     },
     'alu' : {
         'porta' : 'rs1',
@@ -219,6 +253,9 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['SYS-type'] = {
     'regfile' : {
         'write' : 'no',
         'source' : 'alu',
+        'port1'  : 'rs1', # Added for RVC support
+        'port2'  : 'rs2', # Added for RVC support
+        'portw'  : 'rd',  # Added for RVC support
     },
     'datamem' : {
         'write' : 'no',

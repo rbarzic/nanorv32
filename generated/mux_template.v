@@ -14,6 +14,15 @@
         end
 //========================================
 
+    case(pc_size)
+        NANORV32_MUX_SEL_PC_SIZE_32BITS: begin
+            pc_size <= ;
+        end
+        NANORV32_MUX_SEL_PC_SIZE_16BITS: begin
+            pc_size <= ;
+        end
+//========================================
+
     case(pc_branch)
         NANORV32_MUX_SEL_PC_BRANCH_YES: begin
             pc_branch <= ;
@@ -182,6 +191,15 @@
 
 //========================================
 
+    case(regfile_portw)
+        NANORV32_MUX_SEL_REGFILE_PORTW_RD: begin
+            regfile_portw <= ;
+        end
+        NANORV32_MUX_SEL_REGFILE_PORTW_RS1: begin
+            regfile_portw <= ;
+        end
+//========================================
+
     case(regfile_source)
         NANORV32_MUX_SEL_REGFILE_SOURCE_PC_EXE_PLUS_4: begin
             regfile_source <= ;
@@ -200,4 +218,16 @@
         end
         NANORV32_MUX_SEL_REGFILE_WRITE_NO: begin
             regfile_write <= ;
+        end
+//========================================
+
+    case(regfile_port1)
+        NANORV32_MUX_SEL_REGFILE_PORT1_RS1: begin
+            regfile_port1 <= ;
+        end
+//========================================
+
+    case(regfile_port2)
+        NANORV32_MUX_SEL_REGFILE_PORT2_RS2: begin
+            regfile_port2 <= ;
         end

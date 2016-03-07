@@ -8,6 +8,20 @@ parameter NANORV32_MUX_SEL_PC_NEXT_MSB = 1;
 parameter NANORV32_MUX_SEL_PC_NEXT_COND_PC_PLUS_IMMSB = 0;
 parameter NANORV32_MUX_SEL_PC_NEXT_PLUS4 = 1;
 parameter NANORV32_MUX_SEL_PC_NEXT_ALU_RES = 2;
+//  pc_size
+
+parameter NANORV32_MUX_SEL_PC_SIZE_SIZE = 1;
+parameter NANORV32_MUX_SEL_PC_SIZE_MSB = 0;
+ 
+parameter NANORV32_MUX_SEL_PC_SIZE_32BITS = 0;
+parameter NANORV32_MUX_SEL_PC_SIZE_16BITS = 1;
+//  pc_branch
+
+parameter NANORV32_MUX_SEL_PC_BRANCH_SIZE = 1;
+parameter NANORV32_MUX_SEL_PC_BRANCH_MSB = 0;
+ 
+parameter NANORV32_MUX_SEL_PC_BRANCH_YES = 0;
+parameter NANORV32_MUX_SEL_PC_BRANCH_NO = 1;
 // Mux definitions for alu
 
 //  alu_op
@@ -94,6 +108,13 @@ parameter NANORV32_MUX_SEL_DATAMEM_READ_YES = 0;
 parameter NANORV32_MUX_SEL_DATAMEM_READ_NO = 1;
 // Mux definitions for regfile
 
+//  regfile_portw
+
+parameter NANORV32_MUX_SEL_REGFILE_PORTW_SIZE = 1;
+parameter NANORV32_MUX_SEL_REGFILE_PORTW_MSB = 0;
+ 
+parameter NANORV32_MUX_SEL_REGFILE_PORTW_RD = 0;
+parameter NANORV32_MUX_SEL_REGFILE_PORTW_RS1 = 1;
 //  regfile_source
 
 parameter NANORV32_MUX_SEL_REGFILE_SOURCE_SIZE = 2;
@@ -109,3 +130,15 @@ parameter NANORV32_MUX_SEL_REGFILE_WRITE_MSB = 0;
  
 parameter NANORV32_MUX_SEL_REGFILE_WRITE_YES = 0;
 parameter NANORV32_MUX_SEL_REGFILE_WRITE_NO = 1;
+//  regfile_port1
+
+parameter NANORV32_MUX_SEL_REGFILE_PORT1_SIZE = 0;
+parameter NANORV32_MUX_SEL_REGFILE_PORT1_MSB = -1;
+ 
+parameter NANORV32_MUX_SEL_REGFILE_PORT1_RS1 = 0;
+//  regfile_port2
+
+parameter NANORV32_MUX_SEL_REGFILE_PORT2_SIZE = 0;
+parameter NANORV32_MUX_SEL_REGFILE_PORT2_MSB = -1;
+ 
+parameter NANORV32_MUX_SEL_REGFILE_PORT2_RS2 = 0;

@@ -102,8 +102,10 @@ module nanorv32 (/*AUTOARG*/
    wire                     dataif_cpu_early_ready = hreadyd;
    wire                     dataif_cpu_ready_r;
    wire [1:0]               read_byte_sel;
+   reg                      pc_branch;
 
    wire [NANORV32_DATA_MSB:0]                instruction_r;
+
 
    wire [NANORV32_DATA_MSB:0]                inst_from_buffer;
 
@@ -146,7 +148,7 @@ module nanorv32 (/*AUTOARG*/
    wire                                    alu_cond;
    wire                                    fifo_empty;
    wire                                    illegal_instruction_tmp;
-   wire                                    illegal_instruction = illegal_instruction & ~fifo_empty; 
+   wire                                    illegal_instruction = illegal_instruction & ~fifo_empty;
 
    reg [NANORV32_DATA_MSB:0]               mem2regfile;
 
@@ -251,16 +253,25 @@ module nanorv32 (/*AUTOARG*/
 
    // If an irq is detected, we override the instruction register with the code from
    // the the micro-rom in the flow controller
+
    assign instruction_r = irq_bypass_inst_reg_r ? inst_irq : inst_from_buffer;
+
+
+
+
 
 
  /* module_name AUTO_TEMPLATE(
   ); */
    nanorv32_decoder U_DECODER (
+
+                               .dec_c_rd_rs1(dec_c_rd_rs1),
+                               .dec_c_rs2(dec_c_rs2),
                                .instruction_r(instruction_r),
                                .illegal_instruction(illegal_instruction_tmp),
 
                                .pc_next_sel(pc_next_sel),
+                               .pc_branch_sel(pc_branch_sel),
                                .alu_op_sel(alu_op_sel),
                                .alu_portb_sel(alu_portb_sel),
                                .alu_porta_sel(alu_porta_sel),
@@ -403,7 +414,21 @@ module nanorv32 (/*AUTOARG*/
       endcase
    end
 
+//========================================
 
+   always @* begin
+      case(pc_branch_sel)
+          NANORV32_MUX_SEL_PC_BRANCH_YES: begin
+              pc_branch <= 1'b1;
+          end
+          NANORV32_MUX_SEL_PC_BRANCH_NO: begin
+              pc_branch <= 1'b0;
+          end// Mux definitions for alu
+        default begin
+              pc_branch <= 1'b0;
+        end
+      endcase
+   end
 
    //===========================================================================
    // PC management
@@ -413,9 +438,9 @@ module nanorv32 (/*AUTOARG*/
 
       case(pc_next_sel)
         NANORV32_MUX_SEL_PC_NEXT_COND_PC_PLUS_IMMSB: begin
-           pc_next = (alu_cond & output_new_pc ) ? (pc_exe_r + imm12sb_sext) : (pc_fetch_r + 4);
+           pc_next = (alu_cond & output_new_pc & pc_branch) ? (pc_exe_r + imm12sb_sext) : (pc_fetch_r + 4);
            // branch_taken = alu_cond & !stall_exe;
-           branch_taken = alu_cond;
+           branch_taken = alu_cond & pc_branch;
         end
         NANORV32_MUX_SEL_PC_NEXT_PLUS4: begin
            if(!stall_exe) begin
