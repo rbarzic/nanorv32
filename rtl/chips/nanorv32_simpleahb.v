@@ -34,18 +34,11 @@
 
 module nanorv32_simpleahb (/*AUTOARG*/
    // Outputs
-   wb_we_o, wb_stb_o, wb_sel_o, wb_jsp_err_o, wb_jsp_dat_o,
-   wb_jsp_ack_o, wb_dat_o, wb_cyc_o, wb_cti_o, wb_cab_o, wb_bte_o,
-   wb_adr_o, pad_gpio_in, int_o, cpu0_we_o, cpu0_stb_o, cpu0_stall_o,
-   cpu0_rst_o, cpu0_data_o, cpu0_addr_o, illegal_instruction,
+   pad_gpio_in, illegal_instruction, TDO,
    // Inouts
    P0, P1,
    // Inputs
-   wb_rst_i, wb_jsp_we_i, wb_jsp_stb_i, wb_jsp_sel_i, wb_jsp_dat_i,
-   wb_jsp_cyc_i, wb_jsp_cti_i, wb_jsp_cab_i, wb_jsp_bte_i,
-   wb_jsp_adr_i, wb_err_i, wb_dat_i, wb_clk_i, wb_ack_i, pad_jtag_tck,
-   cpu0_data_i, cpu0_clk_i, cpu0_bp_i, cpu0_ack_i, clk_in, rst_n,
-   irq_ext
+   clk_in, rst_n, irq_ext, TMS, TCK, TDI
    );
 
 `include "nanorv32_parameters.v"
@@ -68,63 +61,23 @@ module nanorv32_simpleahb (/*AUTOARG*/
 
    input               irq_ext;
 
+   input               TMS;
+   input               TCK;
+   input               TDI;
+   output               TDO;
 
 
    // Code memory port
    /*AUTOINPUT*/
-   // Beginning of automatic inputs (from unused autoinst inputs)
-   input                cpu0_ack_i;             // To U_ADBG_TOP of adbg_top.v
-   input                cpu0_bp_i;              // To U_ADBG_TOP of adbg_top.v
-   input                cpu0_clk_i;             // To U_ADBG_TOP of adbg_top.v
-   input [31:0]         cpu0_data_i;            // To U_ADBG_TOP of adbg_top.v
-   input                pad_jtag_tck;           // To U_ADBG_TOP of adbg_top.v
-   input                wb_ack_i;               // To U_ADBG_TOP of adbg_top.v
-   input                wb_clk_i;               // To U_ADBG_TOP of adbg_top.v
-   input [31:0]         wb_dat_i;               // To U_ADBG_TOP of adbg_top.v
-   input                wb_err_i;               // To U_ADBG_TOP of adbg_top.v
-   input [31:0]         wb_jsp_adr_i;           // To U_ADBG_TOP of adbg_top.v
-   input [1:0]          wb_jsp_bte_i;           // To U_ADBG_TOP of adbg_top.v
-   input                wb_jsp_cab_i;           // To U_ADBG_TOP of adbg_top.v
-   input [2:0]          wb_jsp_cti_i;           // To U_ADBG_TOP of adbg_top.v
-   input                wb_jsp_cyc_i;           // To U_ADBG_TOP of adbg_top.v
-   input [31:0]         wb_jsp_dat_i;           // To U_ADBG_TOP of adbg_top.v
-   input [3:0]          wb_jsp_sel_i;           // To U_ADBG_TOP of adbg_top.v
-   input                wb_jsp_stb_i;           // To U_ADBG_TOP of adbg_top.v
-   input                wb_jsp_we_i;            // To U_ADBG_TOP of adbg_top.v
-   input                wb_rst_i;               // To U_ADBG_TOP of adbg_top.v
-   // End of automatics
    /*AUTOOUTPUT*/
    // Beginning of automatic outputs (from unused autoinst outputs)
-   output [31:0]        cpu0_addr_o;            // From U_ADBG_TOP of adbg_top.v
-   output [31:0]        cpu0_data_o;            // From U_ADBG_TOP of adbg_top.v
-   output               cpu0_rst_o;             // From U_ADBG_TOP of adbg_top.v
-   output               cpu0_stall_o;           // From U_ADBG_TOP of adbg_top.v
-   output               cpu0_stb_o;             // From U_ADBG_TOP of adbg_top.v
-   output               cpu0_we_o;              // From U_ADBG_TOP of adbg_top.v
-   output               int_o;                  // From U_ADBG_TOP of adbg_top.v
    output [CHIP_PORT_A_WIDTH-1:0] pad_gpio_in;  // From U_PORT_MUX of port_mux.v
-   output [31:0]        wb_adr_o;               // From U_ADBG_TOP of adbg_top.v
-   output [1:0]         wb_bte_o;               // From U_ADBG_TOP of adbg_top.v
-   output               wb_cab_o;               // From U_ADBG_TOP of adbg_top.v
-   output [2:0]         wb_cti_o;               // From U_ADBG_TOP of adbg_top.v
-   output               wb_cyc_o;               // From U_ADBG_TOP of adbg_top.v
-   output [31:0]        wb_dat_o;               // From U_ADBG_TOP of adbg_top.v
-   output               wb_jsp_ack_o;           // From U_ADBG_TOP of adbg_top.v
-   output [31:0]        wb_jsp_dat_o;           // From U_ADBG_TOP of adbg_top.v
-   output               wb_jsp_err_o;           // From U_ADBG_TOP of adbg_top.v
-   output [3:0]         wb_sel_o;               // From U_ADBG_TOP of adbg_top.v
-   output               wb_stb_o;               // From U_ADBG_TOP of adbg_top.v
-   output               wb_we_o;                // From U_ADBG_TOP of adbg_top.v
    // End of automatics
 
    /*AUTOREG*/
    /*AUTOWIRE*/
    // Beginning of automatic wires (for undeclared instantiated-module outputs)
    wire [CHIP_PORT_A_WIDTH-1:0] PA;             // To/From U_TOP_IO of top_io.v
-   wire                 TCK;                    // To/From U_TOP_IO of top_io.v
-   wire                 TDI;                    // To/From U_TOP_IO of top_io.v
-   wire                 TDO;                    // To/From U_TOP_IO of top_io.v
-   wire                 TMS;                    // To/From U_TOP_IO of top_io.v
    wire [31:0]          apb_gpio_paddr;         // From U_APB_BRIDGE of Apbbridge.v
    wire                 apb_gpio_penable;       // From U_APB_BRIDGE of Apbbridge.v
    wire                 apb_gpio_psel;          // From U_APB_BRIDGE of Apbbridge.v
@@ -665,8 +618,19 @@ module nanorv32_simpleahb (/*AUTOARG*/
 
 
     /* adbg_top AUTO_TEMPLATE(
+     .cpu0\(.*\)_o  (),  // One cpu0 interface is used
+     .cpu0\(.*\)_i  (0),  // One cpu0 interface is used
+
      .cpu1\(.*\)_o  (),  // One cpu0 interface is used
      .cpu1\(.*\)_i  (0),  // One cpu0 interface is used
+
+     .wb_\(.*\)_i  (0),
+     .wb_\(.*\)_o  (),
+
+
+     .wb_jsp\(.*\)_i  (0),
+     .wb_jsp\(.*\)_o  (),
+
 
      .shift_dr_i     (tap_debug_shift_dr),
      .pause_dr_i     (tap_debug_pause_dr),
@@ -674,46 +638,55 @@ module nanorv32_simpleahb (/*AUTOARG*/
      .capture_dr_i   (tap_debug_capture_dr),
      .debug_select_i (tap_debug_debug_select),
 
-
+     .cpu0_clk_i     (clk),
+     .cpu1_clk_i     (clk),
 
      .rst_i          (tap_debug_rst),
 
-     .tck_i          (pad_jtag_tck),
+     .int_o          (),
+
+     .tck_i          (pad_tap_tck),
      .tdo_o          (debug_tap_tdo),
      .tdi_i          (tap_debug_tdi),
      ); */
    adbg_top U_ADBG_TOP (
 
+
+
+
+                        .wb_clk_i       (clk),
+                        .wb_rst_i       (!rst_n),
+
                            /*AUTOINST*/
                         // Outputs
                         .tdo_o          (debug_tap_tdo),         // Templated
-                        .wb_adr_o       (wb_adr_o[31:0]),
-                        .wb_dat_o       (wb_dat_o[31:0]),
-                        .wb_cyc_o       (wb_cyc_o),
-                        .wb_stb_o       (wb_stb_o),
-                        .wb_sel_o       (wb_sel_o[3:0]),
-                        .wb_we_o        (wb_we_o),
-                        .wb_cab_o       (wb_cab_o),
-                        .wb_cti_o       (wb_cti_o[2:0]),
-                        .wb_bte_o       (wb_bte_o[1:0]),
-                        .cpu0_addr_o    (cpu0_addr_o[31:0]),
-                        .cpu0_data_o    (cpu0_data_o[31:0]),
-                        .cpu0_stall_o   (cpu0_stall_o),
-                        .cpu0_stb_o     (cpu0_stb_o),
-                        .cpu0_we_o      (cpu0_we_o),
-                        .cpu0_rst_o     (cpu0_rst_o),
+                        .wb_adr_o       (),                      // Templated
+                        .wb_dat_o       (),                      // Templated
+                        .wb_cyc_o       (),                      // Templated
+                        .wb_stb_o       (),                      // Templated
+                        .wb_sel_o       (),                      // Templated
+                        .wb_we_o        (),                      // Templated
+                        .wb_cab_o       (),                      // Templated
+                        .wb_cti_o       (),                      // Templated
+                        .wb_bte_o       (),                      // Templated
+                        .cpu0_addr_o    (),                      // Templated
+                        .cpu0_data_o    (),                      // Templated
+                        .cpu0_stall_o   (),                      // Templated
+                        .cpu0_stb_o     (),                      // Templated
+                        .cpu0_we_o      (),                      // Templated
+                        .cpu0_rst_o     (),                      // Templated
                         .cpu1_addr_o    (),                      // Templated
                         .cpu1_data_o    (),                      // Templated
                         .cpu1_stall_o   (),                      // Templated
                         .cpu1_stb_o     (),                      // Templated
                         .cpu1_we_o      (),                      // Templated
                         .cpu1_rst_o     (),                      // Templated
-                        .wb_jsp_dat_o   (wb_jsp_dat_o[31:0]),
-                        .wb_jsp_ack_o   (wb_jsp_ack_o),
-                        .wb_jsp_err_o   (wb_jsp_err_o),
-                        .int_o          (int_o),
+                        .wb_jsp_dat_o   (),                      // Templated
+                        .wb_jsp_ack_o   (),                      // Templated
+                        .wb_jsp_err_o   (),                      // Templated
+                        .int_o          (),                      // Templated
                         // Inputs
-                        .tck_i          (pad_jtag_tck),          // Templated
+                        .tck_i          (pad_tap_tck),           // Templated
                         .tdi_i          (tap_debug_tdi),         // Templated
                         .rst_i          (tap_debug_rst),         // Templated
                         .shift_dr_i     (tap_debug_shift_dr),    // Templated
@@ -721,28 +694,26 @@ module nanorv32_simpleahb (/*AUTOARG*/
                         .update_dr_i    (tap_debug_update_dr),   // Templated
                         .capture_dr_i   (tap_debug_capture_dr),  // Templated
                         .debug_select_i (tap_debug_debug_select), // Templated
-                        .wb_clk_i       (wb_clk_i),
-                        .wb_rst_i       (wb_rst_i),
-                        .wb_dat_i       (wb_dat_i[31:0]),
-                        .wb_ack_i       (wb_ack_i),
-                        .wb_err_i       (wb_err_i),
-                        .cpu0_clk_i     (cpu0_clk_i),
-                        .cpu0_data_i    (cpu0_data_i[31:0]),
-                        .cpu0_bp_i      (cpu0_bp_i),
-                        .cpu0_ack_i     (cpu0_ack_i),
-                        .cpu1_clk_i     (0),                     // Templated
+                        .wb_dat_i       (0),                     // Templated
+                        .wb_ack_i       (0),                     // Templated
+                        .wb_err_i       (0),                     // Templated
+                        .cpu0_clk_i     (clk),                   // Templated
+                        .cpu0_data_i    (0),                     // Templated
+                        .cpu0_bp_i      (0),                     // Templated
+                        .cpu0_ack_i     (0),                     // Templated
+                        .cpu1_clk_i     (clk),                   // Templated
                         .cpu1_data_i    (0),                     // Templated
                         .cpu1_bp_i      (0),                     // Templated
                         .cpu1_ack_i     (0),                     // Templated
-                        .wb_jsp_adr_i   (wb_jsp_adr_i[31:0]),
-                        .wb_jsp_dat_i   (wb_jsp_dat_i[31:0]),
-                        .wb_jsp_cyc_i   (wb_jsp_cyc_i),
-                        .wb_jsp_stb_i   (wb_jsp_stb_i),
-                        .wb_jsp_sel_i   (wb_jsp_sel_i[3:0]),
-                        .wb_jsp_we_i    (wb_jsp_we_i),
-                        .wb_jsp_cab_i   (wb_jsp_cab_i),
-                        .wb_jsp_cti_i   (wb_jsp_cti_i[2:0]),
-                        .wb_jsp_bte_i   (wb_jsp_bte_i[1:0]));
+                        .wb_jsp_adr_i   (0),                     // Templated
+                        .wb_jsp_dat_i   (0),                     // Templated
+                        .wb_jsp_cyc_i   (0),                     // Templated
+                        .wb_jsp_stb_i   (0),                     // Templated
+                        .wb_jsp_sel_i   (0),                     // Templated
+                        .wb_jsp_we_i    (0),                     // Templated
+                        .wb_jsp_cab_i   (0),                     // Templated
+                        .wb_jsp_cti_i   (0),                     // Templated
+                        .wb_jsp_bte_i   (0));                     // Templated
 
 
 

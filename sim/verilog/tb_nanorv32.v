@@ -37,6 +37,7 @@
 module tb_nanorv32;
 
    `include "nanorv32_parameters.v"
+   `include "chip_params.v"
    `include "tb_defines.v"
 
    parameter ROM_ADDRESS_SIZE  = NANORV32_ADDR_SIZE-1; // Rom is half of the address space
@@ -49,6 +50,7 @@ module tb_nanorv32;
    wire [15:0]          P1;                     // To/From U_DUT of nanorv32_simpleahb.v
    wire                 clk;                    // From U_CLOCK_GEN of clock_gen.v
    wire                 illegal_instruction;    // From U_DUT of nanorv32_simpleahb.v
+   wire [CHIP_PORT_A_WIDTH-1:0] pad_gpio_in;    // From U_DUT of nanorv32_simpleahb.v
    wire                 rst_n;                  // From U_RESET_GEN of reset_gen.v
    // End of automatics
 
@@ -56,6 +58,12 @@ module tb_nanorv32;
 
    reg [15:0]          P1reg;                     // To/From U_DUT of nanorv32_simple.v
    reg                 irq_ext;
+
+   reg                 TCK;
+   reg                 TMS;
+   reg                 TDI;
+   wire                TDO;
+
 
    /* nanorv32_simpleahb AUTO_TEMPLATE(
      .clk_in                  (clk),
@@ -65,13 +73,18 @@ module tb_nanorv32;
                            /*AUTOINST*/
                              // Outputs
                              .illegal_instruction(illegal_instruction),
+                             .pad_gpio_in       (pad_gpio_in[CHIP_PORT_A_WIDTH-1:0]),
                              // Inouts
                              .P0                (P0[15:0]),
                              .P1                (P1[15:0]),
                              // Inputs
                              .clk_in            (clk),           // Templated
                              .rst_n             (rst_n),
-                             .irq_ext           (irq_ext));
+                             .irq_ext           (irq_ext),
+                             .TMS               (TMS),
+                             .TCK               (TCK),
+                             .TDI               (TDI),
+                             .TDO               (TDO));
 
 
 

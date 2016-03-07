@@ -280,7 +280,7 @@ module top_io (/*AUTOARG*/
                    .ie               (1'b1));    //
 
    std_pad U_TDO (
-                  .dout                (jtag_pad_tdo),     //
+                  .dout                (tap_pad_tdo),     //
                   .pad                 (TDO),                //
                   .din                 (),     //
                   .oe               (tap_pad_tdo_oe),    //
@@ -289,14 +289,14 @@ module top_io (/*AUTOARG*/
 
                   .dout                (),     //
                   .pad                 (TMS),                //
-                  .din                 (pad_jtag_tms),     //
+                  .din                 (pad_tap_tms),     //
                   .oe               (1'b0),    //
                   .ie               (1'b1));    //
 
    std_pad U_TCK (
                   .dout                (),     //
                   .pad                 (TCK),                //
-                  .din                 (pad_jtag_tck),     //
+                  .din                 (pad_tap_tck),     //
                   .oe               (1'b0),    //
                   .ie               (1'b1));    //
 
