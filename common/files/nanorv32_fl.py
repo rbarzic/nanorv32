@@ -104,11 +104,22 @@ def nanor32_fl(context):
         'file': "{top}/rtl/ips/ahb_to_ssram.v",
         'targets': 'synt,sim_rtl'
     })
-
+    # Ahbmli is split now
     l.append({
+        'file': "{top}/rtl/ips/HastiBus.v",
+        'targets': 'synt,sim_rtl'
+    })
+    l.append({
+        'file': "{top}/rtl/ips/HastiSlaveMux.v",
+        'targets': 'synt,sim_rtl'
+    })l.append({
+        'file': "{top}/rtl/ips/HastiXbar.v",
+        'targets': 'synt,sim_rtl'
+    })l.append({
         'file': "{top}/rtl/ips/Ahbmli.v",
         'targets': 'synt,sim_rtl'
     })
+
     l.append({
         'file': "{top}/rtl/ips/Apbbridge.v",
         'targets': 'synt,sim_rtl'

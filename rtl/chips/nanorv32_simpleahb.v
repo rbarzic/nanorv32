@@ -32,7 +32,21 @@
 
 
 
-module nanorv32_simpleahb (/*AUTOARG*/);
+module nanorv32_simpleahb (/*AUTOARG*/
+   // Outputs
+   w2ahb_adbg_data, pad_gpio_in, adbg_w2ahb_jsp_err,
+   adbg_w2ahb_jsp_dat, adbg_w2ahb_jsp_ack, adbg_w2ahb_dat,
+   adbg_w2ahb_cti, adbg_w2ahb_cab, adbg_w2ahb_bte, adbg_w2ahb_adr,
+   illegal_instruction, TDO,
+   // Inouts
+   P0, P1,
+   // Inputs
+   w2ahb_adbg_jsp_we, w2ahb_adbg_jsp_stb, w2ahb_adbg_jsp_sel,
+   w2ahb_adbg_jsp_dat, w2ahb_adbg_jsp_cyc, w2ahb_adbg_jsp_cti,
+   w2ahb_adbg_jsp_cab, w2ahb_adbg_jsp_bte, w2ahb_adbg_jsp_adr,
+   w2ahb_adbg_err, w2ahb_adbg_dat, adbg_w2ahb_data, adbg_w2ahb_addr,
+   clk_in, rst_n, irq_ext, TMS, TCK, TDI
+   );
 
 `include "nanorv32_parameters.v"
 `include "chip_params.v"
@@ -62,10 +76,115 @@ module nanorv32_simpleahb (/*AUTOARG*/);
 
    // Code memory port
    /*AUTOINPUT*/
+   // Beginning of automatic inputs (from unused autoinst inputs)
+   input                adbg_w2ahb_addr;        // To U_INSTANCE of ahbmas_wbslv_top.v
+   input                adbg_w2ahb_data;        // To U_INSTANCE of ahbmas_wbslv_top.v
+   input                w2ahb_adbg_dat;         // To U_ADBG_TOP of adbg_top.v
+   input                w2ahb_adbg_err;         // To U_ADBG_TOP of adbg_top.v
+   input                w2ahb_adbg_jsp_adr;     // To U_ADBG_TOP of adbg_top.v
+   input                w2ahb_adbg_jsp_bte;     // To U_ADBG_TOP of adbg_top.v
+   input                w2ahb_adbg_jsp_cab;     // To U_ADBG_TOP of adbg_top.v
+   input                w2ahb_adbg_jsp_cti;     // To U_ADBG_TOP of adbg_top.v
+   input                w2ahb_adbg_jsp_cyc;     // To U_ADBG_TOP of adbg_top.v
+   input                w2ahb_adbg_jsp_dat;     // To U_ADBG_TOP of adbg_top.v
+   input                w2ahb_adbg_jsp_sel;     // To U_ADBG_TOP of adbg_top.v
+   input                w2ahb_adbg_jsp_stb;     // To U_ADBG_TOP of adbg_top.v
+   input                w2ahb_adbg_jsp_we;      // To U_ADBG_TOP of adbg_top.v
+   // End of automatics
    /*AUTOOUTPUT*/
+   // Beginning of automatic outputs (from unused autoinst outputs)
+   output               adbg_w2ahb_adr;         // From U_ADBG_TOP of adbg_top.v
+   output               adbg_w2ahb_bte;         // From U_ADBG_TOP of adbg_top.v
+   output               adbg_w2ahb_cab;         // From U_ADBG_TOP of adbg_top.v
+   output               adbg_w2ahb_cti;         // From U_ADBG_TOP of adbg_top.v
+   output               adbg_w2ahb_dat;         // From U_ADBG_TOP of adbg_top.v
+   output               adbg_w2ahb_jsp_ack;     // From U_ADBG_TOP of adbg_top.v
+   output               adbg_w2ahb_jsp_dat;     // From U_ADBG_TOP of adbg_top.v
+   output               adbg_w2ahb_jsp_err;     // From U_ADBG_TOP of adbg_top.v
+   output [CHIP_PORT_A_WIDTH-1:0] pad_gpio_in;  // From U_PORT_MUX of port_mux.v
+   output               w2ahb_adbg_data;        // From U_INSTANCE of ahbmas_wbslv_top.v
+   // End of automatics
 
    /*AUTOREG*/
    /*AUTOWIRE*/
+   // Beginning of automatic wires (for undeclared instantiated-module outputs)
+   wire [CHIP_PORT_A_WIDTH-1:0] PA;             // To/From U_TOP_IO of top_io.v
+   wire                 adbg_w2ahb_cyc;         // From U_ADBG_TOP of adbg_top.v
+   wire                 adbg_w2ahb_sel;         // From U_ADBG_TOP of adbg_top.v
+   wire                 adbg_w2ahb_stb;         // From U_ADBG_TOP of adbg_top.v
+   wire                 adbg_w2ahb_we;          // From U_ADBG_TOP of adbg_top.v
+   wire                 ahb_w2ahb_hrdata;       // From u_ahbmatrix of Ahbmli.v
+   wire                 ahb_w2ahb_hready;       // From u_ahbmatrix of Ahbmli.v
+   wire                 ahb_w2ahb_hresp;        // From u_ahbmatrix of Ahbmli.v
+   wire [31:0]          apb_gpio_paddr;         // From U_APB_BRIDGE of Apbbridge.v
+   wire                 apb_gpio_penable;       // From U_APB_BRIDGE of Apbbridge.v
+   wire                 apb_gpio_psel;          // From U_APB_BRIDGE of Apbbridge.v
+   wire [31:0]          apb_gpio_pwdata;        // From U_APB_BRIDGE of Apbbridge.v
+   wire                 apb_gpio_pwrite;        // From U_APB_BRIDGE of Apbbridge.v
+   wire [31:0]          apb_intc_paddr;         // From U_APB_BRIDGE of Apbbridge.v
+   wire                 apb_intc_penable;       // From U_APB_BRIDGE of Apbbridge.v
+   wire                 apb_intc_psel;          // From U_APB_BRIDGE of Apbbridge.v
+   wire [31:0]          apb_intc_pwdata;        // From U_APB_BRIDGE of Apbbridge.v
+   wire                 apb_intc_pwrite;        // From U_APB_BRIDGE of Apbbridge.v
+   wire [31:0]          apb_timer_paddr;        // From U_APB_BRIDGE of Apbbridge.v
+   wire                 apb_timer_penable;      // From U_APB_BRIDGE of Apbbridge.v
+   wire                 apb_timer_psel;         // From U_APB_BRIDGE of Apbbridge.v
+   wire [31:0]          apb_timer_pwdata;       // From U_APB_BRIDGE of Apbbridge.v
+   wire                 apb_timer_pwrite;       // From U_APB_BRIDGE of Apbbridge.v
+   wire [31:0]          apb_uart_paddr;         // From U_APB_BRIDGE of Apbbridge.v
+   wire                 apb_uart_penable;       // From U_APB_BRIDGE of Apbbridge.v
+   wire                 apb_uart_psel;          // From U_APB_BRIDGE of Apbbridge.v
+   wire [31:0]          apb_uart_pwdata;        // From U_APB_BRIDGE of Apbbridge.v
+   wire                 apb_uart_pwrite;        // From U_APB_BRIDGE of Apbbridge.v
+   wire                 clk;                    // From U_CLK_GEN of nanorv32_clkgen.v
+   wire                 debug_tap_tdo;          // From U_ADBG_TOP of adbg_top.v
+   wire [31:0]          gpio_apb_prdata;        // From U_GPIO of gpio_apb.v
+   wire                 gpio_apb_pready;        // From U_GPIO of gpio_apb.v
+   wire                 gpio_apb_pslverr;       // From U_GPIO of gpio_apb.v
+   wire                 gpio_irq;               // From U_GPIO of gpio_apb.v
+   wire                 hmastlockd;             // From U_NANORV32_PIL of nanorv32_pil.v
+   wire                 hmastlocki;             // From U_NANORV32_PIL of nanorv32_pil.v
+   wire [31:0]          intc_apb_prdata;        // From U_INTC of nanorv32_intc.v
+   wire                 intc_apb_pready;        // From U_INTC of nanorv32_intc.v
+   wire                 intc_apb_pslverr;       // From U_INTC of nanorv32_intc.v
+   wire                 intc_cpu_irq;           // From U_INTC of nanorv32_intc.v
+   wire                 irq_ack;                // From U_NANORV32_PIL of nanorv32_pil.v
+   wire [7:0]           irqs;                   // From U_IRQ_MAPPER of nanorv32_irq_mapper.v
+   wire [CHIP_PORT_A_WIDTH-1:0] pad_pmux_din;   // From U_PORT_MUX of port_mux.v
+   wire                 pad_tap_tck;            // From U_TOP_IO of top_io.v
+   wire                 pad_tap_tdi;            // From U_TOP_IO of top_io.v
+   wire                 pad_tap_tms;            // From U_TOP_IO of top_io.v
+   wire                 pad_uart_rx;            // From U_PORT_MUX of port_mux.v
+   wire [CHIP_PORT_A_WIDTH-1:0] pmux_pad_dout;  // From U_TOP_IO of top_io.v
+   wire [CHIP_PORT_A_WIDTH-1:0] pmux_pad_ie;    // From U_PORT_MUX of port_mux.v
+   wire [CHIP_PORT_A_WIDTH-1:0] pmux_pad_oe;    // From U_PORT_MUX of port_mux.v
+   wire                 tap_debug_capture_dr;   // From U_TAP_TOP of tap_top.v
+   wire                 tap_debug_debug_select; // From U_TAP_TOP of tap_top.v
+   wire                 tap_debug_pause_dr;     // From U_TAP_TOP of tap_top.v
+   wire                 tap_debug_rst;          // From U_TAP_TOP of tap_top.v
+   wire                 tap_debug_shift_dr;     // From U_TAP_TOP of tap_top.v
+   wire                 tap_debug_tdi;          // From U_TAP_TOP of tap_top.v
+   wire                 tap_debug_update_dr;    // From U_TAP_TOP of tap_top.v
+   wire                 tap_pad_tdo;            // From U_TAP_TOP of tap_top.v
+   wire                 tap_pad_tdo_oe;         // From U_TAP_TOP of tap_top.v
+   wire [31:0]          timer_apb_prdata;       // From U_TIMER of timer_wrapper.v
+   wire                 timer_apb_pready;       // From U_TIMER of timer_wrapper.v
+   wire                 timer_apb_pslverr;      // From U_TIMER of timer_wrapper.v
+   wire                 timer_hires_irq;        // From U_TIMER of timer_wrapper.v
+   wire                 timer_systick_irq;      // From U_TIMER of timer_wrapper.v
+   wire [31:0]          uart_apb_prdata;        // From U_USART of uart_wrapper.v
+   wire                 uart_apb_pready;        // From U_USART of uart_wrapper.v
+   wire                 uart_apb_pslverr;       // From U_USART of uart_wrapper.v
+   wire                 uart_irq;               // From U_USART of uart_wrapper.v
+   wire                 uart_pad_tx;            // From U_USART of uart_wrapper.v
+   wire                 w2ahb_adbg_ack;         // From U_INSTANCE of ahbmas_wbslv_top.v
+   wire [AWIDTH-1:0]    w2ahb_ahb_haddr;        // From U_INSTANCE of ahbmas_wbslv_top.v
+   wire [2:0]           w2ahb_ahb_hburst;       // From U_INSTANCE of ahbmas_wbslv_top.v
+   wire [2:0]           w2ahb_ahb_hsize;        // From U_INSTANCE of ahbmas_wbslv_top.v
+   wire [1:0]           w2ahb_ahb_htrans;       // From U_INSTANCE of ahbmas_wbslv_top.v
+   wire [31:0]          w2ahb_ahb_hwdata;       // From U_INSTANCE of ahbmas_wbslv_top.v
+   wire                 w2ahb_ahb_hwrite;       // From U_INSTANCE of ahbmas_wbslv_top.v
+   // End of automatics
 
    wire [NANORV32_DATA_MSB:0] hrdatai;
    wire                       hrespi;
@@ -245,6 +364,15 @@ module nanorv32_simpleahb (/*AUTOARG*/);
       .io_iside_\([a-z]+\)       (\1i),
       .io_dside_\([a-z]+\)       (\1d),
       .io_periph_\([a-z]+\)       (periph_\1),
+
+
+
+      .io_dbg_\(hready\|hresp\|hrdata\)         (ahb_w2ahb_\1),
+      .io_dbg_\(haddr\|hwrite\|hsize\|hburst\|hwdata\|htrans\)         (w2ahb_ahb_\1),
+
+      .hresp          (ahb_w2ahb_hresp[1:0]),
+      .hready         (ahb_w2ahb_hready),
+
      ); */
    Ahbmli   u_ahbmatrix(
                         .clk         (clk),
@@ -255,8 +383,15 @@ module nanorv32_simpleahb (/*AUTOARG*/);
                         .io_tcm1_hmastlock(),
                         .io_tcm0_hburst(),
                         .io_tcm1_hburst(),
+
+                        .io_dbg_hprot   (0), // Not provided by the wishbone->ahb bridge
+                        .io_dbg_hmastlock(0),
+
                         /*AUTOINST*/
                         // Outputs
+                        .io_dbg_hrdata  (ahb_w2ahb_hrdata),      // Templated
+                        .io_dbg_hready  (ahb_w2ahb_hready),      // Templated
+                        .io_dbg_hresp   (ahb_w2ahb_hresp),       // Templated
                         .io_dside_hrdata(hrdatad),               // Templated
                         .io_dside_hready(hreadyd),               // Templated
                         .io_dside_hresp (hrespd),                // Templated
@@ -288,6 +423,12 @@ module nanorv32_simpleahb (/*AUTOARG*/);
                         .io_tcm1_hsel   (io_tcm1_hsel),
                         .io_tcm1_hreadyin(io_tcm1_hreadyin),
                         // Inputs
+                        .io_dbg_haddr   (w2ahb_ahb_haddr),       // Templated
+                        .io_dbg_hwrite  (w2ahb_ahb_hwrite),      // Templated
+                        .io_dbg_hsize   (w2ahb_ahb_hsize),       // Templated
+                        .io_dbg_hburst  (w2ahb_ahb_hburst),      // Templated
+                        .io_dbg_htrans  (w2ahb_ahb_htrans),      // Templated
+                        .io_dbg_hwdata  (w2ahb_ahb_hwdata),      // Templated
                         .io_dside_haddr (haddrd),                // Templated
                         .io_dside_hwrite(hwrited),               // Templated
                         .io_dside_hsize (hsized),                // Templated
@@ -544,18 +685,20 @@ module nanorv32_simpleahb (/*AUTOARG*/);
 
 
     /* adbg_top AUTO_TEMPLATE(
-     .cpu0\(.*\)_o  (),  // One cpu0 interface is used
-     .cpu0\(.*\)_i  (0),  // One cpu0 interface is used
+     .cpu0_\(.*\)_o  (),  // One cpu0 interface is used
+     .cpu0_\(.*\)_i  (0),  // One cpu0 interface is used
 
      .cpu1\(.*\)_o  (),  // One cpu0 interface is used
      .cpu1\(.*\)_i  (0),  // One cpu0 interface is used
 
-     .wb_\(.*\)_i  (0),
-     .wb_\(.*\)_o  (),
-
-
      .wb_jsp\(.*\)_i  (0),
      .wb_jsp\(.*\)_o  (),
+
+     .wb_\(.*\)_o  (adbg_w2ahb_\1),  // One cpu0 interface is used
+     .wb_\(.*\)_i  (w2ahb_adbg_\1),  // One cpu0 interface is used
+
+
+
 
 
      .shift_dr_i     (tap_debug_shift_dr),
@@ -582,34 +725,34 @@ module nanorv32_simpleahb (/*AUTOARG*/);
 
                         .wb_clk_i       (clk),
                         .wb_rst_i       (!rst_n),
+                        .cpu0_stall_o   (),
+                        .cpu0_rst_o     (adbg_w2ahb_rst),
 
                            /*AUTOINST*/
                         // Outputs
                         .tdo_o          (debug_tap_tdo),         // Templated
-                        .wb_adr_o       (),                      // Templated
-                        .wb_dat_o       (),                      // Templated
-                        .wb_cyc_o       (),                      // Templated
-                        .wb_stb_o       (),                      // Templated
-                        .wb_sel_o       (),                      // Templated
-                        .wb_we_o        (),                      // Templated
-                        .wb_cab_o       (),                      // Templated
-                        .wb_cti_o       (),                      // Templated
-                        .wb_bte_o       (),                      // Templated
+                        .wb_adr_o       (adbg_w2ahb_adr),        // Templated
+                        .wb_dat_o       (adbg_w2ahb_dat),        // Templated
+                        .wb_cyc_o       (adbg_w2ahb_cyc),        // Templated
+                        .wb_stb_o       (adbg_w2ahb_stb),        // Templated
+                        .wb_sel_o       (adbg_w2ahb_sel),        // Templated
+                        .wb_we_o        (adbg_w2ahb_we),         // Templated
+                        .wb_cab_o       (adbg_w2ahb_cab),        // Templated
+                        .wb_cti_o       (adbg_w2ahb_cti),        // Templated
+                        .wb_bte_o       (adbg_w2ahb_bte),        // Templated
                         .cpu0_addr_o    (),                      // Templated
                         .cpu0_data_o    (),                      // Templated
-                        .cpu0_stall_o   (),                      // Templated
                         .cpu0_stb_o     (),                      // Templated
                         .cpu0_we_o      (),                      // Templated
-                        .cpu0_rst_o     (),                      // Templated
                         .cpu1_addr_o    (),                      // Templated
                         .cpu1_data_o    (),                      // Templated
                         .cpu1_stall_o   (),                      // Templated
                         .cpu1_stb_o     (),                      // Templated
                         .cpu1_we_o      (),                      // Templated
                         .cpu1_rst_o     (),                      // Templated
-                        .wb_jsp_dat_o   (),                      // Templated
-                        .wb_jsp_ack_o   (),                      // Templated
-                        .wb_jsp_err_o   (),                      // Templated
+                        .wb_jsp_dat_o   (adbg_w2ahb_jsp_dat),    // Templated
+                        .wb_jsp_ack_o   (adbg_w2ahb_jsp_ack),    // Templated
+                        .wb_jsp_err_o   (adbg_w2ahb_jsp_err),    // Templated
                         .int_o          (),                      // Templated
                         // Inputs
                         .tck_i          (pad_tap_tck),           // Templated
@@ -620,9 +763,9 @@ module nanorv32_simpleahb (/*AUTOARG*/);
                         .update_dr_i    (tap_debug_update_dr),   // Templated
                         .capture_dr_i   (tap_debug_capture_dr),  // Templated
                         .debug_select_i (tap_debug_debug_select), // Templated
-                        .wb_dat_i       (0),                     // Templated
-                        .wb_ack_i       (0),                     // Templated
-                        .wb_err_i       (0),                     // Templated
+                        .wb_dat_i       (w2ahb_adbg_dat),        // Templated
+                        .wb_ack_i       (w2ahb_adbg_ack),        // Templated
+                        .wb_err_i       (w2ahb_adbg_err),        // Templated
                         .cpu0_clk_i     (clk),                   // Templated
                         .cpu0_data_i    (0),                     // Templated
                         .cpu0_bp_i      (0),                     // Templated
@@ -631,25 +774,72 @@ module nanorv32_simpleahb (/*AUTOARG*/);
                         .cpu1_data_i    (0),                     // Templated
                         .cpu1_bp_i      (0),                     // Templated
                         .cpu1_ack_i     (0),                     // Templated
-                        .wb_jsp_adr_i   (0),                     // Templated
-                        .wb_jsp_dat_i   (0),                     // Templated
-                        .wb_jsp_cyc_i   (0),                     // Templated
-                        .wb_jsp_stb_i   (0),                     // Templated
-                        .wb_jsp_sel_i   (0),                     // Templated
-                        .wb_jsp_we_i    (0),                     // Templated
-                        .wb_jsp_cab_i   (0),                     // Templated
-                        .wb_jsp_cti_i   (0),                     // Templated
-                        .wb_jsp_bte_i   (0));                     // Templated
+                        .wb_jsp_adr_i   (w2ahb_adbg_jsp_adr),    // Templated
+                        .wb_jsp_dat_i   (w2ahb_adbg_jsp_dat),    // Templated
+                        .wb_jsp_cyc_i   (w2ahb_adbg_jsp_cyc),    // Templated
+                        .wb_jsp_stb_i   (w2ahb_adbg_jsp_stb),    // Templated
+                        .wb_jsp_sel_i   (w2ahb_adbg_jsp_sel),    // Templated
+                        .wb_jsp_we_i    (w2ahb_adbg_jsp_we),     // Templated
+                        .wb_jsp_cab_i   (w2ahb_adbg_jsp_cab),    // Templated
+                        .wb_jsp_cti_i   (w2ahb_adbg_jsp_cti),    // Templated
+                        .wb_jsp_bte_i   (w2ahb_adbg_jsp_bte));    // Templated
 
 
 
 
 
 
-     /* AHBMAS_WBSLV_TOP AUTO_TEMPLATE(
+     /* ahbmas_wbslv_top AUTO_TEMPLATE(
+
+      .clk_i          (clk),
+      .rst_i          (!rst_n),
+     .\(.*\)_o  (w2ahb_adbg_\1),
+      .\(.*\)_i  (adbg_w2ahb_\1),
+
+      .hclk           (clk),
+      .hresetn        (rst_n),
+
+      .haddr          (w2ahb_ahb_haddr[AWIDTH-1:0]),
+      .hwrite         (w2ahb_ahb_hwrite),
+      .hsize          (w2ahb_ahb_hsize[2:0]),
+      .hburst         (w2ahb_ahb_hburst[2:0]),
+      .hwdata         (w2ahb_ahb_hwdata[31:0]),
+      .htrans         (w2ahb_ahb_htrans[1:0]),
+
+
+      .hrdata         (ahb_w2ahb_hrdata[DWIDTH-1:0]),
+      .hresp          (ahb_w2ahb_hresp[1:0]),
+      .hready         (ahb_w2ahb_hready),
+
+
+
+
      ); */
-   AHBMAS_WBSLV_TOP U_INSTANCE (
-                           /*AUTOINST*/);
+   ahbmas_wbslv_top U_INSTANCE (
+                           /*AUTOINST*/
+                                // Outputs
+                                .haddr          (w2ahb_ahb_haddr[AWIDTH-1:0]), // Templated
+                                .hwrite         (w2ahb_ahb_hwrite), // Templated
+                                .hsize          (w2ahb_ahb_hsize[2:0]), // Templated
+                                .hburst         (w2ahb_ahb_hburst[2:0]), // Templated
+                                .hwdata         (w2ahb_ahb_hwdata[31:0]), // Templated
+                                .htrans         (w2ahb_ahb_htrans[1:0]), // Templated
+                                .data_o         (w2ahb_adbg_data), // Templated
+                                .ack_o          (w2ahb_adbg_ack), // Templated
+                                // Inputs
+                                .hresetn        (rst_n),         // Templated
+                                .hclk           (clk),           // Templated
+                                .hrdata         (ahb_w2ahb_hrdata[DWIDTH-1:0]), // Templated
+                                .hresp          (ahb_w2ahb_hresp[1:0]), // Templated
+                                .hready         (ahb_w2ahb_hready), // Templated
+                                .data_i         (adbg_w2ahb_data), // Templated
+                                .addr_i         (adbg_w2ahb_addr), // Templated
+                                .cyc_i          (adbg_w2ahb_cyc), // Templated
+                                .stb_i          (adbg_w2ahb_stb), // Templated
+                                .sel_i          (adbg_w2ahb_sel), // Templated
+                                .we_i           (adbg_w2ahb_we), // Templated
+                                .clk_i          (clk),           // Templated
+                                .rst_i          (!rst_n));        // Templated
 
 
 
@@ -657,7 +847,17 @@ module nanorv32_simpleahb (/*AUTOARG*/);
     /* port_mux AUTO_TEMPLATE(
      ); */
    port_mux U_PORT_MUX (
-                           /*AUTOINST*/);
+                           /*AUTOINST*/
+                        // Outputs
+                        .pad_pmux_din   (pad_pmux_din[CHIP_PORT_A_WIDTH-1:0]),
+                        .pmux_pad_ie    (pmux_pad_ie[CHIP_PORT_A_WIDTH-1:0]),
+                        .pmux_pad_oe    (pmux_pad_oe[CHIP_PORT_A_WIDTH-1:0]),
+                        .pad_gpio_in    (pad_gpio_in[CHIP_PORT_A_WIDTH-1:0]),
+                        .pad_uart_rx    (pad_uart_rx),
+                        // Inputs
+                        .pmux_pad_dout  (pmux_pad_dout[CHIP_PORT_A_WIDTH-1:0]),
+                        .gpio_pad_out   (gpio_pad_out[CHIP_PORT_A_WIDTH-1:0]),
+                        .uart_pad_tx    (uart_pad_tx));
 
 
 
@@ -666,7 +866,24 @@ module nanorv32_simpleahb (/*AUTOARG*/);
     /* top_io AUTO_TEMPLATE(
      ); */
    top_io U_TOP_IO (
-                           /*AUTOINST*/);
+                           /*AUTOINST*/
+                    // Outputs
+                    .pmux_pad_dout      (pmux_pad_dout[CHIP_PORT_A_WIDTH-1:0]),
+                    .pad_tap_tdi        (pad_tap_tdi),
+                    .pad_tap_tms        (pad_tap_tms),
+                    .pad_tap_tck        (pad_tap_tck),
+                    // Inouts
+                    .PA                 (PA[CHIP_PORT_A_WIDTH-1:0]),
+                    .TMS                (TMS),
+                    .TDI                (TDI),
+                    .TCK                (TCK),
+                    .TDO                (TDO),
+                    // Inputs
+                    .pad_pmux_din       (pad_pmux_din[CHIP_PORT_A_WIDTH-1:0]),
+                    .pmux_pad_ie        (pmux_pad_ie[CHIP_PORT_A_WIDTH-1:0]),
+                    .pmux_pad_oe        (pmux_pad_oe[CHIP_PORT_A_WIDTH-1:0]),
+                    .tap_pad_tdo        (tap_pad_tdo),
+                    .tap_pad_tdo_oe     (tap_pad_tdo_oe));
 
 
 
@@ -679,7 +896,13 @@ module nanorv32_simpleahb (/*AUTOARG*/);
     ); */
     nanorv32_clkgen U_CLK_GEN (
 
-                               /*AUTOINST*/);
+                               /*AUTOINST*/
+                               // Outputs
+                               .clk_out         (clk),           // Templated
+                               .locked          (),              // Templated
+                               // Inputs
+                               .clk_in          (clk_in),
+                               .rst_n           (rst_n));
 
 
 
