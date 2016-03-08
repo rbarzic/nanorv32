@@ -386,9 +386,9 @@ begin
       end
 `endif
 
-     //$display("Wrote 0x%0x", dataword);
+     $display("Wrote 0x%0x", dataword);
    end
-
+   $display("Done writing %d word",word_count);
    // Send the CRC we computed
    jtag_write_stream(crc_calc_o, 6'd32,0);
 

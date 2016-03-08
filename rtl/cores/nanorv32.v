@@ -176,7 +176,7 @@ module nanorv32 (/*AUTOARG*/
    wire                                    alu_cond;
    wire                                    fifo_empty;
    wire                                    illegal_instruction_tmp;
-   wire                                    illegal_instruction = illegal_instruction & ~fifo_empty; 
+   wire                                    illegal_instruction = illegal_instruction & ~fifo_empty;
 
    reg [NANORV32_DATA_MSB:0]               mem2regfile;
 
@@ -202,6 +202,7 @@ module nanorv32 (/*AUTOARG*/
    wire                                     irq_ack;
 
    wire                                     allow_hidden_use_of_x0;
+   wire                                     reset_over;
 
 
    // to a "return from interrupt" as been detected
@@ -446,7 +447,7 @@ module nanorv32 (/*AUTOARG*/
           end// Mux definitions for alu
         default begin
               pc_branch <= 1'b0;
-        end 
+        end
       endcase
    end
 

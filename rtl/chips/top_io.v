@@ -30,11 +30,11 @@
 
 module top_io (/*AUTOARG*/
    // Outputs
-   pmux_pad_dout, pad_tap_tdi, pad_tap_tms, pad_tap_tck,
+   pad_pmux_din, pad_tap_tdi, pad_tap_tms, pad_tap_tck,
    // Inouts
    PA, TMS, TDI, TCK, TDO,
    // Inputs
-   pad_pmux_din, pmux_pad_ie, pmux_pad_oe, tap_pad_tdo,
+   pmux_pad_ie, pmux_pad_oe, pmux_pad_dout, tap_pad_tdo,
    tap_pad_tdo_oe
    );
 
@@ -43,10 +43,10 @@ module top_io (/*AUTOARG*/
 
 
 
-   input    [CHIP_PORT_A_WIDTH-1:0]      pad_pmux_din;          // To U_PA0 of std_pad.v, ...
+   output    [CHIP_PORT_A_WIDTH-1:0]     pad_pmux_din;          // To U_PA0 of std_pad.v, ...
    input    [CHIP_PORT_A_WIDTH-1:0]      pmux_pad_ie;         // To U_PA0 of std_pad.v, ...
    input    [CHIP_PORT_A_WIDTH-1:0]      pmux_pad_oe;         // To U_PA0 of std_pad.v, ...
-   output   [CHIP_PORT_A_WIDTH-1:0]      pmux_pad_dout;          // From U_PA0 of std_pad.v, ...
+   input   [CHIP_PORT_A_WIDTH-1:0]       pmux_pad_dout;          // From U_PA0 of std_pad.v, ...
 
    inout    [CHIP_PORT_A_WIDTH-1:0]      PA;
 
@@ -273,7 +273,7 @@ module top_io (/*AUTOARG*/
    // Special pad
 
    std_pad U_TDI (
-                   .dout                (),
+                   .dout                (1'b0),
                    .pad                 (TDI),                //
                    .din                 (pad_tap_tdi),     //
                    .oe               (1'b0),    //
@@ -288,14 +288,14 @@ module top_io (/*AUTOARG*/
                   .ie               (1'b0));    //
    std_pad U_TMS (
 
-                  .dout                (),     //
+                  .dout                (1'b0),     //
                   .pad                 (TMS),                //
                   .din                 (pad_tap_tms),     //
                   .oe               (1'b0),    //
                   .ie               (1'b1));    //
 
    std_pad U_TCK (
-                  .dout                (),     //
+                  .dout                (1'b0),     //
                   .pad                 (TCK),                //
                   .din                 (pad_tap_tck),     //
                   .oe               (1'b0),    //
