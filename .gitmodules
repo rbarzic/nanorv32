@@ -10,3 +10,4 @@
 [submodule "adv_debug_sys"]
 	path = adv_debug_sys
 	url = https://github.com/rbarzic/adv_debug_sys.git
+	branch = master

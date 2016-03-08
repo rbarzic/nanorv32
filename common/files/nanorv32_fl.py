@@ -75,6 +75,7 @@ def nanor32_fl(context):
             "adbg_wb_defines.v",
             "adbg_defines. v",
             "adbg_or1k_defines.v",
+            "adbg_defines.v",
         ]
     )
     # everything from adv_debug_sys is ok for RTL or synt
