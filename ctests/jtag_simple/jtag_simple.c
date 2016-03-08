@@ -8,7 +8,7 @@ void delay(uint32_t d) {
 }
 
 int main(void) {
-    delay(10);
+    delay(500);
     return 0;
 
 }
