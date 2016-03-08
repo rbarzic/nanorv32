@@ -89,6 +89,12 @@ def nanor32_fl(context):
         'dir': "{top}/adv_debug_sys/Hardware/adv_dbg_if/rtl/verilog/",
         'targets': 'synt,sim_rtl'
     })
+
+    l.append({
+        'file': "{top}/wisbone_2_ahb/src/ahbmas_wbslv_top.v",
+        'targets': 'synt,sim_rtl'
+    })
+
     # peripherals
 
     # Chip top levels
@@ -112,10 +118,12 @@ def nanor32_fl(context):
     l.append({
         'file': "{top}/rtl/ips/HastiSlaveMux.v",
         'targets': 'synt,sim_rtl'
-    })l.append({
+    })
+    l.append({
         'file': "{top}/rtl/ips/HastiXbar.v",
         'targets': 'synt,sim_rtl'
-    })l.append({
+    })
+    l.append({
         'file': "{top}/rtl/ips/Ahbmli.v",
         'targets': 'synt,sim_rtl'
     })

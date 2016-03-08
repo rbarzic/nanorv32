@@ -19,6 +19,10 @@ module jtag_simple;
    reg [15:0] input_data16 [0:15];
    reg [7:0]  input_data8 [0:15];
 
+   reg        failed;
+   integer    i;
+
+
    event      dbg_cpu0_access0;
    event      dbg_cpu0_access1;
 
@@ -78,6 +82,26 @@ module jtag_simple;
       do_module_burst_write(3'h4, 16'd16, 32'h10);  // 3-bit word size (bytes), 16-bit word count, 32-bit start address
       -> dbg_cpu0_access1;
       #1000;
+      $display("Selecting Wishbone module at time %t", $time);
+      select_debug_module(`DBG_TOP_WISHBONE_DEBUG_MODULE);
+      #1000;
+
+
+      failed = 0;
+      $display("Testing WB 32-bit burst write at time %t", $time);
+      do_module_burst_write(3'h4, 16'd16, 32'h0);  // 3-bit word size (bytes), 16-bit word count, 32-bit start address
+      #1000;
+      $display("Testing WB 32-bit burst read at time %t", $time);
+      do_module_burst_read(3'h4, 16'd16, 32'h0);
+      #1000;
+      for(i = 0; i < 16; i = i+1) begin
+         if(static_data32[i] != input_data32[i]) begin
+            failed = 1;
+            $display("32-bit data mismatch at index %d, wrote 0x%x, read 0x%x", i, static_data32[i], input_data32[i]);
+         end
+      end
+      if(!failed) $display("32-bit read/write OK!");
+
 
 
 

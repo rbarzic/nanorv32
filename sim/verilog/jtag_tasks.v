@@ -405,3 +405,94 @@ begin
 end
 
 endtask
+
+task do_module_burst_read;
+input [5:0] word_size_bytes;
+input [15:0] word_count;
+input [31:0] start_address;
+reg [3:0] opcode;
+reg status;
+reg [63:0] instream;
+integer i;
+integer j;
+reg [31:0] crc_calc_i;
+reg [31:0] crc_calc_o;  // temp signal...
+reg [31:0] crc_read;
+reg [5:0] word_size_bits;
+begin
+    $display("Doing burst read, word size %d, word count %d, start address 0x%x", word_size_bytes, word_count, start_address);
+    instream = 64'h0;
+    word_size_bits = word_size_bytes << 3;
+    crc_calc_i = 32'hffffffff;
+
+    // Send the command
+    case (word_size_bytes)
+       3'h1: opcode = `DBG_WB_CMD_BREAD8;
+       3'h2: opcode = `DBG_WB_CMD_BREAD16;
+       3'h4: opcode = `DBG_WB_CMD_BREAD32;
+       default:
+          begin
+           $display("Tried burst read with invalid word size (%0x), defaulting to 4-byte words", word_size_bytes);
+           opcode = `DBG_WB_CMD_BREAD32;
+          end
+   endcase
+
+   send_module_burst_command(opcode,start_address, word_count);  // returns to state idle
+
+   // Get us back to shift_dr mode to read a burst
+   write_bit(`JTAG_TMS_bit);  // select_dr_scan
+   write_bit(3'h0);           // capture_ir
+   write_bit(3'h0);           // shift_ir
+
+`ifdef ADBG_USE_HISPEED
+      // Get 1 status bit, then word_size_bytes*8 bits
+      status = 1'b0;
+      j = 0;
+      while(!status) begin
+         read_write_bit(3'h0, status);
+         j = j + 1;
+      end
+
+      if(j > 1) begin
+         $display("Took %0d tries before good status bit during burst read", j);
+      end
+`endif
+
+   // Now, repeat...
+   for(i = 0; i < word_count; i=i+1) begin
+
+`ifndef ADBG_USE_HISPEED
+      // Get 1 status bit, then word_size_bytes*8 bits
+      status = 1'b0;
+      j = 0;
+      while(!status) begin
+         read_write_bit(3'h0, status);
+         j = j + 1;
+      end
+
+      if(j > 1) begin
+         $display("Took %0d tries before good status bit during burst read", j);
+      end
+`endif
+
+     jtag_read_write_stream(64'h0, {2'h0,(word_size_bytes<<3)},0,instream);
+     //$display("Read 0x%0x", instream[31:0]);
+     compute_crc(crc_calc_i, instream[31:0], word_size_bits, crc_calc_o);
+     crc_calc_i = crc_calc_o;
+     if(word_size_bytes == 1) input_data8[i] = instream[7:0];
+     else if(word_size_bytes == 2) input_data16[i] = instream[15:0];
+     else input_data32[i] = instream[31:0];
+   end
+
+   // Read the data CRC from the debug module.
+   jtag_read_write_stream(64'h0, 6'd32, 1, crc_read);
+   if(crc_calc_o != crc_read) $display("CRC ERROR! Computed 0x%x, read CRC 0x%x", crc_calc_o, crc_read);
+   else $display("CRC OK!");
+
+   // Finally, shift out 5 0's, to make the next command a NOP
+   // Not necessary, debug unit won't latch a new opcode at the end of a burst
+   //jtag_write_stream(64'h0, 8'h5, 1);
+   write_bit(`JTAG_TMS_bit);  // update_ir
+   write_bit(3'h0);           // idle
+end
+endtask
