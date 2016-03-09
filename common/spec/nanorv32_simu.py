@@ -266,7 +266,7 @@ spec['nanorv32']['rv32i']['simu']['inst']['lui'] = {
 
 spec['nanorv32']['rv32i']['simu']['inst']['auipc'] = {
     'func' :  lambda c: (
-        c.update_rf( c.dec_rd, c.pc + (c.dec_imm20<<12) ,
+        c.update_rf( c.dec_rd, c.pc + (c.dec_imm20<<12)) ,
         c.pc + 4
     )
 }
@@ -331,7 +331,7 @@ spec['nanorv32']['rv32i']['simu']['inst']['xor'] = {
 
 spec['nanorv32']['rv32i']['simu']['inst']['srl'] = {
     'func' :  lambda c: (
-        c.update_rf( c.dec_rd, rshift(c.rf[c.dec_rs1],c.rf[c.dec_rs2]) ,
+        c.update_rf( c.dec_rd, rshift(c.rf[c.dec_rs1],c.rf[c.dec_rs2])) ,
         c.pc + 4
     )
 }

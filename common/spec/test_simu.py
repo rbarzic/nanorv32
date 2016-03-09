@@ -2,6 +2,13 @@ import sys
 import pprint as pp
 import inst_decod as id
 import nanorv32_simu as ns
+import argparse
+
+
+class UnalignedAddressError(Exception):
+    pass
+
+
 
 def bitfield(data,offset,size):
     mask = (1<<(size))-1
@@ -18,15 +25,21 @@ def get_match(decode_string):
     return decode_string.replace('?', '0')
 
 
-def sign_extend32(val,bits,xx=32):
-    "Sign extend a 'bits' long number to xx  bit"
-    # FIXME
-    return val
-
 def zero_extend32(val,bits,xx=32):
     "Zero extend a 'bits' long number to xx  bit"
-    # FIXME
-    return val
+
+    return (val2 ^ m)-m
+
+def sign_extend32(val,bits,xx=32):
+    "Sign extend a 'bits' long number to xx  bit"
+    sign_val = 0xFFFFFFFF<<(bits)
+    print "sign_val = " + hex(sign_val)
+    if val & (1<<(bits- 1)):
+        # msb set is set in original value
+        return val | sign_val
+    else:
+        return val
+
 
 
 class NanoRV32Core(object):
@@ -34,42 +47,90 @@ class NanoRV32Core(object):
     """
 
     def __init__(self):
-        self.codemem_size = 65536
+        # Data memory
         self.datamem_size = 65536
-        self.datamem_start = 0x20000000
+        self.datamem_start = 0x00000000
+        # Code memory
+        self.codemem_size = 65536
         self.codemem_start = 0x00000000
         self.rf = [0]*32
         self.pc = 0
         # Build dictionnaries for the decoder
         self.mask_dict = {inst :  int("0b" + get_mask (id.decode[inst]),2) for inst in id.decode.keys ()}
         self.match_dict = {inst : int( "0b" + get_match(id.decode[inst]),2) for inst in id.decode.keys()}
-        self.code_memory = [0]*(self.codemem_size/4)
-        self.data_memory = [0]*(self.datamem_size/4)
+        self.data_memory = [0]*(self.datamem_size) # byte-addressed memory
+        self.code_memory = [0]*(self.codemem_size) # byte-addressed memory
 
+
+    def fix_address(self,addr):
+        "Wrap address to avoid accessing unexistant memory"
+        return addr & 0x0000FFFF # 64K
 
     def mem_write_byte(self,addr,data):
-        pass
+        addr_f = self.fix_address(addr)
+        self.data_memory[addr_f] = data & 0x0FF
+
 
     def mem_write_halfword(self,addr,data):
+        if(addr & 0x01):
+            raise UnalignedAddressError("-E- Write Half word : " + hex(addr) )
+
+        addr_f = self.fix_address(addr)
+        self.data_memory[addr_f] = data & 0x0FF
+        self.data_memory[addr_f+1] = (data>>8) & 0x0FF
         pass
 
     def mem_write_word(self,addr,data):
+        if(addr & 0x03):
+            raise UnalignedAddressError("-E- Write word : " + hex(addr) )
+        self.data_memory[addr_f] = data & 0x0FF
+        self.data_memory[addr_f+1] = (data>>8) & 0x0FF
+        self.data_memory[addr_f+2] = (data>>16) & 0x0FF
+        self.data_memory[addr_f+3] = (data>>24) & 0x0FF
+
         pass
 
     def mem_read_byte(self,addr):
-        pass
+        addr_f = self.fix_address(addr)
+        return sign_extend32(self.data_memory[addr_f] & 0x0FF, bits=8)
+
 
     def mem_read_byte_u(self,addr):
-        pass
+        addr_f = self.fix_address(addr)
+        return self.data_memory[addr_f] & 0x0FF
+
 
     def mem_read_halfword(self,addr):
-        pass
+        if(addr & 0x01):
+            raise UnalignedAddressError("-E- Write Half word : " + hex(addr) )
 
-    def mem_read_halfword_u(self,addr):
-        pass
+        addr_f = self.fix_address(addr)
+        tmp0 = self.data_memory[addr_f] & 0x0FF
+        tmp1 = self.data_memory[addr_f+1] & 0x0FF
+        return sign_extend32(tmp0 + (tmp1<<8), bits=16)
 
     def mem_read_halfword(self,addr):
-        pass
+        if(addr & 0x01):
+            raise UnalignedAddressError("-E- Write Half word : " + hex(addr) )
+
+        addr_f = self.fix_address(addr)
+        tmp0 = self.data_memory[addr_f] & 0x0FF
+        tmp1 = self.data_memory[addr_f+1] & 0x0FF
+        return tmp0 + (tmp1<<8)
+
+
+    def mem_read_word_(self,addr):
+        addr_f = self.fix_address(addr)
+        tmp0 = self.data_memory[addr_f] & 0x0FF
+        tmp1 = self.data_memory[addr_f+1] & 0x0FF
+        tmp2 = self.data_memory[addr_f+2] & 0x0FF
+        tmp3 = self.data_memory[addr_f+3] & 0x0FF
+        tmp = tmp0
+        tmp += (tmp1<< 8)
+        tmp += (tmp2<<16)
+        tmp += (tmp3<< 24)
+        return tmp
+
 
 
     def new_instruction(self,inst):
@@ -133,13 +194,61 @@ class NanoRV32Core(object):
                 i += 1
             print
 
+    def load_code_memory(self,hex2_file):
+        with open(hex2_file) as f:
+            addr = 0;
+            for line in f:
+                word = int(line,16)
+                self.code_memory[addr] = word & 0x0FF
+                self.code_memory[addr+1] = (word>>8) & 0x0FF
+                self.code_memory[addr+2] = (word>>16) & 0x0FF
+                self.code_memory[addr+3] = (word>>24) & 0x0FF
+                addr += 4
 
-#if __name__ == '__main__':
-if True:
+    def get_instruction(self, addr):
+        addr_f = self.fix_address(addr)
+        tmp0 = self.code_memory[addr_f] & 0x0FF
+        tmp1 = self.code_memory[addr_f+1] & 0x0FF
+        tmp2 = self.code_memory[addr_f+2] & 0x0FF
+        tmp3 = self.code_memory[addr_f+3] & 0x0FF
+        tmp = tmp0
+        tmp += (tmp1<< 8)
+        tmp += (tmp2<<16)
+        tmp += (tmp3<< 24)
+        return tmp
+
+
+def get_args():
+    """
+    Get command line arguments
+    """
+
+    parser = argparse.ArgumentParser(description="""
+Put description of application here
+                   """)
+    parser.add_argument('--hex2', action='store', dest='hex2',
+                        help='hex2 file to be load in the memory', default="")
+
+
+
+    parser.add_argument('--version', action='version', version='%(prog)s 0.1')
+
+    return parser.parse_args()
+
+
+if __name__ == '__main__':
+
+    args= get_args()
 
     nrv = NanoRV32Core()
 
+    if args.hex2 != "":
+        nrv.load_code_memory(args.hex2)
+    else:
+        sys.exit("No hex2 file specified (use --hex2=<file name>)")
 
+    print "Intruction #0 : " + hex(nrv.get_instruction(0))
+    print "Intruction #1 : " + hex(nrv.get_instruction(4))
 
     addi=0xff030313 # addi	t1,t1,-16
     auipc=0x20000297
@@ -153,4 +262,8 @@ if True:
     _, new_pc = nrv.execute_instruction(inst_str)
     print "New PC = " + str(new_pc)
     nrv.dump_regfile()
-    pass
+
+    a = 255
+    print "a = " + hex(a)
+    b = sign_extend32(a,8)
+    print "b = " + hex(b)
