@@ -18,7 +18,15 @@ def get_match(decode_string):
     return decode_string.replace('?', '0')
 
 
+def sign_extend32(val,bits,xx=32):
+    "Sign extend a 'bits' long number to xx  bit"
+    # FIXME
+    return val
 
+def zero_extend32(val,bits,xx=32):
+    "Zero extend a 'bits' long number to xx  bit"
+    # FIXME
+    return val
 
 
 class NanoRV32Core(object):
@@ -26,13 +34,42 @@ class NanoRV32Core(object):
     """
 
     def __init__(self):
+        self.codemem_size = 65536
+        self.datamem_size = 65536
+        self.datamem_start = 0x20000000
+        self.codemem_start = 0x00000000
         self.rf = [0]*32
         self.pc = 0
         # Build dictionnaries for the decoder
         self.mask_dict = {inst :  int("0b" + get_mask (id.decode[inst]),2) for inst in id.decode.keys ()}
         self.match_dict = {inst : int( "0b" + get_match(id.decode[inst]),2) for inst in id.decode.keys()}
+        self.code_memory = [0]*(self.codemem_size/4)
+        self.data_memory = [0]*(self.datamem_size/4)
 
 
+    def mem_write_byte(self,addr,data):
+        pass
+
+    def mem_write_halfword(self,addr,data):
+        pass
+
+    def mem_write_word(self,addr,data):
+        pass
+
+    def mem_read_byte(self,addr):
+        pass
+
+    def mem_read_byte_u(self,addr):
+        pass
+
+    def mem_read_halfword(self,addr):
+        pass
+
+    def mem_read_halfword_u(self,addr):
+        pass
+
+    def mem_read_halfword(self,addr):
+        pass
 
 
     def new_instruction(self,inst):
@@ -53,6 +90,9 @@ class NanoRV32Core(object):
         self.dec_shamt = bitfield(inst,offset=20,size=5)
         self.dec_func4 = bitfield(inst,offset=28,size=4)
         self.dec_func12 = bitfield(inst,offset=20,size=12)
+
+        self.dec_imm12_se = sign_extend32(self.dec_imm12,12)
+        self.dec_sb_offset = 0 # FIXME - Offset for SB instruction
 
         #@end[sim_instruction_fields]
     def update_rf(self,idx,val):
@@ -99,24 +139,7 @@ if True:
 
     nrv = NanoRV32Core()
 
-    g = lambda x: (x+1,x)
 
-    h = lambda c : (c.r,c)
-
-    b = g(2)
-    c = 0xCAFEBABE
-    d = bitfield(c,offset=4,size=4)
-    e = bitfield(c,offset=16,size=4)
-
-    print hex(d)
-    print hex(e)
-    print id.decode['and']
-    print get_mask(id.decode['and'])
-    print get_match(id.decode['and'])
-    mask_dict = {inst :  int("0b" + get_mask (id.decode[inst]),2) for inst in id.decode.keys ()}
-    match_dict = {inst : int( "0b" + get_match(id.decode[inst]),2) for inst in id.decode.keys()}
-    #pp.pprint(mask_dict)
-    #pp.pprint(match_dict)
 
     addi=0xff030313 # addi	t1,t1,-16
     auipc=0x20000297

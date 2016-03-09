@@ -10,19 +10,24 @@ spec = av.AutoVivification()
 
 # Instruction specific implementation
 
-
+def rshift(val, n):
+    return val>>n if val >= 0 else (val+0x100000000)>>n
 
 spec['nanorv32']['rv32i']['simu']['inst']['jalr'] = {
-    'func' :  lambda c: (  c.update_rf(c.dec_rd,c.pc),
-                           c.pc  + c.imm12 )
+    'func' :  lambda c: (
+        c.update_rf(c.dec_rd,c.pc),
+        c.pc  + c.dec_imm12_se
+    )
 }
 
 
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['addi'] = {
-   'func' :  lambda c: (  c.update_rf(c.dec_rd, c.rf[c.dec_rs1] +  c.dec_imm12),
-                           c.pc + 4 )
+   'func' :  lambda c: (
+       c.update_rf(c.dec_rd, c.rf[c.dec_rs1] +  c.dec_imm12_se),
+       c.pc + 4
+   )
 }
 
 spec['nanorv32']['rv32i']['simu']['inst']['mul'] = {
@@ -34,134 +39,130 @@ spec['nanorv32']['rv32i']['simu']['inst']['mul'] = {
 
 spec['nanorv32']['rv32i']['simu']['inst']['mulh'] = {
     'func' :  lambda c: (
-        c.update_rf(c.dec_rd, c.rf[c.dec_rs1] * c.rf[c.dec_rs2]),
+        c.update_rf(c.dec_rd, (c.rf[c.dec_rs1] * c.rf[c.dec_rs2])>>32) ,
         c.pc + 4
     )
 
 }
 spec['nanorv32']['rv32i']['simu']['inst']['mulhsu'] = {
-     'alu' : {
-        'op' : 'mulhsu',
-    },
+    'func' :  lambda c: (
+        c.update_rf(c.dec_rd, (c.rf [c.dec_rs1] * abs(c.rf [c.dec_rs2]))>>32) ,
+        c.pc + 4
+    )
 }
 spec['nanorv32']['rv32i']['simu']['inst']['mulhu'] = {
-     'alu' : {
-        'op' : 'mulhu',
-    },
+    'func' :  lambda c: (
+        c.update_rf(c.dec_rd, (abs(c.rf [c.dec_rs1]) * abs(c.rf [c.dec_rs2]))>>32) ,
+        c.pc + 4
+    )
 }
 
 spec['nanorv32']['rv32i']['simu']['inst']['div'] = {
-     'alu' : {
-        'op' : 'div',
-    },
+    'func' :  lambda c: (
+        c.update_rf(c.dec_rd, (c.rf [c.dec_rs1] / c.rf [c.dec_rs2])>>32 if c.rf [c.dec_rs2] !=0 else -1 ) ,
+        c.pc + 4
+    )
+
 }
 spec['nanorv32']['rv32i']['simu']['inst']['divu'] = {
-     'alu' : {
-        'op' : 'divu',
-    },
+    'func' :  lambda c: (
+        c.update_rf(c.dec_rd, (abs(c.rf [c.dec_rs1]) / abs(c.rf[c.dec_rs2]))>>32 if c.rf [c.dec_rs2] !=0 else -1 ) ,
+        c.pc + 4
+    )
+
 }
 spec['nanorv32']['rv32i']['simu']['inst']['rem'] = {
-     'alu' : {
-        'op' : 'rem',
-    },
+     'func' :  lambda c: (
+        c.update_rf(c.dec_rd, (c.rf [c.dec_rs1] / c.rf[c.dec_rs2])>>32 if c.rf [c.dec_rs2] !=0 else c.rf [c.dec_rs2] ) ,
+        c.pc + 4
+    )
 }
 spec['nanorv32']['rv32i']['simu']['inst']['remu'] = {
-     'alu' : {
-        'op' : 'remu',
-    },
+    'func' :  lambda c: (
+        c.update_rf(c.dec_rd, (abs(c.rf [c.dec_rs1]) / abs(c.rf[c.dec_rs2]))>>32 if c.rf [c.dec_rs2] !=0 else c.rf [c.dec_rs2] ) ,
+        c.pc + 4
+    )
+
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['slli'] = {
-     'alu' : {
-        'porta' : 'rs1',
-        'portb' : 'shamt',
-         'op'    : 'lshift',
-    },
+    'func' :  lambda c: (
+        c.update_rf( c.dec_rd, c.rf[c.dec_rs1] << c.dec_shamt) ,
+        c.pc + 4
+    )
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['slti'] = {
-    'alu' : {
-        'porta' : 'rs1',
-        'portb' : 'imm12',
-        'op'    : 'lt_signed',
-    },
+    'func' :  lambda c: (
+        c.update_rf( c.dec_rd, 1 if c.rf[c.dec_rs1] < c.dec_imm12_se else 0) ,
+        c.pc + 4
+    )
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['sltiu'] = {
-    'alu' : {
-        'porta' : 'rs1',
-        'portb' : 'imm12',
-        'op'    : 'lt_unsigned',
-    },
+    'func' :  lambda c: (
+        c.update_rf( c.dec_rd, 1 if abs(c.rf[c.dec_rs1]) < abs(c.dec_imm12) else 0) ,
+        c.pc + 4
+    )
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['xori'] = {
-    'alu' : {
-        'op' : 'xor',
-    },
+    'func' :  lambda c: (
+        c.update_rf( c.dec_rd, c.rf[c.dec_rs1] ^ c.dec_imm12_se) ,
+        c.pc + 4
+    )
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['srli'] = {
-    'alu' : {
-        'porta' : 'rs1',
-        'portb' : 'shamt',
-        'op'    : 'rshift',
-    },
+    'func' :  lambda c: (
+        c.update_rf( c.dec_rd, rshift(c.rf[c.dec_rs1],c.dec_shamt)) ,
+        c.pc + 4
+    )
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['srai'] = {
-    'alu' : {
-        'porta' : 'rs1',
-        'portb' : 'shamt',
-        'op'    : 'arshift', # Arithmetic right shift
-    },
+     'func' :  lambda c: (
+        c.update_rf( c.dec_rd, c.rf[c.dec_rs1] >> c.dec_shamt) ,
+        c.pc + 4
+    )
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['ori'] = {
-    'alu' : {
-        'op' : 'or',
-    },
+    'func' :  lambda c: (
+        c.update_rf( c.dec_rd, c.rf[c.dec_rs1] | c.dec_imm12_se) ,
+        c.pc + 4
+    )
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['andi'] = {
-    'alu' : {
-        'op' : 'and',
-    },
+    'func' :  lambda c: (
+        c.update_rf( c.dec_rd, c.rf[c.dec_rs1] | c.dec_imm12_se) ,
+        c.pc + 4
+    )
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['lb'] = {
-    'regfile' : {
-        'source' : 'datamem',
-    },
-
-    'datamem' : {
-        'size_read' : 'byte',
-        'write' : 'no',
-        'read' : 'yes',
-    }
-
+    'func' :  lambda c: (
+        c.update_rf( c.dec_rd, c.mem_read_byte(c.rf[c.dec_rs1] + c.dec_imm12_se)) ,
+        c.pc + 4
+    )
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['lw'] = {
-    'regfile' : {
-        'source' : 'datamem',
-    },
-    'datamem' : {
-        'write' : 'no',
-        'read' : 'yes',
-        'size_read' : 'word',
-    },
-
+    'func' :  lambda c: (
+        c.update_rf( c.dec_rd, c.mem_read_word(c.rf[c.dec_rs1] + c.dec_imm12_se)) ,
+        c.pc + 4
+    )
 }
 
 
@@ -174,40 +175,25 @@ spec['nanorv32']['rv32i']['simu']['inst']['lw'] = {
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['lbu'] = {
-    'regfile' : {
-        'source' : 'datamem',
-    },
-
-    'datamem' : {
-        'size_read' : 'byte_unsigned',
-        'write' : 'no',
-        'read' : 'yes',
-    }
+    'func' :  lambda c: (
+        c.update_rf( c.dec_rd, c.mem_read_byte_u(c.rf[c.dec_rs1] + c.dec_imm12_se)) ,
+        c.pc + 4
+    )
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['lhu'] = {
-    'regfile' : {
-        'source' : 'datamem',
-    },
-
-    'datamem' : {
-        'size_read' : 'halfword_unsigned',
-        'write' : 'no',
-        'read' : 'yes',
-    }
+    'func' :  lambda c: (
+        c.update_rf( c.dec_rd, c.mem_read_halfword_u(c.rf[c.dec_rs1] + c.dec_imm12_se)) ,
+        c.pc + 4
+    )
 }
 
 spec['nanorv32']['rv32i']['simu']['inst']['lh'] = {
-    'regfile' : {
-        'source' : 'datamem',
-    },
-
-    'datamem' : {
-        'size_read' : 'halfword',
-        'write' : 'no',
-        'read' : 'yes',
-    }
+    'func' :  lambda c: (
+        c.update_rf( c.dec_rd, c.mem_read_halfword(c.rf[c.dec_rs1] + c.dec_imm12_se)) ,
+        c.pc + 4
+    )
 }
 
 
@@ -223,88 +209,76 @@ spec['nanorv32']['rv32i']['simu']['inst']['fence_i'] = {
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['beq'] = {
-    'alu' : {
-        'op' : 'eq',
-    },
-    'pc' : {
-        'next' : 'cond_pc_plus_immsb'
-    },
+    'func' :  lambda c: (
+        None,
+        c.pc + self.sb_offset if c.rf[c.dec_rs1] == c.rf[c.dec_rs2] else c.pc + 4
+    )
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['bne'] = {
-    'alu' : {
-        'op' : 'neq',
-    },
-    'pc' : {
-        'next' : 'cond_pc_plus_immsb'
-    },
+    'func' :  lambda c: (
+        None,
+        c.pc + c.dec_sb_offset if c.rf[c.dec_rs1] != c.rf[c.dec_rs2] else c.pc + 4
+    )
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['blt'] = {
-    'alu' : {
-        'op' : 'lt_signed',
-    },
-    'pc' : {
-        'next' : 'cond_pc_plus_immsb'
-    },
-
+    'func' :  lambda c: (
+        None,
+        c.pc + c.dec_sb_offset if c.rf[c.dec_rs1] < c.rf[c.dec_rs2] else c.pc + 4 # FIXME - signed ?
+    )
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['bge'] = {
-    'alu' : {
-        'op' : 'ge_signed', # Greater or equal (signed)
-    },
-    'pc' : {
-        'next' : 'cond_pc_plus_immsb'
-    },
+    'func' :  lambda c: (
+        None,
+        c.pc + c.dec_sb_offset if c.rf[c.dec_rs1] >= c.rf[c.dec_rs2] else c.pc + 4 # FIXME - signed ?
+    )
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['bltu'] = {
-    'alu' : {
-        'op' : 'lt_unsigned',
-    },
-    'pc' : {
-        'next' : 'cond_pc_plus_immsb'
-    },
+     'func' :  lambda c: (
+        None,
+        c.pc + c.sb_offset if abs(c.rf[c.dec_rs1]) < abs(c.rf[c.dec_rs2]) else c.pc + 4 # FIXME - signed ?
+    )
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['bgeu'] = {
-    'alu' : {
-        'op' : 'ge_unsigned', # Greater or equal (unsigned)
-    },
-    'pc' : {
-        'next' : 'cond_pc_plus_immsb'
-    },
+   'func' :  lambda c: (
+        None,
+        c.pc + c.sb_offset if abs(c.rf[c.dec_rs1]) >= abs(c.rf[c.dec_rs2]) else c.pc + 4 # FIXME - signed ?
+    )
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['lui'] = {
-    'alu' : {
-        'porta' : 'rs1',
-        'portb' : 'imm20u',
-        'op' : 'nop',
-    },
+    'func' :  lambda c: (
+        c.update_rf( c.dec_rd, c.dec_imm20<<12) ,
+        c.pc + 4
+    )
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['auipc'] = {
-    'alu' : {
-        'op' : 'add',
-    },
+    'func' :  lambda c: (
+        c.update_rf( c.dec_rd, c.pc + (c.dec_imm20<<12) ,
+        c.pc + 4
+    )
 }
 
 
 # {{{ add
 
 spec['nanorv32']['rv32i']['simu']['inst']['add'] = {
-     'alu' : {
-        'op' : 'add',
-    },
+    'func' :  lambda c: (
+        c.update_rf(c.dec_rd, (c.rf[c.dec_rs1] + c.rf[c.dec_rs2])) ,
+        c.pc + 4
+    )
 }
 
 # }}}
@@ -312,9 +286,10 @@ spec['nanorv32']['rv32i']['simu']['inst']['add'] = {
 # {{{ sub
 
 spec['nanorv32']['rv32i']['simu']['inst']['sub'] = {
-     'alu' : {
-        'op' : 'sub',
-    },
+    'func' :  lambda c: (
+        c.update_rf(c.dec_rd, (c.rf[c.dec_rs1] - c.rf[c.dec_rs2])) ,
+        c.pc + 4
+    )
 }
 
 # }}}
@@ -322,68 +297,67 @@ spec['nanorv32']['rv32i']['simu']['inst']['sub'] = {
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['sll'] = {
-    'alu' : {
-        'porta' : 'rs1',
-        'portb' : 'rs2',
-        'op'    : 'lshift',
-    },
+    'func' :  lambda c: (
+        c.update_rf( c.dec_rd, c.rf[c.dec_rs1] << c.rf[c.dec_rs2]) ,
+        c.pc + 4
+    )
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['slt'] = {
-     'alu' : {
-        'porta' : 'rs1',
-        'portb' : 'rs2',
-        'op'    : 'lt_signed',
-    },
+    'func' :  lambda c: (
+        c.update_rf( c.dec_rd, 1 if c.rf[c.dec_rs1] < c.rf[c.dec_rs2] else 0) ,
+        c.pc + 4
+    )
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['sltu'] = {
-         'alu' : {
-        'porta' : 'rs1',
-        'portb' : 'rs2',
-        'op'    : 'lt_unsigned',
-    },
+    'func' :  lambda c: (
+        c.update_rf( c.dec_rd, 1 if abs(c.rf[c.dec_rs1]) < abs(c.rf[c.dec_rs2]) else 0) ,
+        c.pc + 4
+    )
+
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['xor'] = {
-    'alu' : {
-        'op' : 'xor',
-    },
+    'func' :  lambda c: (
+        c.update_rf(c.dec_rd, (c.rf[c.dec_rs1] ^ c.rf[c.dec_rs2])) ,
+        c.pc + 4
+    )
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['srl'] = {
-    'alu' : {
-        'porta' : 'rs1',
-        'portb' : 'rs2',
-        'op'    : 'rshift',
-    },
+    'func' :  lambda c: (
+        c.update_rf( c.dec_rd, rshift(c.rf[c.dec_rs1],c.rf[c.dec_rs2]) ,
+        c.pc + 4
+    )
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['sra'] = {
-    'alu' : {
-        'porta' : 'rs1',
-        'portb' : 'rs2',
-        'op'    : 'arshift', # Arithmetic right shift
-    },
+     'func' :  lambda c: (
+        c.update_rf( c.dec_rd, c.rf[c.dec_rs1] >> c.rf[c.dec_rs2]) ,
+        c.pc + 4
+    )
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['or'] = {
-    'alu' : {
-        'op' : 'or',
-    },
+    'func' :  lambda c: (
+        c.update_rf(c.dec_rd, (c.rf[c.dec_rs1] | c.rf[c.dec_rs2])) ,
+        c.pc + 4
+    )
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['and'] = {
-    'alu' : {
-        'op' : 'and',
-    },
+    'func' :  lambda c: (
+        c.update_rf(c.dec_rd, (c.rf[c.dec_rs1] & c.rf[c.dec_rs2])) ,
+        c.pc + 4
+    )
 }
 
 
@@ -398,11 +372,11 @@ spec['nanorv32']['rv32i']['simu']['inst']['sbreak'] = {
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['sb'] = {
-     'datamem' : {
-        'write' : 'yes',
-        'read' : 'no',
-         'size_write' : 'byte',
-    },
+    'func' :  lambda c: (
+        c.mem_write_byte(c.rf[c.dec_rs1] + c.dec_imm12_se, c.rf[c.dec_rd]) ,
+        c.pc + 4
+    )
+
 }
 
 
