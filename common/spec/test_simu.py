@@ -33,7 +33,7 @@ def zero_extend32(val,bits,xx=32):
 def sign_extend32(val,bits,xx=32):
     "Sign extend a 'bits' long number to xx  bit"
     sign_val = 0xFFFFFFFF<<(bits)
-    print "sign_val = " + hex(sign_val)
+    # print "sign_val = " + hex(sign_val)
     if val & (1<<(bits- 1)):
         # msb set is set in original value
         return val | sign_val
@@ -153,7 +153,12 @@ class NanoRV32Core(object):
         self.dec_func12 = bitfield(inst,offset=20,size=12)
 
         self.dec_imm12_se = sign_extend32(self.dec_imm12,12)
-        self.dec_sb_offset = 0 # FIXME - Offset for SB instruction
+        # SB type instruction immediate reconstruction
+        tmp = bitfield(inst,offset=8,size=4)*2 # [4:1]
+        tmp += bitfield(inst,offset=25,size=6)*(2**5) # [10:5]
+        tmp += bitfield(inst,offset=1,size=1)*(2**11) # [11]
+        tmp += bitfield(inst,offset=31,size=1)*(2**12) # [12]
+        self.dec_sb_offset = tmp #
 
         #@end[sim_instruction_fields]
     def update_rf(self,idx,val):
@@ -175,12 +180,6 @@ class NanoRV32Core(object):
         "Execute the current instruction"
         if inst_str in ns.spec['nanorv32']['rv32i']['simu']['inst']:
             f = dict(ns.spec ['nanorv32']['rv32i']['simu']['inst'][inst_str])
-            #tmp = dict()
-            #tmp['func'] = lambda(ns.spec ['nanorv32'] ['rv32i'] ['simu'] ['inst'] ['func'])
-
-            print "Type of f : " + str(type(f))
-            print "Type of f[] : " + str(type(f['func']))
-            #print "Type of t[] : " + str(type(tmp['func']))
 
             return f['func'](self)
 
@@ -250,20 +249,29 @@ if __name__ == '__main__':
     print "Intruction #0 : " + hex(nrv.get_instruction(0))
     print "Intruction #1 : " + hex(nrv.get_instruction(4))
 
-    addi=0xff030313 # addi	t1,t1,-16
-    auipc=0x20000297
+    nrv.pc = 0;
+    while True:
+        sys.stdout.write("PC : 0x{:08X} ".format(nrv.pc))
+        inst = nrv.get_instruction(nrv.pc)
+        nrv.new_instruction(inst)
 
-    print nrv.match_instruction(addi)
-    print nrv.match_instruction(auipc)
+        inst_str =  nrv.match_instruction(inst)
+        sys.stdout.write(inst_str)
+        print
+        _, new_pc = nrv.execute_instruction(inst_str)
+        nrv.pc = new_pc
 
-
-    nrv.new_instruction(addi) # update internal field used for decoding
-    inst_str =  nrv.match_instruction(addi)
-    _, new_pc = nrv.execute_instruction(inst_str)
-    print "New PC = " + str(new_pc)
-    nrv.dump_regfile()
-
-    a = 255
-    print "a = " + hex(a)
-    b = sign_extend32(a,8)
-    print "b = " + hex(b)
+    #print nrv.match_instruction(addi)
+    #print nrv.match_instruction(auipc)
+    #
+    #
+    #nrv.new_instruction(addi) # update internal field used for decoding
+    #inst_str =  nrv.match_instruction(addi)
+    #_, new_pc = nrv.execute_instruction(inst_str)
+    #print "New PC = " + str(new_pc)
+    #nrv.dump_regfile()
+    #
+    #a = 255
+    #print "a = " + hex(a)
+    #b = sign_extend32(a,8)
+    #print "b = " + hex(b)

@@ -211,7 +211,7 @@ spec['nanorv32']['rv32i']['simu']['inst']['fence_i'] = {
 spec['nanorv32']['rv32i']['simu']['inst']['beq'] = {
     'func' :  lambda c: (
         None,
-        c.pc + self.sb_offset if c.rf[c.dec_rs1] == c.rf[c.dec_rs2] else c.pc + 4
+        c.pc + c.dec_sb_offset if c.rf[c.dec_rs1] == c.rf[c.dec_rs2] else c.pc + 4
     )
 }
 
@@ -243,7 +243,7 @@ spec['nanorv32']['rv32i']['simu']['inst']['bge'] = {
 spec['nanorv32']['rv32i']['simu']['inst']['bltu'] = {
      'func' :  lambda c: (
         None,
-        c.pc + c.sb_offset if abs(c.rf[c.dec_rs1]) < abs(c.rf[c.dec_rs2]) else c.pc + 4 # FIXME - signed ?
+        c.pc + c.dec_sb_offset if abs(c.rf[c.dec_rs1]) < abs(c.rf[c.dec_rs2]) else c.pc + 4 # FIXME - signed ?
     )
 }
 
@@ -251,7 +251,7 @@ spec['nanorv32']['rv32i']['simu']['inst']['bltu'] = {
 spec['nanorv32']['rv32i']['simu']['inst']['bgeu'] = {
    'func' :  lambda c: (
         None,
-        c.pc + c.sb_offset if abs(c.rf[c.dec_rs1]) >= abs(c.rf[c.dec_rs2]) else c.pc + 4 # FIXME - signed ?
+        c.pc + c.dec_sb_offset if abs(c.rf[c.dec_rs1]) >= abs(c.rf[c.dec_rs2]) else c.pc + 4 # FIXME - signed ?
     )
 }
 
