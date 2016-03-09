@@ -1,5 +1,6 @@
 import AutoVivification as av
 import VerilogTemplates as vt
+import PythonTemplates as pt
 import math
 import copy
 import sys
@@ -39,6 +40,11 @@ def verilog_instruction_format(inst_format):
 def verilog_inst_field(dic_inst_format):
     """Return bus description for each instruction field"""
     return ''.join([vt.decode_inst_field.format(**d)
+                    for _, d in dic_inst_format.items()]) + '\n'
+
+def python_inst_field(dic_inst_format):
+    """Return  description for each instruction field"""
+    return ''.join([pt.decode_inst_field.format(**d)
                     for _, d in dic_inst_format.items()]) + '\n'
 
 
@@ -87,6 +93,17 @@ def verilog_decode_definition(decode_dic):
         d['inst_uc'] = k.upper()
         d['val'] = v
         res += vt.decode_def.format(**d)
+    return res
+
+def python_decode_definition(decode_dic):
+    """Return decode string definition for each instruction using dictionary returned by build_decode_string"""
+    res = ""
+    for k, v in decode_dic.items():
+        d = dict()
+        d['inst_uc'] = k.upper()
+        d['inst_lc'] = k.lower()
+        d['val'] = v
+        res += pt.decode_def.format(**d)
     return res
 
 
