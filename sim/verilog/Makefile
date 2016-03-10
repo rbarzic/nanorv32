@@ -21,6 +21,7 @@ vivado_file_list.txt:
 IVERILOG_OPTS =  -g2005 -DIVERILOG=1
 IVERILOG_OPTS += -DTB=tb_nanorv32
 IVERILOG_OPTS += $(VCD_EXTRA_MODULE) -f   iverilog_file_list.txt $(EXTRA_V_SRC)
+IVERILOG_OPTS += -DTRACE
 
 
 compile:

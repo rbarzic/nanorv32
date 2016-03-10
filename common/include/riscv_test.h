@@ -22,7 +22,7 @@ main:\
     j exit;
 
 #define RVTEST_FAIL \
-    lui a0,0x0DEAD; \
+    lui a0,0x0DEADD; \
     j exit;
 
 

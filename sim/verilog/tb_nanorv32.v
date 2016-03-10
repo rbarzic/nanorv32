@@ -174,7 +174,7 @@ module tb_nanorv32;
               $finish(0);
            end
          else
-           if(x10_a0 === 32'hDEAD0000) begin
+           if(x10_a0 === 32'hDEADD000) begin
               $display("-I- TEST FAILED");
               $finish(1);
            end
@@ -243,19 +243,19 @@ module tb_nanorv32;
 
   );
   integer f;
-  integer cur_time; 
+  integer cur_time;
   initial
     begin
       f = $fopen("trace.txt","w");
     end
 
-   always @ (posedge clk) begin 
+   always @ (posedge clk) begin
         cur_time = $time;
-        if (U_DUT.U_NANORV32_PIL.U_CPU.inst_ret) begin 
+        if (U_DUT.U_NANORV32_PIL.U_CPU.inst_ret) begin
           $fwrite(f,"%d ns, PC : %x  : I : %s %s, %s, %s \n",cur_time, pc_r, ascii_chain, reg_to_ascii_rd, reg_to_ascii_rs1, reg_to_ascii_rs2 ) ;
-          if (U_DUT.U_NANORV32_PIL.U_CPU.write_rd) 
+          if (U_DUT.U_NANORV32_PIL.U_CPU.write_rd)
           $fwrite(f,"%d ns, RD  %s <= %x \n",cur_time, reg_to_ascii_rd, U_DUT.U_NANORV32_PIL.U_CPU.rd ) ;
-          if (U_DUT.U_NANORV32_PIL.U_CPU.write_rd2) 
+          if (U_DUT.U_NANORV32_PIL.U_CPU.write_rd2)
           $fwrite(f,"%d ns, RD2 %s <= %x \n",cur_time, reg_to_ascii_rd2, U_DUT.U_NANORV32_PIL.U_CPU.rd2 ) ;
         end
      end

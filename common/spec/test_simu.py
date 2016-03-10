@@ -3,7 +3,7 @@ import pprint as pp
 import inst_decod as id
 import nanorv32_simu as ns
 import argparse
-
+import ctypes as ct
 
 class UnalignedAddressError(Exception):
     pass
@@ -82,7 +82,7 @@ class NanoRV32Core(object):
 
     def mem_write_word(self,addr,data):
         if(addr & 0x03):
-            raise UnalignedAddressError("-E- Write word : " + hex(addr) )
+            raise UnalignedAddressError("-E- Write word : " + hex(addr) + " bin : " + bin(addr))
         self.data_memory[addr_f] = data & 0x0FF
         self.data_memory[addr_f+1] = (data>>8) & 0x0FF
         self.data_memory[addr_f+2] = (data>>16) & 0x0FF
@@ -109,7 +109,7 @@ class NanoRV32Core(object):
         tmp1 = self.data_memory[addr_f+1] & 0x0FF
         return sign_extend32(tmp0 + (tmp1<<8), bits=16)
 
-    def mem_read_halfword(self,addr):
+    def mem_read_halfword_u(self,addr):
         if(addr & 0x01):
             raise UnalignedAddressError("-E- Write Half word : " + hex(addr) )
 
@@ -119,7 +119,9 @@ class NanoRV32Core(object):
         return tmp0 + (tmp1<<8)
 
 
-    def mem_read_word_(self,addr):
+    def mem_read_word(self,addr):
+        if(addr & 0x03):
+            raise UnalignedAddressError("-E- Write Half word : " + hex(addr) + " bin : " + bin(addr))
         addr_f = self.fix_address(addr)
         tmp0 = self.data_memory[addr_f] & 0x0FF
         tmp1 = self.data_memory[addr_f+1] & 0x0FF
@@ -147,7 +149,7 @@ class NanoRV32Core(object):
         self.dec_immsb2 = bitfield(inst,offset=25,size=7)
         self.dec_immsb1 = bitfield(inst,offset=7,size=5)
         self.dec_imm20 = bitfield(inst,offset=12,size=20)
-        self.dec_imm20uj = bitfield(inst,offset=12,size=20)
+
         self.dec_shamt = bitfield(inst,offset=20,size=5)
         self.dec_func4 = bitfield(inst,offset=28,size=4)
         self.dec_func12 = bitfield(inst,offset=20,size=12)
@@ -156,14 +158,30 @@ class NanoRV32Core(object):
         # SB type instruction immediate reconstruction
         tmp = bitfield(inst,offset=8,size=4)*2 # [4:1]
         tmp += bitfield(inst,offset=25,size=6)*(2**5) # [10:5]
-        tmp += bitfield(inst,offset=1,size=1)*(2**11) # [11]
+        tmp += bitfield(inst,offset=7,size=1)*(2**11) # [11]
         tmp += bitfield(inst,offset=31,size=1)*(2**12) # [12]
         self.dec_sb_offset = tmp #
+        self.dec_sb_offset_se =  sign_extend32(tmp,13)#
+        # UJ type
+        tmp = bitfield(inst,offset=21,size=10)*2 # imm[10:1]
+        tmp += bitfield(inst,offset=20,size=1)*(2**11) # [11]
+        tmp += bitfield(inst,offset=12,size=8)*(2**12) # [19:12]
+        tmp += bitfield(inst,offset=31,size=1)*(2**20) # [19:12]
+
+        self.dec_imm20uj =  tmp
+        self.dec_imm20uj_se =  sign_extend32(tmp,20)
+
+
 
         #@end[sim_instruction_fields]
     def update_rf(self,idx,val):
         "Write val at index idx in the register file"
-        self.rf[idx] = (val & 0x0FFFFFFFF) # 32-bit truncation
+        if idx != 0:
+            self.rf[idx] = (val & 0x0FFFFFFFF) # 32-bit truncation
+        else:
+            self.rf[0] = 0 # enforce....
+
+        return
 
     def match_instruction(self,inst):
         "return the instruction that match the integer value 'inst'"
@@ -228,6 +246,9 @@ Put description of application here
     parser.add_argument('--hex2', action='store', dest='hex2',
                         help='hex2 file to be load in the memory', default="")
 
+    parser.add_argument('--trace', action='store_true', dest='trace',
+                        help='hex2 file to be load in the memory', default=False)
+
 
 
     parser.add_argument('--version', action='version', version='%(prog)s 0.1')
@@ -242,24 +263,47 @@ if __name__ == '__main__':
     nrv = NanoRV32Core()
 
     if args.hex2 != "":
+        print("-I- Loading " + args.hex2)
         nrv.load_code_memory(args.hex2)
     else:
         sys.exit("No hex2 file specified (use --hex2=<file name>)")
 
-    print "Intruction #0 : " + hex(nrv.get_instruction(0))
-    print "Intruction #1 : " + hex(nrv.get_instruction(4))
-
     nrv.pc = 0;
     while True:
-        sys.stdout.write("PC : 0x{:08X} ".format(nrv.pc))
         inst = nrv.get_instruction(nrv.pc)
+        if args.trace:
+            sys.stdout.write("PC : 0x{:08X} I : 0x{:08X} ".format(nrv.pc,inst))
+        if nrv.pc == 0x00000100:
+            if nrv.rf[10] == 0xCAFFE000: #x10/a0
+                print
+                print "\n-I- TEST OK\n"
+                sys.exit()
+            elif nrv.rf[10] == 0xDEADD000: #x10/a0
+                print
+                nrv.dump_regfile()
+                print "\n-I- TEST FAILED\n"
+                sys.exit()
+            else:
+                print
+                nrv.dump_regfile()
+                print "\n-I- TEST FAILED (unknown reason)\n"
+                sys.exit()
+
+
         nrv.new_instruction(inst)
 
         inst_str =  nrv.match_instruction(inst)
-        sys.stdout.write(inst_str)
-        print
-        _, new_pc = nrv.execute_instruction(inst_str)
-        nrv.pc = new_pc
+        if args.trace:
+            sys.stdout.write(inst_str.ljust(8))
+        if inst_str != 'illegal_instruction':
+            _, new_pc,txt  = nrv.execute_instruction(inst_str)
+            if args.trace:
+                sys.stdout.write(" - " + txt)
+                print
+            nrv.pc = new_pc
+
+        else:
+            sys.exit("-E- Illegall instruction found !")
 
     #print nrv.match_instruction(addi)
     #print nrv.match_instruction(auipc)

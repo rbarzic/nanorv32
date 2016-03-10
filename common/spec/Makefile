@@ -31,3 +31,6 @@ emacs_auto:
 ahbmli:
 	make -C $(TOP)/ml-ahb-gen all JSON=$(TOP)/common/spec/nanorv32_ahbmli.json
 	cp $(TOP)/ml-ahb-gen/chisel/Ahbmli.v $(TOP)/rtl/ips
+
+check_simu:
+	@cat $(TOP)/common/instructions/rv32e_base.txt | xargs -n1 -IXXX  python test_simu.py  --hex2=../../sim/verilog/XXX.hex2

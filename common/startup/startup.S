@@ -44,7 +44,7 @@ bss_loop_done:
         // FIXME : should be only defined if running regression tests
         // from riscv-tests (otherwise, there is a risk of name collision)
 fail:
-	lui	a0,0xdead
+	lui	a0,0xDEADD // important to have 5 digits here
 	j	exit
 
 pass:
