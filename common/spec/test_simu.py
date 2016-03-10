@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import sys
 import pprint as pp
 import inst_decod as id
@@ -66,67 +67,80 @@ class NanoRV32Core(object):
         "Wrap address to avoid accessing unexistant memory"
         return addr & 0x0000FFFF # 64K
 
+    def decode_address(self, addr):
+        "Select a memory, depending of the address"
+        if addr>=0x20000000:
+            return self.data_memory
+        else:
+            return self.code_memory
+
+
     def mem_write_byte(self,addr,data):
+        mem = self.decode_address(addr)
         addr_f = self.fix_address(addr)
-        self.data_memory[addr_f] = data & 0x0FF
+        mem[addr_f] = data & 0x0FF
 
 
     def mem_write_halfword(self,addr,data):
         if(addr & 0x01):
             raise UnalignedAddressError("-E- Write Half word : " + hex(addr) )
-
+        mem = self.decode_address(addr)
         addr_f = self.fix_address(addr)
-        self.data_memory[addr_f] = data & 0x0FF
-        self.data_memory[addr_f+1] = (data>>8) & 0x0FF
-        pass
+        mem[addr_f] = data & 0x0FF
+        mem[addr_f+1] = (data>>8) & 0x0FF
 
     def mem_write_word(self,addr,data):
         if(addr & 0x03):
             raise UnalignedAddressError("-E- Write word : " + hex(addr) + " bin : " + bin(addr))
-        self.data_memory[addr_f] = data & 0x0FF
-        self.data_memory[addr_f+1] = (data>>8) & 0x0FF
-        self.data_memory[addr_f+2] = (data>>16) & 0x0FF
-        self.data_memory[addr_f+3] = (data>>24) & 0x0FF
+        mem = self.decode_address(addr)
+        addr_f = self.fix_address(addr)
+        mem[addr_f] = data & 0x0FF
+        mem[addr_f+1] = (data>>8) & 0x0FF
+        mem[addr_f+2] = (data>>16) & 0x0FF
+        mem[addr_f+3] = (data>>24) & 0x0FF
 
-        pass
 
     def mem_read_byte(self,addr):
+        mem = self.decode_address(addr)
         addr_f = self.fix_address(addr)
-        return sign_extend32(self.data_memory[addr_f] & 0x0FF, bits=8)
+
+        return sign_extend32(mem[addr_f] & 0x0FF, bits=8)
 
 
     def mem_read_byte_u(self,addr):
+        mem = self.decode_address(addr)
         addr_f = self.fix_address(addr)
-        return self.data_memory[addr_f] & 0x0FF
+        return mem[addr_f] & 0x0FF
 
 
     def mem_read_halfword(self,addr):
         if(addr & 0x01):
             raise UnalignedAddressError("-E- Write Half word : " + hex(addr) )
-
+        mem = self.decode_address(addr)
         addr_f = self.fix_address(addr)
-        tmp0 = self.data_memory[addr_f] & 0x0FF
-        tmp1 = self.data_memory[addr_f+1] & 0x0FF
+        tmp0 = mem[addr_f] & 0x0FF
+        tmp1 = mem[addr_f+1] & 0x0FF
         return sign_extend32(tmp0 + (tmp1<<8), bits=16)
 
     def mem_read_halfword_u(self,addr):
         if(addr & 0x01):
             raise UnalignedAddressError("-E- Write Half word : " + hex(addr) )
-
+        mem = self.decode_address(addr)
         addr_f = self.fix_address(addr)
-        tmp0 = self.data_memory[addr_f] & 0x0FF
-        tmp1 = self.data_memory[addr_f+1] & 0x0FF
+        tmp0 = mem[addr_f] & 0x0FF
+        tmp1 = mem[addr_f+1] & 0x0FF
         return tmp0 + (tmp1<<8)
 
 
     def mem_read_word(self,addr):
         if(addr & 0x03):
             raise UnalignedAddressError("-E- Write Half word : " + hex(addr) + " bin : " + bin(addr))
+        mem = self.decode_address(addr)
         addr_f = self.fix_address(addr)
-        tmp0 = self.data_memory[addr_f] & 0x0FF
-        tmp1 = self.data_memory[addr_f+1] & 0x0FF
-        tmp2 = self.data_memory[addr_f+2] & 0x0FF
-        tmp3 = self.data_memory[addr_f+3] & 0x0FF
+        tmp0 = mem[addr_f] & 0x0FF
+        tmp1 = mem[addr_f+1] & 0x0FF
+        tmp2 = mem[addr_f+2] & 0x0FF
+        tmp3 = mem[addr_f+3] & 0x0FF
         tmp = tmp0
         tmp += (tmp1<< 8)
         tmp += (tmp2<<16)
@@ -167,12 +181,13 @@ class NanoRV32Core(object):
         tmp += bitfield(inst,offset=20,size=1)*(2**11) # [11]
         tmp += bitfield(inst,offset=12,size=8)*(2**12) # [19:12]
         tmp += bitfield(inst,offset=31,size=1)*(2**20) # [19:12]
-
         self.dec_imm20uj =  tmp
         self.dec_imm20uj_se =  sign_extend32(tmp,20)
-
-
-
+        # S-Type (Store) offset
+        tmp = self.dec_imm12lo # [4:0]
+        tmp += self.dec_imm12hi*(2**5) # [5:11]
+        self.dec_store_imm12 = tmp
+        self.dec_store_imm12_se = sign_extend32(tmp,12)
         #@end[sim_instruction_fields]
     def update_rf(self,idx,val):
         "Write val at index idx in the register file"
@@ -248,6 +263,8 @@ Put description of application here
 
     parser.add_argument('--trace', action='store_true', dest='trace',
                         help='hex2 file to be load in the memory', default=False)
+
+
 
 
 

@@ -130,7 +130,7 @@ def load(c, mem_access_fn):
     rd_val = mem_access_fn(c,addr)
     new_pc = uint32(pc + 4)
     c.update_rf(rd,rd_val)
-    txt = "RF[rd={:02d}] <= MEM[0x{:08X}] (RF[rs1={:02d}]=0x{:08X} +   offset=0x{:08X}) ".format(rd,addr,rs1,rs1_val,offset)
+    txt = "RF[rd={:02d}] <= 0x{:08X} MEM[0x{:08X}] (RF[rs1={:02d}]=0x{:08X} +   offset=0x{:08X}) ".format(rd,rd_val,addr,rs1,rs1_val,offset)
     return (None,new_pc,txt)
 
 
@@ -140,26 +140,50 @@ def store(c, mem_access_fn):
 
     rs1_val = uint32(c.rf[rs1])
     rs2_val = uint32(c.rf[rs2])
-    offset = uint32(c.dec_imm12_se)
+    offset = uint32(c.dec_store_imm12_se)
     pc = uint32(c.pc)
     addr = rs1_val + offset
     # Mem access (using a function passed as a parameter)
     mem_access_fn(c,addr,rs2_val)
     new_pc = uint32(pc + 4)
-    c.update_rf(rd,rd_val)
-    txt = " MEM[0x{:08X}] <= RF[rs2={:02d}](RF[rs1={:02d}]=0x{:08X} +   offset=0x{:08X}) ".format(addr,rs2,rs1_val,offset)
+    txt = " MEM[0x{:08X}] <= RF[rs2={:02d}] : 0x{:08X} (RF[rs1={:02d}]=0x{:08X} +   offset=0x{:08X}) ".format(addr,rs2,rs2_val,rs1,rs1_val,offset)
     return (None,new_pc,txt)
 
 def lw_fn(c,addr):
     return c.mem_read_word(addr)
 
+def lh_fn(c,addr):
+    return c.mem_read_halfword(addr)
+
+def lhu_fn(c,addr):
+    return c.mem_read_halfword_u(addr)
+
+def lb_fn(c,addr):
+    return c.mem_read_byte(addr)
+
+
+def lbu_fn(c,addr):
+    return c.mem_read_byte_u(addr)
+
+
 def sw_fn(c,addr,data):
     return c.mem_write_word(addr,data)
+def sh_fn(c,addr,data):
+    return c.mem_write_halfword(addr,data)
+def sb_fn(c,addr,data):
+    return c.mem_write_byte(addr,data)
+
 
 
 sim_lw = partial(load,mem_access_fn=lw_fn)
+sim_lh = partial(load,mem_access_fn=lh_fn)
+sim_lhu = partial(load,mem_access_fn=lhu_fn)
+sim_lb = partial(load,mem_access_fn=lb_fn)
+sim_lbu = partial(load,mem_access_fn=lbu_fn)
 
 sim_sw = partial(store,mem_access_fn=sw_fn)
+sim_sh = partial(store,mem_access_fn=sh_fn)
+sim_sb = partial(store,mem_access_fn=sb_fn)
 
 
 sim_add = partial(r_type,op=operator.add,op_str='+')
@@ -396,13 +420,6 @@ spec['nanorv32']['rv32i']['simu']['inst']['andi'] = {
 }
 
 
-spec['nanorv32']['rv32i']['simu']['inst']['lb'] = {
-    'func' :  lambda c: (
-        c.update_rf( c.dec_rd, c.mem_read_byte(c.rf[c.dec_rs1] + c.dec_imm12_se)) ,
-        c.pc + 4,
-        ""
-    )
-}
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['lw'] = {
@@ -410,37 +427,21 @@ spec['nanorv32']['rv32i']['simu']['inst']['lw'] = {
 }
 
 
-# spec['nanorv32']['rv32i']['simu']['inst']['ld'] = {
-#     'datamem' : {
-#         'write' : 'no',
-#         'read' : 'yes',
-#     },
-# }
-
-
 spec['nanorv32']['rv32i']['simu']['inst']['lbu'] = {
-    'func' :  lambda c: (
-        c.update_rf( c.dec_rd, c.mem_read_byte_u(c.rf[c.dec_rs1] + c.dec_imm12_se)) ,
-        c.pc + 4,
-        ""
-    )
+    'func' :  sim_lbu
+}
+
+spec['nanorv32']['rv32i']['simu']['inst']['lb'] = {
+    'func' :  sim_lb
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['lhu'] = {
-    'func' :  lambda c: (
-        c.update_rf( c.dec_rd, c.mem_read_halfword_u(c.rf[c.dec_rs1] + c.dec_imm12_se)) ,
-        c.pc + 4,
-        ""
-    )
+    'func' :  sim_lhu
 }
 
 spec['nanorv32']['rv32i']['simu']['inst']['lh'] = {
-    'func' :  lambda c: (
-        c.update_rf( c.dec_rd, c.mem_read_halfword(c.rf[c.dec_rs1] + c.dec_imm12_se)) ,
-        c.pc + 4,
-        ""
-    )
+    'func' :  sim_lh
 }
 
 
@@ -578,23 +579,13 @@ spec['nanorv32']['rv32i']['simu']['inst']['sbreak'] = {
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['sb'] = {
-    'func' :  lambda c: (
-        c.mem_write_byte(c.rf[c.dec_rs1] + c.dec_imm12_se, c.rf[c.dec_rd]) ,
-        c.pc + 4,
-        ""
-    )
+    'func' :  sim_sb
 
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['sh'] = {
-    'func' :  lambda c: (
-        c.mem_write_halfword(c.rf[c.dec_rs1] + c.dec_imm12_se, c.rf[c.dec_rd]) ,
-        c.pc + 4,
-        ""
-    )
-
-
+    'func' :  sim_sh
 }
 
 
