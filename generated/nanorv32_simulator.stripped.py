@@ -8,12 +8,6 @@ import ctypes as ct
 
 
 #@begin[py_csr_address]
-NANORV32_CSR_ADDR_CYCLEH = 0xc80
-NANORV32_CSR_ADDR_INSTRETH = 0xc82
-NANORV32_CSR_ADDR_TIMEH = 0xc81
-NANORV32_CSR_ADDR_TIME = 0xc01
-NANORV32_CSR_ADDR_INSTRET = 0xc02
-NANORV32_CSR_ADDR_CYCLE = 0xc00
 #@end[py_csr_address]
 
 class UnalignedAddressError(Exception):
@@ -72,7 +66,6 @@ class NanoRV32Core(object):
         self.data_memory = [0]*(self.datamem_size) # byte-addressed memory
         self.code_memory = [0]*(self.codemem_size) # byte-addressed memory
         self.csr = [0xCAFEBABE]*0x1000
-        self.init_csr()
 
     def fix_address(self,addr):
         "Wrap address to avoid accessing unexistant memory"
@@ -161,24 +154,6 @@ class NanoRV32Core(object):
 
     def new_instruction(self,inst):
         #@begin[sim_instruction_fields]
-        self.dec_opcode1 = bitfield(inst,offset=0,size=7)
-        self.dec_func3 = bitfield(inst,offset=12,size=3)
-        self.dec_func7 = bitfield(inst,offset=25,size=7)
-        self.dec_rd = bitfield(inst,offset=7,size=5)
-        self.dec_rs1 = bitfield(inst,offset=15,size=5)
-        self.dec_rs2 = bitfield(inst,offset=20,size=5)
-        self.dec_imm12 = bitfield(inst,offset=20,size=12)
-        self.dec_imm12hi = bitfield(inst,offset=25,size=7)
-        self.dec_imm12lo = bitfield(inst,offset=7,size=5)
-        self.dec_immsb2 = bitfield(inst,offset=25,size=7)
-        self.dec_immsb1 = bitfield(inst,offset=7,size=5)
-        self.dec_imm20 = bitfield(inst,offset=12,size=20)
-        self.dec_imm20uj = bitfield(inst,offset=12,size=20)
-        self.dec_shamt = bitfield(inst,offset=20,size=5)
-        self.dec_sys2_rs1 = bitfield(inst,offset=15,size=5)
-        self.dec_func12 = bitfield(inst,offset=20,size=12)
-        self.dec_sys1_rd = bitfield(inst,offset=7,size=5)
-
         #@end[sim_instruction_fields]
         self.dec_imm12_se = sign_extend32(self.dec_imm12,12)
         # SB type instruction immediate reconstruction
@@ -265,30 +240,7 @@ class NanoRV32Core(object):
         return self.csr[addr]
 
 
-    def update_csr(self):
-        self.csr[NANORV32_CSR_ADDR_CYCLE] +=1
-        self.csr[NANORV32_CSR_ADDR_TIME] +=1
-        self.csr[NANORV32_CSR_ADDR_INSTRET] +=1
-        if self.csr[NANORV32_CSR_ADDR_CYCLE] == 0x100000000:
-            self.csr[NANORV32_CSR_ADDR_CYCLE] = 0
-            self.csr[NANORV32_CSR_ADDR_CYCLEH] += 1
 
-        if self.csr[NANORV32_CSR_ADDR_TIME] == 0x100000000:
-            self.csr[NANORV32_CSR_ADDR_TIME] = 0
-            self.csr[NANORV32_CSR_ADDR_TIMEH] += 1
-
-        if self.csr[NANORV32_CSR_ADDR_INSTRET] == 0x100000000:
-            self.csr[NANORV32_CSR_ADDR_INSTRET] = 0
-            self.csr[NANORV32_CSR_ADDR_INSTRETH] += 1
-        pass
-
-    def init_csr(self):
-        self.csr[NANORV32_CSR_ADDR_CYCLE] = 0
-        self.csr[NANORV32_CSR_ADDR_CYCLEH] = 0
-        self.csr[NANORV32_CSR_ADDR_TIME] = 0
-        self.csr[NANORV32_CSR_ADDR_TIMEH] = 0
-        self.csr[NANORV32_CSR_ADDR_INSTRET] = 0
-        self.csr[NANORV32_CSR_ADDR_INSTRETH] = 0
 
 def get_args():
     """
@@ -375,7 +327,7 @@ if __name__ == '__main__':
             if trace:
                 trace.write(" : " + txt + '\n')
             nrv.pc = new_pc
-            nrv.update_csr()
+
         else:
             if trace:
                 trace.close()

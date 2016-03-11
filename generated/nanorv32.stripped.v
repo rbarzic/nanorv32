@@ -333,24 +333,8 @@ module nanorv32 (/*AUTOARG*/
         NANORV32_MUX_SEL_REGFILE_SOURCE_DATAMEM: begin
            rd_tmp <= mem2regfile ;
         end
-        // Timer and cycle are curently the same
-        NANORV32_MUX_SEL_REGFILE_SOURCE_CYCLE_CNT_LOW: begin
-           rd_tmp <= timer_cnt_low;
-        end
-        NANORV32_MUX_SEL_REGFILE_SOURCE_CYCLE_CNT_HIGH: begin
-           rd_tmp <= timer_cnt_high;
-        end
-        NANORV32_MUX_SEL_REGFILE_SOURCE_TIME_CNT_LOW: begin
-           rd_tmp <= timer_cnt_low;
-        end
-        NANORV32_MUX_SEL_REGFILE_SOURCE_TIME_CNT_HIGH: begin
-           rd_tmp <= timer_cnt_high;
-        end
-        NANORV32_MUX_SEL_REGFILE_SOURCE_INSTRET_CNT_LOW: begin
-           rd_tmp <= instret_cnt_low;
-        end
-        NANORV32_MUX_SEL_REGFILE_SOURCE_INSTRET_CNT_HIGH: begin
-           rd_tmp <= instret_cnt_high;
+        NANORV32_MUX_SEL_REGFILE_SOURCE_CSR_RDATA: begin
+           rd_tmp <= csr_core_rdata;
         end
 
         default begin
@@ -564,6 +548,10 @@ module nanorv32 (/*AUTOARG*/
                        .csr_core_rdata  (csr_core_rdata),
                        // Inputs
                        .core_csr_addr   (dec_func12),
+                       .force_stall_reset(force_stall_reset),
+                       .stall_exe(stall_exe),
+                       .clk(clk),
+                       .rst_n(rst_n),
                        /*AUTOINST*/
                        // Inputs
                        .core_csr_wdata  ({(1+(NANORV32_DATA_MSB)){1'b0}}), // Templated
