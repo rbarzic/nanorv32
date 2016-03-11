@@ -174,6 +174,7 @@ module nanorv32 (/*AUTOARG*/
 
    wire                                     allow_hidden_use_of_x0;
 
+   wire [NANORV32_DATA_MSB:0]               csr_core_rdata;
 
    // to a "return from interrupt" as been detected
    reg [NANORV32_MUX_SEL_DATAMEM_SIZE_READ_MSB:0] datamem_size_read_sel_r;
@@ -332,6 +333,26 @@ module nanorv32 (/*AUTOARG*/
         NANORV32_MUX_SEL_REGFILE_SOURCE_DATAMEM: begin
            rd_tmp <= mem2regfile ;
         end
+        // Timer and cycle are curently the same
+        NANORV32_MUX_SEL_REGFILE_SOURCE_CYCLE_CNT_LOW: begin
+           rd_tmp <= timer_cnt_low;
+        end
+        NANORV32_MUX_SEL_REGFILE_SOURCE_CYCLE_CNT_HIGH: begin
+           rd_tmp <= timer_cnt_high;
+        end
+        NANORV32_MUX_SEL_REGFILE_SOURCE_TIME_CNT_LOW: begin
+           rd_tmp <= timer_cnt_low;
+        end
+        NANORV32_MUX_SEL_REGFILE_SOURCE_TIME_CNT_HIGH: begin
+           rd_tmp <= timer_cnt_high;
+        end
+        NANORV32_MUX_SEL_REGFILE_SOURCE_INSTRET_CNT_LOW: begin
+           rd_tmp <= instret_cnt_low;
+        end
+        NANORV32_MUX_SEL_REGFILE_SOURCE_INSTRET_CNT_HIGH: begin
+           rd_tmp <= instret_cnt_high;
+        end
+
         default begin
            rd_tmp <= alu_res;
         end
@@ -531,6 +552,22 @@ module nanorv32 (/*AUTOARG*/
                        .alu_portb       (alu_portb[NANORV32_DATA_MSB:0]),
                        .clk             (clk),
                        .rst_n           (rst_n));
+
+
+
+    /* nanorv32_csr AUTO_TEMPLATE(
+     .core_csr_wdata  ({@"vl-width"{1'b0}}),
+     .core_csr_write(1'b0),
+     ); */
+   nanorv32_csr U_CSR (
+                       // Outputs
+                       .csr_core_rdata  (csr_core_rdata),
+                       // Inputs
+                       .core_csr_addr   (dec_func12),
+                       /*AUTOINST*/
+                       // Inputs
+                       .core_csr_wdata  ({(1+(NANORV32_DATA_MSB)){1'b0}}), // Templated
+                       .core_csr_write  (1'b0));                  // Templated
 
 
 

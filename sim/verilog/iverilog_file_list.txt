@@ -3,6 +3,7 @@
 ../../rtl/cores/nanorv32_div.v
 ../../rtl/cores/nanorv32_ascii.v
 ../../rtl/cores/nanorv32_alu.v
+../../rtl/cores/nanorv32_csr.v
 ../../rtl/cores/nanorv32_alumuldiv.v
 ../../rtl/cores/nanorv32_flow_ctrl.v
 ../../rtl/cores/nanorv32_prefetch.v

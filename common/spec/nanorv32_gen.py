@@ -63,5 +63,11 @@ if True:
     rg.write_to_file("../../generated", "instruction_decoder.generated.v",
                      rg.verilog_decode_logic(sel_val))
 
+    print "-I- CSR related files"
+    csr_addr = rg.get_csr_address(nanorv32.spec)
 
+    rg.write_to_file("../../generated", "csr_address.generated.v",
+                     rg.verilog_csr_addr(csr_addr))
+    rg.write_to_file("../../generated", "csr_read_decode.generated.v",
+                     rg.verilog_csr_read_decode(csr_addr))
     print("-I Done")

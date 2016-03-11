@@ -105,3 +105,12 @@ parameter NANORV32_UROM_ADDR_MSB=NANORV32_UROM_ADDR_BITS-1;
 //   imm       x1/ra  -    x0    JALR
 parameter NANORV32_RET_INSTRUCTION = 32'h00008067;
 parameter NANORV32_X1_RA_RETI_MAGIC_VALUE = 32'hFFFFFFFF;
+
+
+// CSR implementation
+
+//@begin[csr_address]
+//@end[csr_address]
+
+parameter NANORV32_CSR_ADDR_BITS=12;
+parameter NANORV32_CSR_ADDR_MSB = NANORV32_CSR_ADDR_BITS-1;

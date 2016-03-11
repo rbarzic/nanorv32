@@ -143,6 +143,19 @@ module nanorv32_decoder (/*AUTOARG*/
         regfile_source_sel = NANORV32_MUX_SEL_REGFILE_SOURCE_ALU;
         regfile_write_sel = NANORV32_MUX_SEL_REGFILE_WRITE_NO;
     end
+    NANORV32_DECODE_RDCYCLEH: begin
+        pc_next_sel = NANORV32_MUX_SEL_PC_NEXT_PLUS4;
+        pc_branch_sel = NANORV32_MUX_SEL_PC_BRANCH_NO;
+        alu_op_sel = NANORV32_MUX_SEL_ALU_OP_NOOP;
+        alu_portb_sel = NANORV32_MUX_SEL_ALU_PORTB_RS2;
+        alu_porta_sel = NANORV32_MUX_SEL_ALU_PORTA_RS1;
+        datamem_size_read_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_READ_WORD;
+        datamem_write_sel = NANORV32_MUX_SEL_DATAMEM_WRITE_NO;
+        datamem_size_write_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_WRITE_WORD;
+        datamem_read_sel = NANORV32_MUX_SEL_DATAMEM_READ_NO;
+        regfile_source_sel = NANORV32_MUX_SEL_REGFILE_SOURCE_CSR_RDATA;
+        regfile_write_sel = NANORV32_MUX_SEL_REGFILE_WRITE_YES;
+    end
     NANORV32_DECODE_SBREAK: begin
         pc_next_sel = NANORV32_MUX_SEL_PC_NEXT_PLUS4;
         pc_branch_sel = NANORV32_MUX_SEL_PC_BRANCH_NO;
@@ -219,6 +232,19 @@ module nanorv32_decoder (/*AUTOARG*/
         datamem_size_write_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_WRITE_WORD;
         datamem_read_sel = NANORV32_MUX_SEL_DATAMEM_READ_NO;
         regfile_source_sel = NANORV32_MUX_SEL_REGFILE_SOURCE_ALU;
+        regfile_write_sel = NANORV32_MUX_SEL_REGFILE_WRITE_YES;
+    end
+    NANORV32_DECODE_RDTIME: begin
+        pc_next_sel = NANORV32_MUX_SEL_PC_NEXT_PLUS4;
+        pc_branch_sel = NANORV32_MUX_SEL_PC_BRANCH_NO;
+        alu_op_sel = NANORV32_MUX_SEL_ALU_OP_NOOP;
+        alu_portb_sel = NANORV32_MUX_SEL_ALU_PORTB_RS2;
+        alu_porta_sel = NANORV32_MUX_SEL_ALU_PORTA_RS1;
+        datamem_size_read_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_READ_WORD;
+        datamem_write_sel = NANORV32_MUX_SEL_DATAMEM_WRITE_NO;
+        datamem_size_write_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_WRITE_WORD;
+        datamem_read_sel = NANORV32_MUX_SEL_DATAMEM_READ_NO;
+        regfile_source_sel = NANORV32_MUX_SEL_REGFILE_SOURCE_CSR_RDATA;
         regfile_write_sel = NANORV32_MUX_SEL_REGFILE_WRITE_YES;
     end
     NANORV32_DECODE_LB: begin
@@ -390,6 +416,32 @@ module nanorv32_decoder (/*AUTOARG*/
         regfile_source_sel = NANORV32_MUX_SEL_REGFILE_SOURCE_ALU;
         regfile_write_sel = NANORV32_MUX_SEL_REGFILE_WRITE_YES;
     end
+    NANORV32_DECODE_RDCYCLE: begin
+        pc_next_sel = NANORV32_MUX_SEL_PC_NEXT_PLUS4;
+        pc_branch_sel = NANORV32_MUX_SEL_PC_BRANCH_NO;
+        alu_op_sel = NANORV32_MUX_SEL_ALU_OP_NOOP;
+        alu_portb_sel = NANORV32_MUX_SEL_ALU_PORTB_RS2;
+        alu_porta_sel = NANORV32_MUX_SEL_ALU_PORTA_RS1;
+        datamem_size_read_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_READ_WORD;
+        datamem_write_sel = NANORV32_MUX_SEL_DATAMEM_WRITE_NO;
+        datamem_size_write_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_WRITE_WORD;
+        datamem_read_sel = NANORV32_MUX_SEL_DATAMEM_READ_NO;
+        regfile_source_sel = NANORV32_MUX_SEL_REGFILE_SOURCE_CSR_RDATA;
+        regfile_write_sel = NANORV32_MUX_SEL_REGFILE_WRITE_YES;
+    end
+    NANORV32_DECODE_RDTIMEH: begin
+        pc_next_sel = NANORV32_MUX_SEL_PC_NEXT_PLUS4;
+        pc_branch_sel = NANORV32_MUX_SEL_PC_BRANCH_NO;
+        alu_op_sel = NANORV32_MUX_SEL_ALU_OP_NOOP;
+        alu_portb_sel = NANORV32_MUX_SEL_ALU_PORTB_RS2;
+        alu_porta_sel = NANORV32_MUX_SEL_ALU_PORTA_RS1;
+        datamem_size_read_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_READ_WORD;
+        datamem_write_sel = NANORV32_MUX_SEL_DATAMEM_WRITE_NO;
+        datamem_size_write_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_WRITE_WORD;
+        datamem_read_sel = NANORV32_MUX_SEL_DATAMEM_READ_NO;
+        regfile_source_sel = NANORV32_MUX_SEL_REGFILE_SOURCE_CSR_RDATA;
+        regfile_write_sel = NANORV32_MUX_SEL_REGFILE_WRITE_YES;
+    end
     NANORV32_DECODE_MULH: begin
         pc_next_sel = NANORV32_MUX_SEL_PC_NEXT_PLUS4;
         pc_branch_sel = NANORV32_MUX_SEL_PC_BRANCH_NO;
@@ -415,6 +467,19 @@ module nanorv32_decoder (/*AUTOARG*/
         datamem_read_sel = NANORV32_MUX_SEL_DATAMEM_READ_NO;
         regfile_source_sel = NANORV32_MUX_SEL_REGFILE_SOURCE_ALU;
         regfile_write_sel = NANORV32_MUX_SEL_REGFILE_WRITE_NO;
+    end
+    NANORV32_DECODE_RDINSTRETH: begin
+        pc_next_sel = NANORV32_MUX_SEL_PC_NEXT_PLUS4;
+        pc_branch_sel = NANORV32_MUX_SEL_PC_BRANCH_NO;
+        alu_op_sel = NANORV32_MUX_SEL_ALU_OP_NOOP;
+        alu_portb_sel = NANORV32_MUX_SEL_ALU_PORTB_RS2;
+        alu_porta_sel = NANORV32_MUX_SEL_ALU_PORTA_RS1;
+        datamem_size_read_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_READ_WORD;
+        datamem_write_sel = NANORV32_MUX_SEL_DATAMEM_WRITE_NO;
+        datamem_size_write_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_WRITE_WORD;
+        datamem_read_sel = NANORV32_MUX_SEL_DATAMEM_READ_NO;
+        regfile_source_sel = NANORV32_MUX_SEL_REGFILE_SOURCE_CSR_RDATA;
+        regfile_write_sel = NANORV32_MUX_SEL_REGFILE_WRITE_YES;
     end
     NANORV32_DECODE_SLTIU: begin
         pc_next_sel = NANORV32_MUX_SEL_PC_NEXT_PLUS4;
@@ -726,6 +791,19 @@ module nanorv32_decoder (/*AUTOARG*/
         datamem_size_write_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_WRITE_WORD;
         datamem_read_sel = NANORV32_MUX_SEL_DATAMEM_READ_NO;
         regfile_source_sel = NANORV32_MUX_SEL_REGFILE_SOURCE_ALU;
+        regfile_write_sel = NANORV32_MUX_SEL_REGFILE_WRITE_YES;
+    end
+    NANORV32_DECODE_RDINSTRET: begin
+        pc_next_sel = NANORV32_MUX_SEL_PC_NEXT_PLUS4;
+        pc_branch_sel = NANORV32_MUX_SEL_PC_BRANCH_NO;
+        alu_op_sel = NANORV32_MUX_SEL_ALU_OP_NOOP;
+        alu_portb_sel = NANORV32_MUX_SEL_ALU_PORTB_RS2;
+        alu_porta_sel = NANORV32_MUX_SEL_ALU_PORTA_RS1;
+        datamem_size_read_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_READ_WORD;
+        datamem_write_sel = NANORV32_MUX_SEL_DATAMEM_WRITE_NO;
+        datamem_size_write_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_WRITE_WORD;
+        datamem_read_sel = NANORV32_MUX_SEL_DATAMEM_READ_NO;
+        regfile_source_sel = NANORV32_MUX_SEL_REGFILE_SOURCE_CSR_RDATA;
         regfile_write_sel = NANORV32_MUX_SEL_REGFILE_WRITE_YES;
     end
         //@end[instruction_decoder]
