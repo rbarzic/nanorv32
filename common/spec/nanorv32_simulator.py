@@ -61,7 +61,7 @@ class NanoRV32Core(object):
         self.match_dict = {inst : int( "0b" + get_match(id.decode[inst]),2) for inst in id.decode.keys()}
         self.data_memory = [0]*(self.datamem_size) # byte-addressed memory
         self.code_memory = [0]*(self.codemem_size) # byte-addressed memory
-
+        self.csr = [0xCAFEBABE]*0x1000
 
     def fix_address(self,addr):
         "Wrap address to avoid accessing unexistant memory"
@@ -247,6 +247,11 @@ class NanoRV32Core(object):
         tmp += (tmp2<<16)
         tmp += (tmp3<< 24)
         return tmp
+
+    def csr_read(self, addr):
+        return self.csr[addr]
+
+
 
 
 def get_args():

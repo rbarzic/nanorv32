@@ -457,7 +457,27 @@ sim_srli = partial(i_type,
                   op_str='>>')
 
 
+# CSR
+def csr_read(c,addr,csr=""):
+    addr = uint32(c.dec_imm12)
+    rd  = c.dec_rd
+    rd_val = c.csr_read(addr)
+    pc = uint32(c.pc)
+    # results
+    c.update_rf(rd,rd_val)
+    new_pc = uint32(pc + 4)
+    txt = "RF[rd={:02d}] <= 0x{:08x} (CSR : {:s} 0x{:08x}  ) ".format(rd,rd_val,csr,addr)
 
+    return (None,new_pc,txt)
+
+
+
+sim_rdcycle = partial(csr_read,addr=0xC00,csr="Cycle")
+sim_rdcycleh = partial(csr_read,addr=0xC80,csr="CycleH")
+sim_rdtime = partial(csr_read,addr=0xC01,csr="Time")
+sim_rdtimeh = partial(csr_read,addr=0xC81,csr="TimeH")
+sim_rdinstret = partial(csr_read,addr=0xC02,csr="InstRet")
+sim_rdinstreth = partial(csr_read,addr=0xC82,csr="InstRetH")
 
 
 
@@ -723,4 +743,24 @@ spec['nanorv32']['rv32i']['simu']['inst']['sw'] = {
 
 spec['nanorv32']['rv32i']['simu']['inst']['jal'] = {
      'func' :  sim_jal
+}
+
+
+spec['nanorv32']['rv32i']['simu']['inst']['rdtime'] = {
+     'func' :  sim_rdtime
+}
+spec['nanorv32']['rv32i']['simu']['inst']['rdtimeh'] = {
+     'func' :  sim_rdtimeh
+}
+spec['nanorv32']['rv32i']['simu']['inst']['rdcycle'] = {
+     'func' :  sim_rdcycle
+}
+spec['nanorv32']['rv32i']['simu']['inst']['rdcycle'] = {
+     'func' :  sim_rdcycleh
+}
+spec['nanorv32']['rv32i']['simu']['inst']['instret'] = {
+     'func' :  sim_rdinstret
+}
+spec['nanorv32']['rv32i']['simu']['inst']['rdcycle'] = {
+     'func' :  sim_rdinstreth
 }
