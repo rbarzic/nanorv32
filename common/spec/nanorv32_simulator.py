@@ -33,7 +33,7 @@ def zero_extend32(val,bits,xx=32):
 
 def sign_extend32(val,bits,xx=32):
     "Sign extend a 'bits' long number to xx  bit"
-    sign_val = 0xFFFFFFFF<<(bits)
+    sign_val = 0xFFFFFFFF << bits
     # print "sign_val = " + hex(sign_val)
     if val & (1<<(bits- 1)):
         # msb set is set in original value
@@ -103,7 +103,6 @@ class NanoRV32Core(object):
     def mem_read_byte(self,addr):
         mem = self.decode_address(addr)
         addr_f = self.fix_address(addr)
-
         return sign_extend32(mem[addr_f] & 0x0FF, bits=8)
 
 
@@ -261,8 +260,8 @@ Put description of application here
     parser.add_argument('--hex2', action='store', dest='hex2',
                         help='hex2 file to be load in the memory', default="")
 
-    parser.add_argument('--trace', action='store_true', dest='trace',
-                        help='hex2 file to be load in the memory', default=False)
+    parser.add_argument('--trace', action='store', dest='trace',
+                        help='trace file', default=None)
 
 
 
@@ -285,54 +284,58 @@ if __name__ == '__main__':
     else:
         sys.exit("No hex2 file specified (use --hex2=<file name>)")
 
+    if args.trace is not None:
+        trace = open(args.trace,'w')
+    else:
+        trace = None
+
+
     nrv.pc = 0;
     while True:
         inst = nrv.get_instruction(nrv.pc)
-        if args.trace:
-            sys.stdout.write("PC : 0x{:08X} I : 0x{:08X} ".format(nrv.pc,inst))
+        if trace:
+            trace.write("PC : 0x{:08X} I : 0x{:08X} ".format(nrv.pc,inst))
         if nrv.pc == 0x00000100:
             if nrv.rf[10] == 0xCAFFE000: #x10/a0
                 print
                 print "\n-I- TEST OK\n"
+                if trace:
+                    trace.close()
                 sys.exit()
             elif nrv.rf[10] == 0xDEADD000: #x10/a0
                 print
                 nrv.dump_regfile()
                 print "\n-I- TEST FAILED\n"
+                if trace:
+                    trace.close()
                 sys.exit()
             else:
                 print
                 nrv.dump_regfile()
                 print "\n-I- TEST FAILED (unknown reason)\n"
+                if trace:
+                    trace.close()
                 sys.exit()
+
+        if nrv.pc == 0x0088:
+            c = chr(nrv.rf[10] & 0x0FF)
+            sys.stdout.write(c)
+            if c == 10:
+                print
 
 
         nrv.new_instruction(inst)
 
         inst_str =  nrv.match_instruction(inst)
         if args.trace:
-            sys.stdout.write(inst_str.ljust(8))
+            trace.write(inst_str.ljust(8))
         if inst_str != 'illegal_instruction':
             _, new_pc,txt  = nrv.execute_instruction(inst_str)
-            if args.trace:
-                sys.stdout.write(" - " + txt)
-                print
+            if trace:
+                trace.write(" - " + txt + '\n')
             nrv.pc = new_pc
 
         else:
+            if trace:
+                trace.close()
             sys.exit("-E- Illegall instruction found !")
-
-    #print nrv.match_instruction(addi)
-    #print nrv.match_instruction(auipc)
-    #
-    #
-    #nrv.new_instruction(addi) # update internal field used for decoding
-    #inst_str =  nrv.match_instruction(addi)
-    #_, new_pc = nrv.execute_instruction(inst_str)
-    #print "New PC = " + str(new_pc)
-    #nrv.dump_regfile()
-    #
-    #a = 255
-    #print "a = " + hex(a)
-    #b = sign_extend32(a,8)
-    #print "b = " + hex(b)
