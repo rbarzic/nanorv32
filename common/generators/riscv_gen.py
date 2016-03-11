@@ -301,3 +301,40 @@ def verilog_decode_logic(sel_per_inst):
                 res += vt.decode_line.format(**d)
         res += vt.decode_end
     return res
+
+
+# CSR related stuff
+
+
+def get_csr_address(spec, cpu='nanorv32'):
+    " return a dictionary giving the address and verilog name of each CSR"
+    spec_cpu = spec[cpu]
+    res = dict()
+    for csr, val in spec_cpu['cpu']['csr'].items():
+
+        res[csr] = {
+            'addr' : val['addr'],
+            'vname': val['verilog_name'],
+        }
+
+    return res
+
+
+def verilog_csr_addr(csr_addr):
+    res = ""
+    d = dict()
+    for csr,val in csr_addr.items():
+        d['name_uc'] = csr.upper()
+        d['addr'] = hex(val['addr'])[2:] # remove the 0x in front
+        res += vt.csr_addr_param.format(**d)
+    return res
+
+def verilog_csr_read_decode(csr_addr):
+    res = ""
+    d = dict()
+    for csr,val in csr_addr.items():
+        d['name_uc'] = csr.upper()
+        d['vname_lc'] = val['vname'].lower()
+        res += vt.csr_read_decode.format(**d)
+    res += '\n'
+    return res

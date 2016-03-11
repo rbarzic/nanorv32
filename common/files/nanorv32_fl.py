@@ -21,6 +21,10 @@ def nanor32_fl():
         'targets': 'synt,sim_rtl'
     })
     l.append({
+        'file': "{top}/rtl/cores/nanorv32_csr.v",
+        'targets': 'synt,sim_rtl'
+    })
+    l.append({
         'file': "{top}/rtl/cores/nanorv32_alumuldiv.v",
         'targets': 'synt,sim_rtl'
     })

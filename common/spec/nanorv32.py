@@ -75,20 +75,28 @@ spec['nanorv32']['inst_type']['AS-type']['format'] = {
 
 # Fence-format
 
-spec['nanorv32']['inst_type']['F-type']['format'] = {
-    'opcode1': {'size': 7, 'offset': 0, 'decode': True},
-    'rd': {'size': 5, 'offset': 7},
-    'rs1': {'size': 5, 'offset': 15, 'decode': True},
-    'func3': {'size': 3, 'offset': 12, 'decode': True},
-    'func4': {'size': 4, 'offset': 28, 'decode': True},
-    }
+#spec['nanorv32']['inst_type']['F-type']['format'] = {
+#    'opcode1': {'size': 7, 'offset': 0, 'decode': True},
+#    'rd': {'size': 5, 'offset': 7},
+#    'rs1': {'size': 5, 'offset': 15, 'decode': True},
+#    'func3': {'size': 3, 'offset': 12, 'decode': True},
+#    'func4': {'size': 4, 'offset': 28, 'decode': True},
+#    }
 
 # System format
+# when all fields are defined
+spec['nanorv32']['inst_type']['SYS1-type']['format'] = {
+    'opcode1': {'size': 7, 'offset': 0, 'decode': True},
+    'sys1_rd': {'size': 5, 'offset': 7, 'decode': True},
+    'sys2_rs1': {'size': 5, 'offset': 15, 'decode': True},
+    'func3': {'size': 3, 'offset': 12, 'decode': True},
+    'func12': {'size': 12, 'offset': 20, 'decode': True},
+    }
 
-spec['nanorv32']['inst_type']['SYS-type']['format'] = {
+spec['nanorv32']['inst_type']['SYS2-type']['format'] = {
     'opcode1': {'size': 7, 'offset': 0, 'decode': True},
     'rd': {'size': 5, 'offset': 7},
-    'rs1': {'size': 5, 'offset': 15, 'decode': True},
+    'sys2_rs1': {'size': 5, 'offset': 15, 'decode': True},
     'func3': {'size': 3, 'offset': 12, 'decode': True},
     'func12': {'size': 12, 'offset': 20, 'decode': True},
     }
@@ -98,43 +106,109 @@ spec['nanorv32']['inst_type']['SYS-type']['format'] = {
 ################################################################
 
 spec['nanorv32']['rv32i']['fence']['desc'] = {
-    'inst_type' : 'F-type',
+    'inst_type' : 'SYS1-type',
     'decode' : {
         'opcode1' : 0b0001111,
-        'rs1'     : 0b000,
+        'sys1_rd' : 0b00000,
+        'sys1_rs1': 0b00000,
         'func3'   : 0b000,
-        'func4'   : 0b0000
+        'func12'   : 0b000000000000
     }
 }
 spec['nanorv32']['rv32i']['fence_i']['desc'] = {
-    'inst_type' : 'F-type',
+    'inst_type' : 'SYS1-type',
     'decode' : {
         'opcode1' : 0b0001111,
-        'rs1'     : 0b000,
+        'sys1_rd' : 0b00000,
+        'sys1_rs1': 0b00000,
         'func3'   : 0b001,
-        'func4'   : 0b0000
+        'func12'   : 0b000000000000
     }
 }
 
 spec['nanorv32']['rv32i']['scall']['desc'] = {
-    'inst_type' : 'SYS-type',
+    'inst_type' : 'SYS1-type',
     'decode' : {
         'opcode1' : 0b1110011,
-        'rs1'     : 0b000,
+        'sys1_rd' : 0b00000,
+        'sys1_rs1': 0b00000,
         'func3'   : 0b000,
         'func12'   : 0b000000000000
     }
 }
 
 spec['nanorv32']['rv32i']['sbreak']['desc'] = {
-    'inst_type' : 'SYS-type',
+    'inst_type' : 'SYS1-type',
     'decode' : {
         'opcode1' : 0b1110011,
-        'rs1'     : 0b000,
+        'sys1_rd' : 0b00000,
+        'sys1_rs1': 0b00000,
         'func3'   : 0b000,
         'func12'   : 0b000000000001
     }
 }
+
+
+spec['nanorv32']['rv32i']['rdcycle']['desc'] = {
+    'inst_type' : 'SYS2-type',
+    'decode' : {
+        'opcode1' : 0b1110011,
+        'sys2_rs1': 0b00000,
+        'func3'   : 0b010,
+        'func12'   : 0b110000000000
+    }
+}
+
+spec['nanorv32']['rv32i']['rdcycleh']['desc'] = {
+    'inst_type' : 'SYS2-type',
+    'decode' : {
+        'opcode1' : 0b1110011,
+        'sys2_rs1': 0b00000,
+        'func3'   : 0b010,
+        'func12'   : 0b110010000000
+    }
+}
+
+spec['nanorv32']['rv32i']['rdtime']['desc'] = {
+    'inst_type' : 'SYS2-type',
+    'decode' : {
+        'opcode1' : 0b1110011,
+        'sys2_rs1': 0b00000,
+        'func3'   : 0b010,
+        'func12'   : 0b110000000001
+    }
+}
+
+spec['nanorv32']['rv32i']['rdtimeh']['desc'] = {
+    'inst_type' : 'SYS2-type',
+    'decode' : {
+        'opcode1' : 0b1110011,
+        'sys2_rs1': 0b00000,
+        'func3'   : 0b010,
+        'func12'   : 0b110010000001
+    }
+}
+
+spec['nanorv32']['rv32i']['rdinstret']['desc'] = {
+    'inst_type' : 'SYS2-type',
+    'decode' : {
+        'opcode1' : 0b1110011,
+        'sys2_rs1': 0b00000,
+        'func3'   : 0b010,
+        'func12'   : 0b110000000010
+    }
+}
+
+spec['nanorv32']['rv32i']['rdinstreth']['desc'] = {
+    'inst_type' : 'SYS2-type',
+    'decode' : {
+        'opcode1' : 0b1110011,
+        'sys2_rs1': 0b00000,
+        'func3'   : 0b010,
+        'func12'   : 0b110010000010
+    }
+}
+
 
 
 
@@ -629,3 +703,46 @@ spec['nanorv32']['rv32i']['sd']['desc'] = {
 #-I inst : fence.i of type F-type
 #-I inst : scall of type SYS-type
 #-I inst : sbreak of type SYS-type
+
+
+spec['nanorv32']['cpu']['csr']['cycle'] = {
+    'desc' : 'Cycle counter for RDCYCLE instruction',
+    'addr' : 0xC00,
+    'access' : 'URO',
+    'verilog_name' : 'cycle_cnt_low' # to avoid some conflicts
+}
+
+spec['nanorv32']['cpu']['csr']['time'] = {
+    'desc' : 'Timer for RDTIME instruction',
+    'addr' : 0xC01,
+    'access' : 'URO',
+    'verilog_name' : 'time_cnt_low' # to avoid some conflicts
+}
+
+spec['nanorv32']['cpu']['csr']['instret'] = {
+    'desc' : 'Instruction retired counter for RDINSTRET instruction',
+    'addr' : 0xC02,
+    'access' : 'URO',
+    'verilog_name' : 'instret_cnt_low'
+}
+
+spec['nanorv32']['cpu']['csr']['cycleh'] = {
+    'desc' : 'Upper 32-bits part of cycle',
+    'addr' : 0xC80,
+    'access' : 'URO',
+    'verilog_name' : 'cycle_cnt_high' # to avoid some conflicts
+}
+
+spec['nanorv32']['cpu']['csr']['timeh'] = {
+    'desc' : 'Upper 32-bits part of time',
+    'addr' : 0xC81,
+    'access' : 'URO',
+    'verilog_name' : 'time_cnt_high'
+}
+
+spec['nanorv32']['cpu']['csr']['instreth'] = {
+    'desc' : 'Upper 32-bits part of instret',
+    'addr' : 0xC82,
+    'access' : 'URO',
+    'verilog_name' : 'instret_cnt_high'
+}

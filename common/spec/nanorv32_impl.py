@@ -181,8 +181,10 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['AS-type'] = {
 }
 
 
-# F-type : fence, fence.i
-spec['nanorv32']['rv32i']['impl']['inst_type']['F-type'] = {
+
+
+# SYS1-type : scall, sbreak, fence,....
+spec['nanorv32']['rv32i']['impl']['inst_type']['SYS1-type'] = {
     'pc' : {
         'next' : 'plus4',
         'branch' :'no'
@@ -205,8 +207,9 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['F-type'] = {
 
 }
 
-# SYS-type : scall, sbreak
-spec['nanorv32']['rv32i']['impl']['inst_type']['SYS-type'] = {
+
+# SYS2-type : rdcounter, rdtimer,....
+spec['nanorv32']['rv32i']['impl']['inst_type']['SYS2-type'] = {
     'pc' : {
         'next' : 'plus4',
         'branch' :'no'
@@ -217,7 +220,7 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['SYS-type'] = {
         'op'    : 'noop',
     },
     'regfile' : {
-        'write' : 'no',
+        'write' : 'yes',
         'source' : 'alu',
     },
     'datamem' : {
@@ -439,14 +442,6 @@ spec['nanorv32']['rv32i']['impl']['inst']['lh'] = {
 }
 
 
-spec['nanorv32']['rv32i']['impl']['inst']['fence'] = {
-
-}
-
-
-spec['nanorv32']['rv32i']['impl']['inst']['fence_i'] = {
-
-}
 
 
 
@@ -660,4 +655,60 @@ spec['nanorv32']['rv32i']['impl']['inst']['sw'] = {
 
 spec['nanorv32']['rv32i']['impl']['inst']['jal'] = {
     # See UJ-type description
+}
+
+
+# System related instruction
+# SYS1
+spec['nanorv32']['rv32i']['impl']['inst']['fence'] = {
+
+}
+
+
+spec['nanorv32']['rv32i']['impl']['inst']['fence_i'] = {
+
+}
+
+#SYS2
+
+spec['nanorv32']['rv32i']['impl']['inst']['rdtime'] = {
+       'regfile' : {
+        'write' : 'yes',
+        'source' : 'csr_rdata',
+    },
+}
+
+spec['nanorv32']['rv32i']['impl']['inst']['rdtimeh'] = {
+       'regfile' : {
+        'write' : 'yes',
+        'source' : 'csr_rdata',
+    },
+}
+
+spec['nanorv32']['rv32i']['impl']['inst']['rdcycle'] = {
+       'regfile' : {
+        'write' : 'yes',
+        'source' : 'csr_rdata',
+    },
+}
+
+spec['nanorv32']['rv32i']['impl']['inst']['rdcycleh'] = {
+       'regfile' : {
+        'write' : 'yes',
+        'source' : 'csr_rdata',
+    },
+}
+
+spec['nanorv32']['rv32i']['impl']['inst']['rdinstret'] = {
+       'regfile' : {
+        'write' : 'yes',
+        'source' : 'csr_rdata',
+    },
+}
+
+spec['nanorv32']['rv32i']['impl']['inst']['rdinstreth'] = {
+       'regfile' : {
+        'write' : 'yes',
+        'source' : 'csr_rdata',
+    },
 }

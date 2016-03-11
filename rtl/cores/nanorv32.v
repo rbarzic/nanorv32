@@ -141,8 +141,9 @@ module nanorv32 (/*AUTOARG*/
     wire [NANORV32_INST_FORMAT_IMM20_MSB:0] dec_imm20  = instruction_r[NANORV32_INST_FORMAT_IMM20_OFFSET +: NANORV32_INST_FORMAT_IMM20_SIZE];
     wire [NANORV32_INST_FORMAT_IMM20UJ_MSB:0] dec_imm20uj  = instruction_r[NANORV32_INST_FORMAT_IMM20UJ_OFFSET +: NANORV32_INST_FORMAT_IMM20UJ_SIZE];
     wire [NANORV32_INST_FORMAT_SHAMT_MSB:0] dec_shamt  = instruction_r[NANORV32_INST_FORMAT_SHAMT_OFFSET +: NANORV32_INST_FORMAT_SHAMT_SIZE];
-    wire [NANORV32_INST_FORMAT_FUNC4_MSB:0] dec_func4  = instruction_r[NANORV32_INST_FORMAT_FUNC4_OFFSET +: NANORV32_INST_FORMAT_FUNC4_SIZE];
+    wire [NANORV32_INST_FORMAT_SYS2_RS1_MSB:0] dec_sys2_rs1  = instruction_r[NANORV32_INST_FORMAT_SYS2_RS1_OFFSET +: NANORV32_INST_FORMAT_SYS2_RS1_SIZE];
     wire [NANORV32_INST_FORMAT_FUNC12_MSB:0] dec_func12  = instruction_r[NANORV32_INST_FORMAT_FUNC12_OFFSET +: NANORV32_INST_FORMAT_FUNC12_SIZE];
+    wire [NANORV32_INST_FORMAT_SYS1_RD_MSB:0] dec_sys1_rd  = instruction_r[NANORV32_INST_FORMAT_SYS1_RD_OFFSET +: NANORV32_INST_FORMAT_SYS1_RD_SIZE];
    //@end[instruction_fields]
 
    reg                                       write_rd;
@@ -203,6 +204,7 @@ module nanorv32 (/*AUTOARG*/
 
    wire                                     allow_hidden_use_of_x0;
 
+   wire [NANORV32_DATA_MSB:0]               csr_core_rdata;
 
    // to a "return from interrupt" as been detected
    reg [NANORV32_MUX_SEL_DATAMEM_SIZE_READ_MSB:0] datamem_size_read_sel_r;
@@ -361,6 +363,10 @@ module nanorv32 (/*AUTOARG*/
         NANORV32_MUX_SEL_REGFILE_SOURCE_DATAMEM: begin
            rd_tmp <= mem2regfile ;
         end
+        NANORV32_MUX_SEL_REGFILE_SOURCE_CSR_RDATA: begin
+           rd_tmp <= csr_core_rdata;
+        end
+
         default begin
            rd_tmp <= alu_res;
         end
@@ -560,6 +566,26 @@ module nanorv32 (/*AUTOARG*/
                        .alu_portb       (alu_portb[NANORV32_DATA_MSB:0]),
                        .clk             (clk),
                        .rst_n           (rst_n));
+
+
+
+    /* nanorv32_csr AUTO_TEMPLATE(
+     .core_csr_wdata  ({@"vl-width"{1'b0}}),
+     .core_csr_write(1'b0),
+     ); */
+   nanorv32_csr U_CSR (
+                       // Outputs
+                       .csr_core_rdata  (csr_core_rdata),
+                       // Inputs
+                       .core_csr_addr   (dec_func12),
+                       .force_stall_reset(force_stall_reset),
+                       .stall_exe(stall_exe),
+                       .clk(clk),
+                       .rst_n(rst_n),
+                       /*AUTOINST*/
+                       // Inputs
+                       .core_csr_wdata  ({(1+(NANORV32_DATA_MSB)){1'b0}}), // Templated
+                       .core_csr_write  (1'b0));                  // Templated
 
 
 
