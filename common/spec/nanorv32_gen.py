@@ -68,6 +68,11 @@ if True:
 
     rg.write_to_file("../../generated", "csr_address.generated.v",
                      rg.verilog_csr_addr(csr_addr))
+
+    rg.write_to_file("../../generated", "py_csr_address.generated.py",
+                     rg.python_csr_addr(csr_addr))
+
+
     rg.write_to_file("../../generated", "csr_read_decode.generated.v",
                      rg.verilog_csr_read_decode(csr_addr))
     print("-I Done")

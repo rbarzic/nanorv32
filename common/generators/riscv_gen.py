@@ -329,6 +329,16 @@ def verilog_csr_addr(csr_addr):
         res += vt.csr_addr_param.format(**d)
     return res
 
+def python_csr_addr(csr_addr):
+    res = ""
+    d = dict()
+    for csr,val in csr_addr.items():
+        d['name_uc'] = csr.upper()
+        d['addr'] = hex(val['addr']) # remove the 0x in front
+        res += pt.csr_addr_param.format(**d)
+    return res
+
+
 def verilog_csr_read_decode(csr_addr):
     res = ""
     d = dict()

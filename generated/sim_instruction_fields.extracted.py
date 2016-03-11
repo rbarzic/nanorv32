@@ -10,8 +10,9 @@
         self.dec_immsb2 = bitfield(inst,offset=25,size=7)
         self.dec_immsb1 = bitfield(inst,offset=7,size=5)
         self.dec_imm20 = bitfield(inst,offset=12,size=20)
-
+        self.dec_imm20uj = bitfield(inst,offset=12,size=20)
         self.dec_shamt = bitfield(inst,offset=20,size=5)
-        self.dec_func4 = bitfield(inst,offset=28,size=4)
+        self.dec_sys2_rs1 = bitfield(inst,offset=15,size=5)
         self.dec_func12 = bitfield(inst,offset=20,size=12)
+        self.dec_sys1_rd = bitfield(inst,offset=7,size=5)
 

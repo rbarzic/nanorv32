@@ -6,6 +6,10 @@ import nanorv32_simu as ns
 import argparse
 import ctypes as ct
 
+
+#@begin[py_csr_address]
+#@end[py_csr_address]
+
 class UnalignedAddressError(Exception):
     pass
 
