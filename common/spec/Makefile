@@ -33,4 +33,4 @@ ahbmli:
 	cp $(TOP)/ml-ahb-gen/chisel/Ahbmli.v $(TOP)/rtl/ips
 
 check_simu:
-	@cat $(TOP)/common/instructions/rv32e_base.txt | xargs -n1 -IXXX  python test_simu.py  --hex2=../../sim/verilog/XXX.hex2
+	@cat $(TOP)/common/instructions/rv32e_base.txt | xargs -n1 -IXXX  ./nanorv32_simulator.py  --hex2=../../sim/verilog/XXX.hex2

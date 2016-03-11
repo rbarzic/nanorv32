@@ -14,6 +14,10 @@ def uint32(d):
 def int32(d):
     return ct.c_uint32(d).value
 
+def comp2(a):
+    return ~a +1
+
+
 def r_type(c,op,op_str):
     rs1 = c.dec_rs1
     rs2 = c.dec_rs2
@@ -192,6 +196,158 @@ sim_and = partial(r_type,op=operator.and_,op_str='&')
 sim_or = partial(r_type,op=operator.or_,op_str='|')
 sim_xor = partial(r_type,op=operator.xor,op_str='^')
 
+
+def mulh(a,b):
+    a32 = uint32(a)
+    b32 = uint32(b)
+    #print "Mulh 0x{:08X} * 0x{:08X} ".format(a32,b32)
+
+    s_a = ((a32>>31) & 0x01) == 1
+    s_b = ((b32>>31) & 0x01) == 1
+    #print "s_a = {} s_b = {} ".format(s_a, s_b)
+
+    if (not s_a)  and  (not s_b):
+        # both positive
+        return uint32((a32*b32)>>32)
+    elif (s_a and  s_b):
+        a32_pos = uint32(~a32 +1)
+        b32_pos = uint32(~b32 +1)
+        return uint32((a32_pos*b32_pos)>>32)
+    elif s_a and  (not s_b):
+        # a negative, b positive
+        a32_pos = uint32(~a32 +1)
+        b32_pos = b32
+        # result is negative
+        return uint32 (comp2(a32_pos*b32_pos)>>32)
+    else:
+        # a positive, b negative
+        a32_pos = a32
+        b32_pos = uint32(~b32+1)
+        # result is negative
+        return uint32 (comp2(a32_pos*b32_pos)>>32)
+
+def mulhu(a,b):
+    a32 = uint32(a)
+    b32 = uint32(b)
+    return (a32*b32)>>32
+
+
+def mulhsu(a,b):
+    a32 = uint32(a)
+    b32_pos = uint32(b)
+
+    s_a = ((a32>>31) & 0x01) == 1
+    if s_a:
+        # one negative, one positive
+        a32_pos = uint32(comp2(a32))
+        # result is negative
+        return uint32 (comp2(a32_pos*b32_pos)>>32)
+    else:
+        a32_pos = a32
+        # result is positive
+        return uint32((a32_pos*b32_pos)>>32)
+
+
+def div(a,b):
+    a32 = uint32(a)
+    b32 = uint32(b)
+    #print "Div 0x{:08X} * 0x{:08X} ".format(a32,b32)
+
+    s_a = ((a32>>31) & 0x01) == 1
+    s_b = ((b32>>31) & 0x01) == 1
+    #print "s_a = {} s_b = {} ".format(s_a, s_b)
+    if(b32==0):
+        return uint32(-1)
+
+    if (not s_a)  and  (not s_b):
+        # both positive
+        return uint32(a32/b32)
+    elif (s_a and  s_b):
+        a32_pos = uint32(~a32 +1)
+        b32_pos = uint32(~b32 +1)
+        return uint32(a32_pos/b32_pos)
+    elif s_a and  (not s_b):
+        # a negative, b positive
+        a32_pos = uint32(~a32 +1)
+        b32_pos = b32
+        # result is negative
+        return uint32 (comp2(a32_pos/b32_pos))
+    else:
+        # a positive, b negative
+        a32_pos = a32
+        b32_pos = uint32(~b32+1)
+        # result is negative
+        return uint32 (comp2(a32_pos/b32_pos))
+
+
+def rem(a,b):
+    a32 = uint32(a)
+    b32 = uint32(b)
+    #print "Rem 0x{:08X} / 0x{:08X} ".format(a32,b32)
+
+    s_a = ((a32>>31) & 0x01) == 1
+    s_b = ((b32>>31) & 0x01) == 1
+    #print "s_a = {} s_b = {} ".format(s_a, s_b)
+    if(b32==0):
+        return a32
+
+    if (not s_a)  and  (not s_b):
+        # both positive
+        return uint32(a32%b32)
+    elif (s_a and  s_b):
+        a32_pos = uint32(~a32 +1)
+        b32_pos = uint32(~b32 +1)
+        # result is negative !
+        return uint32(comp2(a32_pos%b32_pos))
+    elif s_a and  (not s_b):
+        # a negative, b positive
+        a32_pos = uint32(~a32 +1)
+        b32_pos = b32
+        # result is negative
+        return uint32 (comp2(a32_pos%b32_pos))
+    else:
+        # a positive, b negative
+        a32_pos = a32
+        b32_pos = uint32(~b32+1)
+       #print "a32_pos = {:d} b32_pos = {:d}".format(a32_pos,b32_pos)
+        # result is positive !
+        return uint32 (a32_pos%b32_pos)
+
+
+
+
+def divu(a,b):
+    a32 = uint32(a)
+    b32 = uint32(b)
+
+    if(b32==0):
+        return uint32(-1)
+    else:
+        return uint32(a32/b32)
+
+def remu(a,b):
+    a32 = uint32(a)
+    b32 = uint32(b)
+
+    if(b32==0):
+        return uint32(a32)
+    else:
+        return uint32(a32%b32)
+
+
+
+
+sim_mul = partial(r_type,op=operator.mul,op_str='*')
+sim_mulh = partial(r_type,op=mulh,op_str='*')
+sim_mulhu = partial(r_type,op=mulhu,op_str='*')
+sim_mulhsu = partial(r_type,op=mulhsu,op_str='*')
+
+sim_div = partial(r_type,op=div,op_str='/')
+sim_divu = partial(r_type,op=divu,op_str='/')
+
+sim_rem = partial(r_type,op=rem,op_str='%')
+sim_remu = partial(r_type,op=remu,op_str='%')
+
 sim_addi = partial(i_type,op=operator.add,op_str='+')
 sim_andi = partial(i_type,op=operator.and_,op_str='&')
 sim_ori = partial(i_type,op=operator.or_,op_str='|')
@@ -200,11 +356,11 @@ sim_xori = partial(i_type,op=operator.xor,op_str='^')
 def lt_comp_signed(a,b):
     a32 = uint32(a)
     b32 = uint32(b)
-    print "Compare 0x{:08X} < 0x{:08X} ".format(a32,b32)
+    #print "Compare 0x{:08X} < 0x{:08X} ".format(a32,b32)
 
     s_a = ((a32>>31) & 0x01) == 1
     s_b = ((b32>>31) & 0x01) == 1
-    print "s_a = {} s_b = {} ".format(s_a, s_b)
+    #print "s_a = {} s_b = {} ".format(s_a, s_b)
 
     if (not s_a)  and  (not s_b):
         # both positive
@@ -250,8 +406,16 @@ def ge_comp_signed(a,b):
 sim_slt = partial(r_type,
                   op=lt_comp_signed,
                   op_str='<')
+sim_sltu = partial(r_type,
+                  op=operator.lt,
+                  op_str='<')
+
 sim_slti = partial(i_type,
                   op=lt_comp_signed,
+                  op_str='<')
+
+sim_sltiu = partial(i_type,
+                  op=operator.lt,
                   op_str='<')
 
 sim_bne = partial(cond_branch,op=operator.ne)
@@ -309,66 +473,32 @@ spec['nanorv32']['rv32i']['simu']['inst']['addi'] = {
 }
 
 spec['nanorv32']['rv32i']['simu']['inst']['mul'] = {
-    'func' :  lambda c: (
-        c.update_rf(c.dec_rd, c.rf[c.dec_rs1] * c.rf[c.dec_rs2]),
-        c.pc + 4,
-        ""
-    )
+    'func' : sim_mul
 }
 
 spec['nanorv32']['rv32i']['simu']['inst']['mulh'] = {
-    'func' :  lambda c: (
-        c.update_rf(c.dec_rd, (c.rf[c.dec_rs1] * c.rf[c.dec_rs2])>>32) ,
-        c.pc + 4,
-        ""
-    )
-
+    'func' : sim_mulh
 }
 spec['nanorv32']['rv32i']['simu']['inst']['mulhsu'] = {
-    'func' :  lambda c: (
-        c.update_rf(c.dec_rd, (c.rf [c.dec_rs1] * abs(c.rf [c.dec_rs2]))>>32) ,
-        c.pc + 4,
-        ""
-    )
+    'func' :  sim_mulhsu
 }
 spec['nanorv32']['rv32i']['simu']['inst']['mulhu'] = {
-    'func' :  lambda c: (
-        c.update_rf(c.dec_rd, (abs(c.rf [c.dec_rs1]) * abs(c.rf [c.dec_rs2]))>>32) ,
-        c.pc + 4,
-        ""
-    )
+    'func' : sim_mulhu
 }
 
 spec['nanorv32']['rv32i']['simu']['inst']['div'] = {
-    'func' :  lambda c: (
-        c.update_rf(c.dec_rd, (c.rf [c.dec_rs1] / c.rf [c.dec_rs2])>>32 if c.rf [c.dec_rs2] !=0 else -1 ) ,
-        c.pc + 4,
-        ""
-    )
-
+    'func' : sim_div
 }
+
 spec['nanorv32']['rv32i']['simu']['inst']['divu'] = {
-    'func' :  lambda c: (
-        c.update_rf(c.dec_rd, (abs(c.rf [c.dec_rs1]) / abs(c.rf[c.dec_rs2]))>>32 if c.rf [c.dec_rs2] !=0 else -1 ) ,
-        c.pc + 4,
-        ""
-    )
+    'func' :  sim_divu
 
 }
 spec['nanorv32']['rv32i']['simu']['inst']['rem'] = {
-     'func' :  lambda c: (
-        c.update_rf(c.dec_rd, (c.rf [c.dec_rs1] / c.rf[c.dec_rs2])>>32 if c.rf [c.dec_rs2] !=0 else c.rf [c.dec_rs2] ) ,
-        c.pc + 4,
-         ""
-    )
+     'func' :  sim_rem
 }
 spec['nanorv32']['rv32i']['simu']['inst']['remu'] = {
-    'func' :  lambda c: (
-        c.update_rf(c.dec_rd, (abs(c.rf [c.dec_rs1]) / abs(c.rf[c.dec_rs2]))>>32 if c.rf [c.dec_rs2] !=0 else c.rf [c.dec_rs2] ) ,
-        c.pc + 4,
-        ""
-    )
-
+    'func' : sim_remu
 }
 
 
@@ -383,11 +513,7 @@ spec['nanorv32']['rv32i']['simu']['inst']['slti'] = {
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['sltiu'] = {
-    'func' :  lambda c: (
-        c.update_rf( c.dec_rd, 1 if abs(c.rf[c.dec_rs1]) < abs(c.dec_imm12) else 0) ,
-        c.pc + 4,
-        ""
-    )
+    'func' :  sim_sltiu
 }
 
 
@@ -534,11 +660,7 @@ spec['nanorv32']['rv32i']['simu']['inst']['slt'] = {
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['sltu'] = {
-    'func' :  lambda c: (
-        c.update_rf( c.dec_rd, 1 if abs(c.rf[c.dec_rs1]) < abs(c.rf[c.dec_rs2]) else 0) ,
-        c.pc + 4,
-        ""
-    )
+    'func' :sim_sltu
 
 }
 
