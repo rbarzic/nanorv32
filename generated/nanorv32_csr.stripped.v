@@ -33,7 +33,8 @@ module nanorv32_csr (/*AUTOARG*/
    // Outputs
    csr_core_rdata,
    // Inputs
-   core_csr_addr, core_csr_wdata, core_csr_write
+   core_csr_addr, core_csr_wdata, core_csr_write, force_stall_reset,
+   stall_exe, clk, rst_n
    );
 
 `include "nanorv32_parameters.v"
@@ -43,6 +44,12 @@ module nanorv32_csr (/*AUTOARG*/
    input                       core_csr_write;
    output [NANORV32_DATA_MSB:0] csr_core_rdata;
 
+   input                        force_stall_reset;
+   input                        stall_exe;
+
+
+   input                        clk;
+   input                        rst_n;
 
 
    /*AUTOINPUT*/
@@ -55,18 +62,22 @@ module nanorv32_csr (/*AUTOARG*/
    /*AUTOWIRE*/
 
 
-   wire [63:0]               time_cnt = 64'hCAFEBABE_AA55AA55;
-   wire [31:0]               time_cnt_low = time_cnt[31:0];
-   wire [31:0]               time_cnt_high = time_cnt[63:32];
+   reg [63:0]               time_cnt_r;
 
-   wire [63:0]               cycle_cnt = 64'h89ABCDEF_11223344;
-   wire [31:0]               cycle_cnt_low = cycle_cnt[31:0];
-   wire [31:0]               cycle_cnt_high = cycle_cnt[63:32];
+   reg [63:0]               instret_cnt_r;
+
+   // Cycle/Timer counter - they are the same in current Nanorv32
+   wire [63:0]              cycle_cnt = time_cnt_r;
+   wire [31:0]              time_cnt_low = time_cnt_r[31:0];
+   wire [31:0]              time_cnt_high = time_cnt_r[63:32];
+
+   wire [31:0]              cycle_cnt_low = cycle_cnt[31:0];
+   wire [31:0]              cycle_cnt_high = cycle_cnt[63:32];
 
 
-   wire [63:0]               instret_cnt = 64'hDEADBEEF_01234567;
-   wire [31:0]               instret_cnt_low = instret_cnt[31:0];
-   wire [31:0]               instret_cnt_high = instret_cnt[63:32];
+
+   wire [31:0]              instret_cnt_low = instret_cnt_r[31:0];
+   wire [31:0]              instret_cnt_high = instret_cnt_r[63:32];
 
 
 
@@ -80,6 +91,38 @@ module nanorv32_csr (/*AUTOARG*/
 
       endcase
    end
+
+
+
+   always @(posedge clk or negedge rst_n ) begin
+      if(rst_n  == 1'b0) begin
+         /*AUTORESET*/
+         // Beginning of autoreset for uninitialized flops
+         time_cnt_r <= 64'h0;
+         // End of automatics
+      end
+      else begin
+         if (!force_stall_reset) begin
+            time_cnt_r <= time_cnt_r +1;
+         end
+      end
+   end
+
+   always @(posedge clk or negedge rst_n ) begin
+      if(rst_n  == 1'b0) begin
+         /*AUTORESET*/
+         // Beginning of autoreset for uninitialized flops
+         instret_cnt_r <= 64'h0;
+         // End of automatics
+      end
+      else begin
+         if (!force_stall_reset && !stall_exe) begin
+            instret_cnt_r <= instret_cnt_r +1;
+         end
+      end
+   end
+
+
 
 
 endmodule // nanorv_csr

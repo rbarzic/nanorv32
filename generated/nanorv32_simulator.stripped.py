@@ -150,24 +150,6 @@ class NanoRV32Core(object):
 
     def new_instruction(self,inst):
         #@begin[sim_instruction_fields]
-        self.dec_opcode1 = bitfield(inst,offset=0,size=7)
-        self.dec_func3 = bitfield(inst,offset=12,size=3)
-        self.dec_func7 = bitfield(inst,offset=25,size=7)
-        self.dec_rd = bitfield(inst,offset=7,size=5)
-        self.dec_rs1 = bitfield(inst,offset=15,size=5)
-        self.dec_rs2 = bitfield(inst,offset=20,size=5)
-        self.dec_imm12 = bitfield(inst,offset=20,size=12)
-        self.dec_imm12hi = bitfield(inst,offset=25,size=7)
-        self.dec_imm12lo = bitfield(inst,offset=7,size=5)
-        self.dec_immsb2 = bitfield(inst,offset=25,size=7)
-        self.dec_immsb1 = bitfield(inst,offset=7,size=5)
-        self.dec_imm20 = bitfield(inst,offset=12,size=20)
-        self.dec_imm20uj = bitfield(inst,offset=12,size=20)
-        self.dec_shamt = bitfield(inst,offset=20,size=5)
-        self.dec_sys2_rs1 = bitfield(inst,offset=15,size=5)
-        self.dec_func12 = bitfield(inst,offset=20,size=12)
-        self.dec_sys1_rd = bitfield(inst,offset=7,size=5)
-
         #@end[sim_instruction_fields]
         self.dec_imm12_se = sign_extend32(self.dec_imm12,12)
         # SB type instruction immediate reconstruction

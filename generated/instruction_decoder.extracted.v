@@ -60,7 +60,7 @@
         datamem_write_sel = NANORV32_MUX_SEL_DATAMEM_WRITE_NO;
         datamem_size_write_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_WRITE_WORD;
         datamem_read_sel = NANORV32_MUX_SEL_DATAMEM_READ_NO;
-        regfile_source_sel = NANORV32_MUX_SEL_REGFILE_SOURCE_CYCLE_CNT_HIGH;
+        regfile_source_sel = NANORV32_MUX_SEL_REGFILE_SOURCE_CSR_RDATA;
         regfile_write_sel = NANORV32_MUX_SEL_REGFILE_WRITE_YES;
     end
     NANORV32_DECODE_SBREAK: begin
@@ -151,7 +151,7 @@
         datamem_write_sel = NANORV32_MUX_SEL_DATAMEM_WRITE_NO;
         datamem_size_write_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_WRITE_WORD;
         datamem_read_sel = NANORV32_MUX_SEL_DATAMEM_READ_NO;
-        regfile_source_sel = NANORV32_MUX_SEL_REGFILE_SOURCE_TIME_CNT_LOW;
+        regfile_source_sel = NANORV32_MUX_SEL_REGFILE_SOURCE_CSR_RDATA;
         regfile_write_sel = NANORV32_MUX_SEL_REGFILE_WRITE_YES;
     end
     NANORV32_DECODE_LB: begin
@@ -333,7 +333,7 @@
         datamem_write_sel = NANORV32_MUX_SEL_DATAMEM_WRITE_NO;
         datamem_size_write_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_WRITE_WORD;
         datamem_read_sel = NANORV32_MUX_SEL_DATAMEM_READ_NO;
-        regfile_source_sel = NANORV32_MUX_SEL_REGFILE_SOURCE_CYCLE_CNT_LOW;
+        regfile_source_sel = NANORV32_MUX_SEL_REGFILE_SOURCE_CSR_RDATA;
         regfile_write_sel = NANORV32_MUX_SEL_REGFILE_WRITE_YES;
     end
     NANORV32_DECODE_RDTIMEH: begin
@@ -346,7 +346,7 @@
         datamem_write_sel = NANORV32_MUX_SEL_DATAMEM_WRITE_NO;
         datamem_size_write_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_WRITE_WORD;
         datamem_read_sel = NANORV32_MUX_SEL_DATAMEM_READ_NO;
-        regfile_source_sel = NANORV32_MUX_SEL_REGFILE_SOURCE_TIME_CNT_HIGH;
+        regfile_source_sel = NANORV32_MUX_SEL_REGFILE_SOURCE_CSR_RDATA;
         regfile_write_sel = NANORV32_MUX_SEL_REGFILE_WRITE_YES;
     end
     NANORV32_DECODE_MULH: begin
@@ -385,7 +385,7 @@
         datamem_write_sel = NANORV32_MUX_SEL_DATAMEM_WRITE_NO;
         datamem_size_write_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_WRITE_WORD;
         datamem_read_sel = NANORV32_MUX_SEL_DATAMEM_READ_NO;
-        regfile_source_sel = NANORV32_MUX_SEL_REGFILE_SOURCE_INSTRET_CNT_HIGH;
+        regfile_source_sel = NANORV32_MUX_SEL_REGFILE_SOURCE_CSR_RDATA;
         regfile_write_sel = NANORV32_MUX_SEL_REGFILE_WRITE_YES;
     end
     NANORV32_DECODE_SLTIU: begin
@@ -710,6 +710,6 @@
         datamem_write_sel = NANORV32_MUX_SEL_DATAMEM_WRITE_NO;
         datamem_size_write_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_WRITE_WORD;
         datamem_read_sel = NANORV32_MUX_SEL_DATAMEM_READ_NO;
-        regfile_source_sel = NANORV32_MUX_SEL_REGFILE_SOURCE_INSTRET_CNT_LOW;
+        regfile_source_sel = NANORV32_MUX_SEL_REGFILE_SOURCE_CSR_RDATA;
         regfile_write_sel = NANORV32_MUX_SEL_REGFILE_WRITE_YES;
     end

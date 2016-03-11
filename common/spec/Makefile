@@ -10,7 +10,7 @@ FILES_WITH_GEN_CODE += $(TOP)/rtl/cores/nanorv32.v
 FILES_WITH_GEN_CODE += $(TOP)/rtl/cores/nanorv32_urom.v
 FILES_WITH_GEN_CODE += $(TOP)/rtl/cores/nanorv32_decoder.v
 FILES_WITH_GEN_CODE += $(TOP)/rtl/cores/nanorv32_csr.v
-FILES_WITH_GEN_CODE += $(TOP)/common/spec/test_simu.py
+FILES_WITH_GEN_CODE += $(TOP)/common/spec/nanorv32_simulator.py
 FILES_WITH_GEN_CODE += $(TOP)/common/spec/inst_decod.py
 # FILES_WITH_GEN_CODE += $(TOP)/hdl/sync/j2_core.v
 

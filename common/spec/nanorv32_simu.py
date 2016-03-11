@@ -755,12 +755,12 @@ spec['nanorv32']['rv32i']['simu']['inst']['rdtimeh'] = {
 spec['nanorv32']['rv32i']['simu']['inst']['rdcycle'] = {
      'func' :  sim_rdcycle
 }
-spec['nanorv32']['rv32i']['simu']['inst']['rdcycle'] = {
+spec['nanorv32']['rv32i']['simu']['inst']['rdcycleh'] = {
      'func' :  sim_rdcycleh
 }
-spec['nanorv32']['rv32i']['simu']['inst']['instret'] = {
+spec['nanorv32']['rv32i']['simu']['inst']['rdinstret'] = {
      'func' :  sim_rdinstret
 }
-spec['nanorv32']['rv32i']['simu']['inst']['rdcycle'] = {
+spec['nanorv32']['rv32i']['simu']['inst']['rdinstreth'] = {
      'func' :  sim_rdinstreth
 }
