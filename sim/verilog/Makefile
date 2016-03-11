@@ -187,8 +187,9 @@ xsim_gui:
 	xsim work.tb_nanorv32#work.glbl  -gui
 
 
-
-
+prepare_trace:
+	cat trace.txt | grep PC | tail -n +1 | cut -d':' -f1-4 > trace_cut.txt
+	diff -w ../../sim/verilog/trace_cut.txt trace_cut.txt  | head -n 2
 
 
 .PHONY: iverilog_file_list.txt vivado_file_list.txt

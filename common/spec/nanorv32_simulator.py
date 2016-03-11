@@ -294,7 +294,7 @@ if __name__ == '__main__':
     while True:
         inst = nrv.get_instruction(nrv.pc)
         if trace:
-            trace.write("PC : 0x{:08X} I : 0x{:08X} ".format(nrv.pc,inst))
+            trace.write("PC : 0x{:08x} I : 0x{:08x} : ".format(nrv.pc,inst))
         if nrv.pc == 0x00000100:
             if nrv.rf[10] == 0xCAFFE000: #x10/a0
                 print
@@ -332,7 +332,7 @@ if __name__ == '__main__':
         if inst_str != 'illegal_instruction':
             _, new_pc,txt  = nrv.execute_instruction(inst_str)
             if trace:
-                trace.write(" - " + txt + '\n')
+                trace.write(" : " + txt + '\n')
             nrv.pc = new_pc
 
         else:

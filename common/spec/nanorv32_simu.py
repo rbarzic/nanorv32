@@ -30,7 +30,7 @@ def r_type(c,op,op_str):
     # results
     c.update_rf(rd,rd_val)
     new_pc = pc + 4
-    txt = "RF[rd={:02d}] <= 0x{:08X} (RF[rs1={:02d}]=0x{:08X} {}  RF[rs2={:02d}]=0x{:08X}) ".format(rd,rd_val,rs1,rs1_val,op_str,rs2,rs2_val)
+    txt = "RF[rd={:02d}] <= 0x{:08x} (RF[rs1={:02d}]=0x{:08x} {}  RF[rs2={:02d}]=0x{:08x}) ".format(rd,rd_val,rs1,rs1_val,op_str,rs2,rs2_val)
 
     return (None,new_pc,txt)
 
@@ -45,7 +45,7 @@ def i_type(c,op,op_str):
     # results
     c.update_rf(rd,rd_val)
     new_pc = pc + 4
-    txt = "RF[rd={:02d}] <= 0x{:08X} (RF[rs1={:02d}]=0x{:08X} {}  imm20 =0x{:08X}) ".format(rd,rd_val,rs1,rs1_val,op_str,imm12_se)
+    txt = "RF[rd={:02d}] <= 0x{:08x} (RF[rs1={:02d}]=0x{:08x} {}  imm20 =0x{:08x}) ".format(rd,rd_val,rs1,rs1_val,op_str,imm12_se)
 
     return (None,new_pc,txt)
 
@@ -59,7 +59,7 @@ def auipc(c):
     # results
     c.update_rf(rd,rd_val)
     new_pc = pc + 4
-    txt = "RF[rd={:02d}] <= 0x{:08X} (pc=0x{:08X} + imm20<<12 =0x{:08X}) ".format(rd,rd_val,pc,imm20_shifted)
+    txt = "RF[rd={:02d}] <= 0x{:08x} (pc=0x{:08x} + imm20<<12 =0x{:08x}) ".format(rd,rd_val,pc,imm20_shifted)
 
     return (None,new_pc,txt)
 
@@ -72,7 +72,7 @@ def lui(c):
     # results
     c.update_rf(rd,rd_val)
     new_pc = pc + 4
-    txt = "RF[rd={:02d}] <= 0x{:08X} (pc=0x{:08X} + imm20<<12 =0x{:08X}) ".format(rd,rd_val,pc,imm20_shifted)
+    txt = "RF[rd={:02d}] <= 0x{:08x} (pc=0x{:08x} + imm20<<12 =0x{:08x}) ".format(rd,rd_val,pc,imm20_shifted)
 
     return (None,new_pc,txt)
 
@@ -89,10 +89,10 @@ def cond_branch(c,op):
         # taken
 
         new_pc = uint32(pc + offset)
-        txt = "RF[rs1={:02d}]=0x{:08X} RF[rs2={:02d}]=0x{:08X}  Jump to 0x{:08X}   (0x{:08X} + 0x{:08X})".format(rs1,rs1_val,rs2,rs2_val,new_pc,pc,offset)
+        txt = "RF[rs1={:02d}]=0x{:08x} RF[rs2={:02d}]=0x{:08x}  Jump to 0x{:08x}   (0x{:08x} + 0x{:08x})".format(rs1,rs1_val,rs2,rs2_val,new_pc,pc,offset)
     else:
         new_pc = uint32(pc + 4)
-        txt = "RF[rs1={:02d}]=0x{:08X} RF[rs2={:02d}]=0x{:08X}  Branch not taken".format(rs1,rs1_val,rs2,rs2_val)
+        txt = "RF[rs1={:02d}]=0x{:08x} RF[rs2={:02d}]=0x{:08x}  Branch not taken".format(rs1,rs1_val,rs2,rs2_val)
 
     return (None,new_pc,txt)
 
@@ -105,7 +105,7 @@ def sim_jal(c):
     rd_val = uint32(pc +4)
     new_pc = uint32(pc + offset ) & 0xFFFFFFFE # lsb must be zero
     c.update_rf(rd,rd_val)
-    txt = "RF[rs1={:02d}] <= 0x{:08X}   Jump to 0x{:08X}   (0x{:08X} + 0x{:08X})".format(rd,rd_val,new_pc,pc,offset)
+    txt = "RF[rs1={:02d}] <= 0x{:08x}   Jump to 0x{:08x}   (0x{:08x} + 0x{:08x})".format(rd,rd_val,new_pc,pc,offset)
 
     return (None,new_pc,txt)
 
@@ -119,7 +119,7 @@ def sim_jalr(c):
     rd_val = uint32(pc +4)
     new_pc = uint32(rs1_val + offset ) & 0xFFFFFFFE # lsb must be zero
     c.update_rf(rd,rd_val)
-    txt = "RF[rs1={:02d}] <= 0x{:08X}   Jump to 0x{:08X}   (0x{:08X} + 0x{:08X})".format(rd,rd_val,new_pc,rs1_val,offset)
+    txt = "RF[rs1={:02d}] <= 0x{:08x}   Jump to 0x{:08x}   (0x{:08x} + 0x{:08x})".format(rd,rd_val,new_pc,rs1_val,offset)
 
     return (None,new_pc,txt)
 
@@ -134,7 +134,7 @@ def load(c, mem_access_fn):
     rd_val = mem_access_fn(c,addr)
     new_pc = uint32(pc + 4)
     c.update_rf(rd,rd_val)
-    txt = "RF[rd={:02d}] <= 0x{:08X} MEM[0x{:08X}] (RF[rs1={:02d}]=0x{:08X} +   offset=0x{:08X}) ".format(rd,rd_val,addr,rs1,rs1_val,offset)
+    txt = "RF[rd={:02d}] <= 0x{:08x} MEM[0x{:08x}] (RF[rs1={:02d}]=0x{:08x} +   offset=0x{:08x}) ".format(rd,rd_val,addr,rs1,rs1_val,offset)
     return (None,new_pc,txt)
 
 
@@ -150,7 +150,7 @@ def store(c, mem_access_fn):
     # Mem access (using a function passed as a parameter)
     mem_access_fn(c,addr,rs2_val)
     new_pc = uint32(pc + 4)
-    txt = " MEM[0x{:08X}] <= RF[rs2={:02d}] : 0x{:08X} (RF[rs1={:02d}]=0x{:08X} +   offset=0x{:08X}) ".format(addr,rs2,rs2_val,rs1,rs1_val,offset)
+    txt = " MEM[0x{:08x}] <= RF[rs2={:02d}] : 0x{:08x} (RF[rs1={:02d}]=0x{:08x} +   offset=0x{:08x}) ".format(addr,rs2,rs2_val,rs1,rs1_val,offset)
     return (None,new_pc,txt)
 
 def lw_fn(c,addr):
@@ -200,7 +200,7 @@ sim_xor = partial(r_type,op=operator.xor,op_str='^')
 def mulh(a,b):
     a32 = uint32(a)
     b32 = uint32(b)
-    #print "Mulh 0x{:08X} * 0x{:08X} ".format(a32,b32)
+    #print "Mulh 0x{:08x} * 0x{:08x} ".format(a32,b32)
 
     s_a = ((a32>>31) & 0x01) == 1
     s_b = ((b32>>31) & 0x01) == 1
@@ -251,7 +251,7 @@ def mulhsu(a,b):
 def div(a,b):
     a32 = uint32(a)
     b32 = uint32(b)
-    #print "Div 0x{:08X} * 0x{:08X} ".format(a32,b32)
+    #print "Div 0x{:08x} * 0x{:08x} ".format(a32,b32)
 
     s_a = ((a32>>31) & 0x01) == 1
     s_b = ((b32>>31) & 0x01) == 1
@@ -283,7 +283,7 @@ def div(a,b):
 def rem(a,b):
     a32 = uint32(a)
     b32 = uint32(b)
-    #print "Rem 0x{:08X} / 0x{:08X} ".format(a32,b32)
+    #print "Rem 0x{:08x} / 0x{:08x} ".format(a32,b32)
 
     s_a = ((a32>>31) & 0x01) == 1
     s_b = ((b32>>31) & 0x01) == 1
@@ -356,7 +356,7 @@ sim_xori = partial(i_type,op=operator.xor,op_str='^')
 def lt_comp_signed(a,b):
     a32 = uint32(a)
     b32 = uint32(b)
-    #print "Compare 0x{:08X} < 0x{:08X} ".format(a32,b32)
+    #print "Compare 0x{:08x} < 0x{:08x} ".format(a32,b32)
 
     s_a = ((a32>>31) & 0x01) == 1
     s_b = ((b32>>31) & 0x01) == 1
@@ -380,7 +380,7 @@ def lt_comp_signed(a,b):
 def ge_comp_signed(a,b):
     a32 = uint32(a)
     b32 = uint32(b)
-    #print "Compare 0x{:08X} < 0x{:08X} ".format(a32,b32)
+    #print "Compare 0x{:08x} < 0x{:08x} ".format(a32,b32)
 
     s_a = ((a32>>31) & 0x01) == 1
     s_b = ((b32>>31) & 0x01) == 1
