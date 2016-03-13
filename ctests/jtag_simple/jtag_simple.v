@@ -103,6 +103,8 @@ module jtag_simple;
       if(!failed) $display("32-bit read/write OK!");
 
 
+      $display("-I- Jtag_simple testbench finished");
+      $finish(0);
 
 
    end
