@@ -14,11 +14,23 @@ def nanor32_fl(context):
 
     # Core
     l.append({
-        'file': "{top}/rtl/cores/nanorv32_alumuldiv.v",
+        'file': "{top}/rtl/cores/nanorv32_div.v",
         'targets': 'synt,sim_rtl'
     })
     l.append({
-        'file': "{top}/rtl/cores/nanorv32_div.v",
+        'file': "{top}/rtl/cores/nanorv32_ascii.v",
+        'targets': 'synt,sim_rtl'
+    })
+    l.append({
+        'file': "{top}/rtl/cores/nanorv32_alu.v",
+        'targets': 'synt,sim_rtl'
+    })
+    l.append({
+        'file': "{top}/rtl/cores/nanorv32_csr.v",
+        'targets': 'synt,sim_rtl'
+    })
+    l.append({
+        'file': "{top}/rtl/cores/nanorv32_alumuldiv.v",
         'targets': 'synt,sim_rtl'
     })
     l.append({
@@ -39,10 +51,6 @@ def nanor32_fl(context):
     })
     l.append({
         'file': "{top}/rtl/cores/nanorv32_urom.v",
-        'targets': 'synt,sim_rtl'
-    })
-    l.append({
-        'file': "{top}/rtl/cores/nanorv32_ascii.v",
         'targets': 'synt,sim_rtl'
     })
     l.append({

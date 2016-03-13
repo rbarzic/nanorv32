@@ -37,3 +37,9 @@ mux_sel_template_2 ="""
         NANORV32_MUX_SEL_{name}: begin
             {port_lc} <= ;
         end"""
+
+csr_addr_param = "parameter NANORV32_CSR_ADDR_{name_uc} = 12'h{addr};\n"
+csr_read_decode = """
+        NANORV32_CSR_ADDR_{name_uc}: begin
+            csr_core_rdata = {vname_lc};
+        end"""

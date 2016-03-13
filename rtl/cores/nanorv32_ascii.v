@@ -12,7 +12,7 @@ module nanorv32_ascii (/*AUTOARG*/
 
 `include "nanorv32_parameters.v"
 
-   output [6*8-1:0] ascii_chain;
+   output [8*8-1:0] ascii_chain;
    output [4*8-1:0] reg_to_ascii_rd;
    output [4*8-1:0] reg_to_ascii_rd2;
    output [4*8-1:0] reg_to_ascii_rs1;
@@ -23,67 +23,67 @@ module nanorv32_ascii (/*AUTOARG*/
    input  [4:0]    reg_rs1;
    input  [4:0]    reg_rs2;
 
-   reg     [6*8-1:0] ascii_chain; 
+   reg     [8*8-1:0] ascii_chain;
    always @* begin
       casez (instruction_r)
-          NANORV32_DECODE_AND    : ascii_chain = "AND   ";
-          NANORV32_DECODE_LBU    : ascii_chain = "LBU   "; 
-          NANORV32_DECODE_FENCE  : ascii_chain = "FENCE "; 
-          NANORV32_DECODE_SLTI   : ascii_chain = "SLTI  "; 
-          NANORV32_DECODE_SBREAK : ascii_chain = "SBREAK"; 
-          NANORV32_DECODE_BLTU   : ascii_chain = "BLTU  "; 
-          NANORV32_DECODE_XOR    : ascii_chain = "XOR   "; 
-          NANORV32_DECODE_SLL    : ascii_chain = "SLL   "; 
-          NANORV32_DECODE_MULHU  : ascii_chain = "MULHU "; 
-          NANORV32_DECODE_ANDI   : ascii_chain = "ANDI  "; 
-          NANORV32_DECODE_JALR   : ascii_chain = "JALR  "; 
-          NANORV32_DECODE_BLT    : ascii_chain = "BLT   "; 
-          NANORV32_DECODE_SCALL  : ascii_chain = "SCALL "; 
-          NANORV32_DECODE_FENCE_I: ascii_chain = "FENCE_"; 
-          NANORV32_DECODE_ADD    : ascii_chain = "ADD   "; 
-          NANORV32_DECODE_LH     : ascii_chain = "LH    "; 
-          NANORV32_DECODE_LWU    : ascii_chain = "LWU   "; 
-          NANORV32_DECODE_LW     : ascii_chain = "LW    "; 
-          NANORV32_DECODE_JAL    : ascii_chain = "JAL   "; 
-          NANORV32_DECODE_AUIPC  : ascii_chain = "AUIPC "; 
-          NANORV32_DECODE_REM    : ascii_chain = "REM   "; 
-          NANORV32_DECODE_LUI    : ascii_chain = "LUI   "; 
-          NANORV32_DECODE_ADDI   : ascii_chain = "ADDI  "; 
-          NANORV32_DECODE_MULH   : ascii_chain = "MULH  "; 
-          NANORV32_DECODE_BGEU   : ascii_chain = "BGEU  "; 
-          NANORV32_DECODE_SLTIU  : ascii_chain = "SLTIU "; 
-          NANORV32_DECODE_SLLI   : ascii_chain = "SLLI  "; 
-          NANORV32_DECODE_SRAI   : ascii_chain = "SRAI  "; 
-          NANORV32_DECODE_MULHSU : ascii_chain = "MULHSU"; 
-          NANORV32_DECODE_LD     : ascii_chain = "LD    "; 
-          NANORV32_DECODE_ORI    : ascii_chain = "ORI   "; 
-          NANORV32_DECODE_XORI   : ascii_chain = "XORI  "; 
-          NANORV32_DECODE_LB     : ascii_chain = "LB    "; 
-          NANORV32_DECODE_DIVU   : ascii_chain = "DIVU  "; 
-          NANORV32_DECODE_SUB    : ascii_chain = "SUB   "; 
-          NANORV32_DECODE_SRA    : ascii_chain = "SRA   "; 
-          NANORV32_DECODE_BGE    : ascii_chain = "BGE   "; 
-          NANORV32_DECODE_SLT    : ascii_chain = "SLT   "; 
-          NANORV32_DECODE_SRLI   : ascii_chain = "SRLI  "; 
-          NANORV32_DECODE_SW     : ascii_chain = "SW    "; 
-          NANORV32_DECODE_REMU   : ascii_chain = "REMU  "; 
-          NANORV32_DECODE_SRL    : ascii_chain = "SRL   "; 
-          NANORV32_DECODE_SLTU   : ascii_chain = "SLTU  "; 
-          NANORV32_DECODE_LHU    : ascii_chain = "LHU   "; 
-          NANORV32_DECODE_SH     : ascii_chain = "SH    "; 
-          NANORV32_DECODE_MUL    : ascii_chain = "MUL   "; 
-          NANORV32_DECODE_BNE    : ascii_chain = "BNE   "; 
-          NANORV32_DECODE_SB     : ascii_chain = "SB    "; 
-          NANORV32_DECODE_DIV    : ascii_chain = "DIV   "; 
-          NANORV32_DECODE_BEQ    : ascii_chain = "BEQ   "; 
-          NANORV32_DECODE_OR     : ascii_chain = "OR    "; 
-          NANORV32_DECODE_SD     : ascii_chain = "SD    "; 
-          default                : ascii_chain = "UNDEF ";
+          NANORV32_DECODE_AND    : ascii_chain = "and     ";
+          NANORV32_DECODE_LBU    : ascii_chain = "lbu     ";
+          NANORV32_DECODE_FENCE  : ascii_chain = "fence   ";
+          NANORV32_DECODE_SLTI   : ascii_chain = "slti    ";
+          NANORV32_DECODE_SBREAK : ascii_chain = "sbreak  ";
+          NANORV32_DECODE_BLTU   : ascii_chain = "bltu    ";
+          NANORV32_DECODE_XOR    : ascii_chain = "xor     ";
+          NANORV32_DECODE_SLL    : ascii_chain = "sll     ";
+          NANORV32_DECODE_MULHU  : ascii_chain = "mulhu   ";
+          NANORV32_DECODE_ANDI   : ascii_chain = "andi    ";
+          NANORV32_DECODE_JALR   : ascii_chain = "jalr    ";
+          NANORV32_DECODE_BLT    : ascii_chain = "blt     ";
+          NANORV32_DECODE_SCALL  : ascii_chain = "scall   ";
+          NANORV32_DECODE_FENCE_I: ascii_chain = "fence_  ";
+          NANORV32_DECODE_ADD    : ascii_chain = "add     ";
+          NANORV32_DECODE_LH     : ascii_chain = "lh      ";
+          NANORV32_DECODE_LWU    : ascii_chain = "lwu     ";
+          NANORV32_DECODE_LW     : ascii_chain = "lw      ";
+          NANORV32_DECODE_JAL    : ascii_chain = "jal     ";
+          NANORV32_DECODE_AUIPC  : ascii_chain = "auipc   ";
+          NANORV32_DECODE_REM    : ascii_chain = "rem     ";
+          NANORV32_DECODE_LUI    : ascii_chain = "lui     ";
+          NANORV32_DECODE_ADDI   : ascii_chain = "addi    ";
+          NANORV32_DECODE_MULH   : ascii_chain = "mulh    ";
+          NANORV32_DECODE_BGEU   : ascii_chain = "bgeu    ";
+          NANORV32_DECODE_SLTIU  : ascii_chain = "sltiu   ";
+          NANORV32_DECODE_SLLI   : ascii_chain = "slli    ";
+          NANORV32_DECODE_SRAI   : ascii_chain = "srai    ";
+          NANORV32_DECODE_MULHSU : ascii_chain = "mulhsu  ";
+          NANORV32_DECODE_LD     : ascii_chain = "ld      ";
+          NANORV32_DECODE_ORI    : ascii_chain = "ori     ";
+          NANORV32_DECODE_XORI   : ascii_chain = "xori    ";
+          NANORV32_DECODE_LB     : ascii_chain = "lb      ";
+          NANORV32_DECODE_DIVU   : ascii_chain = "divu    ";
+          NANORV32_DECODE_SUB    : ascii_chain = "sub     ";
+          NANORV32_DECODE_SRA    : ascii_chain = "sra     ";
+          NANORV32_DECODE_BGE    : ascii_chain = "bge     ";
+          NANORV32_DECODE_SLT    : ascii_chain = "slt     ";
+          NANORV32_DECODE_SRLI   : ascii_chain = "srli    ";
+          NANORV32_DECODE_SW     : ascii_chain = "sw      ";
+          NANORV32_DECODE_REMU   : ascii_chain = "remu    ";
+          NANORV32_DECODE_SRL    : ascii_chain = "srl     ";
+          NANORV32_DECODE_SLTU   : ascii_chain = "sltu    ";
+          NANORV32_DECODE_LHU    : ascii_chain = "lhu     ";
+          NANORV32_DECODE_SH     : ascii_chain = "sh      ";
+          NANORV32_DECODE_MUL    : ascii_chain = "mul     ";
+          NANORV32_DECODE_BNE    : ascii_chain = "bne     ";
+          NANORV32_DECODE_SB     : ascii_chain = "sb      ";
+          NANORV32_DECODE_DIV    : ascii_chain = "div     ";
+          NANORV32_DECODE_BEQ    : ascii_chain = "beq     ";
+          NANORV32_DECODE_OR     : ascii_chain = "or      ";
+          NANORV32_DECODE_SD     : ascii_chain = "sd      ";
+          default                : ascii_chain = "UNDEF   ";
      endcase
    end
    reg   [4*8-1:0] tmp_rd;
-   always @* begin 
-     case (reg_rd)  
+   always @* begin
+     case (reg_rd)
         5'h00 : tmp_rd = "zero";
         5'h01 : tmp_rd = "ra  ";
         5'h02 : tmp_rd = "sp  ";
@@ -116,12 +116,12 @@ module nanorv32_ascii (/*AUTOARG*/
         5'h1d : tmp_rd = "t4  ";
         5'h1e : tmp_rd = "t5  ";
         5'h1f : tmp_rd = "t6  ";
-     endcase 
-   end 
+     endcase
+   end
    assign reg_to_ascii_rd = tmp_rd;
    reg   [4*8-1:0] tmp_rd2;
-   always @* begin 
-     case (reg_rd2)  
+   always @* begin
+     case (reg_rd2)
         5'h00 : tmp_rd2 = "zero";
         5'h01 : tmp_rd2 = "ra  ";
         5'h02 : tmp_rd2 = "sp  ";
@@ -154,11 +154,11 @@ module nanorv32_ascii (/*AUTOARG*/
         5'h1d : tmp_rd2 = "t4  ";
         5'h1e : tmp_rd2 = "t5  ";
         5'h1f : tmp_rd2 = "t6  ";
-     endcase 
-   end 
+     endcase
+   end
    assign reg_to_ascii_rd2 = tmp_rd2;
      reg   [4*8-1:0] tmp_rs1;
-     always @* begin 
+     always @* begin
        case (reg_rs1)
           5'h00 : tmp_rs1 = "zero";
           5'h01 : tmp_rs1 = "ra  ";
@@ -192,11 +192,11 @@ module nanorv32_ascii (/*AUTOARG*/
           5'h1d : tmp_rs1 = "t4  ";
           5'h1e : tmp_rs1 = "t5  ";
           5'h1f : tmp_rs1 = "t6  ";
-       endcase 
-     end 
+       endcase
+     end
    assign reg_to_ascii_rs1 = tmp_rs1;
      reg   [4*8-1:0] tmp_rs2;
-     always @* begin 
+     always @* begin
        case (reg_rs2)
           5'h00 : tmp_rs2 = "zero";
           5'h01 : tmp_rs2 = "ra  ";
@@ -230,8 +230,8 @@ module nanorv32_ascii (/*AUTOARG*/
           5'h1d : tmp_rs2 = "t4  ";
           5'h1e : tmp_rs2 = "t5  ";
           5'h1f : tmp_rs2 = "t6  ";
-       endcase 
-     end 
+       endcase
+     end
    assign reg_to_ascii_rs2 = tmp_rs2;
 
 endmodule

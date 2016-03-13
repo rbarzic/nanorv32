@@ -9,6 +9,9 @@ FILES_WITH_GEN_CODE += $(TOP)/rtl/cores/nanorv32_parameters.v
 FILES_WITH_GEN_CODE += $(TOP)/rtl/cores/nanorv32.v
 FILES_WITH_GEN_CODE += $(TOP)/rtl/cores/nanorv32_urom.v
 FILES_WITH_GEN_CODE += $(TOP)/rtl/cores/nanorv32_decoder.v
+FILES_WITH_GEN_CODE += $(TOP)/rtl/cores/nanorv32_csr.v
+FILES_WITH_GEN_CODE += $(TOP)/common/spec/nanorv32_simulator.py
+FILES_WITH_GEN_CODE += $(TOP)/common/spec/inst_decod.py
 # FILES_WITH_GEN_CODE += $(TOP)/hdl/sync/j2_core.v
 
 
@@ -29,3 +32,6 @@ emacs_auto:
 ahbmli:
 	make -C $(TOP)/ml-ahb-gen all JSON=$(TOP)/common/spec/nanorv32_ahbmli.json
 	cp $(TOP)/ml-ahb-gen/chisel/Ahbmli.v $(TOP)/rtl/ips
+
+check_simu:
+	@cat $(TOP)/common/instructions/rv32e_base.txt | xargs -n1 -IXXX  ./nanorv32_simulator.py  --hex2=../../sim/verilog/XXX.hex2
