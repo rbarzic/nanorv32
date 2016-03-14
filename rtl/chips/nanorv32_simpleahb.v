@@ -34,9 +34,9 @@
 
 module nanorv32_simpleahb (/*AUTOARG*/
    // Outputs
-   pad_gpio_in, adbg_w2ahb_cab, illegal_instruction, TDO,
+   illegal_instruction, TDO,
    // Inouts
-   P0, P1,
+   P0,
    // Inputs
    clk_in, rst_n, irq_ext, TMS, TCK, TDI
    );
@@ -55,7 +55,6 @@ module nanorv32_simpleahb (/*AUTOARG*/
    output               illegal_instruction;    // From U_CPU of nanorv32.v
 
    inout  wire [15:0]   P0;
-   inout  wire [15:0]   P1;
 
    // irq support (preliminary)
 
@@ -70,10 +69,6 @@ module nanorv32_simpleahb (/*AUTOARG*/
    // Code memory port
    /*AUTOINPUT*/
    /*AUTOOUTPUT*/
-   // Beginning of automatic outputs (from unused autoinst outputs)
-   output               adbg_w2ahb_cab;         // From U_ADBG_TOP of adbg_top.v
-   output [CHIP_PORT_A_WIDTH-1:0] pad_gpio_in;  // From U_PORT_MUX of port_mux.v
-   // End of automatics
 
    /*AUTOREG*/
    /*AUTOWIRE*/
@@ -508,25 +503,28 @@ module nanorv32_simpleahb (/*AUTOARG*/
    /* gpio_apb AUTO_TEMPLATE(
     .clk_apb            (clk),
     .rst_apb_n          (rst_n),
+    .pad_gpio_in                 (pad_gpio_in[CHIP_PORT_A_WIDTH-1:0]),
     ); */
-   gpio_apb U_GPIO (
-                    .pad_gpio_in        (pad_gpio_in[15:0]),
+   gpio_apb #(.GPIO_NUMBER(CHIP_PORT_A_WIDTH))
+   U_GPIO (
+
                     .gpio_pad_out       (gpio_pad_out[15:0]),
 
                     /*AUTOINST*/
-                    // Outputs
-                    .gpio_apb_prdata    (gpio_apb_prdata[31:0]),
-                    .gpio_apb_pready    (gpio_apb_pready),
-                    .gpio_apb_pslverr   (gpio_apb_pslverr),
-                    .gpio_irq           (gpio_irq),
-                    // Inputs
-                    .apb_gpio_psel      (apb_gpio_psel),
-                    .apb_gpio_paddr     (apb_gpio_paddr[11:0]),
-                    .apb_gpio_penable   (apb_gpio_penable),
-                    .apb_gpio_pwrite    (apb_gpio_pwrite),
-                    .apb_gpio_pwdata    (apb_gpio_pwdata[31:0]),
-                    .clk_apb            (clk),                   // Templated
-                    .rst_apb_n          (rst_n));                 // Templated
+           // Outputs
+           .gpio_apb_prdata             (gpio_apb_prdata[31:0]),
+           .gpio_apb_pready             (gpio_apb_pready),
+           .gpio_apb_pslverr            (gpio_apb_pslverr),
+           .gpio_irq                    (gpio_irq),
+           // Inputs
+           .apb_gpio_psel               (apb_gpio_psel),
+           .apb_gpio_paddr              (apb_gpio_paddr[11:0]),
+           .apb_gpio_penable            (apb_gpio_penable),
+           .apb_gpio_pwrite             (apb_gpio_pwrite),
+           .apb_gpio_pwdata             (apb_gpio_pwdata[31:0]),
+           .pad_gpio_in                 (pad_gpio_in[CHIP_PORT_A_WIDTH-1:0]), // Templated
+           .clk_apb                     (clk),                   // Templated
+           .rst_apb_n                   (rst_n));                 // Templated
 
 
    /* uart_warpper AUTO_TEMPLATE(
@@ -705,7 +703,7 @@ module nanorv32_simpleahb (/*AUTOARG*/
                         .wb_rst_i       (!rst_n),
                         .cpu0_stall_o   (), // FIXME
                         .cpu0_rst_o     (), // FIXME
-
+                        .wb_cab_o       (),
                         /*AUTOINST*/
                         // Outputs
                         .tdo_o          (debug_tap_tdo),         // Templated
@@ -715,7 +713,6 @@ module nanorv32_simpleahb (/*AUTOARG*/
                         .wb_stb_o       (adbg_w2ahb_stb),        // Templated
                         .wb_sel_o       (adbg_w2ahb_sel),        // Templated
                         .wb_we_o        (adbg_w2ahb_we),         // Templated
-                        .wb_cab_o       (adbg_w2ahb_cab),        // Templated
                         .wb_cti_o       (),                      // Templated
                         .wb_bte_o       (),                      // Templated
                         .cpu0_addr_o    (),                      // Templated
@@ -888,7 +885,7 @@ module nanorv32_simpleahb (/*AUTOARG*/
 
 
    assign P0 = gpio_pad_out[15:0];
-   assign pad_gpio_in[15:0] = P1;
+   assign pad_gpio_in[15:0] = 0;
 
 endmodule // nanorv32_simple
 /*

@@ -47,10 +47,8 @@ module tb_nanorv32;
    /*AUTOWIRE*/
    // Beginning of automatic wires (for undeclared instantiated-module outputs)
    wire [15:0]          P0;                     // To/From U_DUT of nanorv32_simpleahb.v
-   wire [15:0]          P1;                     // To/From U_DUT of nanorv32_simpleahb.v
    wire                 clk;                    // From U_CLOCK_GEN of clock_gen.v
    wire                 illegal_instruction;    // From U_DUT of nanorv32_simpleahb.v
-   wire [CHIP_PORT_A_WIDTH-1:0] pad_gpio_in;    // From U_DUT of nanorv32_simpleahb.v
    wire                 rst_n;                  // From U_RESET_GEN of reset_gen.v
    // End of automatics
 
@@ -73,18 +71,16 @@ module tb_nanorv32;
                            /*AUTOINST*/
                              // Outputs
                              .illegal_instruction(illegal_instruction),
-                             .pad_gpio_in       (pad_gpio_in[CHIP_PORT_A_WIDTH-1:0]),
+                             .TDO               (TDO),
                              // Inouts
                              .P0                (P0[15:0]),
-                             .P1                (P1[15:0]),
                              // Inputs
                              .clk_in            (clk),           // Templated
                              .rst_n             (rst_n),
                              .irq_ext           (irq_ext),
                              .TMS               (TMS),
                              .TCK               (TCK),
-                             .TDI               (TDI),
-                             .TDO               (TDO));
+                             .TDI               (TDI));
 
 
 
@@ -278,7 +274,7 @@ module tb_nanorv32;
 
 `endif
 
-   assign P1[15:0] = P1reg[15:0];
+
 endmodule // tb_nanorv32
 /*
  Local Variables:

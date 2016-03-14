@@ -186,6 +186,11 @@ def nanor32_fl(context):
         'targets': 'sim_rtl'
     })
 
+    l.append({
+        'file': "{top}/rtl/chips/BUFG.v",
+        'targets': 'sim_rtl'
+    })
+
     # Arty specific file
     l.append({
         'file': "{top}/rtl/ips/clock_manager/arty_mmcm/arty_mmcm_clk_wiz.v",

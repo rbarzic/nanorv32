@@ -106,3 +106,7 @@ write_sdf -force chip_layout.sdf
 
 # STEP #8 : output BRAM location information
 source report_bram.tcl > bram.yaml
+
+# STEP #9 : various reporting
+
+echo [all_latches] > all_latches.rpt

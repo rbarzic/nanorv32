@@ -294,10 +294,16 @@ module top_io (/*AUTOARG*/
                   .oe               (1'b0),    //
                   .ie               (1'b1));    //
 
+           BUFG U_TCK_BUF(
+                .I(pad_tap_tck_in),
+                .O(pad_tap_tck)
+                );
+
+
    std_pad U_TCK (
                   .dout                (1'b0),     //
                   .pad                 (TCK),                //
-                  .din                 (pad_tap_tck),     //
+                  .din                 (pad_tap_tck_in),     //
                   .oe               (1'b0),    //
                   .ie               (1'b1));    //
 
