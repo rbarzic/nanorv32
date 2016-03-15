@@ -10,10 +10,33 @@ from collections import Mapping
 
 
 
+
+
 tpl_verilog_parameter = "VERILOG_PARAMETER += +{var_name_lc}={val}\n"
 tpl_make_variable     = "{var_name_uc}={val}\n"
 tpl_c_define          = "C_DEFINES += -D{var_name_uc}={val}\n"
 tpl_verilog_define    = "VERILOG_DEFINES += -D{var_name_uc}={val}\n"
+
+tpl_main_makefile  = """
+TOP={top_rel_dir}
+TEST_DIR_FROM_TOP={test_dir_from_top}
+TEST_DIR=$(TOP)/$(TEST_DIR_FROM_TOP)
+
+include {config_rel_dir}/gcc.mk
+include {config_rel_dir}/icarus.mk
+include {config_rel_dir}/xilinx.mk
+
+
+debug:
+	@echo "Hello world"
+
+"""
+
+
+def top_dir(sim_path):
+    "Get top dir of the database if called from sim directory (the one where runtest.py is called)"
+    return '/'.join(sim_path.split('/')[:-1])
+
 
 def merge_dict2(a, b, path=None):
     "merges b into a, with override"
@@ -93,16 +116,23 @@ if __name__ == '__main__':
     args = get_args()
     if args.verbosity:
         print "Verbosity set to {}".format(args.verbosity)
-    # we parse the default configuration file
-    default_opts = av.AutoVivification()
-    define_opts = av.AutoVivification()
-    execfile("./config/default.py", {}, {"cfg": default_opts, "define" : define_opts})
-    # and the override file
-    override_opts= av.AutoVivification()
-    execfile("./config/override.py", {}, {"cfg": override_opts})
+
+    global_args = dict()
+    global_args['trace'] =  args.trace
+
+
 
     # main loop over tests
     for test in args.tests:
+        # we parse the default configuration file
+        default_opts = av.AutoVivification()
+        define_opts = av.AutoVivification()
+        execfile("./config/default.py", global_args, {"cfg": default_opts, "define" : define_opts})
+        # and the override file
+        override_opts= av.AutoVivification()
+        execfile("./config/override.py", {}, {"cfg": override_opts})
+
+
         if args.verbosity>0:
             print "Parsing options for test {}".format(test)
         local_opts = av.AutoVivification()
@@ -112,22 +142,20 @@ if __name__ == '__main__':
         if os.path.isfile(opt_file):
             execfile(opt_file, {}, {"cfg": local_opts})
 
-
-
+        # We merge (with eventually override) all the definitions
         merge_dict2(default_opts, local_opts)
         merge_dict2(default_opts, override_opts)
 
-        #pp.pprint(default_opts)
-        #pp.pprint(define_opts)
-
         all_data = list(treeZip (default_opts,define_opts, path=[]))
 
-        #pp.pprint(all_data)
+        # Now we generate the content of the makefile
+        # for each entry, we create a line in the Makefile
+        # depending of the expected type (as defined in the define[][]...[])
+        # in the default.py
+
         txt = ""
         for path,v  in all_data:
-            #print "txt : " + txt
-            #print "Path = {}".format(path)
-            #print "Data = {}".format(v)
+
             d = dict() # use for string format(**d)
             var_name = '_'.join(path)
             d['var_name_uc'] = var_name.upper()
@@ -140,23 +168,13 @@ if __name__ == '__main__':
             val_type = v[1]
             val_l = list()
             if type(val_type) == str:
-                #print "val_type = {}".format(val_type)
-                #print "val_l = {}".format(val_l)
                 val_l.append(val_type)
-                #val_l = set(val_l)
-                #print "Type of val_l : {}".format(type(val_l))
 
             elif type(val_type) == tuple:
                 val_l = val_type
             else:
                 sys.exit("-E- Unrecognized type for {} : {}".format(val_type,type(val_type)))
                 pass
-
-            #print "val_l : {} ".format(val_l)
-            #print "Var = {} / {}".format(var_name_uc,var_name_lc)
-            #print "Type({}[1]) = {}".format(v,type(v[1]))
-
-
             for t in val_l:
                 if t == 'VERILOG_PARAMETER':
                     txt += tpl_verilog_parameter.format(**d)
@@ -167,4 +185,36 @@ if __name__ == '__main__':
                 elif t == 'VERILOG_DEFINE':
                     txt += tpl_verilog_define.format(**d)
 
-        print(txt)
+        # Here, txt contains the Makefile content
+        # We add some extra stuff to include the main Makefile
+
+        cwd = os.getcwd()
+        topdir = top_dir(cwd)
+        # Get test dir
+        # Note : we pass a directory to runtest
+        test_dir = os.path.realpath(test)
+        test_dir_from_cwd = os.path.relpath(test_dir,cwd)
+        test_dir_from_top = os.path.relpath(test_dir,topdir)
+        cwd_from_test_dir = os.path.relpath(cwd,test_dir)
+        config_rel_dir = cwd_from_test_dir + "/config"
+        top_rel_dir = os.path.relpath(topdir,test_dir)
+        if args.verbosity>0:
+            print "Current directory : {}".format(cwd)
+            print "Top directory : {}".format(topdir)
+            print "Test directory : {}".format(test_dir)
+            print "Test directory (relative to cwd): {}".format(test_dir_from_cwd)
+            print "Test directory (relative to top): {}".format(test_dir_from_top)
+            print "CWD directory (relative to test dir): {}".format(cwd_from_test_dir)
+            print "TOP directory (relative to test dir): {}".format(top_rel_dir)
+
+        d = dict()
+        d['config_rel_dir'] = config_rel_dir
+        d['top_rel_dir'] = top_rel_dir
+        d['test_dir'] = test_dir
+        d['test_dir_from_top'] = test_dir_from_top
+        txt += tpl_main_makefile.format(**d)
+
+        # We are done with the MAkefile content, we write it into the test directory
+        makefile = test+"/Makefile"
+        with open(makefile,'w') as f:
+            f.write(txt)
