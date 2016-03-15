@@ -9,7 +9,7 @@ int main(void) {
     // Code copied from
     // http://www.menie.org/georges/embedded/printf-stdarg.html
     // for testing of the printf implementation
-	char *ptr = "Hello world!";
+	const char *ptr = "Hello world!";
 	char *np = 0;
 	int i = 5;
 	unsigned int bs = sizeof(int)*8;

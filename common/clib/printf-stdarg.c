@@ -29,6 +29,9 @@
 #include <stdarg.h>
 extern void _sim_printk(int);
 
+int printf(const char *format, ...);
+int sprintf(char* out, const char *format, ...);
+
 
 static void printchar(char **str, int c)
 {
@@ -202,13 +205,6 @@ int sprintf(char *out, const char *format, ...)
 }
 
 
-int printk(const char *format, ...)
-{
-    va_list args;
-
-    va_start( args, format );
-    return print( 0, format, args );
-}
 
 
 
