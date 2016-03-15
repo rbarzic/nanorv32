@@ -102,7 +102,7 @@ module nanorv32_prefetch (/*AUTOARG*/
    wire  [2:0] wr_pt_r_plus1 = wr_pt_r + 1;
    wire  [2:0] rd_pt_r_plus1 = rd_pt_r + 1;
    reg fifo_full_reg;
-   wire fifo_full = wr_pt_r_plus1[1:0] == rd_pt_r[1:0] & pstate_r != NANORV32_PSTATE_BRANCH ;
+   wire fifo_full = wr_pt_r_plus1[1:0] == rd_pt_r[1:0] & pstate_r != NANORV32_PSTATE_BRANCH & write_data;
    wire fifo_empty = wr_pt_r[1:0] == rd_pt_r[1:0] & pstate_r != NANORV32_PSTATE_BRANCH & ~fifo_full_reg;
    reg  [31:0] iq [0:3];
    wire inst_ret = (!(stall_exe | force_stall_reset));
@@ -116,7 +116,7 @@ module nanorv32_prefetch (/*AUTOARG*/
       end
       else begin
          if(hreadyi)
-           branch_taken_reg <= branch_taken & hreadyi & ~reset_over &  pstate_r != NANORV32_PSTATE_BRANCH;
+           branch_taken_reg <= branch_taken & hreadyi & ~reset_over &  pstate_r != NANORV32_PSTATE_BRANCH & ~interlock; 
       end
    end
     always @(posedge clk or negedge rst_n) begin
@@ -145,7 +145,7 @@ module nanorv32_prefetch (/*AUTOARG*/
          /*AUTORESET*/
       end
       else begin
-         if((write_data | branch_taken & ~ignore_branch) & hreadyi)
+         if((write_data | branch_taken & ~ignore_branch & ~interlock & ~fifo_empty) & hreadyi)
            wr_pt_r <= (branch_taken & ~ignore_branch &  (pstate_r != NANORV32_PSTATE_BRANCH)) ? 2'b00 : wr_pt_r + 1;
       end
    end
@@ -248,9 +248,9 @@ module nanorv32_prefetch (/*AUTOARG*/
           haddri_r <= haddri;
       end
    end
-   assign branch_req_tmp =  branch_taken & ~ignore_branch & pstate_r != NANORV32_PSTATE_BRANCH;
+   assign branch_req_tmp =  branch_taken & ~ignore_branch & pstate_r != NANORV32_PSTATE_BRANCH & ~interlock;
 
-   assign next_inst_en_tmp = ~force_stall_reset & ~fifo_full & ~(fifo_full_reg & ~branch_taken);
+   assign next_inst_en_tmp = ~force_stall_reset & ~fifo_full & ~(fifo_full_reg & ~branch_taken) & ~(branch_taken & interlock);
    // We block eternal request on the bus if we are overriding
    // the instruction register during a irq context save/restore operation
    assign htransi_tmp  = (next_inst_en_tmp | branch_req_tmp) & ~force_stall_reset & ~interlock & (!irq_bypass_inst_reg_r ||  branch_taken);
@@ -262,7 +262,7 @@ module nanorv32_prefetch (/*AUTOARG*/
 
    // Code memory interface
 
-   assign htransi      = hreadyi & ~force_stall_reset & ~fifo_full & ~(fifo_full_reg & ~branch_taken);  // request is the AHB is free
+   assign htransi      = hreadyi & ~force_stall_reset & ~(branch_taken & interlock) & ~(fifo_full & ~branch_taken) & ~(fifo_full_reg & ~branch_taken);  // request is the AHB is free
    assign hsizei       = 3'b010;   // word request
    assign hproti       = 4'b0001;  // instruction data
    assign hbursti      = 3'b000;   // Burst not supported

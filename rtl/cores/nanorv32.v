@@ -466,7 +466,7 @@ module nanorv32 (/*AUTOARG*/
         NANORV32_MUX_SEL_PC_NEXT_COND_PC_PLUS_IMMSB: begin
            pc_next = (alu_cond & output_new_pc & pc_branch) ? (pc_exe_r + imm12sb_sext) : (pc_fetch_r + 4);
            // branch_taken = alu_cond & !stall_exe;
-           branch_taken = alu_cond & pc_branch;
+           branch_taken = alu_cond & pc_branch & ~fifo_empty & ~interlock;
         end
         NANORV32_MUX_SEL_PC_NEXT_PLUS4: begin
            if(!stall_exe) begin
@@ -489,7 +489,7 @@ module nanorv32 (/*AUTOARG*/
            // We cancel the branch if we detect a "reti"
            // while in interrupt state
             // branch_taken = !(reti_inst_detected && interrupt_state_r);
-           branch_taken = 1'b1;
+           branch_taken = ~fifo_empty & ~interlock;
 
         end// Mux definitions for alu
         default begin
@@ -648,7 +648,8 @@ module nanorv32 (/*AUTOARG*/
    assign cpu_dataif_req = (datamem_write || datamem_read) & data_access_cycle;
    // assign stall_fetch = !codeif_cpu_early_ready  | force_stall_pstate | !codeif_cpu_ready_r;
    assign stall_fetch = force_stall_pstate | !codeif_cpu_ready_r;
-   assign interlock   = write_rd2 & (dec_rd2 == dec_rs1 | dec_rd2 == dec_rs2) & ~(htransd & hreadyd & hwrited);
+//   assign interlock   = write_rd2 & (dec_rd2 == dec_rs1 | dec_rd2 == dec_rs2) & ~(htransd & hreadyd & hwrited);
+   assign interlock   = write_rd2 & (dec_rd2 == dec_rs1 | dec_rd2 == dec_rs2);
    assign stall_exe = force_stall_pstate | interlock | ~div_ready | fifo_empty;
    assign read_byte_sel = cpu_dataif_addr[1:0];
    wire  [2:0] hsized_tmp = {3{(datamem_size_read_sel == NANORV32_MUX_SEL_DATAMEM_SIZE_READ_HALFWORD_UNSIGNED |
