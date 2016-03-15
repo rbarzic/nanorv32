@@ -165,7 +165,7 @@ module tb_nanorv32;
       if(rst_n) begin
          if(illegal_instruction) begin
             $display("-I- TEST FAILED (Illegal instruction)");
-            $finish(2);
+            $error;
          end
       else
         if(pc === 32'h00000100) begin
@@ -176,16 +176,16 @@ module tb_nanorv32;
          else
            if(x10_a0 === 32'hDEADD000) begin
               $display("-I- TEST FAILED");
-              $finish(1);
+              $error;
            end
            else begin
               $display("-I- TEST FAILED (unknown reason)");
-              $finish(2);
+              $error;
            end
       end // if (pc === 32'h00000100)
       else if (pc === 32'hxxxxxxxx) begin
          $display("-I- TEST FAILED (PC is X)");
-         $finish(2);
+         $error;
       end
          end
    end
@@ -261,7 +261,7 @@ module tb_nanorv32;
    always @ (posedge clk or negedge rst_n) begin
         if (rst_n == 1'b0)
            load_ongoing <= 1'b0;
-        else begin 
+        else begin
           cur_time = $time;
           if (load_ongoing & U_DUT.U_NANORV32_PIL.U_CPU.hreadyd) begin
              $fwrite(f,"PC : 0x%08x I : 0x%08x : %s : %s, %s, %s %d ns ",pc_r_r, data_r, ascii_chain_r, reg_to_ascii_rd_r, reg_to_ascii_rs1_r, reg_to_ascii_rs2_r,cur_time ) ;
@@ -270,7 +270,7 @@ module tb_nanorv32;
              $fwrite(f,"\n");
              load_ongoing <= 1'b0;
              end
-          if (U_DUT.U_NANORV32_PIL.U_CPU.inst_ret && ~(U_DUT.U_NANORV32_PIL.U_CPU.htransd && ~U_DUT.U_NANORV32_PIL.U_CPU.hwrited)) 
+          if (U_DUT.U_NANORV32_PIL.U_CPU.inst_ret && ~(U_DUT.U_NANORV32_PIL.U_CPU.htransd && ~U_DUT.U_NANORV32_PIL.U_CPU.hwrited))
              begin
              $fwrite(f,"PC : 0x%08x I : 0x%08x : %s : %s, %s, %s %d ns ",pc_r, data, ascii_chain, reg_to_ascii_rd, reg_to_ascii_rs1, reg_to_ascii_rs2,cur_time ) ;
              if (U_DUT.U_NANORV32_PIL.U_CPU.write_rd)
@@ -278,7 +278,7 @@ module tb_nanorv32;
              $fwrite(f,"\n");
              load_ongoing <= 1'b0;
              end
-          else 
+          else
           if (U_DUT.U_NANORV32_PIL.U_CPU.inst_ret && (U_DUT.U_NANORV32_PIL.U_CPU.htransd && ~U_DUT.U_NANORV32_PIL.U_CPU.hwrited && U_DUT.U_NANORV32_PIL.U_CPU.hreadyd))
           begin
              pc_r_r <= pc_r;
