@@ -34,7 +34,7 @@
 
 module nanorv32_simpleahb (/*AUTOARG*/
    // Outputs
-   illegal_instruction, TDO,
+   illegal_instruction, TDO, debug,
    // Inouts
    P0,
    // Inputs
@@ -64,6 +64,9 @@ module nanorv32_simpleahb (/*AUTOARG*/
    input                TCK;
    input                TDI;
    output               TDO;
+
+   output [5:0]               debug;
+
 
 
    // Code memory port
@@ -233,6 +236,8 @@ module nanorv32_simpleahb (/*AUTOARG*/
    wire [31:0]                    gpio_pad_out;           // From U_GPIO of gpio_apb.v
 
    wire                           irq_ext;
+
+   wire [5:0]                     debug;
 
 
    /* nanorv32_pil AUTO_TEMPLATE(
@@ -611,6 +616,7 @@ module nanorv32_simpleahb (/*AUTOARG*/
 
 
 
+   wire                           tap_debug_run_test_idle;
 
 
    /* tap_top AUTO_TEMPLATE(
@@ -635,10 +641,11 @@ module nanorv32_simpleahb (/*AUTOARG*/
     ); */
    tap_top
      U_TAP_TOP (
+                .run_test_idle_o        (), // For debug only
                 .bs_chain_tdo_i   (1'b0), // Boundary scan chain not used
                 .mbist_tdo_i      (1'b0),
                 // Unused
-                .run_test_idle_o        (),
+
                 .extest_select_o(),
                 .sample_preload_select_o(),
                 .mbist_select_o(),
@@ -659,6 +666,13 @@ module nanorv32_simpleahb (/*AUTOARG*/
                 .trstn_pad_i            (rst_n),                 // Templated
                 .tdi_pad_i              (pad_tap_tdi),           // Templated
                 .debug_tdo_i            (debug_tap_tdo));         // Templated
+
+
+   assign debug[5] = 0;
+   assign debug[6] = 0;
+
+
+
 
 
    /* adbg_top AUTO_TEMPLATE(
