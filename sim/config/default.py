@@ -27,6 +27,7 @@ define['c_compiler']['optimisation_options'] = 'MAKE_VARIABLE'
 cfg['c_compiler']['optimisation_options'] = '-O3'
 
 
+
 define['c_compiler']['linker_script_path'] = 'MAKE_VARIABLE'
 cfg['c_compiler']['linker_script_path'] = '$(TOP)/common/linker_scripts'
 
@@ -44,12 +45,13 @@ cfg['c_compiler']['default_lib_opt'] = "-ffreestanding -nostdlib"
 
 
 define['c_compiler']['extra_c_sources'] = 'MAKE_VARIABLE'
-cfg['c_compiler']['extra_c_sources'] = '' # Added in  the config.py  in each test
+cfg['c_compiler']['extra_c_sources'] = ''
 
+define['c_compiler']['extra_incdirs'] = 'MAKE_VARIABLE'
+cfg['c_compiler']['extra_incdirs'] = ''
 
-
-
-
+define['c_compiler']['extra_defines'] = 'MAKE_VARIABLE'
+cfg['c_compiler']['extra_defines'] = ''
 
 
 define['simulation']['timeout_ns'] = 'VERILOG_PARAMETER'

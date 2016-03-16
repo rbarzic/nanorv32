@@ -189,24 +189,58 @@ if __name__ == '__main__':
 
     # main loop over tests
     for test in args.tests:
+        color_print_result('header',test)
+
         # we reset everything
         default_opts = av.AutoVivification()
         define_opts = av.AutoVivification()
         override_opts= av.AutoVivification()
 
+
+        # we start creating some variables regarding test directory and test name
+        # that could be useful later
+
+        # For nanorv32, we need to be able to pass
+        # a assembly file in addition of the default debaviour
+        # (a directory)
+        test_dir = '' # we need that later also
+        test_is_a_file = False
+        test_name = ''
+        if(os.path.isdir(test)):
+            opt_file = test + '/options.py'
+            test_dir = os.path.realpath(test)
+            test_is_a_file = False
+            test_name = test_dir.split('/')[-1]
+
+        elif(os.path.isfile(test)):
+            opt_file = os.path.dirname(test) + '/options.py'
+            test_dir = os.path.dirname(test)
+            test_is_a_file = True
+            test_name = os.path.splitext(os.path.basename (test))[0]
+        else:
+            color_print_result('failed',"-E- Can't find what or where <{}> is...".format(test))
+            sys.exit()
+
+        # we add those variables to the global_args so that the default/config/override files
+        # can access them
+        global_args['test'] = test
+        global_args['test_dir'] = test_dir
+        global_args['test_name'] = test_name
+        global_args['test_is_a_file'] = test_is_a_file
+        global_args['verbosity'] = args.verbosity
+
+
         # we parse the default configuration file
         execfile("./config/default.py", global_args, {"cfg": default_opts, "define" : define_opts})
 
         # and the override file
-        execfile("./config/override.py", {}, {"cfg": override_opts})
+        execfile("./config/override.py", global_args, {"cfg": override_opts})
 
 
         if args.verbosity>0:
             print "Parsing options for test {}".format(test)
         local_opts = av.AutoVivification()
 
-        # check if a configuration file exist
-        opt_file = test + '/options.py'
         if os.path.isfile(opt_file):
             execfile(opt_file, {}, {"cfg": local_opts})
 
@@ -273,13 +307,13 @@ if __name__ == '__main__':
         # Note : we pass a directory to runtest
 
 
-        test_dir = os.path.realpath(test)
+
         test_dir_from_cwd = os.path.relpath(test_dir,cwd)
         test_dir_from_top = os.path.relpath(test_dir,topdir)
         cwd_from_test_dir = os.path.relpath(cwd,test_dir)
         config_rel_dir = cwd_from_test_dir + "/config"
         top_rel_dir = os.path.relpath(topdir,test_dir)
-        test_name = test_dir.split('/')[-1]
+
         if args.verbosity>1:
             print "Test name  : {}".format(test_name)
             print "Current directory : {}".format(cwd)
@@ -299,7 +333,7 @@ if __name__ == '__main__':
         txt += tpl_main_makefile_footer.format(**d)
         txt = tpl_main_makefile_header.format(**d) + txt
         # We are done with the MAkefile content, we write it into the test directory
-        makefile = test+"/Makefile"
+        makefile = test_dir +"/Makefile"
         with open(makefile,'w') as f:
             f.write(txt)
 
@@ -307,7 +341,7 @@ if __name__ == '__main__':
         # We build the Makefile targets based on c compiler and verilator selections
         final_step_list = [s.format(**global_args) for s in steps]
         #pp.pprint(final_step_list)
-        color_print_result('header',test)
+
         for s in final_step_list:
             log_file = test_dir+"/" + test_name + "_" + s + ".log"
             # cmd = "make -C {} {} 2>&1 | tee {}".format(test_dir,s,log_file)
@@ -336,5 +370,5 @@ if __name__ == '__main__':
                     except subprocess.CalledProcessError as e:
                         with open(log_file,'w') as log:
                             log.write(e.output)
-                        color_print_result('failed',s)
+                        color_print_result('failed',test + " : " + s)
                         sys.exit("-E- Error in step {} - return value {}: ".format(s,e.returncode))
