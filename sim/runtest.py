@@ -44,14 +44,27 @@ TEST_DIR=$(TOP)/$(TEST_DIR_FROM_TOP)
 
 def color_print_result(res,txt):
     class bcolors:
-        HEADER = '\033[95m'
-        OKBLUE = '\033[94m'
-        OKGREEN = '\033[92m'
-        WARNING = '\033[93m'
-        FAIL = '\033[91m'
-        ENDC = '\033[0m'
-        BOLD = '\033[1m'
-        UNDERLINE = '\033[4m'
+        if sys.stdout.isatty():
+            # we are running in a real terminal - we hope it is support colors
+            HEADER = '\033[95m'
+            OKBLUE = '\033[94m'
+            OKGREEN = '\033[92m'
+            WARNING = '\033[93m'
+            FAIL = '\033[91m'
+            ENDC = '\033[0m'
+            BOLD = '\033[1m'
+            UNDERLINE = '\033[4m'
+        else:
+            # probably a I/O redirection on going
+            HEADER = ''
+            OKBLUE = ''
+            OKGREEN = ''
+            WARNING = ''
+            FAIL = ''
+            ENDC = ''
+            BOLD = ''
+            UNDERLINE = ''
+
 
     if res=='ok':
         print bcolors.OKGREEN + "[OK]      " + bcolors.ENDC + txt
@@ -117,6 +130,10 @@ A simulation launcher for the Nanorv32 project
 
     parser.add_argument('-t', '--trace', action='store', dest='trace',
                         help='Activate CPU trace ')
+
+    parser.add_argument('-g', '--gui', action='store_true', dest='gui',
+                        default=False,
+                        help='Launch simulator GUI if applicable ')
 
 
     parser.add_argument('--target', action='store', dest='target',
@@ -244,7 +261,7 @@ if __name__ == '__main__':
         config_rel_dir = cwd_from_test_dir + "/config"
         top_rel_dir = os.path.relpath(topdir,test_dir)
         test_name = test_dir.split('/')[-1]
-        if args.verbosity>0:
+        if args.verbosity>1:
             print "Test name  : {}".format(test_name)
             print "Current directory : {}".format(cwd)
             print "Top directory : {}".format(topdir)
@@ -273,12 +290,17 @@ if __name__ == '__main__':
         #pp.pprint(final_step_list)
 
         for s in final_step_list:
-            cmd = "make -C {} {}".format(test_dir,s)
-            if args.verbosity >1:
+            log_file = test_dir+"/" + test_name + "_" + s + ".log"
+            # cmd = "make -C {} {} 2>&1 | tee {}".format(test_dir,s,log_file)
+            # above coomand line will not work if error is returned by the
+            # make command - we get the error code of tee
+            cmd = "make -C {} {}".format(test_dir, s)
+            if args.verbosity >0:
                 print "-I- executing {}".format(cmd)
             if not global_args['noexec']:
                 result = -1
-                if args.verbosity >1:
+                out = ""
+                if args.verbosity >0:
                     result = subprocess.call(cmd, shell=True)
                     if result != 0:
                         sys.exit("-E- Error in step {}".format(s))
@@ -286,10 +308,14 @@ if __name__ == '__main__':
                         print "-I- return value for step {} : {}".format(s,result)
                 else:
                     try:
-                        out = subprocess.check_output(cmd,
+                        output = subprocess.check_output(cmd,
                                                       stderr=subprocess.STDOUT,
                                                       shell=True)
+                        with open(log_file,'w') as log:
+                            log.write(output)
                         color_print_result('ok',s)
                     except subprocess.CalledProcessError as e:
+                        with open(log_file,'w') as log:
+                            log.write(e.output)
                         color_print_result('failed',s)
                         sys.exit("-E- Error in step {} - return value {}: ".format(s,e.returncode))
