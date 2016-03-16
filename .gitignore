@@ -107,3 +107,9 @@ ctests/*/xvlog.pb
 ctests/*/xsim.dir
 ctests/*/xelab.pb
 ctests/*/work.tb_nanorv32#work.glbl.wdb
+ctests/*/*.vmem
+ctests/*/*.vmem2
+ctests/*/*.hex
+ctests/*/*.hex2
+ctests/*/*.lst
+ctests/*/*.map

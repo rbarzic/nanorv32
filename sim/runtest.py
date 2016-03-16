@@ -184,6 +184,7 @@ if __name__ == '__main__':
     global_args['cc'] = args.cc
     global_args['noexec'] = args.noexec
     global_args['gui'] = args.gui
+    global_args['logging'] = args.logging
 
 
     # main loop over tests
