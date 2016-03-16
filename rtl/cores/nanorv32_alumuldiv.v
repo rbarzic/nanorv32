@@ -60,13 +60,15 @@ module nanorv32_alumuldiv (/*AUTOARG*/
    wire [63:0] mul_res = (mul_res_tmp ^ {64{alu_porta[31] & sign_a ^ alu_portb[31] & sign_b}}) + {{31{1'b0}},alu_porta[31] & sign_a ^alu_portb[31] & sign_b};
    wire [31:0] div_res;
    wire        div_ready_tmp, div_valid;
+   wire        div_occuring;
+
 
    assign      div_ready    = div_occuring ? div_valid : div_ready_tmp;
    wire        mul_occuring = alu_op_sel == NANORV32_MUX_SEL_ALU_OP_MUL |
                               alu_op_sel == NANORV32_MUX_SEL_ALU_OP_MULH |
                               alu_op_sel == NANORV32_MUX_SEL_ALU_OP_MULHU |
                               alu_op_sel == NANORV32_MUX_SEL_ALU_OP_MULHSU;
-   wire        div_occuring = alu_op_sel == NANORV32_MUX_SEL_ALU_OP_DIV  |
+   assign        div_occuring = alu_op_sel == NANORV32_MUX_SEL_ALU_OP_DIV  |
                               alu_op_sel == NANORV32_MUX_SEL_ALU_OP_DIVU |
                               alu_op_sel == NANORV32_MUX_SEL_ALU_OP_REM  |
                               alu_op_sel == NANORV32_MUX_SEL_ALU_OP_REMU;
