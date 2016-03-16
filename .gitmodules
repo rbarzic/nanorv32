@@ -7,3 +7,11 @@
 [submodule "ml-ahb-gen"]
 	path = ml-ahb-gen
 	url = https://github.com/rbarzic/ml-ahb-gen.git
+[submodule "adv_debug_sys"]
+	path = adv_debug_sys
+	url = https://github.com/rbarzic/adv_debug_sys.git
+	branch = master
+[submodule "wisbone_2_ahb"]
+	path = wisbone_2_ahb
+	url = https://github.com/rbarzic/wisbone_2_ahb.git
+	branch = master

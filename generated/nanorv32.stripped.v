@@ -422,7 +422,11 @@ module nanorv32 (/*AUTOARG*/
           end// Mux definitions for alu
         default begin
               pc_branch <= 1'b0;
+<<<<<<< HEAD
+        end 
+=======
         end
+>>>>>>> master
       endcase
    end
 

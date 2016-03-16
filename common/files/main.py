@@ -42,13 +42,14 @@ Put description of application here
 
 args = get_args()
 
-l, d = nanorv32_fl.nanor32_fl()
+
 
 context = dict()
 
 context['top'] = args.topdir
 context['top_ds'] = args.designstart
 
+l, d = nanorv32_fl.nanor32_fl(context)
 
 if args.iverilog != "":
     print "-I- iverilog generation"""
