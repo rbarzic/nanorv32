@@ -72,6 +72,8 @@ def color_print_result(res,txt):
         print bcolors.FAIL    + "[FAILED]  " + bcolors.ENDC + txt
     if res=='skipped':
         print bcolors.WARNING + "[SKIPPED] " + bcolors.ENDC + txt
+    if res=='header':
+        print bcolors.HEADER + "==== {} ====".format(txt) + bcolors.ENDC
 
 
 
@@ -184,12 +186,15 @@ if __name__ == '__main__':
 
     # main loop over tests
     for test in args.tests:
-        # we parse the default configuration file
+        # we reset everything
         default_opts = av.AutoVivification()
         define_opts = av.AutoVivification()
-        execfile("./config/default.py", global_args, {"cfg": default_opts, "define" : define_opts})
-        # and the override file
         override_opts= av.AutoVivification()
+
+        # we parse the default configuration file
+        execfile("./config/default.py", global_args, {"cfg": default_opts, "define" : define_opts})
+
+        # and the override file
         execfile("./config/override.py", {}, {"cfg": override_opts})
 
 
@@ -206,10 +211,15 @@ if __name__ == '__main__':
         merge_dict2(default_opts, local_opts)
         merge_dict2(default_opts, override_opts)
 
+        # we merge the sped and define dictionnary
+        # we get a list of tupples  (  (a,b) (c,d) ....)
+        # with the first element being a list representing the "path" in the hierarchy
+        # of nested directories (use pp.pprint to see the result eventuall)
         all_data = list(treeZip (default_opts,define_opts, path=[]))
-
-        # Now we generate the content of the makefile
-        # for each entry, we create a line in the Makefile
+        if args.verbosity >3:
+            pp.pprint(all_data)
+        # Now we generate the content of the makefile.
+        # For each entry, we create a line in the Makefile
         # depending of the expected type (as defined in the define[][]...[])
         # in the default.py
 
@@ -217,11 +227,12 @@ if __name__ == '__main__':
         for path,v  in all_data:
 
             d = dict() # use for string format(**d)
-            var_name = '_'.join(path)
+            var_name = '_'.join(path) # the variable name is derived directly
+            # from the path in the dictionnary
             d['var_name_uc'] = var_name.upper()
             d['var_name_lc'] = var_name.lower()
             d['val'] = v[0]
-            # The type of the parameters can be a singel string
+            # The type of the parameters can be a single string
             # or a sequence
             # we convert everything to a list
 
@@ -235,6 +246,8 @@ if __name__ == '__main__':
             else:
                 sys.exit("-E- Unrecognized type for {} : {}".format(val_type,type(val_type)))
                 pass
+            # now val_l contains a list of possible value types
+            # for each type, we have a specific way to handle the values
             for t in val_l:
                 if t == 'VERILOG_PARAMETER':
                     txt += tpl_verilog_parameter.format(**d)
@@ -245,8 +258,11 @@ if __name__ == '__main__':
                 elif t == 'VERILOG_DEFINE':
                     txt += tpl_verilog_define.format(**d)
 
-        # Here, txt contains the Makefile content
-        # We add some extra stuff to include the main Makefile
+        # Here, txt contains now the Makefile main content
+        # We add some extra stuff to include the main Makefiles
+        # for the tools (gcc, icarus,...)
+        # and some useful variables like the TOP directory
+        # of the database
 
         cwd = os.getcwd()
         topdir = top_dir(cwd)
@@ -288,7 +304,7 @@ if __name__ == '__main__':
         # We build the Makefile targets based on c compiler and verilator selections
         final_step_list = [s.format(**global_args) for s in steps]
         #pp.pprint(final_step_list)
-
+        color_print_result('header',test)
         for s in final_step_list:
             log_file = test_dir+"/" + test_name + "_" + s + ".log"
             # cmd = "make -C {} {} 2>&1 | tee {}".format(test_dir,s,log_file)
