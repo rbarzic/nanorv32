@@ -669,7 +669,7 @@ module nanorv32_simpleahb (/*AUTOARG*/
 
 
    assign debug[5] = 0;
-   assign debug[6] = 0;
+
 
 
 
