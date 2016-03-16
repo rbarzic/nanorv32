@@ -18,6 +18,7 @@ _ICARUS_SIM += $(VERILOG_PARAMETER)
 _ICARUS_SIM += +program_memory=$(TEST_DIR)/$(TEST).vmem
 
 icarus_rtl_build:
+
 	cd $(TOP)/sim/verilog  && iverilog $(_ICARUS_OPTS)  -o $(TEST_DIR)/testbench.exe
 
 icarus_rtl_elab:

@@ -58,9 +58,10 @@ cfg['simulation']['timeout_ns'] = 10000000
 define['simulation']['default_exit_address'] = ('VERILOG_PARAMETER','C_DEFINE', 'VERILOG_DEFINE')
 cfg['simulation']['default_exit_address'] = '0x00000100'
 
-define['simulation']['testbench_name'] = ('VERILOG_PARAMETER')
+define['simulation']['testbench_name'] = ('VERILOG_PARAMETER','MAKE_VARIABLE')
 cfg['simulation']['testbench_name'] = "tb_nanorv32"
 
+# ICARUS iverilog simulator
 
 define['simulator']['icarus']['options'] = 'MAKE_VARIABLE'
 cfg['simulator']['icarus']['options'] = '-g2005 -DIVERILOG=1'
@@ -70,3 +71,28 @@ cfg['simulator']['icarus']['warnings'] = '-Wall -W no-timescale'
 
 if trace:
     cfg['simulator']['icarus']['options'] += ' -DTRACE='+trace
+
+# Xilinx Vivado  xvlog/xelab/xsim  simulator
+
+define['simulator']['xilinx']['xvlog']['options'] = 'MAKE_VARIABLE'
+cfg['simulator']['xilinx']['xvlog']['options'] = '$(XILINX_VIVADO)/data/verilog/src/glbl.v'
+
+define['simulator']['xilinx']['xelab']['options'] = 'MAKE_VARIABLE'
+cfg['simulator']['xilinx']['xelab']['options'] = ' -L unisims_ver $(SIMULATION_TESTBENCH_NAME) glbl --relax --debug all '
+
+define['simulator']['xilinx']['xsim']['options'] = 'MAKE_VARIABLE'
+cfg['simulator']['xilinx']['xsim']['options'] = ' \"work.$(SIMULATION_TESTBENCH_NAME)\\#work.glbl\"  '
+
+
+define['simulator']['xilinx']['xsim']['batch_or_gui'] = 'MAKE_VARIABLE'
+
+if gui:
+    cfg['simulator']['xilinx']['xsim']['batch_or_gui'] = ' -gui '
+else:
+    cfg['simulator']['xilinx']['xsim']['batch_or_gui'] = ' -runall '
+
+
+
+
+define['simulator']['icarus']['warnings'] = 'MAKE_VARIABLE'
+cfg['simulator']['icarus']['warnings'] = '-Wall -W no-timescale'

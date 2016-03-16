@@ -27,6 +27,7 @@ tpl_main_makefile_footer  = """
 include {config_rel_dir}/gcc.mk
 include {config_rel_dir}/icarus.mk
 include {config_rel_dir}/xilinx.mk
+include {config_rel_dir}/pysim.mk
 
 
 debug:
@@ -41,6 +42,40 @@ TEST_DIR_FROM_TOP={test_dir_from_top}
 TEST_DIR=$(TOP)/$(TEST_DIR_FROM_TOP)
 
 """
+
+def color_print_result(res,txt):
+    class bcolors:
+        if sys.stdout.isatty():
+            # we are running in a real terminal - we hope it is support colors
+            HEADER = '\033[95m'
+            OKBLUE = '\033[94m'
+            OKGREEN = '\033[92m'
+            WARNING = '\033[93m'
+            FAIL = '\033[91m'
+            ENDC = '\033[0m'
+            BOLD = '\033[1m'
+            UNDERLINE = '\033[4m'
+        else:
+            # probably a I/O redirection on going
+            HEADER = ''
+            OKBLUE = ''
+            OKGREEN = ''
+            WARNING = ''
+            FAIL = ''
+            ENDC = ''
+            BOLD = ''
+            UNDERLINE = ''
+
+
+    if res=='ok':
+        print bcolors.OKGREEN + "[OK]      " + bcolors.ENDC + txt
+    if res=='failed':
+        print bcolors.FAIL    + "[FAILED]  " + bcolors.ENDC + txt
+    if res=='skipped':
+        print bcolors.WARNING + "[SKIPPED] " + bcolors.ENDC + txt
+    if res=='header':
+        print bcolors.HEADER + "==== {} ====".format(txt) + bcolors.ENDC
+
 
 
 def top_dir(sim_path):
@@ -99,6 +134,10 @@ A simulation launcher for the Nanorv32 project
     parser.add_argument('-t', '--trace', action='store', dest='trace',
                         help='Activate CPU trace ')
 
+    parser.add_argument('-g', '--gui', action='store_true', dest='gui',
+                        default=False,
+                        help='Launch simulator GUI if applicable ')
+
 
     parser.add_argument('--target', action='store', dest='target',
                         choices = ['rtl','ntl', 'sdf'],
@@ -107,7 +146,7 @@ A simulation launcher for the Nanorv32 project
 
     parser.add_argument('-s', '--simulator', action='store', dest='simulator',
                         default='icarus',
-                        choices = ['icarus','xilinx','python'],
+                        choices = ['icarus','xilinx','pysim'],
 
                         help='Select simulator (iverilog, xilinx(xlog),...)')
 
@@ -144,16 +183,20 @@ if __name__ == '__main__':
     global_args['target'] = args.target
     global_args['cc'] = args.cc
     global_args['noexec'] = args.noexec
+    global_args['gui'] = args.gui
 
 
     # main loop over tests
     for test in args.tests:
-        # we parse the default configuration file
+        # we reset everything
         default_opts = av.AutoVivification()
         define_opts = av.AutoVivification()
-        execfile("./config/default.py", global_args, {"cfg": default_opts, "define" : define_opts})
-        # and the override file
         override_opts= av.AutoVivification()
+
+        # we parse the default configuration file
+        execfile("./config/default.py", global_args, {"cfg": default_opts, "define" : define_opts})
+
+        # and the override file
         execfile("./config/override.py", {}, {"cfg": override_opts})
 
 
@@ -170,10 +213,15 @@ if __name__ == '__main__':
         merge_dict2(default_opts, local_opts)
         merge_dict2(default_opts, override_opts)
 
+        # we merge the sped and define dictionnary
+        # we get a list of tupples  (  (a,b) (c,d) ....)
+        # with the first element being a list representing the "path" in the hierarchy
+        # of nested directories (use pp.pprint to see the result eventuall)
         all_data = list(treeZip (default_opts,define_opts, path=[]))
-
-        # Now we generate the content of the makefile
-        # for each entry, we create a line in the Makefile
+        if args.verbosity >3:
+            pp.pprint(all_data)
+        # Now we generate the content of the makefile.
+        # For each entry, we create a line in the Makefile
         # depending of the expected type (as defined in the define[][]...[])
         # in the default.py
 
@@ -181,11 +229,12 @@ if __name__ == '__main__':
         for path,v  in all_data:
 
             d = dict() # use for string format(**d)
-            var_name = '_'.join(path)
+            var_name = '_'.join(path) # the variable name is derived directly
+            # from the path in the dictionnary
             d['var_name_uc'] = var_name.upper()
             d['var_name_lc'] = var_name.lower()
             d['val'] = v[0]
-            # The type of the parameters can be a singel string
+            # The type of the parameters can be a single string
             # or a sequence
             # we convert everything to a list
 
@@ -199,6 +248,8 @@ if __name__ == '__main__':
             else:
                 sys.exit("-E- Unrecognized type for {} : {}".format(val_type,type(val_type)))
                 pass
+            # now val_l contains a list of possible value types
+            # for each type, we have a specific way to handle the values
             for t in val_l:
                 if t == 'VERILOG_PARAMETER':
                     txt += tpl_verilog_parameter.format(**d)
@@ -209,8 +260,11 @@ if __name__ == '__main__':
                 elif t == 'VERILOG_DEFINE':
                     txt += tpl_verilog_define.format(**d)
 
-        # Here, txt contains the Makefile content
-        # We add some extra stuff to include the main Makefile
+        # Here, txt contains now the Makefile main content
+        # We add some extra stuff to include the main Makefiles
+        # for the tools (gcc, icarus,...)
+        # and some useful variables like the TOP directory
+        # of the database
 
         cwd = os.getcwd()
         topdir = top_dir(cwd)
@@ -225,7 +279,7 @@ if __name__ == '__main__':
         config_rel_dir = cwd_from_test_dir + "/config"
         top_rel_dir = os.path.relpath(topdir,test_dir)
         test_name = test_dir.split('/')[-1]
-        if args.verbosity>0:
+        if args.verbosity>1:
             print "Test name  : {}".format(test_name)
             print "Current directory : {}".format(cwd)
             print "Top directory : {}".format(topdir)
@@ -251,16 +305,35 @@ if __name__ == '__main__':
         # Now, we are ready to launch the various jobs
         # We build the Makefile targets based on c compiler and verilator selections
         final_step_list = [s.format(**global_args) for s in steps]
-        pp.pprint(final_step_list)
-
+        #pp.pprint(final_step_list)
+        color_print_result('header',test)
         for s in final_step_list:
-            cmd = "make -C {} {}".format(test_dir,s)
-            if args.verbosity >1:
+            log_file = test_dir+"/" + test_name + "_" + s + ".log"
+            # cmd = "make -C {} {} 2>&1 | tee {}".format(test_dir,s,log_file)
+            # above coomand line will not work if error is returned by the
+            # make command - we get the error code of tee
+            cmd = "make -C {} {}".format(test_dir, s)
+            if args.verbosity >0:
                 print "-I- executing {}".format(cmd)
             if not global_args['noexec']:
-                result = subprocess.call(cmd, shell=True)
-                if result != 0:
-                    sys.exit("-E- Error in step {}".format(s))
-                else:
-                    if args.verbosity >1:
+                result = -1
+                out = ""
+                if args.verbosity >0:
+                    result = subprocess.call(cmd, shell=True)
+                    if result != 0:
+                        sys.exit("-E- Error in step {}".format(s))
+                    else:
                         print "-I- return value for step {} : {}".format(s,result)
+                else:
+                    try:
+                        output = subprocess.check_output(cmd,
+                                                      stderr=subprocess.STDOUT,
+                                                      shell=True)
+                        with open(log_file,'w') as log:
+                            log.write(output)
+                        color_print_result('ok',s)
+                    except subprocess.CalledProcessError as e:
+                        with open(log_file,'w') as log:
+                            log.write(e.output)
+                        color_print_result('failed',s)
+                        sys.exit("-E- Error in step {} - return value {}: ".format(s,e.returncode))

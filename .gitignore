@@ -101,3 +101,9 @@
 /ctests/printk/printk.vmem32
 /ctests/gpio_toggle/trace.txt
 /ctests/printk/trace.txt
+ctests/*/*.log
+ctests/*/*.jou
+ctests/*/xvlog.pb
+ctests/*/xsim.dir
+ctests/*/xelab.pb
+ctests/*/work.tb_nanorv32#work.glbl.wdb
