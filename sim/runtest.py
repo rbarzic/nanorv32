@@ -182,6 +182,7 @@ if __name__ == '__main__':
     global_args['target'] = args.target
     global_args['cc'] = args.cc
     global_args['noexec'] = args.noexec
+    global_args['gui'] = args.noexec
 
 
     # main loop over tests
