@@ -169,6 +169,10 @@ def nanor32_fl():
         'targets': 'synt,sim_rtl'
     })
     d.append({
+        'dir': "{top}/sim/verilog/",
+        'targets': 'synt,sim_rtl'
+    })
+    d.append({
         'dir': "{top}/rtl/imported_from_ultraembedded",
         'targets': 'synt,sim_rtl'
     })

@@ -1,13 +1,15 @@
 # GCC specific Makefile
 
 C_SRC ?= $(wildcard $(TEST_DIR)/*.c)
-S_ASM ?= $(wildcard $(TEST_DIR)/*.S)
+
 
 CC_FLAGS += $(C_COMPILER_ARCH_OPT)
 CC_FLAGS += $(C_COMPILER_OPTIMISATION_OPTIONS)
 CC_FLAGS += $(C_COMPILER_WARNINGS)
 CC_FLAGS += $(C_COMPILER_STARTUP_CODE_OPT)
 CC_FLAGS += $(C_COMPILER_DEFAULT_LIB_OPT)
+CC_FLAGS += $(C_COMPILER_EXTRA_INCDIRS)
+CC_FLAGS += $(C_COMPILER_EXTRA_DEFINES)
 
 
 # we split the tasks to get correct return error code (Make will stop on first error)
@@ -16,6 +18,8 @@ gcc_compile: _gcc_compile gcc_bin gcc_lst gcc_map gcc_hex gcc_vmem32 gcc_vmem gc
 
 
 _gcc_compile:
+	echo $(TEST_DIR)
+	echo $(S_ASM)
 	$(C_COMPILER_CC)   $(CC_FLAGS) \
 	$(C_COMPILER_STARTUP_CODE) $(C_SRC) $(C_COMPILER_EXTRA_C_SOURCES) \
 	-L $(C_COMPILER_LINKER_SCRIPT_PATH) \

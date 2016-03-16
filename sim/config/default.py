@@ -27,6 +27,7 @@ define['c_compiler']['optimisation_options'] = 'MAKE_VARIABLE'
 cfg['c_compiler']['optimisation_options'] = '-O3'
 
 
+
 define['c_compiler']['linker_script_path'] = 'MAKE_VARIABLE'
 cfg['c_compiler']['linker_script_path'] = '$(TOP)/common/linker_scripts'
 
@@ -44,12 +45,13 @@ cfg['c_compiler']['default_lib_opt'] = "-ffreestanding -nostdlib"
 
 
 define['c_compiler']['extra_c_sources'] = 'MAKE_VARIABLE'
-cfg['c_compiler']['extra_c_sources'] = '' # Added in  the config.py  in each test
+cfg['c_compiler']['extra_c_sources'] = ''
 
+define['c_compiler']['extra_incdirs'] = 'MAKE_VARIABLE'
+cfg['c_compiler']['extra_incdirs'] = ''
 
-
-
-
+define['c_compiler']['extra_defines'] = 'MAKE_VARIABLE'
+cfg['c_compiler']['extra_defines'] = ''
 
 
 define['simulation']['timeout_ns'] = 'VERILOG_PARAMETER'
@@ -61,6 +63,9 @@ cfg['simulation']['default_exit_address'] = '0x00000100'
 define['simulation']['testbench_name'] = ('VERILOG_PARAMETER','MAKE_VARIABLE')
 cfg['simulation']['testbench_name'] = "tb_nanorv32"
 
+
+
+
 # ICARUS iverilog simulator
 
 define['simulator']['icarus']['options'] = 'MAKE_VARIABLE'
@@ -69,8 +74,15 @@ cfg['simulator']['icarus']['options'] = '-g2005 -DIVERILOG=1'
 define['simulator']['icarus']['warnings'] = 'MAKE_VARIABLE'
 cfg['simulator']['icarus']['warnings'] = '-Wall -W no-timescale'
 
+define['simulator']['icarus']['vvp_opt'] = 'MAKE_VARIABLE'
+cfg['simulator']['icarus']['vvp_opt'] = ''
+
+if logging:
+    cfg['simulator']['icarus']['vvp_opt'] += ' +vcd '
+
 if trace:
     cfg['simulator']['icarus']['options'] += ' -DTRACE='+trace
+
 
 # Xilinx Vivado  xvlog/xelab/xsim  simulator
 
@@ -78,10 +90,10 @@ define['simulator']['xilinx']['xvlog']['options'] = 'MAKE_VARIABLE'
 cfg['simulator']['xilinx']['xvlog']['options'] = '$(XILINX_VIVADO)/data/verilog/src/glbl.v'
 
 define['simulator']['xilinx']['xelab']['options'] = 'MAKE_VARIABLE'
-cfg['simulator']['xilinx']['xelab']['options'] = ' -L unisims_ver $(SIMULATION_TESTBENCH_NAME) glbl --relax --debug all '
+cfg['simulator']['xilinx']['xelab']['options'] = ' --relax --debug all -L unisims_ver $(SIMULATION_TESTBENCH_NAME) glbl  '
 
 define['simulator']['xilinx']['xsim']['options'] = 'MAKE_VARIABLE'
-cfg['simulator']['xilinx']['xsim']['options'] = ' \"work.$(SIMULATION_TESTBENCH_NAME)\\#work.glbl\"  '
+cfg['simulator']['xilinx']['xsim']['options'] = ' work.$(SIMULATION_TESTBENCH_NAME)\\#work.glbl'
 
 
 define['simulator']['xilinx']['xsim']['batch_or_gui'] = 'MAKE_VARIABLE'
