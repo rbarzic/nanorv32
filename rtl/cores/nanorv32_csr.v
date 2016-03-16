@@ -106,6 +106,7 @@ module nanorv32_csr (/*AUTOARG*/
 //@end[csr_read_decode]
 
         default: begin
+           csr_core_rdata = 0;
         end
 
       endcase
