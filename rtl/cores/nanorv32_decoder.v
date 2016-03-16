@@ -478,7 +478,7 @@ module nanorv32_decoder (/*AUTOARG*/
         datamem_write_sel = NANORV32_MUX_SEL_DATAMEM_WRITE_NO;
         datamem_size_write_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_WRITE_WORD;
         datamem_read_sel = NANORV32_MUX_SEL_DATAMEM_READ_NO;
-        regfile_source_sel = NANORV32_MUX_SEL_REGFILE_SOURCE_CSR_RDATA;
+       regfile_source_sel = NANORV32_MUX_SEL_REGFILE_SOURCE_CSR_RDATA;
         regfile_write_sel = NANORV32_MUX_SEL_REGFILE_WRITE_YES;
     end
     NANORV32_DECODE_SLTIU: begin
@@ -819,6 +819,10 @@ module nanorv32_decoder (/*AUTOARG*/
            datamem_read_sel = NANORV32_MUX_SEL_DATAMEM_READ_NO;
            regfile_source_sel = NANORV32_MUX_SEL_REGFILE_SOURCE_ALU;
            regfile_write_sel = NANORV32_MUX_SEL_REGFILE_WRITE_NO;
+           datamem_size_write_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_WRITE_WORD;
+           pc_branch_sel = NANORV32_MUX_SEL_PC_BRANCH_NO;
+
+
         end
       endcase // casez (instruction[NANORV32_INSTRUCTION_MSB:0])
    end

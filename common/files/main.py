@@ -30,6 +30,8 @@ Put description of application here
     parser.add_argument('--designstart', action='store', dest='designstart',
                         help='Top directory for the ARM DesignStart forlder',
                         default="")
+    parser.add_argument('-v', '--verbosity', action="count",
+                        help='Increase output verbosity')
 
 
     parser.add_argument('--version', action='version', version='%(prog)s 0.1')
