@@ -42,6 +42,25 @@ TEST_DIR=$(TOP)/$(TEST_DIR_FROM_TOP)
 
 """
 
+def color_print_result(res,txt):
+    class bcolors:
+        HEADER = '\033[95m'
+        OKBLUE = '\033[94m'
+        OKGREEN = '\033[92m'
+        WARNING = '\033[93m'
+        FAIL = '\033[91m'
+        ENDC = '\033[0m'
+        BOLD = '\033[1m'
+        UNDERLINE = '\033[4m'
+
+    if res=='ok':
+        print bcolors.OKGREEN + "[OK]      " + bcolors.ENDC + txt
+    if res=='failed':
+        print bcolors.FAIL    + "[FAILED]  " + bcolors.ENDC + txt
+    if res=='skipped':
+        print bcolors.WARNING + "[SKIPPED] " + bcolors.ENDC + txt
+
+
 
 def top_dir(sim_path):
     "Get top dir of the database if called from sim directory (the one where runtest.py is called)"
@@ -251,16 +270,26 @@ if __name__ == '__main__':
         # Now, we are ready to launch the various jobs
         # We build the Makefile targets based on c compiler and verilator selections
         final_step_list = [s.format(**global_args) for s in steps]
-        pp.pprint(final_step_list)
+        #pp.pprint(final_step_list)
 
         for s in final_step_list:
             cmd = "make -C {} {}".format(test_dir,s)
             if args.verbosity >1:
                 print "-I- executing {}".format(cmd)
             if not global_args['noexec']:
-                result = subprocess.call(cmd, shell=True)
-                if result != 0:
-                    sys.exit("-E- Error in step {}".format(s))
-                else:
-                    if args.verbosity >1:
+                result = -1
+                if args.verbosity >1:
+                    result = subprocess.call(cmd, shell=True)
+                    if result != 0:
+                        sys.exit("-E- Error in step {}".format(s))
+                    else:
                         print "-I- return value for step {} : {}".format(s,result)
+                else:
+                    try:
+                        out = subprocess.check_output(cmd,
+                                                      stderr=subprocess.STDOUT,
+                                                      shell=True)
+                        color_print_result('ok',s)
+                    except subprocess.CalledProcessError as e:
+                        color_print_result('failed',s)
+                        sys.exit("-E- Error in step {} - return value {}: ".format(s,e.returncode))
