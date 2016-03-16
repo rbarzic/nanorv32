@@ -806,7 +806,7 @@ module nanorv32_simpleahb (/*AUTOARG*/
      .hready         (ahb_w2ahb_hready),
      ); */
 
-    ahbmas_wbslv_top U_INSTANCE (
+    ahbmas_wbslv_top U_WB2AHB (
         /*AUTOINST*/
                                  // Outputs
                                  .haddr                 (w2ahb_ahb_haddr[NANORV32_DATA_MSB:0]), // Templated
