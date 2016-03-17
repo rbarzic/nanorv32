@@ -17,11 +17,49 @@ def int32(d):
 def comp2(a):
     return ~a +1
 
+def format_reg(rd):
+    function_format = {
+        0 : "zero",
+        1 : "ra  ",
+        2 : "sp  ",
+        3 : "gp  ",
+        4 : "tp  ",
+        5 : "t0  ",
+        6 : "t1  ",
+        7 : "t2  ",
+	8 : "so  ",
+        9 : "s1  ",
+        10 : "a0  ",
+        11 : "a1  ",
+        12 : "a2  ",
+        13 : "a3  ",
+        14 : "a4  ",
+        15 : "a5  ",
+        16 : "a6  ",
+        17 : "a7  ",
+        18 : "s2  ",
+        19 : "s3  ",
+        20 : "s4  ",
+        21 : "s5  ",
+        22 : "s6  ",
+        23 : "s7  ",
+        24 : "s8  ",
+        25 : "s9  ",
+        26 : "s10 ",
+        27 : "s11 ",
+        28 : "t3  ",
+        29 : "t4  ",
+        30 : "t5  ",
+        31 : "t6  "}
+    return function_format.get(rd,"zero")
 
 def r_type(c,op,op_str):
     rs1 = c.dec_rs1
     rs2 = c.dec_rs2
     rd = c.dec_rd
+    rd_print = format_reg(rd)
+    rs1_print = format_reg(rs1)
+    rs2_print = format_reg(rs2)
     rs1_val = ct.c_uint32(c.rf[rs1]).value
     rs2_val = ct.c_uint32(c.rf[rs2]).value
     rd_val = ct.c_uint32(op(rs1_val,rs2_val)).value
@@ -30,7 +68,7 @@ def r_type(c,op,op_str):
     # results
     c.update_rf(rd,rd_val)
     new_pc = pc + 4
-    txt = "RF[rd={:02d}] <= 0x{:08x} (RF[rs1={:02d}]=0x{:08x} {}  RF[rs2={:02d}]=0x{:08x}) ".format(rd,rd_val,rs1,rs1_val,op_str,rs2,rs2_val)
+    txt = "RF[{}] <= 0x{:08x} (RF[{}]=0x{:08x} {}  RF[{}]=0x{:08x}) ".format(rd_print,rd_val,rs1_print,rs1_val,op_str,rs2_print,rs2_val)
 
     return (None,new_pc,txt)
 
@@ -39,13 +77,15 @@ def i_type(c,op,op_str):
     rs1 = c.dec_rs1
     imm12_se = ct.c_uint32(c.dec_imm12_se).value
     rd = c.dec_rd
+    rd_print = format_reg(rd)
+    rs1_print = format_reg(rs1)
     rs1_val = ct.c_uint32(c.rf[rs1]).value
     rd_val = ct.c_uint32(op(rs1_val,imm12_se)).value
     pc = c.pc
     # results
     c.update_rf(rd,rd_val)
     new_pc = pc + 4
-    txt = "RF[rd={:02d}] <= 0x{:08x} (RF[rs1={:02d}]=0x{:08x} {}  imm20 =0x{:08x}) ".format(rd,rd_val,rs1,rs1_val,op_str,imm12_se)
+    txt = "RF[{}] <= 0x{:08x} (RF[{}]=0x{:08x} {}  imm20 =0x{:08x}) ".format(rd_print,rd_val,rs1_print,rs1_val,op_str,imm12_se)
 
     return (None,new_pc,txt)
 
@@ -53,26 +93,28 @@ def i_type(c,op,op_str):
 def auipc(c):
     imm20 = c.dec_imm20
     rd = c.dec_rd
+    rd_print = format_reg(rd)
     imm20_shifted = (imm20<<12)
     pc = c.pc
     rd_val = pc + imm20_shifted
     # results
     c.update_rf(rd,rd_val)
     new_pc = pc + 4
-    txt = "RF[rd={:02d}] <= 0x{:08x} (pc=0x{:08x} + imm20<<12 =0x{:08x}) ".format(rd,rd_val,pc,imm20_shifted)
+    txt = "RF[{}] <= 0x{:08x} (pc=0x{:08x} + imm20<<12 =0x{:08x}) ".format(rd_print,rd_val,pc,imm20_shifted)
 
     return (None,new_pc,txt)
 
 def lui(c):
     imm20 = uint32(c.dec_imm20)
     rd = c.dec_rd
+    rd_print = format_reg(rd)
     imm20_shifted = uint32(imm20<<12)
     pc = c.pc
     rd_val = imm20_shifted
     # results
     c.update_rf(rd,rd_val)
     new_pc = pc + 4
-    txt = "RF[rd={:02d}] <= 0x{:08x} (pc=0x{:08x} + imm20<<12 =0x{:08x}) ".format(rd,rd_val,pc,imm20_shifted)
+    txt = "RF[{}] <= 0x{:08x} (pc=0x{:08x} + imm20<<12 =0x{:08x}) ".format(rd_print,rd_val,pc,imm20_shifted)
 
     return (None,new_pc,txt)
 
@@ -82,6 +124,8 @@ def cond_branch(c,op):
     rs2 = c.dec_rs2
     rs1_val = uint32(c.rf[rs1])
     rs2_val = uint32(c.rf[rs2])
+    rs1_print = format_reg(rs1)
+    rs2_print = format_reg(rs2)
     offset = uint32(c.dec_sb_offset_se)
     pc = c.pc
 
@@ -89,29 +133,31 @@ def cond_branch(c,op):
         # taken
 
         new_pc = uint32(pc + offset)
-        txt = "RF[rs1={:02d}]=0x{:08x} RF[rs2={:02d}]=0x{:08x}  Jump to 0x{:08x}   (0x{:08x} + 0x{:08x})".format(rs1,rs1_val,rs2,rs2_val,new_pc,pc,offset)
+        txt = "RF[{}]=0x{:08x} RF[{}]=0x{:08x}  Jump to 0x{:08x}   (0x{:08x} + 0x{:08x})".format(rs1_print,rs1_val,rs2_print,rs2_val,new_pc,pc,offset)
     else:
         new_pc = uint32(pc + 4)
-        txt = "RF[rs1={:02d}]=0x{:08x} RF[rs2={:02d}]=0x{:08x}  Branch not taken".format(rs1,rs1_val,rs2,rs2_val)
+        txt = "RF[{}]=0x{:08x} RF[{}]=0x{:08x}  Branch not taken".format(rs1_print,rs1_val,rs2_print,rs2_val)
 
     return (None,new_pc,txt)
 
 def sim_jal(c):
 
     rd  = c.dec_rd
+    rd_print = format_reg(rd)
 
     offset = uint32(c.dec_imm20uj_se)
     pc = uint32(c.pc)
     rd_val = uint32(pc +4)
     new_pc = uint32(pc + offset ) & 0xFFFFFFFE # lsb must be zero
     c.update_rf(rd,rd_val)
-    txt = "RF[rs1={:02d}] <= 0x{:08x}   Jump to 0x{:08x}   (0x{:08x} + 0x{:08x})".format(rd,rd_val,new_pc,pc,offset)
+    txt = "RF[{}] <= 0x{:08x}   Jump to 0x{:08x}   (0x{:08x} + 0x{:08x})".format(rd_print,rd_val,new_pc,pc,offset)
 
     return (None,new_pc,txt)
 
 def sim_jalr(c):
     rs1 = c.dec_rs1
     rd  = c.dec_rd
+    rd_print = format_reg(rd)
     rs1_val = uint32(c.rf[rs1])
 
     offset = uint32(c.dec_imm12_se)
@@ -119,13 +165,15 @@ def sim_jalr(c):
     rd_val = uint32(pc +4)
     new_pc = uint32(rs1_val + offset ) & 0xFFFFFFFE # lsb must be zero
     c.update_rf(rd,rd_val)
-    txt = "RF[rs1={:02d}] <= 0x{:08x}   Jump to 0x{:08x}   (0x{:08x} + 0x{:08x})".format(rd,rd_val,new_pc,rs1_val,offset)
+    txt = "RF[{}] <= 0x{:08x}   Jump to 0x{:08x}   (0x{:08x} + 0x{:08x})".format(rd_print, rd_val,new_pc,rs1_val,offset)
 
     return (None,new_pc,txt)
 
 def load(c, mem_access_fn):
     rs1 = c.dec_rs1
     rd  = c.dec_rd
+    rd_print = format_reg(rd)
+    rs1_print = format_reg(rs1)
     rs1_val = uint32(c.rf[rs1])
     offset = uint32(c.dec_imm12_se)
     pc = uint32(c.pc)
@@ -134,13 +182,15 @@ def load(c, mem_access_fn):
     rd_val = mem_access_fn(c,addr)
     new_pc = uint32(pc + 4)
     c.update_rf(rd,rd_val)
-    txt = "RF[rd={:02d}] <= 0x{:08x} MEM[0x{:08x}] (RF[rs1={:02d}]=0x{:08x} +   offset=0x{:08x}) ".format(rd,rd_val,addr,rs1,rs1_val,offset)
+    txt = "RF[{}] <= 0x{:08x} MEM[0x{:08x}] (RF[{}]=0x{:08x} +   offset=0x{:08x}) ".format(rd_print,rd_val,addr,rs1_print,rs1_val,offset)
     return (None,new_pc,txt)
 
 
 def store(c, mem_access_fn):
     rs1 = c.dec_rs1
     rs2 = c.dec_rs2
+    rs1_print = format_reg(rs1)
+    rs2_print = format_reg(rs2)
 
     rs1_val = uint32(c.rf[rs1])
     rs2_val = uint32(c.rf[rs2])
@@ -150,7 +200,7 @@ def store(c, mem_access_fn):
     # Mem access (using a function passed as a parameter)
     mem_access_fn(c,addr,rs2_val)
     new_pc = uint32(pc + 4)
-    txt = " MEM[0x{:08x}] <= RF[rs2={:02d}] : 0x{:08x} (RF[rs1={:02d}]=0x{:08x} +   offset=0x{:08x}) ".format(addr,rs2,rs2_val,rs1,rs1_val,offset)
+    txt = " MEM[0x{:08x}] <= RF[{}] : 0x{:08x} (RF[{}]=0x{:08x} +   offset=0x{:08x}) ".format(addr,rs2_print,rs2_val,rs1_print,rs1_val,offset)
     return (None,new_pc,txt)
 
 def lw_fn(c,addr):
