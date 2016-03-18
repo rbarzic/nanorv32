@@ -27,7 +27,12 @@
 */
 
 #include <stdarg.h>
-extern void _sim_printk(int);
+
+#ifndef UART_PUTCHAR
+#define UART_PUTCHAR _sim_printk
+#endif
+
+extern int UART_PUTCHAR(int);
 
 int printf(const char *format, ...);
 int sprintf(char* out, const char *format, ...);
@@ -35,14 +40,14 @@ int sprintf(char* out, const char *format, ...);
 
 static void printchar(char **str, int c)
 {
-	extern int putchar(int c);
+
 
 	if (str) {
 		**str = c;
 		++(*str);
 	}
         else
-            _sim_printk(c);
+            (void)UART_PUTCHAR(c);
 }
 
 #define PAD_RIGHT 1
