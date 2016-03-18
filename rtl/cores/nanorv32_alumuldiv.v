@@ -69,7 +69,7 @@ module nanorv32_alumuldiv (/*AUTOARG*/
                               alu_op_sel == NANORV32_MUX_SEL_ALU_OP_MULH |
                               alu_op_sel == NANORV32_MUX_SEL_ALU_OP_MULHU |
                               alu_op_sel == NANORV32_MUX_SEL_ALU_OP_MULHSU;
-   assign      div_occuring = alu_op_sel == NANORV32_MUX_SEL_ALU_OP_DIV  |
+   assign      div_occuring = (alu_op_sel == NANORV32_MUX_SEL_ALU_OP_DIV  |
                               alu_op_sel == NANORV32_MUX_SEL_ALU_OP_DIVU |
                               alu_op_sel == NANORV32_MUX_SEL_ALU_OP_REM  |
                               alu_op_sel == NANORV32_MUX_SEL_ALU_OP_REMU ) & ~interlock;
