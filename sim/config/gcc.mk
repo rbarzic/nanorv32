@@ -18,8 +18,6 @@ gcc_compile: _gcc_compile gcc_bin gcc_lst gcc_map gcc_hex gcc_vmem32 gcc_vmem gc
 
 
 _gcc_compile:
-	echo $(TEST_DIR)
-	echo $(S_ASM)
 	$(C_COMPILER_CC)   $(CC_FLAGS) \
 	$(C_COMPILER_STARTUP_CODE) $(C_SRC) $(C_COMPILER_EXTRA_C_SOURCES) \
 	-L $(C_COMPILER_LINKER_SCRIPT_PATH) \

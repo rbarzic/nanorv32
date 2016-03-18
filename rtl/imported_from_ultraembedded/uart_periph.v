@@ -1,6 +1,6 @@
 //-----------------------------------------------------------------
-//                           AltOR32 
-//                Alternative Lightweight OpenRisc 
+//                           AltOR32
+//                Alternative Lightweight OpenRisc
 //                            V2.0
 //                     Ultra-Embedded.com
 //                   Copyright 2011 - 2013
@@ -12,26 +12,26 @@
 //
 // Copyright (C) 2011 - 2013 Ultra-Embedded.com
 //
-// This source file may be used and distributed without         
-// restriction provided that this copyright statement is not    
-// removed from the file and that any derivative work contains  
-// the original copyright notice and the associated disclaimer. 
+// This source file may be used and distributed without
+// restriction provided that this copyright statement is not
+// removed from the file and that any derivative work contains
+// the original copyright notice and the associated disclaimer.
 //
-// This source file is free software; you can redistribute it   
-// and/or modify it under the terms of the GNU Lesser General   
-// Public License as published by the Free Software Foundation; 
-// either version 2.1 of the License, or (at your option) any   
+// This source file is free software; you can redistribute it
+// and/or modify it under the terms of the GNU Lesser General
+// Public License as published by the Free Software Foundation;
+// either version 2.1 of the License, or (at your option) any
 // later version.
 //
-// This source is distributed in the hope that it will be       
-// useful, but WITHOUT ANY WARRANTY; without even the implied   
-// warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR      
-// PURPOSE.  See the GNU Lesser General Public License for more 
+// This source is distributed in the hope that it will be
+// useful, but WITHOUT ANY WARRANTY; without even the implied
+// warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+// PURPOSE.  See the GNU Lesser General Public License for more
 // details.
 //
-// You should have received a copy of the GNU Lesser General    
-// Public License along with this source; if not, write to the 
-// Free Software Foundation, Inc., 59 Temple Place, Suite 330, 
+// You should have received a copy of the GNU Lesser General
+// Public License along with this source; if not, write to the
+// Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 // Boston, MA  02111-1307  USA
 //-----------------------------------------------------------------
 
@@ -78,6 +78,9 @@ wire        uart_tx_busy_w;
 wire        uart_rx_ready_w;
 wire        uart_break_w;
 
+   reg [31:0] uart_baud_r;
+
+
 //-----------------------------------------------------------------
 // Instantiation
 //-----------------------------------------------------------------
@@ -99,7 +102,8 @@ u1_uart
     .rx_ready_o(uart_rx_ready_w),
     .break_o(uart_break_w),
     .rxd_i(rx_i),
-    .txd_o(tx_o)
+    .txd_o(tx_o),
+    .uart_divisor(uart_baud_r)
 );
 
 //-----------------------------------------------------------------
@@ -111,6 +115,8 @@ begin
    begin
        uart_tx_data_q     <= 8'h00;
        uart_wr_q          <= 1'b0;
+      uart_baud_r         <= 32'd1;
+
    end
    else
    begin
@@ -126,6 +132,10 @@ begin
                uart_tx_data_q   <= data_i[7:0];
                uart_wr_q        <= 1'b1;
            end
+           `UART_BAUD :
+             begin
+                uart_baud_r   <= data_i[31:0];
+             end
 
            default :
                ;
@@ -150,6 +160,8 @@ begin
    end
    `UART_UDR :
         data_o[7:0] = uart_rx_data_w;
+     `UART_BAUD :
+       data_o[31:0] = uart_baud_r;
 
    default :
         data_o = 32'h00000000;
@@ -167,6 +179,7 @@ begin
        // Read UART data register?
        if (!we_i && stb_i && (addr_i[7:0] == `UART_UDR))
           uart_rd_q <= 1'b1;
+
        else
           uart_rd_q <= 1'b0;
    end
