@@ -656,7 +656,7 @@ module nanorv32 (/*AUTOARG*/
    assign stall_fetch = force_stall_pstate | !codeif_cpu_ready_r;
 //   assign interlock   = write_rd2 & (dec_rd2 == dec_rs1 | dec_rd2 == dec_rs2) & ~(htransd & hreadyd & hwrited);
    assign interlock   = write_rd2 & (dec_rd2 == dec_rs1 | dec_rd2 == dec_rs2) | 
-                        write_rd2 & ~hreadyd & (datamem_write || datamem_read) & data_access_cycle; 
+                        write_rd2 & ~hreadyd & (datamem_write || datamem_read); 
 
    assign branch_wait = branch_taken & pstate_r != NANORV32_PSTATE_BRANCH & ~hreadyi;
    assign stall_exe = force_stall_pstate | interlock | ~div_ready | fifo_empty | branch_wait; // REVISIT case where branch in a shadow store or load | pstate_r == NANORV32_PSTATE_WAITLD & ~hreadyd ;

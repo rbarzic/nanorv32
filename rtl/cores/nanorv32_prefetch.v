@@ -266,7 +266,6 @@ module nanorv32_prefetch (/*AUTOARG*/
 
    // Code memory interface
 
-//   assign htransi      = hreadyi & ~force_stall_reset & ~(branch_taken & interlock) & ~(fifo_full & ~branch_taken) & ~(fifo_full_reg & ~branch_taken) & ~(branch_taken &  pstate_r == NANORV32_PSTATE_WAITLD);  // request is the AHB is free
    assign htransi = htransi_tmp;
    assign hsizei       = 3'b010;   // word request
    assign hproti       = 4'b0001;  // instruction data
