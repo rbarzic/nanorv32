@@ -177,7 +177,9 @@ module nanorv32 (/*AUTOARG*/
    wire                                    alu_cond;
    wire                                    fifo_empty;
    wire                                    illegal_instruction_tmp;
+
    wire                                    illegal_instruction = illegal_instruction_tmp  & ~fifo_empty;
+
 
    reg [NANORV32_DATA_MSB:0]               mem2regfile;
 
@@ -204,6 +206,7 @@ module nanorv32 (/*AUTOARG*/
    wire                                     irq_ack;
 
    wire                                     allow_hidden_use_of_x0;
+   wire                                     reset_over;
 
    wire [NANORV32_DATA_MSB:0]               csr_core_rdata;
 
@@ -589,7 +592,6 @@ module nanorv32 (/*AUTOARG*/
                        // Inputs
                        .core_csr_wdata  ({(1+(NANORV32_DATA_MSB)){1'b0}}), // Templated
                        .core_csr_write  (1'b0));                  // Templated
-
 
 
    // data memory interface

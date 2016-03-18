@@ -58,16 +58,18 @@ module nanorv32_alumuldiv (/*AUTOARG*/
    wire [NANORV32_DATA_MSB:0] mul_a = (alu_porta ^ {32{alu_porta[31] & sign_a}}) + {{31{1'b0}},alu_porta[31] & sign_a};
    wire [NANORV32_DATA_MSB:0] mul_b = (alu_portb ^ {32{alu_portb[31] & sign_b}}) + {{31{1'b0}},alu_portb[31] & sign_b};
    wire [63:0] mul_res_tmp = mul_a[NANORV32_DATA_MSB:0] * mul_b[NANORV32_DATA_MSB:0];
-   wire [63:0] mul_res = (mul_res_tmp ^ {64{alu_porta[31] & sign_a ^ alu_portb[31] & sign_b}}) + {{31{1'b0}},alu_porta[31] & sign_a ^alu_portb[31] & sign_b}; 
-   wire [31:0] div_res; 
+   wire [63:0] mul_res = (mul_res_tmp ^ {64{alu_porta[31] & sign_a ^ alu_portb[31] & sign_b}}) + {{31{1'b0}},alu_porta[31] & sign_a ^alu_portb[31] & sign_b};
+   wire [31:0] div_res;
    wire        div_ready_tmp, div_valid;
-  
+   wire        div_occuring;
+
+
    assign      div_ready    = div_occuring ? div_valid : div_ready_tmp;
    wire        mul_occuring = alu_op_sel == NANORV32_MUX_SEL_ALU_OP_MUL |
                               alu_op_sel == NANORV32_MUX_SEL_ALU_OP_MULH |
                               alu_op_sel == NANORV32_MUX_SEL_ALU_OP_MULHU |
                               alu_op_sel == NANORV32_MUX_SEL_ALU_OP_MULHSU;
-   wire        div_occuring = (alu_op_sel == NANORV32_MUX_SEL_ALU_OP_DIV  |
+   assign      div_occuring = alu_op_sel == NANORV32_MUX_SEL_ALU_OP_DIV  |
                               alu_op_sel == NANORV32_MUX_SEL_ALU_OP_DIVU |
                               alu_op_sel == NANORV32_MUX_SEL_ALU_OP_REM  |
                               alu_op_sel == NANORV32_MUX_SEL_ALU_OP_REMU ) & ~interlock;
@@ -87,13 +89,17 @@ module nanorv32_alumuldiv (/*AUTOARG*/
      .resp_result (div_res),
      .req_ready   (div_ready_tmp)
   );
- 
+
    // Beginning of automatic regs (for this module's undeclared outputs)
    reg [NANORV32_DATA_MSB:0] alu_res;
    // End of automatics
    /*AUTOWIRE*/
    // port a is tos most of the time, port b is nos
    always@* begin
+      alu_res = alu_portb;
+      div_sign = 1'b0;
+      sign_a   = 1'b0;
+      sign_b   = 1'b0;
       case(alu_op_sel)
         NANORV32_MUX_SEL_ALU_OP_NOP: begin
            alu_res = alu_portb;
@@ -182,7 +188,13 @@ module nanorv32_alumuldiv (/*AUTOARG*/
            div_sign = 1'b0;
            alu_res = div_res;
         end
+        default: begin
+           alu_res = alu_portb;
+           div_sign = 1'b0;
+           sign_a   = 1'b0;
+           sign_b   = 1'b0;
 
+        end
       endcase // case (alu_op_sel)
    end // always@ *
    assign alu_cond = (|alu_res);

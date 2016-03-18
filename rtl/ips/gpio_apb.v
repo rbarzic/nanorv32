@@ -37,6 +37,8 @@ module gpio_apb (/*AUTOARG*/
    apb_gpio_pwdata, pad_gpio_in, clk_apb, rst_apb_n
    );
 
+   parameter GPIO_NUMBER = 16;
+   localparam GPIO_MSB = GPIO_NUMBER-1;
 
    input  wire        apb_gpio_psel;     // Peripheral select
 
@@ -51,8 +53,8 @@ module gpio_apb (/*AUTOARG*/
 
 
    // GPIO in/out
-   output [31:0]      gpio_pad_out;
-   input [31:0]       pad_gpio_in;
+   output [GPIO_MSB:0]      gpio_pad_out;
+   input [GPIO_MSB:0]       pad_gpio_in;
 
 
    input              clk_apb;
@@ -70,8 +72,8 @@ module gpio_apb (/*AUTOARG*/
    reg             [31:0]     read_mux;
 
    reg [31:0]                 gpio_out_r;
-   reg [31:0]                 gpio_in_m;
-   reg [31:0]                 gpio_in_r;
+   reg [GPIO_MSB:0]                 gpio_in_m;
+   reg [GPIO_MSB:0]                 gpio_in_r;
 
    wire                       read_enable;
    wire                       write_enable;
@@ -83,12 +85,13 @@ module gpio_apb (/*AUTOARG*/
 
    // Register Read
    always@* begin
+      read_mux = 0;
       case(apb_gpio_paddr[3:2])
         2'h0: begin
            read_mux = gpio_out_r;
         end
         2'h1: begin
-           read_mux = gpio_in_r;
+           read_mux[GPIO_MSB:0] = gpio_in_r;
         end
         default: begin
            read_mux = 0;
@@ -127,8 +130,8 @@ module gpio_apb (/*AUTOARG*/
       if(rst_apb_n == 1'b0) begin
          /*AUTORESET*/
          // Beginning of autoreset for uninitialized flops
-         gpio_in_m <= 32'h0;
-         gpio_in_r <= 32'h0;
+         gpio_in_m <= {(1+(GPIO_MSB)){1'b0}};
+         gpio_in_r <= {(1+(GPIO_MSB)){1'b0}};
          // End of automatics
       end
       else begin
@@ -138,7 +141,7 @@ module gpio_apb (/*AUTOARG*/
       end
    end
 
-   assign gpio_pad_out = gpio_out_r;
+   assign gpio_pad_out = gpio_out_r[GPIO_MSB:0];
 
    assign gpio_irq = 0;
 

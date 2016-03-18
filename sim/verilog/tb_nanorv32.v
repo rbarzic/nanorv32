@@ -37,6 +37,7 @@
 module tb_nanorv32;
 
    `include "nanorv32_parameters.v"
+   `include "chip_params.v"
    `include "tb_defines.v"
 
    parameter ROM_ADDRESS_SIZE  = NANORV32_ADDR_SIZE-1; // Rom is half of the address space
@@ -46,7 +47,6 @@ module tb_nanorv32;
    /*AUTOWIRE*/
    // Beginning of automatic wires (for undeclared instantiated-module outputs)
    wire [15:0]          P0;                     // To/From U_DUT of nanorv32_simpleahb.v
-   wire [15:0]          P1;                     // To/From U_DUT of nanorv32_simpleahb.v
    wire                 clk;                    // From U_CLOCK_GEN of clock_gen.v
    wire                 illegal_instruction;    // From U_DUT of nanorv32_simpleahb.v
    wire                 rst_n;                  // From U_RESET_GEN of reset_gen.v
@@ -57,6 +57,12 @@ module tb_nanorv32;
    reg [15:0]          P1reg;                     // To/From U_DUT of nanorv32_simple.v
    reg                 irq_ext;
 
+   reg                 TCK;
+   reg                 TMS;
+   reg                 TDI;
+   wire                TDO;
+
+
    /* nanorv32_simpleahb AUTO_TEMPLATE(
      .clk_in                  (clk),
      ); */
@@ -65,13 +71,16 @@ module tb_nanorv32;
                            /*AUTOINST*/
                              // Outputs
                              .illegal_instruction(illegal_instruction),
+                             .TDO               (TDO),
                              // Inouts
                              .P0                (P0[15:0]),
-                             .P1                (P1[15:0]),
                              // Inputs
                              .clk_in            (clk),           // Templated
                              .rst_n             (rst_n),
-                             .irq_ext           (irq_ext));
+                             .irq_ext           (irq_ext),
+                             .TMS               (TMS),
+                             .TCK               (TCK),
+                             .TDI               (TDI));
 
 
 
@@ -135,6 +144,7 @@ module tb_nanorv32;
    task vcd_dump;
       begin
          if ($test$plusargs("vcd")) begin
+            $display("-I- VCD dump is enabled !");
 	    $dumpfile("tb_nanorv32.vcd");
 	    $dumpvars(0, tb_nanorv32 `VCD_EXTRA_MODULE);
 	 end
@@ -145,7 +155,11 @@ module tb_nanorv32;
       #1;
       load_program_memory();
       vcd_dump();
+<<<<<<< HEAD
       #100000000;
+=======
+      #20000000;
+>>>>>>> upstream/master
       $display("-I- TEST FAILED Timeout !");
       $finish(2);
 
@@ -165,7 +179,7 @@ module tb_nanorv32;
       if(rst_n) begin
          if(illegal_instruction) begin
             $display("-I- TEST FAILED (Illegal instruction)");
-            $finish(2);
+            $error;
          end
       else
         if(pc === 32'h00000100) begin
@@ -176,16 +190,16 @@ module tb_nanorv32;
          else
            if(x10_a0 === 32'hDEADD000) begin
               $display("-I- TEST FAILED");
-              $finish(1);
+              $error;
            end
            else begin
               $display("-I- TEST FAILED (unknown reason)");
-              $finish(2);
+              $error;
            end
       end // if (pc === 32'h00000100)
       else if (pc === 32'hxxxxxxxx) begin
          $display("-I- TEST FAILED (PC is X)");
-         $finish(2);
+         $error;
       end
          end
    end
@@ -258,6 +272,7 @@ module tb_nanorv32;
       f = $fopen("trace.txt","w");
     end
 
+
    always @ (posedge clk or negedge rst_n) begin
         if (rst_n == 1'b0) begin
            load_ongoing <= 1'b0;
@@ -287,7 +302,7 @@ module tb_nanorv32;
              $fwrite(f," %s, %s, %s %d ns ",reg_to_ascii_rd, reg_to_ascii_rs1, reg_to_ascii_rs2,cur_time);
              $fwrite(f,"\n");
              end
-          else 
+          else
           if (U_DUT.U_NANORV32_PIL.U_CPU.inst_ret && (U_DUT.U_NANORV32_PIL.U_CPU.htransd && ~U_DUT.U_NANORV32_PIL.U_CPU.hwrited && U_DUT.U_NANORV32_PIL.U_CPU.hreadyd))
           begin
              pc_r_r <= pc_r;
@@ -314,7 +329,7 @@ module tb_nanorv32;
 
 `endif
 
-   assign P1[15:0] = P1reg[15:0];
+
 endmodule // tb_nanorv32
 /*
  Local Variables:
