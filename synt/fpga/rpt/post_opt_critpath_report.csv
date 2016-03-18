@@ -1,5 +1,5 @@
 #
-# File created on Fri Mar 18 10:49:21 CET 2016
+# File created on Fri Mar 18 12:19:24 CET 2016
 #
 
 Startpoint,Endpoint,DelayType,Slack,#Levels,#LUTs
@@ -96,10 +96,10 @@ U_ADBG_TOP/i_dbg_jsp/jsp_biu_i/freespace_syncreg/regA_reg[2]/C,U_ADBG_TOP/i_dbg_
 U_ADBG_TOP/i_dbg_jsp/jsp_biu_i/freespace_syncreg/regA_reg[3]/C,U_ADBG_TOP/i_dbg_jsp/jsp_biu_i/freespace_syncreg/regB_reg[3]/D,min,-4.759,0,0
 U_ADBG_TOP/i_dbg_jsp/jsp_biu_i/freespace_syncreg/strobe_toggle_reg/C,U_ADBG_TOP/i_dbg_jsp/jsp_biu_i/freespace_syncreg/strobe_sff/sync1_reg/D,min,-4.759,0,0
 U_ADBG_TOP/i_dbg_wb/wb_biu_i/rdy_sync_reg/C,U_ADBG_TOP/i_dbg_wb/wb_biu_i/rdy_sync_tff1_reg/D,min,-4.759,0,0
+U_TIMER/U_TIMER/systick_clk_count_reg[0]/C,U_TIMER/U_TIMER/systick_clk_count_reg[1]/D,min,0.074,1,0
 U_NANORV32_PIL/U_CPU/U_ALU/u_div/a_reg[32]/C,U_NANORV32_PIL/U_CPU/U_ALU/u_div/a_reg[33]/D,min,0.076,1,0
 U_NANORV32_PIL/U_CPU/U_ALU/u_div/a_reg[36]/C,U_NANORV32_PIL/U_CPU/U_ALU/u_div/a_reg[37]/D,min,0.076,1,0
 U_NANORV32_PIL/U_CPU/U_ALU/u_div/a_reg[40]/C,U_NANORV32_PIL/U_CPU/U_ALU/u_div/a_reg[41]/D,min,0.076,1,0
 U_NANORV32_PIL/U_CPU/U_ALU/u_div/a_reg[44]/C,U_NANORV32_PIL/U_CPU/U_ALU/u_div/a_reg[45]/D,min,0.076,1,0
 U_NANORV32_PIL/U_CPU/U_ALU/u_div/a_reg[48]/C,U_NANORV32_PIL/U_CPU/U_ALU/u_div/a_reg[49]/D,min,0.076,1,0
 U_NANORV32_PIL/U_CPU/U_ALU/u_div/a_reg[52]/C,U_NANORV32_PIL/U_CPU/U_ALU/u_div/a_reg[53]/D,min,0.076,1,0
-U_NANORV32_PIL/U_CPU/U_ALU/u_div/a_reg[56]/C,U_NANORV32_PIL/U_CPU/U_ALU/u_div/a_reg[57]/D,min,0.076,1,0

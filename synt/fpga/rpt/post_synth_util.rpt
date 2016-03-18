@@ -1,8 +1,8 @@
 Copyright 1986-2015 Xilinx, Inc. All Rights Reserved.
 ------------------------------------------------------------------------------------
-| Tool Version : Vivado v.2015.4 (lin64) Build 1412921 Wed Nov 18 09:44:32 MST 2015
-| Date         : Fri Mar 18 10:49:08 2016
-| Host         : ThinkPad-T420s running 64-bit Ubuntu 15.04
+| Tool Version : Vivado v.2015.3 (lin64) Build 1368829 Mon Sep 28 20:06:39 MDT 2015
+| Date         : Fri Mar 18 12:19:16 2016
+| Host         : roba-OptiPlex-7010 running 64-bit Ubuntu 15.04
 | Command      : report_utilization -file ./rpt/post_synth_util.rpt
 | Design       : nanorv32_simpleahb
 | Device       : 7a35tcsg324-1
@@ -30,11 +30,11 @@ Table of Contents
 +-------------------------+------+-------+-----------+-------+
 |        Site Type        | Used | Fixed | Available | Util% |
 +-------------------------+------+-------+-----------+-------+
-| Slice LUTs*             | 6189 |     0 |     20800 | 29.75 |
-|   LUT as Logic          | 6189 |     0 |     20800 | 29.75 |
+| Slice LUTs*             | 6201 |     0 |     20800 | 29.81 |
+|   LUT as Logic          | 6201 |     0 |     20800 | 29.81 |
 |   LUT as Memory         |    0 |     0 |      9600 |  0.00 |
-| Slice Registers         | 2847 |     0 |     41600 |  6.84 |
-|   Register as Flip Flop | 2791 |     0 |     41600 |  6.71 |
+| Slice Registers         | 2879 |     0 |     41600 |  6.92 |
+|   Register as Flip Flop | 2823 |     0 |     41600 |  6.79 |
 |   Register as Latch     |   56 |     0 |     41600 |  0.13 |
 | F7 Muxes                |  318 |     0 |     16300 |  1.95 |
 | F8 Muxes                |   64 |     0 |      8150 |  0.79 |
@@ -55,7 +55,7 @@ Table of Contents
 | 0     |            _ |       Reset |            - |
 | 0     |          Yes |           - |            - |
 | 145   |          Yes |           - |          Set |
-| 1239  |          Yes |           - |        Reset |
+| 1271  |          Yes |           - |        Reset |
 | 41    |          Yes |         Set |            - |
 | 1422  |          Yes |       Reset |            - |
 +-------+--------------+-------------+--------------+
@@ -151,16 +151,16 @@ Table of Contents
 +------------+------+---------------------+
 |  Ref Name  | Used | Functional Category |
 +------------+------+---------------------+
-| LUT6       | 3604 |                 LUT |
+| LUT6       | 3614 |                 LUT |
 | FDRE       | 1422 |        Flop & Latch |
-| FDCE       | 1183 |        Flop & Latch |
-| LUT5       |  789 |                 LUT |
-| LUT2       |  754 |                 LUT |
-| LUT4       |  735 |                 LUT |
-| LUT3       |  581 |                 LUT |
-| LUT1       |  387 |                 LUT |
+| FDCE       | 1215 |        Flop & Latch |
+| LUT2       |  789 |                 LUT |
+| LUT5       |  755 |                 LUT |
+| LUT4       |  728 |                 LUT |
+| LUT3       |  592 |                 LUT |
+| LUT1       |  385 |                 LUT |
 | MUXF7      |  318 |               MuxFx |
-| CARRY4     |  262 |          CarryLogic |
+| CARRY4     |  273 |          CarryLogic |
 | FDPE       |  145 |        Flop & Latch |
 | MUXF8      |   64 |               MuxFx |
 | LDCE       |   56 |        Flop & Latch |

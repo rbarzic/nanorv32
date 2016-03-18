@@ -9,8 +9,8 @@
 // `define UART_UDR                8'h08
 // `define UART_BAUD               8'h0C
 
-// #define TARGET_BAUD_RATE 38400
-#define TARGET_BAUD_RATE 10000000
+#define TARGET_BAUD_RATE 38400
+//#define TARGET_BAUD_RATE 10000000
 
 
 extern int printf(const char *format, ...);
@@ -25,13 +25,14 @@ void delay(uint32_t d) {
 
 
 int main(void) {
-
-    // *UART_BAUD = 0x03;
-    // *UART_UDR = 0x55;
     uart_init(NRV32_UART0, NRV32_CLOCK_FREQ_HZ/TARGET_BAUD_RATE);
-    NRV32_UART0->UDR = 0x55;
+
 
     printf("-I Hello world !\n");
-    //delay(1000);
+    uint32_t i = 0;
+    while(1) {
+        printf("%08d Bonjour !\n",i++);
+        delay(1000);
+    }
     return 0;
 }
