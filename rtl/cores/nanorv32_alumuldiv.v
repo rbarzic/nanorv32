@@ -31,13 +31,14 @@ module nanorv32_alumuldiv (/*AUTOARG*/
    // Outputs
    alu_res, alu_cond, div_ready,
    // Inputs
-   alu_porta, alu_portb, alu_op_sel, clk, rst_n
+   alu_porta, alu_portb, alu_op_sel, interlock, clk, rst_n
    );
 
    `include "nanorv32_parameters.v"
    input [NANORV32_DATA_MSB:0] alu_porta;
    input [NANORV32_DATA_MSB:0] alu_portb;
    input [NANORV32_MUX_SEL_ALU_OP_MSB:0] alu_op_sel;
+   input                       interlock;
    input                       clk;
    input                       rst_n;
    //input [NANORV32_MUX_SEL_ALU_COND_MSB:0] alu_cond_sel;
@@ -68,10 +69,10 @@ module nanorv32_alumuldiv (/*AUTOARG*/
                               alu_op_sel == NANORV32_MUX_SEL_ALU_OP_MULH |
                               alu_op_sel == NANORV32_MUX_SEL_ALU_OP_MULHU |
                               alu_op_sel == NANORV32_MUX_SEL_ALU_OP_MULHSU;
-   assign        div_occuring = alu_op_sel == NANORV32_MUX_SEL_ALU_OP_DIV  |
+   assign      div_occuring = alu_op_sel == NANORV32_MUX_SEL_ALU_OP_DIV  |
                               alu_op_sel == NANORV32_MUX_SEL_ALU_OP_DIVU |
                               alu_op_sel == NANORV32_MUX_SEL_ALU_OP_REM  |
-                              alu_op_sel == NANORV32_MUX_SEL_ALU_OP_REMU;
+                              alu_op_sel == NANORV32_MUX_SEL_ALU_OP_REMU ) & ~interlock;
    wire        div_rem      = alu_op_sel == NANORV32_MUX_SEL_ALU_OP_REM  |
                               alu_op_sel == NANORV32_MUX_SEL_ALU_OP_REMU;
 //   assign div_ready = div_occuring ? div_ready_tmp :1'b1;

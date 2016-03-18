@@ -185,6 +185,7 @@ module nanorv32 (/*AUTOARG*/
 
    wire                                    stall_exe;
    wire                                    interlock;
+   wire                                    branch_wait;
    wire                                    div_ready;
    wire                                    stall_fetch;
    wire                                    force_stall_pstate;
@@ -273,6 +274,7 @@ module nanorv32 (/*AUTOARG*/
                         .hrdatai        (hrdatai[NANORV32_DATA_MSB:0]),
                         .hrespi         (hrespi),
                         .hreadyi        (hreadyi),
+                        .hreadyd        (hreadyd),
                         .stall_exe      (stall_exe),
                         .force_stall_reset(force_stall_reset),
                         .rst_n          (rst_n),
@@ -567,6 +569,7 @@ module nanorv32 (/*AUTOARG*/
                        .alu_op_sel      (alu_op_sel[NANORV32_MUX_SEL_ALU_OP_MSB:0]),
                        .alu_porta       (alu_porta[NANORV32_DATA_MSB:0]),
                        .alu_portb       (alu_portb[NANORV32_DATA_MSB:0]),
+                       .interlock       (interlock),
                        .clk             (clk),
                        .rst_n           (rst_n));
 
@@ -631,6 +634,7 @@ module nanorv32 (/*AUTOARG*/
                   .inst_irq             (inst_irq[NANORV32_DATA_MSB:0]),
                   // Inputs
                   .interlock           (interlock),
+                  .branch_wait          (branch_wait),
                   .branch_taken         (branch_taken),
                   .datamem_read         (datamem_read),
                   .datamem_write        (datamem_write),
@@ -651,8 +655,11 @@ module nanorv32 (/*AUTOARG*/
    // assign stall_fetch = !codeif_cpu_early_ready  | force_stall_pstate | !codeif_cpu_ready_r;
    assign stall_fetch = force_stall_pstate | !codeif_cpu_ready_r;
 //   assign interlock   = write_rd2 & (dec_rd2 == dec_rs1 | dec_rd2 == dec_rs2) & ~(htransd & hreadyd & hwrited);
-   assign interlock   = write_rd2 & (dec_rd2 == dec_rs1 | dec_rd2 == dec_rs2);
-   assign stall_exe = force_stall_pstate | interlock | ~div_ready | fifo_empty;
+   assign interlock   = write_rd2 & (dec_rd2 == dec_rs1 | dec_rd2 == dec_rs2) | 
+                        write_rd2 & ~hreadyd & (datamem_write || datamem_read) & data_access_cycle; 
+
+   assign branch_wait = branch_taken & pstate_r != NANORV32_PSTATE_BRANCH & ~hreadyi;
+   assign stall_exe = force_stall_pstate | interlock | ~div_ready | fifo_empty | branch_wait; // REVISIT case where branch in a shadow store or load | pstate_r == NANORV32_PSTATE_WAITLD & ~hreadyd ;
    assign read_byte_sel = cpu_dataif_addr[1:0];
    wire  [2:0] hsized_tmp = {3{(datamem_size_read_sel == NANORV32_MUX_SEL_DATAMEM_SIZE_READ_HALFWORD_UNSIGNED |
                              datamem_size_read_sel == NANORV32_MUX_SEL_DATAMEM_SIZE_READ_HALFWORD)}} & 3'b001 |

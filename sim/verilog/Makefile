@@ -150,6 +150,30 @@ run_dhry:
 	python3 ./makehex.py dhry.bin 16384 > dhry.hex2
 	vvp testbench.exe  +vcd +program_memory=dhry.vmem | tee -a logs/dhry.run.log
 
+run_coremark:
+	@echo  "===================== TEST coremark ============================"
+	mkdir -p logs
+	($(GNU_GCC)  $(GNU_CC_FLAGS) $(TEST_FLAGS) \
+	-L $(LINKER_SCRIPT_PATH) \
+	-T $(LINKER_SCRIPT_ROM_SRAM) \
+	$(TOP)/common/clib/printf-stdarg.c \
+	../../ctests/coremark/stdlib.c \
+	../../ctests/coremark/core_main.c \
+	../../ctests/coremark/core_list_join.c \
+	../../ctests/coremark/core_matrix.c \
+	../../ctests/coremark/core_portme.c \
+	../../ctests/coremark/core_state.c \
+	../../ctests/coremark/core_util.c \
+	$(STARTUP_CODE) -o coremark.elf  || echo "-I- TEST FAILED (gcc compilation)" >> logs/coremark.run.log) | tee  logs/coremark.run.log
+	$(GNU_OBJCOPY) -O binary coremark.elf coremark.bin
+	$(GNU_OBJDUMP) -d coremark.elf > coremark.lst
+	$(GNU_OBJDUMP) -t coremark.elf > coremark.map
+	$(GNU_OBJCOPY) -S coremark.elf -O verilog coremark.hex
+	hexdump -v -e ' 1/4 "%08x " "\n"' coremark.bin > coremark.vmem32 # Xilinx
+	hexdump -v -e '"@%08.8_ax  " 1/1 "%02x " "\n"' coremark.bin > coremark.vmem # iverilog
+	python3 ./makehex.py coremark.bin 16384 > coremark.hex2
+	vvp testbench.exe  +vcd +program_memory=coremark.vmem | tee -a logs/coremark.run.log
+
 ###################  Xilinx simulation ###############################################
 # Xilinx :
 # xvlog -f xilinx_vlist.txt
