@@ -35,7 +35,7 @@ module nanorv32_prefetch (/*AUTOARG*/
    haddri, hproti, hsizei, hmasteri, hmasterlocki, hbursti, hwdatai,
    hwritei, htransi, inst_from_buffer, inst_ret, reset_over, fifo_empty,
    // Inputs
-   branch_taken, pstate_r, pc_next, hrdatai, hrespi, hreadyi,
+   branch_taken, pstate_r, pc_next, hrdatai, hrespi, hreadyi,hreadyd,
    stall_exe, force_stall_reset, rst_n, clk, irq_bypass_inst_reg_r,
    interlock
    );
@@ -52,6 +52,7 @@ module nanorv32_prefetch (/*AUTOARG*/
    input [NANORV32_DATA_MSB:0]      hrdatai;
    input                            hrespi;
    input                            hreadyi;
+   input                            hreadyd;
    output [NANORV32_DATA_MSB:0]     haddri;
    output [3:0]                     hproti;
    output [2:0]                     hsizei;
@@ -116,7 +117,7 @@ module nanorv32_prefetch (/*AUTOARG*/
       end
       else begin
          if(hreadyi)
-           branch_taken_reg <= branch_taken & hreadyi & ~reset_over &  pstate_r != NANORV32_PSTATE_BRANCH & ~interlock; 
+           branch_taken_reg <= branch_taken & hreadyi & ~reset_over &  pstate_r != NANORV32_PSTATE_BRANCH; 
       end
    end
     always @(posedge clk or negedge rst_n) begin
@@ -145,8 +146,10 @@ module nanorv32_prefetch (/*AUTOARG*/
          /*AUTORESET*/
       end
       else begin
-         if((write_data | branch_taken & ~ignore_branch & ~interlock & ~fifo_empty) & hreadyi)
-           wr_pt_r <= (branch_taken & ~ignore_branch &  (pstate_r != NANORV32_PSTATE_BRANCH)) ? 2'b00 : wr_pt_r + 1;
+//         if((write_data | branch_taken & ~ignore_branch & ~hreadyd) & hreadyi)
+         if((write_data | branch_taken ) & hreadyi)
+//           wr_pt_r <= (branch_taken & ~ignore_branch &  (pstate_r != NANORV32_PSTATE_BRANCH)) ? 2'b00 : wr_pt_r + 1;
+           wr_pt_r <= (branch_taken &  (pstate_r != NANORV32_PSTATE_BRANCH)) ? 2'b00 : wr_pt_r + 1;
       end
    end
    always @(posedge clk or negedge rst_n) begin
@@ -244,16 +247,17 @@ module nanorv32_prefetch (/*AUTOARG*/
           haddri_r  <= 32'b0;
          /*AUTORESET*/
       end
-      else if ((next_inst_en_tmp | branch_req_tmp & ~force_stall_reset) & hreadyi) begin
+      else if ((next_inst_en_tmp | branch_req_tmp) & hreadyi) begin
           haddri_r <= haddri;
       end
    end
-   assign branch_req_tmp =  branch_taken & ~ignore_branch & pstate_r != NANORV32_PSTATE_BRANCH & ~interlock;
+//   assign branch_req_tmp =  branch_taken & ~ignore_branch & pstate_r != NANORV32_PSTATE_BRANCH &  ~force_stall_reset;
+   assign branch_req_tmp =  branch_taken & pstate_r != NANORV32_PSTATE_BRANCH &  ~force_stall_reset;
 
-   assign next_inst_en_tmp = ~force_stall_reset & ~fifo_full & ~(fifo_full_reg & ~branch_taken) & ~(branch_taken & interlock);
+   assign next_inst_en_tmp = ~force_stall_reset & ~fifo_full & ~fifo_full_reg;
    // We block eternal request on the bus if we are overriding
    // the instruction register during a irq context save/restore operation
-   assign htransi_tmp  = (next_inst_en_tmp | branch_req_tmp) & ~force_stall_reset & ~interlock & (!irq_bypass_inst_reg_r ||  branch_taken);
+   assign htransi_tmp  = (next_inst_en_tmp | branch_req_tmp) & (!irq_bypass_inst_reg_r) & hreadyi;
 
    assign haddri  = branch_req_tmp & ~reset_over ? branch_target_tmp : {32{~(force_stall_reset | reset_over & htransi_tmp & ~write_data)}} & (haddri_r + 4);
 
@@ -262,7 +266,8 @@ module nanorv32_prefetch (/*AUTOARG*/
 
    // Code memory interface
 
-   assign htransi      = hreadyi & ~force_stall_reset & ~(branch_taken & interlock) & ~(fifo_full & ~branch_taken) & ~(fifo_full_reg & ~branch_taken);  // request is the AHB is free
+//   assign htransi      = hreadyi & ~force_stall_reset & ~(branch_taken & interlock) & ~(fifo_full & ~branch_taken) & ~(fifo_full_reg & ~branch_taken) & ~(branch_taken &  pstate_r == NANORV32_PSTATE_WAITLD);  // request is the AHB is free
+   assign htransi = htransi_tmp;
    assign hsizei       = 3'b010;   // word request
    assign hproti       = 4'b0001;  // instruction data
    assign hbursti      = 3'b000;   // Burst not supported
