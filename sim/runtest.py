@@ -158,7 +158,7 @@ A simulation launcher for the Nanorv32 project
                         default='gcc',
                         choices = ['gcc','llvm'],
 
-                        help='Select simulator (iverilog, xilinx(xlog),...)')
+                        help='Select C compiler')
 
     parser.add_argument('--noexec', action='store_true', dest='noexec',
                         default=False,
@@ -346,7 +346,7 @@ if __name__ == '__main__':
         if args.compile_only:
             current_steps = c_only_steps
         else:
-            current_steps = c_steps
+            current_steps = steps
         final_step_list = [s.format(**global_args) for s in current_steps]
         #pp.pprint(final_step_list)
 
