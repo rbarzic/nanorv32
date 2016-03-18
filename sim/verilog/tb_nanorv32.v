@@ -145,7 +145,7 @@ module tb_nanorv32;
       #1;
       load_program_memory();
       vcd_dump();
-      #1000000000;
+      #100000000;
       $display("-I- TEST FAILED Timeout !");
       $finish(2);
 
@@ -286,7 +286,6 @@ module tb_nanorv32;
                $fwrite(f," RF[%s] <= 0x%x :",reg_to_ascii_rd, U_DUT.U_NANORV32_PIL.U_CPU.rd ) ;
              $fwrite(f," %s, %s, %s %d ns ",reg_to_ascii_rd, reg_to_ascii_rs1, reg_to_ascii_rs2,cur_time);
              $fwrite(f,"\n");
-             load_ongoing <= 1'b0;
              end
           else 
           if (U_DUT.U_NANORV32_PIL.U_CPU.inst_ret && (U_DUT.U_NANORV32_PIL.U_CPU.htransd && ~U_DUT.U_NANORV32_PIL.U_CPU.hwrited && U_DUT.U_NANORV32_PIL.U_CPU.hreadyd))
