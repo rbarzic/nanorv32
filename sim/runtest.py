@@ -15,7 +15,7 @@ steps = ["{cc}_compile",
          "{simulator}_{target}_elab",
          "{simulator}_{target}_sim",
 ]
-
+c_only_steps = ["{cc}_compile"]
 
 tpl_verilog_parameter = "VERILOG_PARAMETER += +{var_name_lc}={val}\n"
 tpl_make_variable     = "{var_name_uc}={val}\n"
@@ -143,6 +143,10 @@ A simulation launcher for the Nanorv32 project
                         choices = ['rtl','ntl', 'sdf'],
                         default='rtl',
                         help='Simulation type (rtl, sdf,...)')
+
+    parser.add_argument('-c', action='store_true', dest='compile_only',
+                        default=False,
+                        help='Run only C compilation')
 
     parser.add_argument('-s', '--simulator', action='store', dest='simulator',
                         default='icarus',
@@ -339,7 +343,11 @@ if __name__ == '__main__':
 
         # Now, we are ready to launch the various jobs
         # We build the Makefile targets based on c compiler and verilator selections
-        final_step_list = [s.format(**global_args) for s in steps]
+        if args.compile_only:
+            current_steps = c_only_steps
+        else:
+            current_steps = c_steps
+        final_step_list = [s.format(**global_args) for s in current_steps]
         #pp.pprint(final_step_list)
 
         for s in final_step_list:

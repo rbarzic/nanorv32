@@ -30,3 +30,4 @@ icarus_rtl_elab:
 
 icarus_rtl_sim:
 	cd $(TEST_DIR) && vvp testbench.exe  $(_ICARUS_SIM)
+	$(SIMULATOR_ICARUS_GUI)
