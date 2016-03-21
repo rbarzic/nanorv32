@@ -181,7 +181,7 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
                 // we use an early "ready",
                 // so we move to state WAITLD when the memory is ready
 
-                force_stall_pstate = 0;
+                force_stall_pstate = ~hreadyd;
                 force_stall_pstate2 = 1;
                 data_access_cycle  = 1;
                 urom_addr_inc = irq_bypass_inst_reg_r;
