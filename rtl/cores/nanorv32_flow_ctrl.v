@@ -35,7 +35,7 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
    interrupt_state_r,
    // Inputs
    branch_taken, datamem_read, datamem_write, hreadyd,
-   codeif_cpu_ready_r, interlock, irq, reti_inst_detected, clk, rst_n
+   codeif_cpu_ready_r, interlock, branch_wait, irq, reti_inst_detected, clk, rst_n
    );
 
 `include "nanorv32_parameters.v"
@@ -56,6 +56,7 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
 
    input  codeif_cpu_ready_r;
    input  interlock;
+   input  branch_wait;
 
    // IRQ support
    input  irq;
@@ -171,7 +172,7 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
            if(branch_taken) begin
               force_stall_pstate = 1;
               force_stall_pstate2 = 0;
-              pstate_next =  NANORV32_PSTATE_BRANCH;
+              pstate_next =   NANORV32_PSTATE_BRANCH;
               urom_addr_inc = 0;
               output_new_pc = 1;
            end
@@ -180,12 +181,13 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
                 // we use an early "ready",
                 // so we move to state WAITLD when the memory is ready
 
-                force_stall_pstate = 0;
+                force_stall_pstate = ~hreadyd;
                 force_stall_pstate2 = 1;
                 data_access_cycle  = 1;
                 urom_addr_inc = irq_bypass_inst_reg_r;
 
-                pstate_next = NANORV32_PSTATE_WAITLD;
+//                pstate_next = NANORV32_PSTATE_WAITLD;
+                pstate_next = NANORV32_PSTATE_CONT;
              end // if ((datamem_write || datamem_read))
            else if (irq && !irq_bypass_inst_reg_r) begin
               set_irq_bypass_inst = 1'b1;
@@ -293,9 +295,9 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
                  end
               end
               else begin
-                 pstate_next =  NANORV32_PSTATE_WAITLD;
+                 pstate_next = NANORV32_PSTATE_WAITLD;
                  force_stall_pstate = 1'b1;
-                 force_stall_pstate2 = 1;
+                 force_stall_pstate2 = 1'b1;
                  urom_addr_inc = 0;
                  output_new_pc = 0;
               end
@@ -332,7 +334,7 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
          /*AUTORESET*/
       end
       else begin
-        if (~interlock)
+        if (~(interlock | branch_wait)) 
          pstate_r <= pstate_next;
 
       end

@@ -1,5 +1,6 @@
 # functions to help building list of files needed by the various tools
-
+import glob
+import os
 
 def get_file_list(l, context, target):
     """
@@ -52,3 +53,10 @@ def get_dir_list(ll, context, target):
         if set.intersection(list_of_dir_targets, list_of_wanted_targets) is not None:  # noqa
             result.append(dirname.format(**context))
     return result
+
+def glob_v_file(dir_string, context, exclude_list=[]):
+    glob_string = dir_string.format(**context) + "/*.v"
+    print "Glob string : " + glob_string
+    filtered_list = [f for f in glob.glob(glob_string )
+                     if os.path.basename(f)  not in exclude_list]
+    return filtered_list

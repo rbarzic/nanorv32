@@ -1,5 +1,6 @@
 import AutoVivification as av
 import VerilogTemplates as vt
+import PythonTemplates as pt
 import math
 import copy
 import sys
@@ -44,6 +45,11 @@ def verilog_inst_field(dic_inst_format):
     return ''.join([vt.decode_inst_field.format(**d)
                     for _, d in dic_inst_format.items()
                     if not d.get('Hint',False)]) + '\n'
+
+def python_inst_field(dic_inst_format):
+    """Return  description for each instruction field"""
+    return ''.join([pt.decode_inst_field.format(**d)
+                    for _, d in dic_inst_format.items()]) + '\n'
 
 
 def get_decode_fields(spec,dic_inst_format,cpu='nanorv32',inst_group=['rv32i','rvc_rv32']):
@@ -97,6 +103,17 @@ def verilog_decode_definition(decode_dic):
         res += vt.decode_def.format(**d)
     return res
 
+def python_decode_definition(decode_dic):
+    """Return decode string definition for each instruction using dictionary returned by build_decode_string"""
+    res = ""
+    for k, v in decode_dic.items():
+        d = dict()
+        d['inst_uc'] = k.upper()
+        d['inst_lc'] = k.lower()
+        d['val'] = v
+        res += pt.decode_def.format(**d)
+    return res
+
 
 
 def write_to_file(path, filename, text):
@@ -137,7 +154,6 @@ def merge_dict2(a, b, path=None):
         else:
             a[key] = b[key]
     return a
-
 
 
 def merge_inst_impl(spec,impl_spec, inst_group=['rv32i','rvc_rv32']):
@@ -296,19 +312,48 @@ def verilog_decode_logic(sel_per_inst):
         res += vt.decode_end
     return res
 
+# CSR related stuff
 
-def merge_dict2(a, b, path=None):
-    "merges b into a, with override"
-    if path is None: path = []
-    for key in b:
-        if key in a:
-            if isinstance(a[key], dict) and isinstance(b[key], dict):
-                merge_dict2(a[key], b[key], path + [str(key)])
-            elif a[key] == b[key]:
-                pass # same leaf value
-            else:
-                a[key] = b[key]
-                #raise Exception('Conflict at %s' % '.'.join(path + [str(key)]))
-        else:
-            a[key] = b[key]
-    return a
+
+def get_csr_address(spec, cpu='nanorv32'):
+    " return a dictionary giving the address and verilog name of each CSR"
+    spec_cpu = spec[cpu]
+    res = dict()
+    for csr, val in spec_cpu['cpu']['csr'].items():
+
+        res[csr] = {
+            'addr' : val['addr'],
+            'vname': val['verilog_name'],
+        }
+
+    return res
+
+
+def verilog_csr_addr(csr_addr):
+    res = ""
+    d = dict()
+    for csr,val in csr_addr.items():
+        d['name_uc'] = csr.upper()
+        d['addr'] = hex(val['addr'])[2:] # remove the 0x in front
+        res += vt.csr_addr_param.format(**d)
+    return res
+
+def python_csr_addr(csr_addr):
+    res = ""
+    d = dict()
+    for csr,val in csr_addr.items():
+        d['name_uc'] = csr.upper()
+        d['addr'] = hex(val['addr']) # remove the 0x in front
+        res += pt.csr_addr_param.format(**d)
+    return res
+
+
+def verilog_csr_read_decode(csr_addr):
+    res = ""
+    d = dict()
+    for csr,val in csr_addr.items():
+        d['name_uc'] = csr.upper()
+        d['vname_lc'] = val['vname'].lower()
+        res += vt.csr_read_decode.format(**d)
+    res += '\n'
+    return res

@@ -15,11 +15,13 @@ Highlights :
     - 2 AHB-lite  master interfaces (Code &  Data)
     - lot of code is generated from a high level description
     - written in verilog (using iverilog or Xilinx xvsim as simulator)
+    - RV32I ISA simulator available 
 
-Still under development
+Still under development in dedicated branches: 
 
-  - currently supporting only RV32I base instructions (no scall,sbreak,rd*)
-  - No interrupt support yet
+  - RVC support 
+  - interrupt support (with auto push/pop of registers, like for Cortex-M)
+  - debugger support
 
 FPGA version available (Digilent ARTY board - Xilinx Artix7)
 

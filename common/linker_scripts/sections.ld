@@ -38,6 +38,7 @@ SECTIONS
 		__data_start__ = .;
 		*(vtable)
 		*(.data*)
+		*(.sdata*)
 
 		. = ALIGN(4);
 		/* preinit data */
@@ -72,6 +73,7 @@ SECTIONS
 		. = ALIGN(4);
 		__bss_start__ = .;
 		*(.bss*)
+		*(.sbss*)
 /*		*(COMMON)*/
 		. = ALIGN(4);
 		__bss_end__ = .;
