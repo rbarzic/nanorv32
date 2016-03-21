@@ -38,6 +38,8 @@ check_timing -override_defaults loops -verbose > post_synt_loops.rpt
 
 
 
+
+
 #read_verilog "$top_ds/logical/cmsdk_ahb_to_apb/verilog/cmsdk_ahb_to_apb.v"
 #
 #
@@ -64,6 +66,8 @@ check_timing -override_defaults loops -verbose > post_synt_loops.rpt
 #
 #
 
+
+set_clock_groups -asynchronous -group {clk_in clk_50m_arty_mmcm} -group {TCK}
 
 
 opt_design

@@ -26,6 +26,11 @@ cfg['c_compiler']['warnings'] += " -Wredundant-decls -Wstrict-prototypes  -pedan
 define['c_compiler']['optimisation_options'] = 'MAKE_VARIABLE'
 cfg['c_compiler']['optimisation_options'] = '-O3'
 
+define['c_compiler']['target_options'] = 'MAKE_VARIABLE'
+if target_fpga:
+    cfg['c_compiler']['target_options'] = ' -DFPGA=1 '
+else:
+    cfg['c_compiler']['target_options'] = ''
 
 
 define['c_compiler']['linker_script_path'] = 'MAKE_VARIABLE'

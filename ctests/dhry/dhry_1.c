@@ -74,6 +74,7 @@ long            Begin_Insn,
 
 /* end of variables for time measurement */
 
+extern  dhry_uart_init(void);
 
 main ()
 /*****/
@@ -90,6 +91,8 @@ main ()
         Str_30          Str_2_Loc;
   REG   int             Run_Index;
   REG   int             Number_Of_Runs;
+
+  dhry_uart_init();
 
   /* Initializations */
 
@@ -420,9 +423,3 @@ register int    l;
         while (l--) *d++ = *s++;
 }
 #endif
-
-
-
-
-
-

@@ -1,10 +1,16 @@
 #include <stdint.h>
+#include "nrv32_chip.h"
 
 
 extern int printf(const char *format, ...);
 extern int sprintf(char* out, const char *format, ...);
 
 int main(void) {
+#ifdef FPGA
+#define TARGET_BAUD_RATE 38400
+    uart_init(NRV32_UART0, NRV32_CLOCK_FREQ_HZ/TARGET_BAUD_RATE);
+#endif
+
 #if 1
     // Code copied from
     // http://www.menie.org/georges/embedded/printf-stdarg.html

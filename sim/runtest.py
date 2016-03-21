@@ -164,6 +164,10 @@ A simulation launcher for the Nanorv32 project
                         default=False,
                         help='Do not execute the command')
 
+    parser.add_argument('-f', action='store_true', dest='target_fpga',
+                        default=False,
+                        help='Define FPGA=1 for C compilation (mainly to use Uart output for printf ) - Likely to be used with -c')
+
 
     parser.add_argument(dest='tests', metavar='tests', nargs='*',
                         help='Path(es) to the test')
@@ -189,6 +193,7 @@ if __name__ == '__main__':
     global_args['noexec'] = args.noexec
     global_args['gui'] = args.gui
     global_args['logging'] = args.logging
+    global_args['target_fpga'] = args.target_fpga
 
 
     # main loop over tests
@@ -246,7 +251,7 @@ if __name__ == '__main__':
         local_opts = av.AutoVivification()
 
         if os.path.isfile(opt_file):
-            execfile(opt_file, {}, {"cfg": local_opts})
+            execfile(opt_file, global_args, {"cfg": local_opts})
 
         # We merge (with eventually override) all the definitions
         merge_dict2(default_opts, local_opts)
