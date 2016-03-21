@@ -301,8 +301,12 @@ Put description of application here
     parser.add_argument('--hex2', action='store', dest='hex2',
                         help='hex2 file to be load in the memory', default="")
 
+
     parser.add_argument('--trace', action='store', dest='trace',
                         help='trace file', default=None)
+
+    parser.add_argument('--start_address', action='store', dest='start_address',
+                        help='PC start address', default=0)
 
 
 
@@ -331,7 +335,7 @@ if __name__ == '__main__':
         trace = None
 
 
-    nrv.pc = 0;
+    nrv.pc = args.start_address;
     while True:
         inst = nrv.get_instruction(nrv.pc)
         if trace:
