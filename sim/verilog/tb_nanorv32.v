@@ -151,6 +151,11 @@ module tb_nanorv32;
       end
    endtask // if
 
+
+
+
+
+
    initial begin
       #1;
       load_program_memory();
@@ -246,6 +251,18 @@ module tb_nanorv32;
   reg [4*8-1:0] reg_to_ascii_rs1_r;
   reg [4*8-1:0] reg_to_ascii_rs2_r;
 
+   reg [1024:0] trace_filename;
+
+   task trace;
+      integer dummy;
+      begin
+         if ($test$plusargs("trace")) begin
+            dummy = $value$plusargs("trace=%s", trace_filename);
+            $display("-I- Trace file : %s  !",trace_filename);
+         end
+      end
+   endtask // load_program_memory
+
 
 
   nanorv32_ascii u_ascii(
@@ -264,8 +281,11 @@ module tb_nanorv32;
   integer f;
   integer cur_time;
   initial
+
+
     begin
-      f = $fopen("trace.txt","w");
+       trace();
+      f = $fopen(trace_filename,"w");
     end
 
 

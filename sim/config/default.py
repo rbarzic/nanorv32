@@ -90,6 +90,7 @@ if logging:
 
 if trace:
     cfg['simulator']['icarus']['options'] += ' -DTRACE='+trace
+    cfg['simulator']['icarus']['vvp_opt'] += ' +trace=' + trace
 
 if gui:
     cfg['simulator']['icarus']['gui'] += 'cd $(TEST_DIR) && gtkwave ' + cfg['simulation']['testbench_name'] + '.vcd &'
@@ -114,6 +115,10 @@ if gui:
 else:
     cfg['simulator']['xilinx']['xsim']['batch_or_gui'] = ' -runall '
 
+
+if trace:
+    cfg['simulator']['xilinx']['xvlog']['options'] += ' -DTRACE='+trace
+    cfg['simulator']['xilinx']['xsim']['options'] += ' +trace=' + trace
 
 
 
