@@ -13,6 +13,11 @@
         rdinstret a4
         rdinstreth a5
 
+        c.add    a4,a4
+        c.add    a5,a4
+        c.add    a5,a4
+        c.add    a5,a4
+
         j pass
 
 fail:

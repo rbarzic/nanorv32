@@ -2,7 +2,7 @@ TOOL_CHAIN      ?= gcc
 
 
 CPU_TYPE        ?= -m32
-ARCH_TYPE       ?= -march=RV32IM
+ARCH_TYPE       ?= -march=RV32IMC
 
 
 

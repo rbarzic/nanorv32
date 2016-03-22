@@ -32,18 +32,11 @@
 
 module nanorv32_decoder (/*AUTOARG*/
    // Outputs
-<<<<<<< HEAD
    illegal_instruction, pc_next_sel, pc_size_sel, pc_branch_sel,
    alu_op_sel, alu_portb_sel, alu_porta_sel, datamem_size_read_sel,
    datamem_write_sel, datamem_size_write_sel, datamem_read_sel,
    regfile_portw_sel, regfile_source_sel, regfile_write_sel,
    regfile_port1_sel, regfile_port2_sel,
-=======
-   illegal_instruction, pc_next_sel, pc_branch_sel, alu_op_sel,
-   alu_portb_sel, alu_porta_sel, datamem_size_read_sel,
-   datamem_write_sel, datamem_size_write_sel, datamem_read_sel,
-   regfile_source_sel, regfile_write_sel,
->>>>>>> upstream/master
    // Inputs
    instruction_r, dec_c_rd_rs1, dec_c_rs2
    );
@@ -113,6 +106,10 @@ module nanorv32_decoder (/*AUTOARG*/
            datamem_read_sel = NANORV32_MUX_SEL_DATAMEM_READ_NO;
            regfile_source_sel = NANORV32_MUX_SEL_REGFILE_SOURCE_ALU;
            regfile_write_sel = NANORV32_MUX_SEL_REGFILE_WRITE_NO;
+           datamem_size_write_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_WRITE_WORD;
+           pc_branch_sel = NANORV32_MUX_SEL_PC_BRANCH_NO;
+
+
         end
       endcase // casez (instruction[NANORV32_INSTRUCTION_MSB:0])
    end

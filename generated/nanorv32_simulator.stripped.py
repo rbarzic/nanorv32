@@ -63,9 +63,10 @@ class NanoRV32Core(object):
         # Build dictionnaries for the decoder
         self.mask_dict = {inst :  int("0b" + get_mask (id.decode[inst]),2) for inst in id.decode.keys ()}
         self.match_dict = {inst : int( "0b" + get_match(id.decode[inst]),2) for inst in id.decode.keys()}
-        self.data_memory = [0]*(self.datamem_size) # byte-addressed memory
+        self.data_memory = [0x55]*(self.datamem_size) # byte-addressed memory
         self.code_memory = [0]*(self.codemem_size) # byte-addressed memory
         self.csr = [0xCAFEBABE]*0x1000
+        self.init_csr()
 
     def fix_address(self,addr):
         "Wrap address to avoid accessing unexistant memory"
@@ -240,7 +241,30 @@ class NanoRV32Core(object):
         return self.csr[addr]
 
 
+    def update_csr(self):
+        self.csr[NANORV32_CSR_ADDR_CYCLE] +=1
+        self.csr[NANORV32_CSR_ADDR_TIME] +=1
+        self.csr[NANORV32_CSR_ADDR_INSTRET] +=1
+        if self.csr[NANORV32_CSR_ADDR_CYCLE] == 0x100000000:
+            self.csr[NANORV32_CSR_ADDR_CYCLE] = 0
+            self.csr[NANORV32_CSR_ADDR_CYCLEH] += 1
 
+        if self.csr[NANORV32_CSR_ADDR_TIME] == 0x100000000:
+            self.csr[NANORV32_CSR_ADDR_TIME] = 0
+            self.csr[NANORV32_CSR_ADDR_TIMEH] += 1
+
+        if self.csr[NANORV32_CSR_ADDR_INSTRET] == 0x100000000:
+            self.csr[NANORV32_CSR_ADDR_INSTRET] = 0
+            self.csr[NANORV32_CSR_ADDR_INSTRETH] += 1
+        pass
+
+    def init_csr(self):
+        self.csr[NANORV32_CSR_ADDR_CYCLE] = 0
+        self.csr[NANORV32_CSR_ADDR_CYCLEH] = 0
+        self.csr[NANORV32_CSR_ADDR_TIME] = 0
+        self.csr[NANORV32_CSR_ADDR_TIMEH] = 0
+        self.csr[NANORV32_CSR_ADDR_INSTRET] = 0
+        self.csr[NANORV32_CSR_ADDR_INSTRETH] = 0
 
 def get_args():
     """
@@ -253,8 +277,12 @@ Put description of application here
     parser.add_argument('--hex2', action='store', dest='hex2',
                         help='hex2 file to be load in the memory', default="")
 
+
     parser.add_argument('--trace', action='store', dest='trace',
                         help='trace file', default=None)
+
+    parser.add_argument('--start_address', action='store', dest='start_address',
+                        help='PC start address', default=0)
 
 
 
@@ -283,7 +311,7 @@ if __name__ == '__main__':
         trace = None
 
 
-    nrv.pc = 0;
+    nrv.pc = args.start_address;
     while True:
         inst = nrv.get_instruction(nrv.pc)
         if trace:
@@ -327,7 +355,7 @@ if __name__ == '__main__':
             if trace:
                 trace.write(" : " + txt + '\n')
             nrv.pc = new_pc
-
+            nrv.update_csr()
         else:
             if trace:
                 trace.close()

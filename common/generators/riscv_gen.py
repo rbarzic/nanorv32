@@ -145,7 +145,7 @@ def merge_dict2(a, b, path=None):
     for key in b:
         if key in a:
             if isinstance(a[key], dict) and isinstance(b[key], dict):
-                merge_dict2(a[ke104y], b[key], path + [str(key)])
+                merge_dict2(a[key], b[key], path + [str(key)])
             elif a[key] == b[key]:
                 pass # same leaf value
             else:

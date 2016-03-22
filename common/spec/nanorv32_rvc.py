@@ -170,7 +170,7 @@ spec['nanorv32']['rvc_rv32']['c.sw']['desc'] = {
 spec['nanorv32']['rvc_rv32']['c.nop']['desc'] = {
     'inst_type' : 'CI-type',
     'decode' : {
-        'opcodervc' : 0b10,
+        'opcodervc' : 0b01,
         'c_func3'     : 0b000,
         'hint_rvc_rd_rs1_is_zero' : 1,
         'hint_rvc_rd_rs1_is_two' : '?',
@@ -181,7 +181,7 @@ spec['nanorv32']['rvc_rv32']['c.nop']['desc'] = {
 spec['nanorv32']['rvc_rv32']['c.addi']['desc'] = {
     'inst_type' : 'CI-type',
     'decode' : {
-        'opcodervc' : 0b10,
+        'opcodervc' : 0b01,
         'c_func3'     : 0b000,
         'hint_rvc_rd_rs1_is_zero' : 0, # rd must be != 0
         'hint_rvc_rd_rs1_is_two' : '?',
@@ -199,14 +199,24 @@ spec['nanorv32']['rvc_rv32']['c.jal']['desc'] = {
         'hint_rvc_rs2_is_zero'    : '?',
     }
 }
+spec['nanorv32']['rvc_rv32']['c.j']['desc'] = {
+    'inst_type' : 'CJ-type',
+    'decode' : {
+        'opcodervc' : 0b01,
+        'c_func3'     : 0b0101,
+        'hint_rvc_rd_rs1_is_zero' : '?',
+        'hint_rvc_rd_rs1_is_two' : '?',
+        'hint_rvc_rs2_is_zero'    : '?',
+    }
+}
 
 spec['nanorv32']['rvc_rv32']['c.li']['desc'] = {
     'inst_type' : 'CI-type',
     'decode' : {
-        'opcodervc' : 0b10,
+        'opcodervc' : 0b01,
         'c_func3'     : 0b010,
         'hint_rvc_rd_rs1_is_zero' : 0, # rd must be != 0
-        'hint_rvc_rd_rs1_is_two' : '?',
+        'hint_rvc_rd_rs1_is_two' :  0,
         'hint_rvc_rs2_is_zero'    : '?',
     }
 }
@@ -225,9 +235,9 @@ spec['nanorv32']['rvc_rv32']['c.addi16sp']['desc'] = {
 spec['nanorv32']['rvc_rv32']['c.lui']['desc'] = {
     'inst_type' : 'CI-type',
     'decode' : {
-        'opcodervc' : 0b10,
+        'opcodervc' : 0b01,
         'c_func3'     : 0b011,
-        'hint_rvc_rd_rs1_is_zero' : '?',
+        'hint_rvc_rd_rs1_is_zero' : 0,
         'hint_rvc_rd_rs1_is_two' : 0, # rd must be != 0 and != 2
         'hint_rvc_rs2_is_zero'    : '?',
     }
@@ -257,18 +267,6 @@ spec['nanorv32']['rvc_rv32']['c.srai']['desc'] = {
     'decode' : {
         'opcodervc' : 0b10,
         'cb2_dec'   : 0b01,
-        'c_func3'     : 0b100,
-        'hint_rvc_rd_rs1_is_zero' : '?',
-        'hint_rvc_rd_rs1_is_two' : '?',
-        'hint_rvc_rs2_is_zero'    : '?',
-    }
-}
-
-spec['nanorv32']['rvc_rv32']['c.addi']['desc'] = {
-    'inst_type' : 'CB2-type',
-    'decode' : {
-        'opcodervc' : 0b10,
-        'cb2_dec'   : 0b10,
         'c_func3'     : 0b100,
         'hint_rvc_rd_rs1_is_zero' : '?',
         'hint_rvc_rd_rs1_is_two' : '?',

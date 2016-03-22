@@ -43,7 +43,8 @@ if True:
     rg.write_to_file("../../generated", "sim_instruction_fields.generated.py",
                      rg.python_inst_field(dic_inst_format))
 
-    decode_fields = rg.get_decode_fields(nanorv32.spec, dic_inst_format)
+#    decode_fields = rg.get_decode_fields(nanorv32.spec, dic_inst_format)
+    decode_fields = rg.get_decode_fields(spec_nanorv32 , dic_inst_format)
     pp.pprint(decode_fields)
     decode_dic = rg.build_decode_string(decode_fields, "35'b", 35)
     decode_dic_py = rg.build_decode_string(decode_fields, "", 35)
@@ -55,7 +56,8 @@ if True:
     rg.write_to_file("../../generated", "sim_inst_decode_definitions.generated.py",
                      rg.python_decode_definition(decode_dic_py))
     #print "="*80
-    merged_impl = rg.merge_inst_impl(nanorv32.spec, impl.spec)
+#    merged_impl = rg.merge_inst_impl(nanorv32.spec, impl.spec)
+    merged_impl = rg.merge_inst_impl(spec_nanorv32, spec_nanorv32_impl)
     #print "*"*80
     pp.pprint(merged_impl)
     print "$"*80
@@ -84,7 +86,8 @@ if True:
                      rg.verilog_decode_logic(sel_val))
 
     print "-I- CSR related files"
-    csr_addr = rg.get_csr_address(nanorv32.spec)
+#    csr_addr = rg.get_csr_address(nanorv32.spec)
+    csr_addr = rg.get_csr_address(spec_nanorv32)
 
     rg.write_to_file("../../generated", "csr_address.generated.v",
                      rg.verilog_csr_addr(csr_addr))

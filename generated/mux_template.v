@@ -12,6 +12,9 @@
         NANORV32_MUX_SEL_PC_NEXT_ALU_RES: begin
             pc_next <= ;
         end
+        NANORV32_MUX_SEL_PC_NEXT_PLUS2: begin
+            pc_next <= ;
+        end
 //========================================
 
     case(pc_size)
@@ -112,24 +115,39 @@
         NANORV32_MUX_SEL_ALU_PORTB_SHAMT: begin
             alu_portb <= ;
         end
+        NANORV32_MUX_SEL_ALU_PORTB_RS2: begin
+            alu_portb <= ;
+        end
         NANORV32_MUX_SEL_ALU_PORTB_IMM12: begin
+            alu_portb <= ;
+        end
+        NANORV32_MUX_SEL_ALU_PORTB_CIMM5_LUI: begin
             alu_portb <= ;
         end
         NANORV32_MUX_SEL_ALU_PORTB_IMM12HILO: begin
             alu_portb <= ;
         end
+        NANORV32_MUX_SEL_ALU_PORTB_CIMM5: begin
+            alu_portb <= ;
+        end
         NANORV32_MUX_SEL_ALU_PORTB_IMM20U: begin
+            alu_portb <= ;
+        end
+        NANORV32_MUX_SEL_ALU_PORTB_CIMM10CJ: begin
             alu_portb <= ;
         end
         NANORV32_MUX_SEL_ALU_PORTB_IMM20UJ: begin
             alu_portb <= ;
         end
-        NANORV32_MUX_SEL_ALU_PORTB_RS2: begin
+        NANORV32_MUX_SEL_ALU_PORTB_RS2_C: begin
             alu_portb <= ;
         end
 //========================================
 
     case(alu_porta)
+        NANORV32_MUX_SEL_ALU_PORTA_RS1_C: begin
+            alu_porta <= ;
+        end
         NANORV32_MUX_SEL_ALU_PORTA_PC_EXE: begin
             alu_porta <= ;
         end
@@ -140,19 +158,22 @@
 //========================================
 
     case(datamem_size_read)
+        NANORV32_MUX_SEL_DATAMEM_SIZE_READ_WORD: begin
+            datamem_size_read <= ;
+        end
+        NANORV32_MUX_SEL_DATAMEM_SIZE_READ_BYTE_UNSIGNED: begin
+            datamem_size_read <= ;
+        end
         NANORV32_MUX_SEL_DATAMEM_SIZE_READ_HALFWORD_UNSIGNED: begin
             datamem_size_read <= ;
         end
-        NANORV32_MUX_SEL_DATAMEM_SIZE_READ_HALFWORD: begin
-            datamem_size_read <= ;
-        end
-        NANORV32_MUX_SEL_DATAMEM_SIZE_READ_WORD: begin
+        NANORV32_MUX_SEL_DATAMEM_SIZE_READ_WORD_C: begin
             datamem_size_read <= ;
         end
         NANORV32_MUX_SEL_DATAMEM_SIZE_READ_BYTE: begin
             datamem_size_read <= ;
         end
-        NANORV32_MUX_SEL_DATAMEM_SIZE_READ_BYTE_UNSIGNED: begin
+        NANORV32_MUX_SEL_DATAMEM_SIZE_READ_HALFWORD: begin
             datamem_size_read <= ;
         end
 //========================================
@@ -170,6 +191,9 @@
 //========================================
 
     case(datamem_size_write)
+        NANORV32_MUX_SEL_DATAMEM_SIZE_WRITE_WORD_C: begin
+            datamem_size_write <= ;
+        end
         NANORV32_MUX_SEL_DATAMEM_SIZE_WRITE_BYTE: begin
             datamem_size_write <= ;
         end
@@ -195,10 +219,10 @@
         NANORV32_MUX_SEL_REGFILE_PORTW_RD: begin
             regfile_portw <= ;
         end
-        NANORV32_MUX_SEL_REGFILE_PORTW_RS1_P: begin
+        NANORV32_MUX_SEL_REGFILE_PORTW_C_X1: begin
             regfile_portw <= ;
         end
-        NANORV32_MUX_SEL_REGFILE_PORTW_RS1: begin
+        NANORV32_MUX_SEL_REGFILE_PORTW_RD_C: begin
             regfile_portw <= ;
         end
 //========================================
@@ -216,6 +240,9 @@
         NANORV32_MUX_SEL_REGFILE_SOURCE_DATAMEM: begin
             regfile_source <= ;
         end
+        NANORV32_MUX_SEL_REGFILE_SOURCE_PC_EXE_PLUS_2: begin
+            regfile_source <= ;
+        end
 //========================================
 
     case(regfile_write)
@@ -228,7 +255,7 @@
 //========================================
 
     case(regfile_port1)
-        NANORV32_MUX_SEL_REGFILE_PORT1_RS1_P: begin
+        NANORV32_MUX_SEL_REGFILE_PORT1_RS1_C: begin
             regfile_port1 <= ;
         end
         NANORV32_MUX_SEL_REGFILE_PORT1_RS1: begin
@@ -237,6 +264,9 @@
 //========================================
 
     case(regfile_port2)
+        NANORV32_MUX_SEL_REGFILE_PORT2_RS2_C: begin
+            regfile_port2 <= ;
+        end
         NANORV32_MUX_SEL_REGFILE_PORT2_RS2: begin
             regfile_port2 <= ;
         end
