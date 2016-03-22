@@ -164,7 +164,7 @@ module nanorv32_prefetch (/*AUTOARG*/
       end
       else begin
          if(inst_ret & ~reset_over)
-           rd_pt_r <= branch_taken_reg ? 3'b000 :(is_32 ? rd_pt_r_plus2[2:0] : rd_pt_r_plus1[2:0]);
+           rd_pt_r <= branch_taken_reg ? {2'b00,haddri_r[1]} :(is_32 ? rd_pt_r_plus2[2:0] : rd_pt_r_plus1[2:0]);
       end
    end
    wire  cancel_data = branch_req_tmp;

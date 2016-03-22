@@ -17,6 +17,13 @@
         c.add    a5,a4
         c.add    a5,a4
         c.add    a5,a4
+        c.mv     a5,a1
+        c.li     a0,8
+        c.slli   a0, 9
+        lui      sp, 0x20000
+        c.swsp   a0, 0 (sp)
+        c.li     a0,8
+        c.lwsp   a0, 0 (sp)
 
         j pass
 

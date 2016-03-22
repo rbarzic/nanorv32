@@ -260,6 +260,13 @@ module nanorv32 (/*AUTOARG*/
    wire [NANORV32_DATA_MSB:0]                   cimm12cj;
    wire [NANORV32_DATA_MSB:0]                   cimm5;
    wire [NANORV32_DATA_MSB:0]                   cimm5_lui;
+   wire [NANORV32_DATA_MSB:0]                   cimm5_swsp;
+   wire [NANORV32_DATA_MSB:0]                   cimm5_lwsp;
+   wire [NANORV32_DATA_MSB:0]                   cimm5_cl;
+   wire [NANORV32_DATA_MSB:0]                   cimm5_ciw;
+   wire [NANORV32_DATA_MSB:0]                   cimm5_16sp;
+   wire [NANORV32_DATA_MSB:0]                   cimm8_ciw;
+   wire [NANORV32_DATA_MSB:0]                   cimm5_cb;
 
 
    assign imm12_sext = {{20{dec_imm12 [11]}},dec_imm12[11:0]};
@@ -272,6 +279,12 @@ module nanorv32 (/*AUTOARG*/
                            dec_cj_imm[9], dec_cj_imm[3:1] ,1'b0};
    assign cimm5        =   {{26{dec_ci_immhi}},dec_ci_immhi,dec_ci_immlo};
    assign cimm5_lui    =   {{15{dec_ci_immhi}},dec_ci_immhi,dec_ci_immlo,12'b0};
+   assign cimm5_swsp   =   {24'b0,dec_css_imm[1:0],dec_css_imm[5:2],2'b0};
+   assign cimm5_lwsp   =   {24'b0,dec_ci_immlo[1:0],dec_ci_immhi[0],dec_ci_immlo[4:2],2'b0};
+   assign cimm5_cl     =   {25'b0,dec_cl_immlo[0],dec_cl_immhi[2:0],dec_cl_immlo[1],2'b0};
+   assign cimm8_ciw    =   {24'b0,dec_ciw_imm[5:2], dec_ciw_imm[7:6],dec_ciw_imm[0],dec_ciw_imm[1],2'b0};
+   assign cimm5_16sp   =   {22'b0,dec_ci_immhi[0],dec_ci_immlo[2:1],dec_ci_immlo[3],dec_ci_immlo[0],dec_ci_immlo[4],4'b0};
+   assign cimm5_cb     =   {23'b0,dec_cb_offset_hi[2],dec_cb_offset_lo[4:3],dec_cb_offset_lo[0],dec_cb_offset_hi[1:0],dec_cb_offset_lo[2:1],1'b0};
 
    // Fixme - incomplete/wrong
 
@@ -369,11 +382,17 @@ module nanorv32 (/*AUTOARG*/
    //===========================================================================
    always @* begin
       case(regfile_port1_sel)
+        NANORV32_MUX_SEL_REGFILE_PORT1_RS1_C_P: begin
+           regfile_port1 <= rvc_to_rv32_reg(dec_c_rd_rs1);
+        end
         NANORV32_MUX_SEL_REGFILE_PORT1_RS1_C: begin
            regfile_port1 <= dec_c_rd_rs1;
         end
         NANORV32_MUX_SEL_REGFILE_PORT1_RS1: begin
            regfile_port1 <= dec_rs1;
+        end
+        NANORV32_MUX_SEL_REGFILE_PORT1_C_X2: begin
+           regfile_port1 <= 5'h02;
         end
         default: begin
            regfile_port1 <= dec_rs1;
@@ -388,6 +407,9 @@ module nanorv32 (/*AUTOARG*/
         end
         NANORV32_MUX_SEL_REGFILE_PORT2_RS2: begin
            regfile_port2 <= dec_rs2;
+        end
+        NANORV32_MUX_SEL_REGFILE_PORT2_RS2_C_P: begin
+           regfile_port2 <= rvc_to_rv32_reg(dec_c_rs2_p);
         end
         default: begin
            regfile_port2 <= dec_rs2;
@@ -405,12 +427,12 @@ module nanorv32 (/*AUTOARG*/
         NANORV32_MUX_SEL_REGFILE_PORTW_C_X1: begin
            regfile_portw <= 5'h01;
         end
-//        NANORV32_MUX_SEL_REGFILE_PORTW_RS1_C: begin
-//           regfile_portw <= dec_c_rd_rs1;
-//        end
-//        NANORV32_MUX_SEL_REGFILE_PORTW_RS1_C_P: begin
-//           regfile_portw <= rvc_to_rv32_reg(dec_c_rs1_p);
-//        end
+        NANORV32_MUX_SEL_REGFILE_PORTW_RD_C_P: begin
+           regfile_portw <=  rvc_to_rv32_reg(dec_c_rs2_p);
+        end
+        NANORV32_MUX_SEL_REGFILE_PORTW_RS1_C_P: begin
+           regfile_portw <= rvc_to_rv32_reg(dec_c_rs1_p);
+        end
         default: begin
         end
       endcase
@@ -439,6 +461,21 @@ module nanorv32 (/*AUTOARG*/
         NANORV32_MUX_SEL_ALU_PORTB_CIMM10CJ: begin
            alu_portb = cimm12cj;
         end
+        NANORV32_MUX_SEL_ALU_PORTB_CIMM5_CL: begin
+           alu_portb = cimm5_cl;
+        end
+        NANORV32_MUX_SEL_ALU_PORTB_CIMM8_CIW: begin
+           alu_portb = cimm8_ciw;
+        end
+        NANORV32_MUX_SEL_ALU_PORTB_CIMM5_SWSP: begin
+           alu_portb = cimm5_swsp;
+        end
+        NANORV32_MUX_SEL_ALU_PORTB_CIMM5_LWSP: begin
+           alu_portb = cimm5_lwsp;
+        end
+        NANORV32_MUX_SEL_ALU_PORTB_CIMM5_16SP: begin
+           alu_portb = cimm5_16sp;
+        end
         NANORV32_MUX_SEL_ALU_PORTB_RS2: begin
            alu_portb = rf_portb;
         end
@@ -450,6 +487,9 @@ module nanorv32 (/*AUTOARG*/
         end
         NANORV32_MUX_SEL_ALU_PORTB_CIMM5_LUI: begin
            alu_portb = cimm5_lui;
+        end
+        NANORV32_MUX_SEL_ALU_PORTB_CIMM5_CB: begin
+           alu_portb = cimm5_cb;
         end
         default begin
            alu_portb = rf_portb;
@@ -858,7 +898,7 @@ module nanorv32 (/*AUTOARG*/
         end // UNMATCHED !!
       endcase
    end
-  wire [31:0] wdata_nxt = ((regfile_port2 == dec_rd2) & write_rd2 & htransd & hwrited & hreadyd) ? mem2regfile : rf_portb ;
+  wire [31:0] wdata_nxt = ((regfile_port2 == dec_rd2) & write_rd2 & htransd & hwrited & hreadyd) ? mem2regfile : rf_portb ;
    // fixme - we don't need to mux zeros in unwritten bytes
    always @* begin
       case(datamem_size_write_sel)
