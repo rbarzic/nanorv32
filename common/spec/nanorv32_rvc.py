@@ -88,10 +88,9 @@ spec['nanorv32']['inst_type']['CJ-type']['format'] = {
 spec['nanorv32']['inst_type']['CS2-type']['format'] = {
     'opcodervc': {'size': 2, 'offset': 0, 'decode': True},
     'c_rs2_p': {'size': 3, 'offset': 2},
-    'cs_immlo': {'size': 2, 'offset': 5},
+    'cb2_dec':{'size': 2, 'offset': 5, 'decode': True},
     'c_rs1_p': {'size': 3, 'offset': 7},
-    'cs_immhi': {'size': 3, 'offset': 10},
-    'c_func3': {'size': 3, 'offset': 13, 'decode': True},
+    'c_func6': {'size': 6, 'offset': 10, 'decode': True},
     'hint_rvc_rd_rs1_is_zero' : {'size': 1, 'offset': 32, 'decode': True, 'Hint' : True},
     'hint_rvc_rd_rs1_is_two' : {'size': 1, 'offset': 33, 'decode': True, 'Hint' : True},
     'hint_rvc_rs2_is_zero'    : {'size': 1, 'offset': 34, 'decode': True, 'Hint' : True},
@@ -192,7 +191,7 @@ spec['nanorv32']['rvc_rv32']['c.addi']['desc'] = {
 spec['nanorv32']['rvc_rv32']['c.jal']['desc'] = {
     'inst_type' : 'CJ-type',
     'decode' : {
-        'opcodervc' : 0b10,
+        'opcodervc' : 0b01,
         'c_func3'     : 0b001,
         'hint_rvc_rd_rs1_is_zero' : '?',
         'hint_rvc_rd_rs1_is_two' : '?',

@@ -155,7 +155,7 @@ module tb_nanorv32;
       #1;
       load_program_memory();
       vcd_dump();
-      #100000000;
+      #10000000;
       $display("-I- TEST FAILED Timeout !");
       $finish(2);
 
@@ -228,8 +228,9 @@ module tb_nanorv32;
 `define TRACE
 `ifdef TRACE
   wire [31:0] pc_r =  U_DUT.U_NANORV32_PIL.U_CPU.pc_exe_r;
-  wire [31:0] data = U_DUT.U_NANORV32_PIL.U_CPU.instruction_r;
-  reg [31:0] pc_r_r, data_r, addrd_r;
+  wire [34:0] data = U_DUT.U_NANORV32_PIL.U_CPU.U_DECODER.instruction_for_decode_unit;
+  reg [31:0] pc_r_r, addrd_r;
+  reg [34:0] data_r;
   reg load_ongoing, store_ongoing;
   wire [4:0]  rd   = U_DUT.U_NANORV32_PIL.U_CPU.dec_rd;
   wire [4:0]  rd2   = U_DUT.U_NANORV32_PIL.U_CPU.dec_rd2;
@@ -277,22 +278,22 @@ module tb_nanorv32;
         else begin 
           cur_time = $time;
           if (load_ongoing & U_DUT.U_NANORV32_PIL.U_CPU.hreadyd) begin
-             $fwrite(f,"PC : 0x%08x I : 0x%08x : %s :",pc_r_r, data_r, ascii_chain_r) ;
+             $fwrite(f,"PC : 0x%08x I : 0x%08x : %s :",pc_r_r, data_r[31:0], ascii_chain_r) ;
              if (U_DUT.U_NANORV32_PIL.U_CPU.write_rd2)
-               $fwrite(f," RF[%s] <= 0x%x  :",reg_to_ascii_rd2, U_DUT.U_NANORV32_PIL.U_CPU.rd2 ) ;
+               $fwrite(f," RF[%s] <= 0x%x MEM[0x%x] :",reg_to_ascii_rd2, U_DUT.U_NANORV32_PIL.U_CPU.rd2, addrd_r ) ;
              $fwrite(f," %s, %s, %s %d ns ",reg_to_ascii_rd_r, reg_to_ascii_rs1_r, reg_to_ascii_rs2_r,cur_time);
              $fwrite(f,"\n");
              load_ongoing <= 1'b0;
              end
           if (store_ongoing & U_DUT.U_NANORV32_PIL.U_CPU.hreadyd) begin
-             $fwrite(f,"PC : 0x%08x I : 0x%08x : %s :",pc_r_r, data_r, ascii_chain_r) ;
+             $fwrite(f,"PC : 0x%08x I : 0x%08x : %s :",pc_r_r, data_r[31:0], ascii_chain_r) ;
              $fwrite(f,"  MEM[0x%x] <= RF[%s] : 0x%x : %d ns",addrd_r, reg_to_ascii_rs2_r, U_DUT.U_NANORV32_PIL.U_CPU.hwdatad, cur_time);
              $fwrite(f,"\n");
              store_ongoing <= 1'b0;
              end
           if (U_DUT.U_NANORV32_PIL.U_CPU.inst_ret && ~(U_DUT.U_NANORV32_PIL.U_CPU.htransd)) 
              begin
-             $fwrite(f,"PC : 0x%08x I : 0x%08x : %s :",pc_r, data, ascii_chain) ;
+             $fwrite(f,"PC : 0x%08x I : 0x%08x : %s :",pc_r, data[31:0], ascii_chain) ;
              if (U_DUT.U_NANORV32_PIL.U_CPU.write_rd)
                $fwrite(f," RF[%s] <= 0x%x :",reg_to_ascii_rd, U_DUT.U_NANORV32_PIL.U_CPU.rd ) ;
              $fwrite(f," %s, %s, %s %d ns ",reg_to_ascii_rd, reg_to_ascii_rs1, reg_to_ascii_rs2,cur_time);

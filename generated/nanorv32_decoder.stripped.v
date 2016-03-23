@@ -91,7 +91,7 @@ module nanorv32_decoder (/*AUTOARG*/
 
    always @* begin
       illegal_instruction = 0;
-      casez(instruction_for_decode_unit[NANORV32_INSTRUCTION_MSB:0])
+      casez(instruction_for_decode_unit[34:0])
         //@begin[instruction_decoder]
         //@end[instruction_decoder]
         default begin

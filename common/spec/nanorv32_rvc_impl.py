@@ -21,8 +21,8 @@ spec['nanorv32']['rvc_rv32']['impl']['inst_type']['CR-type'] = {
     'datamem' : {
         'write' : 'no',
         'read' : 'no',
-        'size_read' : 'word_c',
-	'size_write' : 'word_c',
+        'size_read' : 'word',
+	'size_write' : 'word',
     },
 
 }
@@ -51,8 +51,8 @@ spec['nanorv32']['rvc_rv32']['impl']['inst_type']['CI-type'] = {
     'datamem' : {
         'write' : 'no',
         'read' : 'no',
-        'size_read' : 'word_c',
-	'size_write' : 'word_c',
+        'size_read' : 'word',
+	'size_write' : 'word',
     },
 
 }
@@ -76,8 +76,8 @@ spec['nanorv32']['rvc_rv32']['impl']['inst_type']['CSS-type'] = {
     'datamem' : {
         'write' : 'yes',
         'read' : 'no',
-        'size_read' : 'word_c',
-	'size_write' : 'word_c',
+        'size_read' : 'word',
+	'size_write' : 'word',
     },
 
 }
@@ -106,8 +106,8 @@ spec['nanorv32']['rvc_rv32']['impl']['inst_type']['CIW-type'] = {
     'datamem' : {
         'write' : 'no',
         'read' : 'no',
-        'size_read' : 'word_c',
-	'size_write' : 'word_c',
+        'size_read' : 'word',
+	'size_write' : 'word',
     },
 
 }
@@ -135,8 +135,8 @@ spec['nanorv32']['rvc_rv32']['impl']['inst_type']['CL-type'] = {
     'datamem' : {
         'write' : 'no',
         'read' : 'no',
-        'size_read' : 'word_c',
-	'size_write' : 'word_c',
+        'size_read' : 'word',
+	'size_write' : 'word',
     },
 
 }
@@ -165,8 +165,8 @@ spec['nanorv32']['rvc_rv32']['impl']['inst_type']['CS-type'] = {
     'datamem' : {
         'write' : 'no',
         'read' : 'no',
-        'size_read' : 'word_c',
-	'size_write' : 'word_c',
+        'size_read' : 'word',
+	'size_write' : 'word',
     },
 
 }
@@ -195,8 +195,8 @@ spec['nanorv32']['rvc_rv32']['impl']['inst_type']['CB-type'] = {
     'datamem' : {
         'write' : 'no',
         'read' : 'no',
-        'size_read' : 'word_c',
-	'size_write' : 'word_c',
+        'size_read' : 'word',
+	'size_write' : 'word',
     },
 
 }
@@ -225,8 +225,8 @@ spec['nanorv32']['rvc_rv32']['impl']['inst_type']['CJ-type'] = {
     'datamem' : {
         'write' : 'no',
         'read' : 'no',
-        'size_read' : 'word_c',
-	'size_write' : 'word_c',
+        'size_read' : 'word',
+	'size_write' : 'word',
     },
 
 }
@@ -255,8 +255,8 @@ spec['nanorv32']['rvc_rv32']['impl']['inst_type']['CS2-type'] = {
     'datamem' : {
         'write' : 'no',
         'read' : 'no',
-        'size_read' : 'word_c',
-	'size_write' : 'word_c',
+        'size_read' : 'word',
+	'size_write' : 'word',
     },
 
 }
@@ -283,8 +283,8 @@ spec['nanorv32']['rvc_rv32']['impl']['inst_type']['CB2-type'] = {
     'datamem' : {
         'write' : 'no',
         'read' : 'no',
-        'size_read' : 'word_c',
-	'size_write' : 'word_c',
+        'size_read' : 'word',
+	'size_write' : 'word',
     },
 
 }
@@ -321,6 +321,7 @@ spec['nanorv32']['rvc_rv32']['impl']['inst']['c.jr'] = {
         'next' : 'alu_res',
     },
     'alu' : {
+        'op' : 'add',
         'porta' : 'rs1',
     },
     'regfile' : {
@@ -359,6 +360,7 @@ spec['nanorv32']['rvc_rv32']['impl']['inst']['c.ebreak'] = {
 spec['nanorv32']['rvc_rv32']['impl']['inst']['c.addi'] = {
      'alu' : {
         'op' : 'add',
+        'portb' : 'cimm5',
     },
 }
 
@@ -439,7 +441,7 @@ spec['nanorv32']['rvc_rv32']['impl']['inst']['c.jal'] = {
     },
     'regfile' : {
         'write' : 'yes',
-        'source' : 'pc_exe_plus_4',
+        'source' : 'pc_exe_plus_2',
         'port1'  : 'rs1', # Added for RVC support
         'port2'  : 'rs2', # Added for RVC support
         'portw'  : 'c_x1',  # Added for RVC support

@@ -228,7 +228,7 @@ module nanorv32 (/*AUTOARG*/
    assign cimm5_lwsp   =   {24'b0,dec_ci_immlo[1:0],dec_ci_immhi[0],dec_ci_immlo[4:2],2'b0};
    assign cimm5_cl     =   {25'b0,dec_cl_immlo[0],dec_cl_immhi[2:0],dec_cl_immlo[1],2'b0};
    assign cimm8_ciw    =   {24'b0,dec_ciw_imm[5:2], dec_ciw_imm[7:6],dec_ciw_imm[0],dec_ciw_imm[1],2'b0};
-   assign cimm5_16sp   =   {22'b0,dec_ci_immhi[0],dec_ci_immlo[2:1],dec_ci_immlo[3],dec_ci_immlo[0],dec_ci_immlo[4],4'b0};
+   assign cimm5_16sp   =   {{22{dec_ci_immhi[0]}},dec_ci_immhi[0],dec_ci_immlo[2:1],dec_ci_immlo[3],dec_ci_immlo[0],dec_ci_immlo[4],4'b0};
    assign cimm5_cb     =   {23'b0,dec_cb_offset_hi[2],dec_cb_offset_lo[4:3],dec_cb_offset_lo[0],dec_cb_offset_hi[1:0],dec_cb_offset_lo[2:1],1'b0};
 
    // Fixme - incomplete/wrong
@@ -465,6 +465,9 @@ module nanorv32 (/*AUTOARG*/
       case(regfile_source_sel)
         NANORV32_MUX_SEL_REGFILE_SOURCE_PC_EXE_PLUS_4:begin
            rd_tmp <= pc_exe_r + 4;
+        end
+        NANORV32_MUX_SEL_REGFILE_SOURCE_PC_EXE_PLUS_2:begin
+           rd_tmp <= pc_exe_r + 2;
         end
         NANORV32_MUX_SEL_REGFILE_SOURCE_ALU: begin
            rd_tmp <= alu_res;
@@ -845,10 +848,11 @@ module nanorv32 (/*AUTOARG*/
    end
   wire [31:0] wdata_nxt = ((regfile_port2 == dec_rd2) & write_rd2 & htransd & hwrited & hreadyd) ? mem2regfile : rf_portb ;
    // fixme - we don't need to mux zeros in unwritten bytes
+  reg [1:0] write_sized;
    always @* begin
       case(datamem_size_write_sel)
         NANORV32_MUX_SEL_DATAMEM_SIZE_WRITE_BYTE: begin
-
+           write_sized = 2'b00;
            case(haddrd[1:0])
              2'b00: begin
                 cpu_dataif_wdata =  {24'b0,wdata_nxt[7:0]};
@@ -873,6 +877,7 @@ module nanorv32 (/*AUTOARG*/
            endcase
         end
         NANORV32_MUX_SEL_DATAMEM_SIZE_WRITE_HALFWORD: begin
+           write_sized = 2'b01;
            case(haddrd[1])
              1'b0: begin
                 cpu_dataif_wdata =  {16'b0,wdata_nxt[15:0]};
@@ -891,10 +896,12 @@ module nanorv32 (/*AUTOARG*/
 
         end
         NANORV32_MUX_SEL_DATAMEM_SIZE_WRITE_WORD: begin
+           write_sized = 2'b10;
            cpu_dataif_wdata = wdata_nxt;
            cpu_dataif_bytesel = {4{datamem_write}};
         end
         default begin
+           write_sized = 2'b10;
            cpu_dataif_wdata = wdata_nxt;
            cpu_dataif_bytesel = {4{datamem_write}};
         end
@@ -913,7 +920,7 @@ module nanorv32 (/*AUTOARG*/
    assign hwdatad          = cpu_dataif_wdata_reg;
    assign htransd          = cpu_dataif_req;
    assign hwrited          = datamem_write;
-   assign hsized           = datamem_write ? datamem_size_write_sel : hsized_tmp ;
+   assign hsized           = datamem_write ? write_sized : hsized_tmp ;
    assign hburstd          = 3'b000 ;
    assign hmasterd         = 1'b0 ;
    assign hmasterlockd     = 1'b0 ;

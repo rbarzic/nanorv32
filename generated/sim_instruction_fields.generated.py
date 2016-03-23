@@ -37,6 +37,8 @@
         self.dec_cb_offset_lo = bitfield(inst,offset=2,size=5)
         self.dec_cb_offset_hi = bitfield(inst,offset=10,size=3)
         self.dec_cj_imm = bitfield(inst,offset=2,size=11)
+        self.dec_cb2_dec = bitfield(inst,offset=5,size=2)
+        self.dec_c_func6 = bitfield(inst,offset=10,size=6)
         self.dec_c_func2 = bitfield(inst,offset=10,size=2)
         self.dec_cb2_immlo = bitfield(inst,offset=12,size=1)
 
