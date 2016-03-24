@@ -30,9 +30,9 @@
 
 // Convert an RVC register index to a regular
 // register index
-function  rvc_to_rv32_reg;
-   input rvc;
+function [4:0] rvc_to_rv32_reg;
+   input [2:0] rvc;
    begin
-      rvc_to_rv32_reg = rvc + 8;
+      rvc_to_rv32_reg = {2'b01,rvc} ;
    end
 endfunction //

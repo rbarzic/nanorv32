@@ -88,7 +88,89 @@ def i_type(c,op,op_str):
     txt = "RF[{}] <= 0x{:08x} (RF[{}]=0x{:08x} {}  imm20 =0x{:08x}) ".format(rd_print,rd_val,rs1_print,rs1_val,op_str,imm12_se)
 
     return (None,new_pc,txt)
+def c_mv(c):
+    rs2 = c.dec_c_rs2
+    rd = c.dec_c_rd_rs1
+    rd_print = format_reg(rd)
+    rs2_print = format_reg(rs2)
+    rs2_val = ct.c_uint32(c.rf[rs2]).value
+    rd_val = rs2_val
+    pc = c.pc
+    # results
+    c.update_rf(rd,rd_val)
+    new_pc = pc + 2
+    txt = "RF[{}] <= 0x{:08x} (RF[{}]=0x{:08x}) ".format(rd_print,rd_val,rs2_print,rs2_val)
 
+    return (None,new_pc,txt)
+
+def c_add(c):
+    rs1 = c.dec_c_rd_rs1
+    rs2 = c.dec_c_rs2
+    rd = c.dec_c_rd_rs1
+    rd_print = format_reg(rd)
+    rs1_print = format_reg(rs1)
+    rs1_val = ct.c_uint32(c.rf[rs1]).value
+    rs2_print = format_reg(rs2)
+    rs2_val = ct.c_uint32(c.rf[rs2]).value
+    rd_val = rs1_val + rs2_val
+    pc = c.pc
+    # results
+    c.update_rf(rd,rd_val)
+    new_pc = pc + 2
+    txt = "RF[{}] <= 0x{:08x} (RF[{}]=0x{:08x} + RF[{}]=0x{:08x}) ".format(rd_print,rd_val,rs1_print,rs1_val,rs2_print,rs2_val)
+
+    return (None,new_pc,txt)
+def c_add4spn(c):
+    rs1 = 2
+    rd = c.dec_c_rd_p +8
+    rd_print = format_reg(rd)
+    rs1_print = format_reg(rs1)
+    rs1_val = ct.c_uint32(c.rf[rs1]).value
+    imm9 = c.dec_c_immaddi4sp
+    rd_val = rs1_val + imm9
+    pc = c.pc
+    # results
+    c.update_rf(rd,rd_val)
+    new_pc = pc + 2
+    txt = "RF[{}] <= 0x{:08x} (RF[{}]=0x{:08x} + imm9=0x{:08x}) ".format(rd_print,rd_val,rs1_print,rs1_val,imm9)
+
+    return (None,new_pc,txt)
+def c_addi(c):
+    imm5 = uint32(c.dec_li_cimm5)
+    rd = c.dec_rd
+    rd_print = format_reg(rd)
+    imm5_shifted = uint32(imm5)
+    rs1 = c.dec_c_rd_rs1
+    rd = c.dec_c_rd_rs1
+    rd_print = format_reg(rd)
+    rs1_print = format_reg(rs1)
+    rs1_val = ct.c_uint32(c.rf[rs1]).value
+    rd_val = ct.c_uint32(rs1_val + imm5_shifted).value
+    pc = c.pc
+    # results
+    c.update_rf(rd,rd_val)
+    new_pc = pc + 2
+    txt = "RF[{}] <= 0x{:08x} (RF[{}]=0x{:08x} + imm5=0x{:08x}) ".format(rd_print,rd_val,rs1_print,rs1_val,imm5_shifted)
+    return (None,new_pc,txt)
+
+def c_addi16sp(c):
+    imm5 = uint32(c.dec_addi16_imm)
+    rd = c.dec_rd
+    rd_print = format_reg(rd)
+    imm5_shifted = uint32(imm5)*(2**4)
+    rs1 = 2
+    rd = 2
+    rd_print = format_reg(rd)
+    rs1_print = format_reg(rs1)
+    rs1_val = ct.c_uint32(c.rf[rs1]).value
+    rd_val = ct.c_uint32(rs1_val + imm5_shifted).value
+    pc = c.pc
+    # results
+    c.update_rf(rd,rd_val)
+    new_pc = pc + 2
+    txt = "RF[{}] <= 0x{:08x} (RF[{}]=0x{:08x} + imm5=0x{:08x}) ".format(rd_print,rd_val,rs1_print,rs1_val,imm5_shifted)
+
+    return (None,new_pc,txt)
 
 def auipc(c):
     imm20 = c.dec_imm20
@@ -118,6 +200,32 @@ def lui(c):
 
     return (None,new_pc,txt)
 
+def c_lui(c):
+    imm5 = uint32(c.dec_ci_cimm5_u)
+    rd = c.dec_rd
+    rd_print = format_reg(rd)
+    imm5_shifted = uint32(imm5<<12)
+    pc = c.pc
+    rd_val = imm5_shifted
+    # results
+    c.update_rf(rd,rd_val)
+    new_pc = pc + 2
+    txt = "RF[{}] <= 0x{:08x} (pc=0x{:08x} + imm5<<12 =0x{:08x}) ".format(rd_print,rd_val,pc,imm5_shifted)
+
+    return (None,new_pc,txt)
+def c_li(c):
+    imm5 = uint32(c.dec_li_cimm5)
+    rd = c.dec_rd
+    rd_print = format_reg(rd)
+    imm5_shifted = uint32(imm5)
+    pc = c.pc
+    rd_val = imm5_shifted
+    # results
+    c.update_rf(rd,rd_val)
+    new_pc = pc + 2
+    txt = "RF[{}] <= 0x{:08x} (pc=0x{:08x} + imm5<<12 =0x{:08x}) ".format(rd_print,rd_val,pc,imm5_shifted)
+
+    return (None,new_pc,txt)
 
 def cond_branch(c,op):
     rs1 = c.dec_rs1
@@ -139,7 +247,26 @@ def cond_branch(c,op):
         txt = "RF[{}]=0x{:08x} RF[{}]=0x{:08x}  Branch not taken".format(rs1_print,rs1_val,rs2_print,rs2_val)
 
     return (None,new_pc,txt)
+def c_cond_branch(c,op):
+    rs1 = (c.dec_c_rs1_p+8)
+    rs1_val = uint32(c.rf[rs1])
+    rs1_print = format_reg(rs1)
+    offset = uint32(c.dec_c_bcond_imm)
+    pc = c.pc
 
+    if op(rs1_val,0):
+        # taken
+
+        new_pc = uint32(pc + offset)
+        txt = "RF[{}]=0x{:08x} Jump to 0x{:08x}   (0x{:08x} + 0x{:08x})".format(rs1_print,rs1_val,new_pc,pc,offset)
+    else:
+        new_pc = uint32(pc + 2)
+        txt = "RF[{}]=0x{:08x} Branch not taken".format(rs1_print,rs1_val)
+
+    return (None,new_pc,txt)
+
+c_beqz = partial(c_cond_branch,op=operator.eq)
+c_bnez = partial(c_cond_branch,op=operator.ne)
 def sim_jal(c):
 
     rd  = c.dec_rd
@@ -151,6 +278,44 @@ def sim_jal(c):
     new_pc = uint32(pc + offset ) & 0xFFFFFFFE # lsb must be zero
     c.update_rf(rd,rd_val)
     txt = "RF[{}] <= 0x{:08x}   Jump to 0x{:08x}   (0x{:08x} + 0x{:08x})".format(rd_print,rd_val,new_pc,pc,offset)
+
+    return (None,new_pc,txt)
+def c_jal(c):
+
+    rd  = 1
+    rd_print = format_reg(rd)
+
+    offset = uint32(c.dec_imm11j)
+    pc = uint32(c.pc)
+    rd_val = uint32(pc +2)
+    new_pc = uint32(pc + offset ) & 0xFFFFFFFE # lsb must be zero
+    c.update_rf(rd,rd_val)
+    txt = "RF[{}] <= 0x{:08x}   Jump to 0x{:08x}   (0x{:08x} + 0x{:08x})".format(rd_print,rd_val,new_pc,pc,offset)
+
+    return (None,new_pc,txt)
+def c_j(c):
+
+    offset = uint32(c.dec_imm11j)
+    pc = uint32(c.pc)
+    new_pc = uint32(pc + offset ) & 0xFFFFFFFE # lsb must be zero
+    txt = "Jump to 0x{:08x}   (0x{:08x} + 0x{:08x})".format(new_pc,pc,offset)
+
+    return (None,new_pc,txt)
+def c_jr(c):
+
+    rs1 = c.dec_c_rd_rs1
+    rs1_print = format_reg(rs1)
+    rs1_val = uint32(c.rf[rs1])
+    pc = uint32(c.pc)
+    new_pc = uint32(rs1_val ) & 0xFFFFFFFE # lsb must be zero
+    txt = "Jump to 0x{:08x}   (RF[{}] = 0x{:08x})".format(new_pc,rs1_print, rs1_val)
+
+    return (None,new_pc,txt)
+def c_nop(c):
+
+    pc = uint32(c.pc)
+    new_pc = uint32(pc + 2 ) # lsb must be zero
+    txt = ""
 
     return (None,new_pc,txt)
 
@@ -246,7 +411,76 @@ sim_and = partial(r_type,op=operator.and_,op_str='&')
 sim_or = partial(r_type,op=operator.or_,op_str='|')
 sim_xor = partial(r_type,op=operator.xor,op_str='^')
 
+def cstore_sp(c, mem_access_fn):
+    rs1 = 2
+    rs2 = c.dec_c_rs2
+    rs1_print = format_reg(rs1)
+    rs2_print = format_reg(rs2)
 
+    rs1_val = uint32(c.rf[rs1])
+    rs2_val = uint32(c.rf[rs2])
+    offset = uint32(c.dec_swsp_imm)
+    pc = uint32(c.pc)
+    addr = rs1_val + offset
+    # Mem access (using a function passed as a parameter)
+    mem_access_fn(c,addr,rs2_val)
+    new_pc = uint32(pc + 2)
+    txt = " MEM[0x{:08x}] <= RF[{}] : 0x{:08x} (RF[{}]=0x{:08x} +   offset=0x{:08x}) ".format(addr,rs2_print,rs2_val,rs1_print,rs1_val,offset)
+    return (None,new_pc,txt)
+
+def cload_sp(c, mem_access_fn):
+    rs1 = 2
+    rd  = c.dec_c_rd_rs1
+    rd_print = format_reg(rd)
+    rs1_print = format_reg(rs1)
+    rs1_val = uint32(c.rf[rs1])
+    offset = uint32(c.dec_lwsp_imm)
+    pc = uint32(c.pc)
+    addr = rs1_val + offset
+    # Mem access (using a function passed as a parameter)
+    rd_val = mem_access_fn(c,addr)
+    new_pc = uint32(pc + 2)
+    c.update_rf(rd,rd_val)
+    txt = "RF[{}] <= 0x{:08x} MEM[0x{:08x}] (RF[{}]=0x{:08x} +   offset=0x{:08x}) ".format(rd_print,rd_val,addr,rs1_print,rs1_val,offset)
+    return (None,new_pc,txt)
+
+c_swsp = partial(cstore_sp,mem_access_fn=sw_fn)
+c_lwsp = partial(cload_sp,mem_access_fn=lw_fn)
+def cstore(c, mem_access_fn):
+    rs1 = (c.dec_c_rs1_p+8)
+    rs2 = (c.dec_c_rs2_p+8)
+    rs1_print = format_reg(rs1)
+    rs2_print = format_reg(rs2)
+
+    rs1_val = uint32(c.rf[rs1])
+    rs2_val = uint32(c.rf[rs2])
+    offset = uint32(c.dec_c_ls_imm)
+    pc = uint32(c.pc)
+    addr = rs1_val + offset
+    # Mem access (using a function passed as a parameter)
+    mem_access_fn(c,addr,rs2_val)
+    new_pc = uint32(pc + 2)
+    txt = " MEM[0x{:08x}] <= RF[{}] : 0x{:08x} (RF[{}]=0x{:08x} +   offset=0x{:08x}) ".format(addr,rs2_print,rs2_val,rs1_print,rs1_val,offset)
+    return (None,new_pc,txt)
+
+def cload(c, mem_access_fn):
+    rs1 = c.dec_c_rs1_p+8
+    rd  = c.dec_c_rs2_p+8
+    rd_print = format_reg(rd)
+    rs1_print = format_reg(rs1)
+    rs1_val = uint32(c.rf[rs1])
+    offset = uint32(c.dec_c_ls_imm)
+    pc = uint32(c.pc)
+    addr = rs1_val + offset
+    # Mem access (using a function passed as a parameter)
+    rd_val = mem_access_fn(c,addr)
+    new_pc = uint32(pc + 2)
+    c.update_rf(rd,rd_val)
+    txt = "RF[{}] <= 0x{:08x} MEM[0x{:08x}] (RF[{}]=0x{:08x} +   offset=0x{:08x}) ".format(rd_print,rd_val,addr,rs1_print,rs1_val,offset)
+    return (None,new_pc,txt)
+
+c_sw = partial(cstore,mem_access_fn=sw_fn)
+c_lw = partial(cload,mem_access_fn=lw_fn)
 def mulh(a,b):
     a32 = uint32(a)
     b32 = uint32(b)
@@ -505,7 +739,28 @@ sim_slli = partial(i_type,
 sim_srli = partial(i_type,
                   op=lambda x,y: x>>(y & 0x1F),
                   op_str='>>')
+def ci_type_shft(c,op,op_str):
+    rs1 = c.dec_c_rd_rs1
+    imm5 = ct.c_uint32(c.dec_ci_cimm5_u).value
+    rd = c.dec_c_rd_rs1
+    rd_print = format_reg(rd)
+    rs1_print = format_reg(rs1)
+    rs1_val = ct.c_uint32(c.rf[rs1]).value
+    rd_val = ct.c_uint32(op(rs1_val,imm5)).value
+    pc = c.pc
+    # results
+    c.update_rf(rd,rd_val)
+    new_pc = pc + 2
+    txt = "RF[{}] <= 0x{:08x} (RF[{}]=0x{:08x} {}  imm5 =0x{:08x}) ".format(rd_print,rd_val,rs1_print,rs1_val,op_str,imm5)
+    return (None,new_pc,txt)
 
+sim_cslli = partial(ci_type_shft,
+                  op=lambda x,y: x<<(y & 0x1F),
+                  op_str='<<')
+sim_csrli = partial(ci_type_shft,
+                  op=lambda x,y: x>>(y & 0x1F),
+                  op_str='>>')
+sim_csrai = partial(ci_type_shft,op=sra_32,op_str='>>') 
 
 # CSR
 def csr_read(c,addr,csr=""):
@@ -813,4 +1068,64 @@ spec['nanorv32']['rv32i']['simu']['inst']['rdinstret'] = {
 }
 spec['nanorv32']['rv32i']['simu']['inst']['rdinstreth'] = {
      'func' :  sim_rdinstreth
+}
+spec['nanorv32']['rvc_rv32']['simu']['inst']['c.lui'] = {
+     'func' :  c_lui
+}
+spec['nanorv32']['rvc_rv32']['simu']['inst']['c.swsp'] = {
+     'func' :  c_swsp
+}
+spec['nanorv32']['rvc_rv32']['simu']['inst']['c.jal'] = {
+    'func' : c_jal
+}
+spec['nanorv32']['rvc_rv32']['simu']['inst']['c.beqz'] = {
+    'func' : c_beqz
+}
+spec['nanorv32']['rvc_rv32']['simu']['inst']['c.bnez'] = {
+    'func' : c_bnez
+}
+spec['nanorv32']['rvc_rv32']['simu']['inst']['c.mv'] = {
+    'func' : c_mv
+}
+spec['nanorv32']['rvc_rv32']['simu']['inst']['c.add'] = {
+    'func' : c_add
+}
+spec['nanorv32']['rvc_rv32']['simu']['inst']['c.li'] = {
+    'func' : c_li
+}
+spec['nanorv32']['rvc_rv32']['simu']['inst']['c.lwsp'] = {
+    'func' : c_lwsp
+}
+spec['nanorv32']['rvc_rv32']['simu']['inst']['c.j'] = {
+    'func' : c_j
+}
+spec['nanorv32']['rvc_rv32']['simu']['inst']['c.jr'] = {
+    'func' : c_jr
+}
+spec['nanorv32']['rvc_rv32']['simu']['inst']['c.nop'] = {
+    'func' : c_nop
+}
+spec['nanorv32']['rvc_rv32']['simu']['inst']['c.addi'] = {
+    'func' : c_addi
+}
+spec['nanorv32']['rvc_rv32']['simu']['inst']['c.add4spn'] = {
+    'func' : c_add4spn
+}
+spec['nanorv32']['rvc_rv32']['simu']['inst']['c.addi16sp'] = {
+    'func' : c_addi16sp
+}
+spec['nanorv32']['rvc_rv32']['simu']['inst']['c.slli'] = {
+    'func' :  sim_cslli
+}
+spec['nanorv32']['rvc_rv32']['simu']['inst']['c.srli'] = {
+    'func' :  sim_csrli
+}
+spec['nanorv32']['rvc_rv32']['simu']['inst']['c.srai'] = {
+    'func' :  sim_csrai
+}
+spec['nanorv32']['rvc_rv32']['simu']['inst']['c.sw'] = {
+    'func' :  c_sw
+}
+spec['nanorv32']['rvc_rv32']['simu']['inst']['c.lw'] = {
+    'func' :  c_lw
 }

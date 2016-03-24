@@ -188,8 +188,8 @@ spec['nanorv32']['rvc_rv32']['impl']['inst_type']['CB-type'] = {
     'regfile' : {
         'write' : 'no',
         'source' : 'alu',
-        'port1'  : 'rs1_c', # Added for RVC support
-        'port2'  : 'rs2_c', # Added for RVC support
+        'port1'  : 'rs1_c_p', # Added for RVC support
+        'port2'  : 'x0', # Added for RVC support
         'portw'  : 'rd_c',  # Added for RVC support
     },
     'datamem' : {
@@ -569,7 +569,6 @@ spec['nanorv32']['rvc_rv32']['impl']['inst']['c.srli'] = {
 spec['nanorv32']['rvc_rv32']['impl']['inst']['c.bnez'] = {
      'alu' : {
         'op' : 'neq',
-        'portb' : 'cimm5_cb',
     },
     'pc' : {
         'next' : 'cond_pc_plus_immsb_c'
@@ -578,7 +577,6 @@ spec['nanorv32']['rvc_rv32']['impl']['inst']['c.bnez'] = {
 spec['nanorv32']['rvc_rv32']['impl']['inst']['c.beqz'] = {
      'alu' : {
         'op' : 'eq',
-        'portb' : 'cimm5_cb',
     },
     'pc' : {
         'next' : 'cond_pc_plus_immsb_c'

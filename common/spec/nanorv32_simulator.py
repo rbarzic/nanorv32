@@ -102,6 +102,7 @@ class NanoRV32Core(object):
 
     def mem_write_word(self,addr,data):
         if(addr & 0x03):
+            print "addr" + hex(addr)
             raise UnalignedAddressError("-E- Write word : " + hex(addr) + " bin : " + bin(addr))
         mem = self.decode_address(addr)
         addr_f = self.fix_address(addr)
@@ -226,7 +227,56 @@ class NanoRV32Core(object):
         tmp += self.dec_imm12hi*(2**5) # [5:11]
         self.dec_store_imm12 = tmp
         self.dec_store_imm12_se = sign_extend32(tmp,12)
+        # LUI
+        tmp =  self.dec_ci_immlo #[4:0]
+        tmp += self.dec_ci_immhi*(2**5) #[5]
+        self.dec_ci_cimm5_u = tmp
+        self.dec_li_cimm5 = sign_extend32(tmp,6)
+        #ADDI16SP
+        tmp  = bitfield(self.dec_ci_immlo,offset=4,size=1) #[4]
+        tmp += bitfield(self.dec_ci_immlo,offset=0,size=1)* (2) #[0]
+        tmp += bitfield(self.dec_ci_immlo,offset=3,size=1)* (2**2) #[0]
+        tmp += bitfield(self.dec_ci_immlo,offset=1,size=2)* (2**3) #[0]
+        tmp += bitfield(self.dec_ci_immhi,offset=0,size=1)* (2**5) #[0]
+        self.dec_addi16_imm = sign_extend32(tmp,6)
 
+        # CSS (SWSP)
+        tmp = bitfield(self.dec_css_imm,offset=2,size=4)*(2**2)
+        tmp += bitfield(self.dec_css_imm, offset=0, size=2)*(2**6) 
+        self.dec_swsp_imm = tmp
+        #CI (LWSP)
+        tmp = bitfield(self.dec_ci_immlo,offset=2,size=3)*(2**2)
+        tmp += bitfield(self.dec_ci_immhi, offset=0, size=1)*(2**5) 
+        tmp += bitfield(self.dec_ci_immlo, offset=0, size=2)*(2**6) 
+        self.dec_lwsp_imm = tmp
+        # JAL or J
+        tmp = bitfield(self.dec_cj_imm,offset=1,size=3)*2
+        tmp += bitfield(self.dec_cj_imm,offset=9,size=1)*(2**4)
+        tmp += bitfield(self.dec_cj_imm,offset=0,size=1)*(2**5)
+        tmp += bitfield(self.dec_cj_imm,offset=5,size=1)*(2**6)
+        tmp += bitfield(self.dec_cj_imm,offset=4,size=1)*(2**7)
+        tmp += bitfield(self.dec_cj_imm,offset=7,size=2)*(2**8)
+        tmp += bitfield(self.dec_cj_imm,offset=6,size=1)*(2**10)
+        tmp += bitfield(self.dec_cj_imm,offset=10,size=1)*(2**11)
+        self.dec_imm11j = sign_extend32(tmp,12)
+        #BEQZ BNEZ
+        tmp  =  bitfield(self.dec_cb_offset_lo,offset=1,size=2)* 2
+        tmp +=  bitfield(self.dec_cb_offset_hi,offset=0,size=2)*(2**3)
+        tmp +=  bitfield(self.dec_cb_offset_lo,offset=0,size=1)*(2**5)
+        tmp +=  bitfield(self.dec_cb_offset_lo,offset=3,size=2)*(2**6)
+        tmp +=  bitfield(self.dec_cb_offset_hi,offset=2,size=1)*(2**8)
+        self.dec_c_bcond_imm = sign_extend32(tmp,9)
+        #CIW
+        tmp  = bitfield(self.dec_ciw_imm,offset=1,size=1)*(2**2)
+        tmp += bitfield(self.dec_ciw_imm,offset=0,size=1)*(2**3)
+        tmp += bitfield(self.dec_ciw_imm,offset=6,size=2)*(2**4)
+        tmp += bitfield(self.dec_ciw_imm,offset=2,size=4)*(2**6)
+        self.dec_c_immaddi4sp = tmp
+        #LS COMPRESSED
+        tmp  = bitfield(self.dec_cl_immlo,offset=1,size=1)*(2**2)
+        tmp  += bitfield(self.dec_cl_immhi,offset=0,size=3)*(2**3)
+        tmp  += bitfield(self.dec_cl_immlo,offset=0,size=0)*(2**6)
+        self.dec_c_ls_imm = tmp
     def update_rf(self,idx,val):
         "Write val at index idx in the register file"
         if idx != 0:
@@ -237,118 +287,126 @@ class NanoRV32Core(object):
         return
 
     def match_instruction(self,inst):
-        "return the instruction that match the integer value 'inst'"
-        # Stupid loop....
-        for i in id.decode.keys():
-            mask = self.mask_dict[i]
-            match = self.match_dict[i]
-            if (inst & mask) == match:
-                return i
-
-        return 'illegal_instruction'
+       "return the instruction that match the integer value 'inst'"
+       # Stupid loop....
+       inst_match = inst
+       for i in id.decode.keys():
+           mask = self.mask_dict[i]
+           match = self.match_dict[i]
+           if (inst_match & mask) == match:
+       	      return i
+       
+       return 'illegal_instruction'
 
     def execute_instruction(self,inst_str):
-        "Execute the current instruction"
-        if inst_str in ns.spec['nanorv32']['rv32i']['simu']['inst']:
-            f = dict(ns.spec ['nanorv32']['rv32i']['simu']['inst'][inst_str])
-
-            return f['func'](self)
-
-
+       "Execute the current instruction"
+       if inst_str in ns.spec['nanorv32']['rv32i']['simu']['inst']:
+           f = dict(ns.spec ['nanorv32']['rv32i']['simu']['inst'][inst_str])
+       
+           return f['func'](self)
+       elif inst_str in ns.spec['nanorv32']['rvc_rv32']['simu']['inst']:
+           f = dict(ns.spec ['nanorv32']['rvc_rv32']['simu']['inst'][inst_str])
+       
+           return f['func'](self)
+    
+    
     def dump_regfile(self, num_col=4):
-        nb_reg = len(self.rf)
-        i = 0
-        while(i<nb_reg):
-            for c in range(0,num_col):
-                sys.stdout.write("x{:02d}=0x{:08X} ".format(i,self.rf[i]))
-                i += 1
-            print
-
+       nb_reg = len(self.rf)
+       i = 0
+       while(i<nb_reg):
+           for c in range(0,num_col):
+       	      sys.stdout.write("x{:02d}=0x{:08X} ".format(i,self.rf[i]))
+       	      i += 1
+              print
+    
     def load_code_memory(self,hex2_file):
-        with open(hex2_file) as f:
-            addr = 0;
-            for line in f:
-                word = int(line,16)
-                self.code_memory[addr] = word & 0x0FF
-                self.code_memory[addr+1] = (word>>8) & 0x0FF
-                self.code_memory[addr+2] = (word>>16) & 0x0FF
-                self.code_memory[addr+3] = (word>>24) & 0x0FF
-                addr += 4
-
+       with open(hex2_file) as f:
+           addr = 0;
+           for line in f:
+              word = int(line,16)
+              self.code_memory[addr] = word & 0x0FF
+              self.code_memory[addr+1] = (word>>8) & 0x0FF
+              self.code_memory[addr+2] = (word>>16) & 0x0FF
+              self.code_memory[addr+3] = (word>>24) & 0x0FF
+              addr += 4
+    
     def get_instruction(self, addr):
-        addr_f = self.fix_address(addr)
-        tmp0 = self.code_memory[addr_f] & 0x0FF
-        tmp1 = self.code_memory[addr_f+1] & 0x0FF
-        tmp2 = self.code_memory[addr_f+2] & 0x0FF
-        tmp3 = self.code_memory[addr_f+3] & 0x0FF
-        tmp = tmp0
-        tmp += (tmp1<< 8)
-        tmp += (tmp2<<16)
-        tmp += (tmp3<< 24)
-        return tmp
-
+       addr_f = self.fix_address(addr)
+       tmp0 = self.code_memory[addr_f] & 0x0FF
+       tmp1 = self.code_memory[addr_f+1] & 0x0FF
+       tmp2 = self.code_memory[addr_f+2] & 0x0FF
+       tmp3 = self.code_memory[addr_f+3] & 0x0FF
+       tmp = tmp0
+       tmp += (tmp1<< 8)
+       tmp += (tmp2<<16)
+       tmp += (tmp3<< 24)
+       if bitfield(tmp,offset=7,size=5) == 0x00:
+          is_rs1_eq_0 = 1
+       else: 
+          is_rs1_eq_0 = 0 
+       if bitfield(tmp,offset=7,size=5) == 0x02:
+          is_rs1_eq_2 = 1
+       else :
+          is_rs1_eq_2 = 0 
+       if bitfield(tmp,offset=2,size=5) == 0x00:
+          is_rs2_eq_0 = 1
+       else :
+          is_rs2_eq_0 = 0 
+       tmp += (is_rs1_eq_0<<32)
+       tmp += (is_rs1_eq_2<<33)
+       tmp += (is_rs2_eq_0<<34)
+       return tmp
+    
     def csr_read(self, addr):
-        return self.csr[addr]
-
-
+       return self.csr[addr]
+    
+    
     def update_csr(self):
-        self.csr[NANORV32_CSR_ADDR_CYCLE] +=1
-        self.csr[NANORV32_CSR_ADDR_TIME] +=1
-        self.csr[NANORV32_CSR_ADDR_INSTRET] +=1
-        if self.csr[NANORV32_CSR_ADDR_CYCLE] == 0x100000000:
-            self.csr[NANORV32_CSR_ADDR_CYCLE] = 0
-            self.csr[NANORV32_CSR_ADDR_CYCLEH] += 1
-
-        if self.csr[NANORV32_CSR_ADDR_TIME] == 0x100000000:
-            self.csr[NANORV32_CSR_ADDR_TIME] = 0
-            self.csr[NANORV32_CSR_ADDR_TIMEH] += 1
-
-        if self.csr[NANORV32_CSR_ADDR_INSTRET] == 0x100000000:
-            self.csr[NANORV32_CSR_ADDR_INSTRET] = 0
-            self.csr[NANORV32_CSR_ADDR_INSTRETH] += 1
-        pass
-
+       self.csr[NANORV32_CSR_ADDR_CYCLE] +=1
+       self.csr[NANORV32_CSR_ADDR_TIME] +=1
+       self.csr[NANORV32_CSR_ADDR_INSTRET] +=1
+       if self.csr[NANORV32_CSR_ADDR_CYCLE] == 0x100000000:
+           self.csr[NANORV32_CSR_ADDR_CYCLE] = 0
+           self.csr[NANORV32_CSR_ADDR_CYCLEH] += 1
+       
+       if self.csr[NANORV32_CSR_ADDR_TIME] == 0x100000000:
+           self.csr[NANORV32_CSR_ADDR_TIME] = 0
+           self.csr[NANORV32_CSR_ADDR_TIMEH] += 1
+       
+       if self.csr[NANORV32_CSR_ADDR_INSTRET] == 0x100000000:
+           self.csr[NANORV32_CSR_ADDR_INSTRET] = 0
+           self.csr[NANORV32_CSR_ADDR_INSTRETH] += 1
+       pass
+       
     def init_csr(self):
-        self.csr[NANORV32_CSR_ADDR_CYCLE] = 0
-        self.csr[NANORV32_CSR_ADDR_CYCLEH] = 0
-        self.csr[NANORV32_CSR_ADDR_TIME] = 0
-        self.csr[NANORV32_CSR_ADDR_TIMEH] = 0
-        self.csr[NANORV32_CSR_ADDR_INSTRET] = 0
-        self.csr[NANORV32_CSR_ADDR_INSTRETH] = 0
-
+       self.csr[NANORV32_CSR_ADDR_CYCLE] = 0
+       self.csr[NANORV32_CSR_ADDR_CYCLEH] = 0
+       self.csr[NANORV32_CSR_ADDR_TIME] = 0
+       self.csr[NANORV32_CSR_ADDR_TIMEH] = 0
+       self.csr[NANORV32_CSR_ADDR_INSTRET] = 0
+       self.csr[NANORV32_CSR_ADDR_INSTRETH] = 0
+    
 def get_args():
     """
     Get command line arguments
     """
-
     parser = argparse.ArgumentParser(description="""
 Put description of application here
                    """)
     parser.add_argument('--hex2', action='store', dest='hex2',
                         help='hex2 file to be load in the memory', default="")
-
-
     parser.add_argument('--trace', action='store', dest='trace',
                         help='trace file', default=None)
-
     parser.add_argument('--start_address', action='store', dest='start_address',
                         help='PC start address', default=0)
-
-
-
-
-
     parser.add_argument('--version', action='version', version='%(prog)s 0.1')
-
     return parser.parse_args()
-
-
+    
+    
 if __name__ == '__main__':
 
     args= get_args()
-
     nrv = NanoRV32Core()
-
     if args.hex2 != "":
         print("-I- Loading " + args.hex2)
         nrv.load_code_memory(args.hex2)

@@ -118,9 +118,6 @@
         NANORV32_MUX_SEL_ALU_PORTB_SHAMT: begin
             alu_portb <= ;
         end
-        NANORV32_MUX_SEL_ALU_PORTB_CIMM5_CB: begin
-            alu_portb <= ;
-        end
         NANORV32_MUX_SEL_ALU_PORTB_IMM12: begin
             alu_portb <= ;
         end
@@ -285,6 +282,9 @@
 //========================================
 
     case(regfile_port2)
+        NANORV32_MUX_SEL_REGFILE_PORT2_X0: begin
+            regfile_port2 <= ;
+        end
         NANORV32_MUX_SEL_REGFILE_PORT2_RS2_C: begin
             regfile_port2 <= ;
         end

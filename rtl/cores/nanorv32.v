@@ -286,7 +286,7 @@ module nanorv32 (/*AUTOARG*/
    assign cimm5_cl     =   {25'b0,dec_cl_immlo[0],dec_cl_immhi[2:0],dec_cl_immlo[1],2'b0};
    assign cimm8_ciw    =   {24'b0,dec_ciw_imm[5:2], dec_ciw_imm[7:6],dec_ciw_imm[0],dec_ciw_imm[1],2'b0};
    assign cimm5_16sp   =   {{22{dec_ci_immhi[0]}},dec_ci_immhi[0],dec_ci_immlo[2:1],dec_ci_immlo[3],dec_ci_immlo[0],dec_ci_immlo[4],4'b0};
-   assign cimm5_cb     =   {23'b0,dec_cb_offset_hi[2],dec_cb_offset_lo[4:3],dec_cb_offset_lo[0],dec_cb_offset_hi[1:0],dec_cb_offset_lo[2:1],1'b0};
+   assign cimm5_cb     =   {{23{dec_cb_offset_hi[2]}},dec_cb_offset_hi[2],dec_cb_offset_lo[4:3],dec_cb_offset_lo[0],dec_cb_offset_hi[1:0],dec_cb_offset_lo[2:1],1'b0};
 
    // Fixme - incomplete/wrong
 
@@ -385,7 +385,7 @@ module nanorv32 (/*AUTOARG*/
    always @* begin
       case(regfile_port1_sel)
         NANORV32_MUX_SEL_REGFILE_PORT1_RS1_C_P: begin
-           regfile_port1 <= rvc_to_rv32_reg(dec_c_rd_rs1);
+           regfile_port1 <= rvc_to_rv32_reg(dec_c_rs1_p);
         end
         NANORV32_MUX_SEL_REGFILE_PORT1_RS1_C: begin
            regfile_port1 <= dec_c_rd_rs1;
@@ -404,11 +404,17 @@ module nanorv32 (/*AUTOARG*/
 
    always @* begin
       case(regfile_port2_sel)
+        NANORV32_MUX_SEL_REGFILE_PORT2_X0: begin
+           regfile_port2 <= 5'h00;
+        end
         NANORV32_MUX_SEL_REGFILE_PORT2_RS2_C: begin
            regfile_port2 <= dec_c_rs2;
         end
         NANORV32_MUX_SEL_REGFILE_PORT2_RS2: begin
            regfile_port2 <= dec_rs2;
+        end
+        NANORV32_MUX_SEL_REGFILE_PORT2_RS2_C_P: begin
+           regfile_port2 <= rvc_to_rv32_reg(dec_c_rs2_p);
         end
         NANORV32_MUX_SEL_REGFILE_PORT2_RS2_C_P: begin
            regfile_port2 <= rvc_to_rv32_reg(dec_c_rs2_p);
@@ -489,9 +495,6 @@ module nanorv32 (/*AUTOARG*/
         end
         NANORV32_MUX_SEL_ALU_PORTB_CIMM5_LUI: begin
            alu_portb = cimm5_lui;
-        end
-        NANORV32_MUX_SEL_ALU_PORTB_CIMM5_CB: begin
-           alu_portb = cimm5_cb;
         end
         default begin
            alu_portb = rf_portb;
@@ -634,6 +637,11 @@ module nanorv32 (/*AUTOARG*/
       case(pc_next_sel)
         NANORV32_MUX_SEL_PC_NEXT_COND_PC_PLUS_IMMSB: begin
            pc_next = (alu_cond & output_new_pc & pc_branch) ? (pc_exe_r + imm12sb_sext) : (is_32 ? (pc_fetch_r + 4) : (pc_fetch_r + 2));
+           // branch_taken = alu_cond & !stall_exe;
+           branch_taken = alu_cond & pc_branch & ~fifo_empty & ~interlock;
+        end
+        NANORV32_MUX_SEL_PC_NEXT_COND_PC_PLUS_IMMSB_C: begin
+           pc_next = (alu_cond & output_new_pc & pc_branch) ? (pc_exe_r + cimm5_cb) : (is_32 ? (pc_fetch_r + 4) : (pc_fetch_r + 2));
            // branch_taken = alu_cond & !stall_exe;
            branch_taken = alu_cond & pc_branch & ~fifo_empty & ~interlock;
         end
