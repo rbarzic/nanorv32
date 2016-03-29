@@ -10,6 +10,7 @@ CC_FLAGS += $(C_COMPILER_STARTUP_CODE_OPT)
 CC_FLAGS += $(C_COMPILER_DEFAULT_LIB_OPT)
 CC_FLAGS += $(C_COMPILER_EXTRA_INCDIRS)
 CC_FLAGS += $(C_COMPILER_EXTRA_DEFINES)
+CC_FLAGS += $(C_COMPILER_TARGET_OPTIONS)
 
 
 # we split the tasks to get correct return error code (Make will stop on first error)

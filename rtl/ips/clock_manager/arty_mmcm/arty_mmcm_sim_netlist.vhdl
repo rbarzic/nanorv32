@@ -1,10 +1,10 @@
 -- Copyright 1986-2015 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2015.3 (lin64) Build 1368829 Mon Sep 28 20:06:39 MDT 2015
--- Date        : Mon Nov 16 15:47:10 2015
+-- Date        : Mon Mar 21 13:42:45 2016
 -- Host        : roba-OptiPlex-7010 running 64-bit Ubuntu 15.04
 -- Command     : write_vhdl -force -mode funcsim
---               /home/roba/perso/github/arty-designstart-cm0/ips/clock_manager/arty_mmcm/arty_mmcm_sim_netlist.vhdl
+--               /home/roba/perso/github/nanorv32/rtl/ips/clock_manager/arty_mmcm/arty_mmcm_sim_netlist.vhdl
 -- Design      : arty_mmcm
 -- Purpose     : This VHDL netlist is a functional simulation representation of the design and should not be modified or
 --               synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -85,7 +85,7 @@ mmcm_adv_inst: unisim.vcomponents.MMCME2_ADV
       CLKFBOUT_USE_FINE_PS => false,
       CLKIN1_PERIOD => 10.000000,
       CLKIN2_PERIOD => 0.000000,
-      CLKOUT0_DIVIDE_F => 20.000000,
+      CLKOUT0_DIVIDE_F => 25.000000,
       CLKOUT0_DUTY_CYCLE => 0.500000,
       CLKOUT0_PHASE => 0.000000,
       CLKOUT0_USE_FINE_PS => false,

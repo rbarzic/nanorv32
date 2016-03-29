@@ -5,7 +5,7 @@ header="""
 <MemInfo Version="1" Minor="0">
     <Processor Endianness="Little" InstPath="design/nanorv32">
         <AddressSpace
-            Name="design_1_i_microblaze_0.design_1_i_microblaze_0_local_memory_dlmb_bram_if_cntlr" Begin="0" End="8191">
+            Name="design_1_i_microblaze_0.design_1_i_microblaze_0_local_memory_dlmb_bram_if_cntlr" Begin="0" End="32767">
 
             <BusBlock>
 """

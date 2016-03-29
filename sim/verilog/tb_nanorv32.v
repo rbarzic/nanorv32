@@ -151,11 +151,16 @@ module tb_nanorv32;
       end
    endtask // if
 
+
+
+
+
+
    initial begin
       #1;
       load_program_memory();
       vcd_dump();
-      #100000000;
+      #1000000000;
       $display("-I- TEST FAILED Timeout !");
       $finish(2);
 
@@ -257,6 +262,19 @@ module tb_nanorv32;
   reg [31:0]    fifo_cur_time[7:0];         
   reg [31:0]    fifo_rd[7:0]  ;            
   reg [7:0]     fifo_write_rd;         
+   reg [1024:0] trace_filename;
+
+   task trace;
+      integer dummy;
+      begin
+         if ($test$plusargs("trace")) begin
+            dummy = $value$plusargs("trace=%s", trace_filename);
+            $display("-I- Trace file : %s  !",trace_filename);
+         end
+      end
+   endtask // load_program_memory
+
+
 
   nanorv32_ascii u_ascii(
      .ascii_chain (ascii_chain),
@@ -275,8 +293,11 @@ module tb_nanorv32;
   integer f;
   integer cur_time;
   initial
+
+
     begin
-      f = $fopen("trace.txt","w");
+       trace();
+      f = $fopen(trace_filename,"w");
     end
 
 
@@ -285,7 +306,7 @@ module tb_nanorv32;
            load_ongoing <= 1'b0;
            store_ongoing <= 1'b0;
         end
-        else begin 
+        else begin
           cur_time = $time;
           if (load_ongoing & U_DUT.U_NANORV32_PIL.U_CPU.hreadyd) begin
              $fwrite(f,"PC : 0x%08x I : 0x%08x : %s :",pc_r_r, data_r[31:0], ascii_chain_r) ;

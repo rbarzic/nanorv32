@@ -192,6 +192,7 @@ module nanorv32 (/*AUTOARG*/
    reg [NANORV32_DATA_MSB:0]                alu_porta;
    reg [NANORV32_DATA_MSB:0]                alu_portb;
    wire [NANORV32_DATA_MSB:0]               alu_res;
+   wire [NANORV32_DATA_MSB:0]               alu_add_res;
 
 
    reg [NANORV32_DATA_MSB:0]               pc_next;
@@ -670,7 +671,7 @@ module nanorv32 (/*AUTOARG*/
            // pc - but once we have fetch the new instruction, we need to start
            // fetching  the n+1 instruction
            // Fixme - this may not be valid if there is some wait-state
-           pc_next = output_new_pc  ? alu_res & 32'hFFFFFFFE : (is_32 ? (pc_fetch_r + 4) : (pc_fetch_r + 2));
+           pc_next = output_new_pc  ? alu_res_res & 32'hFFFFFFFE : (is_32 ? (pc_fetch_r + 4) : (pc_fetch_r + 2));
 
            // We cancel the branch if we detect a "reti"
            // while in interrupt state
@@ -742,25 +743,27 @@ module nanorv32 (/*AUTOARG*/
 
 
    nanorv32_alumuldiv U_ALU (
-                       // Outputs
-                       .div_ready       (div_ready),
-                       .alu_res         (alu_res[NANORV32_DATA_MSB:0]),
-                       .alu_cond        (alu_cond),
-                       // Inputs
-                       .alu_op_sel      (alu_op_sel[NANORV32_MUX_SEL_ALU_OP_MSB:0]),
-                       .alu_porta       (alu_porta[NANORV32_DATA_MSB:0]),
-                       .alu_portb       (alu_portb[NANORV32_DATA_MSB:0]),
-                       .interlock       (interlock),
-                       .clk             (clk),
-                       .rst_n           (rst_n));
+                             .alu_add_res         (alu_add_res[NANORV32_DATA_MSB:0]),
+                             // Outputs
+                             .div_ready       (div_ready),
+                             .alu_res         (alu_res[NANORV32_DATA_MSB:0]),
+                             .alu_cond        (alu_cond),
+                             // Inputs
+                             .alu_op_sel      (alu_op_sel[NANORV32_MUX_SEL_ALU_OP_MSB:0]),
+                             .alu_porta       (alu_porta[NANORV32_DATA_MSB:0]),
+                             .alu_portb       (alu_portb[NANORV32_DATA_MSB:0]),
+                             .interlock       (interlock),
+                             .clk             (clk),
+                             .rst_n           (rst_n));
 
 
 
-    /* nanorv32_csr AUTO_TEMPLATE(
-     .core_csr_wdata  ({@"vl-width"{1'b0}}),
-     .core_csr_write(1'b0),
-     ); */
-   nanorv32_csr U_CSR (
+
+                             /* nanorv32_csr AUTO_TEMPLATE(
+                              .core_csr_wdata  ({@"vl-width"{1'b0}}),
+                              .core_csr_write(1'b0),
+                              ); */
+                             nanorv32_csr U_CSR (
                        // Outputs
                        .csr_core_rdata  (csr_core_rdata),
                        // Inputs
@@ -777,12 +780,12 @@ module nanorv32 (/*AUTOARG*/
 
    // data memory interface
 
-   assign haddrd[31:2] = alu_res[31:2];
+   assign haddrd[31:2] = alu_add_res[31:2];
    // When we are pushing/stacking registers for interrupt entry/exit
    // we realign the stack pointer the "hard way" :-)
    // so that we don't have to do special computation or extra register
    // so be careful, don't use -4(sp)
-   assign haddrd[1:0]  =  irq_bypass_inst_reg_r ? 2'b00 : alu_res[1:0];
+   assign haddrd[1:0]  =  irq_bypass_inst_reg_r ? 2'b00 : alu_add_res[1:0];
 
 
 
@@ -790,7 +793,7 @@ module nanorv32 (/*AUTOARG*/
    if (rst_n == 1'b0)
       cpu_dataif_addr <= 2'b00;
    else if (hreadyd & htransd)
-      cpu_dataif_addr <= alu_res[1:0];
+      cpu_dataif_addr <= alu_add_res[1:0];
    end
 
 

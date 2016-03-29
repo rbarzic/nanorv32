@@ -26,6 +26,11 @@ cfg['c_compiler']['warnings'] += " -Wredundant-decls -Wstrict-prototypes  -pedan
 define['c_compiler']['optimisation_options'] = 'MAKE_VARIABLE'
 cfg['c_compiler']['optimisation_options'] = '-O3'
 
+define['c_compiler']['target_options'] = 'MAKE_VARIABLE'
+if target_fpga:
+    cfg['c_compiler']['target_options'] = ' -DFPGA=1 '
+else:
+    cfg['c_compiler']['target_options'] = ''
 
 
 define['c_compiler']['linker_script_path'] = 'MAKE_VARIABLE'
@@ -85,6 +90,7 @@ if logging:
 
 if trace:
     cfg['simulator']['icarus']['options'] += ' -DTRACE='+trace
+    cfg['simulator']['icarus']['vvp_opt'] += ' +trace=' + trace
 
 if gui:
     cfg['simulator']['icarus']['gui'] += 'cd $(TEST_DIR) && gtkwave ' + cfg['simulation']['testbench_name'] + '.vcd &'
@@ -109,6 +115,10 @@ if gui:
 else:
     cfg['simulator']['xilinx']['xsim']['batch_or_gui'] = ' -runall '
 
+
+if trace:
+    cfg['simulator']['xilinx']['xvlog']['options'] += ' -DTRACE='+trace
+    cfg['simulator']['xilinx']['xsim']['options'] += ' +trace=' + trace
 
 
 

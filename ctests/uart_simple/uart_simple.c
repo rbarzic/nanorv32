@@ -25,6 +25,7 @@ void delay(uint32_t d) {
 
 
 int main(void) {
+
     uart_init(NRV32_UART0, NRV32_CLOCK_FREQ_HZ/TARGET_BAUD_RATE);
 
 

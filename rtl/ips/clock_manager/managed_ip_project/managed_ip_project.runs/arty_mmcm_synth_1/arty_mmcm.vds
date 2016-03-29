@@ -2,31 +2,31 @@
 # Vivado v2015.3 (64-bit)
 # SW Build 1368829 on Mon Sep 28 20:06:39 MDT 2015
 # IP Build 1367837 on Mon Sep 28 08:56:14 MDT 2015
-# Start of session at: Mon Nov 16 15:46:35 2015
-# Process ID: 2825
-# Current directory: /home/roba/perso/github/arty-designstart-cm0/ips/clock_manager/managed_ip_project/managed_ip_project.runs/arty_mmcm_synth_1
+# Start of session at: Mon Mar 21 13:42:11 2016
+# Process ID: 8786
+# Current directory: /home/roba/perso/github/nanorv32/rtl/ips/clock_manager/managed_ip_project/managed_ip_project.runs/arty_mmcm_synth_1
 # Command line: vivado -log arty_mmcm.vds -mode batch -messageDb vivado.pb -notrace -source arty_mmcm.tcl
-# Log file: /home/roba/perso/github/arty-designstart-cm0/ips/clock_manager/managed_ip_project/managed_ip_project.runs/arty_mmcm_synth_1/arty_mmcm.vds
-# Journal file: /home/roba/perso/github/arty-designstart-cm0/ips/clock_manager/managed_ip_project/managed_ip_project.runs/arty_mmcm_synth_1/vivado.jou
+# Log file: /home/roba/perso/github/nanorv32/rtl/ips/clock_manager/managed_ip_project/managed_ip_project.runs/arty_mmcm_synth_1/arty_mmcm.vds
+# Journal file: /home/roba/perso/github/nanorv32/rtl/ips/clock_manager/managed_ip_project/managed_ip_project.runs/arty_mmcm_synth_1/vivado.jou
 #-----------------------------------------------------------
 source arty_mmcm.tcl -notrace
 INFO: [IP_Flow 19-234] Refreshing IP repositories
 INFO: [IP_Flow 19-1704] No user IP repositories specified
 INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/opt/Xilinx/Vivado/2015.3/data/ip'.
-WARNING: [IP_Flow 19-3664] IP 'arty_mmcm' generated file not found '/home/roba/perso/github/arty-designstart-cm0/ips/clock_manager/arty_mmcm/arty_mmcm.dcp'. Please regenerate to continue.
-WARNING: [IP_Flow 19-3664] IP 'arty_mmcm' generated file not found '/home/roba/perso/github/arty-designstart-cm0/ips/clock_manager/arty_mmcm/arty_mmcm_stub.v'. Please regenerate to continue.
-WARNING: [IP_Flow 19-3664] IP 'arty_mmcm' generated file not found '/home/roba/perso/github/arty-designstart-cm0/ips/clock_manager/arty_mmcm/arty_mmcm_stub.vhdl'. Please regenerate to continue.
-WARNING: [IP_Flow 19-3664] IP 'arty_mmcm' generated file not found '/home/roba/perso/github/arty-designstart-cm0/ips/clock_manager/arty_mmcm/arty_mmcm_sim_netlist.v'. Please regenerate to continue.
-WARNING: [IP_Flow 19-3664] IP 'arty_mmcm' generated file not found '/home/roba/perso/github/arty-designstart-cm0/ips/clock_manager/arty_mmcm/arty_mmcm_sim_netlist.vhdl'. Please regenerate to continue.
+WARNING: [IP_Flow 19-3664] IP 'arty_mmcm' generated file not found '/home/roba/perso/github/nanorv32/rtl/ips/clock_manager/arty_mmcm/arty_mmcm.dcp'. Please regenerate to continue.
+WARNING: [IP_Flow 19-3664] IP 'arty_mmcm' generated file not found '/home/roba/perso/github/nanorv32/rtl/ips/clock_manager/arty_mmcm/arty_mmcm_stub.v'. Please regenerate to continue.
+WARNING: [IP_Flow 19-3664] IP 'arty_mmcm' generated file not found '/home/roba/perso/github/nanorv32/rtl/ips/clock_manager/arty_mmcm/arty_mmcm_stub.vhdl'. Please regenerate to continue.
+WARNING: [IP_Flow 19-3664] IP 'arty_mmcm' generated file not found '/home/roba/perso/github/nanorv32/rtl/ips/clock_manager/arty_mmcm/arty_mmcm_sim_netlist.v'. Please regenerate to continue.
+WARNING: [IP_Flow 19-3664] IP 'arty_mmcm' generated file not found '/home/roba/perso/github/nanorv32/rtl/ips/clock_manager/arty_mmcm/arty_mmcm_sim_netlist.vhdl'. Please regenerate to continue.
 Command: synth_design -top arty_mmcm -part xc7k70tfbv676-1 -mode out_of_context
 Starting synth_design
 Attempting to get a license for feature 'Synthesis' and/or device 'xc7k70t'
 INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7k70t'
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 1041.238 ; gain = 171.945 ; free physical = 852 ; free virtual = 21534
+Starting RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 1041.242 ; gain = 171.945 ; free physical = 3926 ; free virtual = 18486
 ---------------------------------------------------------------------------------
-INFO: [Synth 8-638] synthesizing module 'arty_mmcm' [/home/roba/perso/github/arty-designstart-cm0/ips/clock_manager/arty_mmcm/arty_mmcm.v:69]
-INFO: [Synth 8-638] synthesizing module 'arty_mmcm_clk_wiz' [/home/roba/perso/github/arty-designstart-cm0/ips/clock_manager/arty_mmcm/arty_mmcm_clk_wiz.v:67]
+INFO: [Synth 8-638] synthesizing module 'arty_mmcm' [/home/roba/perso/github/nanorv32/rtl/ips/clock_manager/arty_mmcm/arty_mmcm.v:69]
+INFO: [Synth 8-638] synthesizing module 'arty_mmcm_clk_wiz' [/home/roba/perso/github/nanorv32/rtl/ips/clock_manager/arty_mmcm/arty_mmcm_clk_wiz.v:67]
 INFO: [Synth 8-638] synthesizing module 'IBUF' [/opt/Xilinx/Vivado/2015.3/scripts/rt/data/unisim_comp.v:14176]
 	Parameter CAPACITANCE bound to: DONT_CARE - type: string 
 	Parameter IBUF_DELAY_VALUE bound to: 0 - type: string 
@@ -41,7 +41,7 @@ INFO: [Synth 8-638] synthesizing module 'MMCME2_ADV' [/opt/Xilinx/Vivado/2015.3/
 	Parameter CLKFBOUT_USE_FINE_PS bound to: FALSE - type: string 
 	Parameter CLKIN1_PERIOD bound to: 10.000000 - type: float 
 	Parameter CLKIN2_PERIOD bound to: 0.000000 - type: float 
-	Parameter CLKOUT0_DIVIDE_F bound to: 20.000000 - type: float 
+	Parameter CLKOUT0_DIVIDE_F bound to: 25.000000 - type: float 
 	Parameter CLKOUT0_DUTY_CYCLE bound to: 0.500000 - type: float 
 	Parameter CLKOUT0_PHASE bound to: 0.000000 - type: float 
 	Parameter CLKOUT0_USE_FINE_PS bound to: FALSE - type: string 
@@ -86,10 +86,10 @@ INFO: [Synth 8-638] synthesizing module 'MMCME2_ADV' [/opt/Xilinx/Vivado/2015.3/
 INFO: [Synth 8-256] done synthesizing module 'MMCME2_ADV' (2#1) [/opt/Xilinx/Vivado/2015.3/scripts/rt/data/unisim_comp.v:20441]
 INFO: [Synth 8-638] synthesizing module 'BUFG' [/opt/Xilinx/Vivado/2015.3/scripts/rt/data/unisim_comp.v:607]
 INFO: [Synth 8-256] done synthesizing module 'BUFG' (3#1) [/opt/Xilinx/Vivado/2015.3/scripts/rt/data/unisim_comp.v:607]
-INFO: [Synth 8-256] done synthesizing module 'arty_mmcm_clk_wiz' (4#1) [/home/roba/perso/github/arty-designstart-cm0/ips/clock_manager/arty_mmcm/arty_mmcm_clk_wiz.v:67]
-INFO: [Synth 8-256] done synthesizing module 'arty_mmcm' (5#1) [/home/roba/perso/github/arty-designstart-cm0/ips/clock_manager/arty_mmcm/arty_mmcm.v:69]
+INFO: [Synth 8-256] done synthesizing module 'arty_mmcm_clk_wiz' (4#1) [/home/roba/perso/github/nanorv32/rtl/ips/clock_manager/arty_mmcm/arty_mmcm_clk_wiz.v:67]
+INFO: [Synth 8-256] done synthesizing module 'arty_mmcm' (5#1) [/home/roba/perso/github/nanorv32/rtl/ips/clock_manager/arty_mmcm/arty_mmcm.v:69]
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 1079.621 ; gain = 210.328 ; free physical = 812 ; free virtual = 21495
+Finished RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 1079.625 ; gain = 210.328 ; free physical = 3886 ; free virtual = 18446
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -99,7 +99,7 @@ Report Check Netlist:
 |1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
 +------+------------------+-------+---------+-------+------------------+
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1079.621 ; gain = 210.328 ; free physical = 812 ; free virtual = 21495
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1079.625 ; gain = 210.328 ; free physical = 3886 ; free virtual = 18446
 ---------------------------------------------------------------------------------
 INFO: [Netlist 29-17] Analyzing 2 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
@@ -108,44 +108,44 @@ INFO: [Project 1-570] Preparing netlist for logic optimization
 
 Processing XDC Constraints
 Initializing timing engine
-Parsing XDC File [/home/roba/perso/github/arty-designstart-cm0/ips/clock_manager/arty_mmcm/arty_mmcm_ooc.xdc] for cell 'inst'
-Finished Parsing XDC File [/home/roba/perso/github/arty-designstart-cm0/ips/clock_manager/arty_mmcm/arty_mmcm_ooc.xdc] for cell 'inst'
-Parsing XDC File [/home/roba/perso/github/arty-designstart-cm0/ips/clock_manager/arty_mmcm/arty_mmcm_board.xdc] for cell 'inst'
-Finished Parsing XDC File [/home/roba/perso/github/arty-designstart-cm0/ips/clock_manager/arty_mmcm/arty_mmcm_board.xdc] for cell 'inst'
-Parsing XDC File [/home/roba/perso/github/arty-designstart-cm0/ips/clock_manager/arty_mmcm/arty_mmcm.xdc] for cell 'inst'
-Finished Parsing XDC File [/home/roba/perso/github/arty-designstart-cm0/ips/clock_manager/arty_mmcm/arty_mmcm.xdc] for cell 'inst'
-INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [/home/roba/perso/github/arty-designstart-cm0/ips/clock_manager/arty_mmcm/arty_mmcm.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/arty_mmcm_propImpl.xdc].
+Parsing XDC File [/home/roba/perso/github/nanorv32/rtl/ips/clock_manager/arty_mmcm/arty_mmcm_ooc.xdc] for cell 'inst'
+Finished Parsing XDC File [/home/roba/perso/github/nanorv32/rtl/ips/clock_manager/arty_mmcm/arty_mmcm_ooc.xdc] for cell 'inst'
+Parsing XDC File [/home/roba/perso/github/nanorv32/rtl/ips/clock_manager/arty_mmcm/arty_mmcm_board.xdc] for cell 'inst'
+Finished Parsing XDC File [/home/roba/perso/github/nanorv32/rtl/ips/clock_manager/arty_mmcm/arty_mmcm_board.xdc] for cell 'inst'
+Parsing XDC File [/home/roba/perso/github/nanorv32/rtl/ips/clock_manager/arty_mmcm/arty_mmcm.xdc] for cell 'inst'
+Finished Parsing XDC File [/home/roba/perso/github/nanorv32/rtl/ips/clock_manager/arty_mmcm/arty_mmcm.xdc] for cell 'inst'
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [/home/roba/perso/github/nanorv32/rtl/ips/clock_manager/arty_mmcm/arty_mmcm.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/arty_mmcm_propImpl.xdc].
 Resolution: To avoid this warning, move constraints listed in [.Xil/arty_mmcm_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
 INFO: [Timing 38-2] Deriving generated clocks
-Parsing XDC File [/home/roba/perso/github/arty-designstart-cm0/ips/clock_manager/managed_ip_project/managed_ip_project.runs/arty_mmcm_synth_1/dont_touch.xdc]
-Finished Parsing XDC File [/home/roba/perso/github/arty-designstart-cm0/ips/clock_manager/managed_ip_project/managed_ip_project.runs/arty_mmcm_synth_1/dont_touch.xdc]
+Parsing XDC File [/home/roba/perso/github/nanorv32/rtl/ips/clock_manager/managed_ip_project/managed_ip_project.runs/arty_mmcm_synth_1/dont_touch.xdc]
+Finished Parsing XDC File [/home/roba/perso/github/nanorv32/rtl/ips/clock_manager/managed_ip_project/managed_ip_project.runs/arty_mmcm_synth_1/dont_touch.xdc]
 Completed Processing XDC Constraints
 
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00 . Memory (MB): peak = 1321.770 ; gain = 0.000 ; free physical = 618 ; free virtual = 21331
+Constraint Validation Runtime : Time (s): cpu = 00:00:00.02 ; elapsed = 00:00:00.02 . Memory (MB): peak = 1320.773 ; gain = 0.000 ; free physical = 3697 ; free virtual = 18286
 INFO: Launching helper process for spawning children vivado processes
-INFO: Helper process launched with PID 2838 
+INFO: Helper process launched with PID 8805 
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:12 ; elapsed = 00:00:12 . Memory (MB): peak = 1321.770 ; gain = 452.477 ; free physical = 814 ; free virtual = 21517
+Finished Constraint Validation : Time (s): cpu = 00:00:12 ; elapsed = 00:00:12 . Memory (MB): peak = 1320.773 ; gain = 451.477 ; free physical = 3695 ; free virtual = 18284
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7k70tfbv676-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:12 ; elapsed = 00:00:12 . Memory (MB): peak = 1321.770 ; gain = 452.477 ; free physical = 814 ; free virtual = 21517
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:12 ; elapsed = 00:00:12 . Memory (MB): peak = 1320.773 ; gain = 451.477 ; free physical = 3695 ; free virtual = 18284
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
 ---------------------------------------------------------------------------------
 Applied set_property DONT_TOUCH = true for inst. (constraint file  auto generated constraint, line ).
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:12 ; elapsed = 00:00:12 . Memory (MB): peak = 1321.770 ; gain = 452.477 ; free physical = 814 ; free virtual = 21517
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:12 ; elapsed = 00:00:12 . Memory (MB): peak = 1320.773 ; gain = 451.477 ; free physical = 3695 ; free virtual = 18284
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:12 ; elapsed = 00:00:13 . Memory (MB): peak = 1321.770 ; gain = 452.477 ; free physical = 810 ; free virtual = 21514
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:12 ; elapsed = 00:00:12 . Memory (MB): peak = 1320.773 ; gain = 451.477 ; free physical = 3691 ; free virtual = 18280
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -176,14 +176,14 @@ BRAMs: 270 (col length: RAMB18 80 RAMB36 40)
 ---------------------------------------------------------------------------------
 Finished Part Resource Summary
 ---------------------------------------------------------------------------------
-Start Parallel Synthesis Optimization  : Time (s): cpu = 00:00:12 ; elapsed = 00:00:13 . Memory (MB): peak = 1321.770 ; gain = 452.477 ; free physical = 810 ; free virtual = 21514
+Start Parallel Synthesis Optimization  : Time (s): cpu = 00:00:12 ; elapsed = 00:00:13 . Memory (MB): peak = 1320.773 ; gain = 451.477 ; free physical = 3691 ; free virtual = 18280
 ---------------------------------------------------------------------------------
 Start Cross Boundary Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Cross Boundary Optimization : Time (s): cpu = 00:00:13 ; elapsed = 00:00:13 . Memory (MB): peak = 1321.770 ; gain = 452.477 ; free physical = 804 ; free virtual = 21507
+Finished Cross Boundary Optimization : Time (s): cpu = 00:00:12 ; elapsed = 00:00:13 . Memory (MB): peak = 1320.773 ; gain = 451.477 ; free physical = 3683 ; free virtual = 18272
 ---------------------------------------------------------------------------------
-Finished Parallel Reinference  : Time (s): cpu = 00:00:13 ; elapsed = 00:00:13 . Memory (MB): peak = 1321.770 ; gain = 452.477 ; free physical = 804 ; free virtual = 21507
+Finished Parallel Reinference  : Time (s): cpu = 00:00:12 ; elapsed = 00:00:13 . Memory (MB): peak = 1320.773 ; gain = 451.477 ; free physical = 3683 ; free virtual = 18272
 
 Report RTL Partitions: 
 +-+--------------+------------+----------+
@@ -194,9 +194,9 @@ Report RTL Partitions:
 Start Area Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Area Optimization : Time (s): cpu = 00:00:13 ; elapsed = 00:00:13 . Memory (MB): peak = 1321.770 ; gain = 452.477 ; free physical = 795 ; free virtual = 21498
+Finished Area Optimization : Time (s): cpu = 00:00:12 ; elapsed = 00:00:13 . Memory (MB): peak = 1320.773 ; gain = 451.477 ; free physical = 3679 ; free virtual = 18268
 ---------------------------------------------------------------------------------
-Finished Parallel Area Optimization  : Time (s): cpu = 00:00:13 ; elapsed = 00:00:13 . Memory (MB): peak = 1321.770 ; gain = 452.477 ; free physical = 795 ; free virtual = 21498
+Finished Parallel Area Optimization  : Time (s): cpu = 00:00:12 ; elapsed = 00:00:13 . Memory (MB): peak = 1320.773 ; gain = 451.477 ; free physical = 3679 ; free virtual = 18268
 
 Report RTL Partitions: 
 +-+--------------+------------+----------+
@@ -210,24 +210,24 @@ Start Timing Optimization
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:20 ; elapsed = 00:00:20 . Memory (MB): peak = 1339.762 ; gain = 470.469 ; free physical = 602 ; free virtual = 21282
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:19 ; elapsed = 00:00:19 . Memory (MB): peak = 1339.773 ; gain = 470.477 ; free physical = 3652 ; free virtual = 18215
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:20 ; elapsed = 00:00:20 . Memory (MB): peak = 1339.762 ; gain = 470.469 ; free physical = 602 ; free virtual = 21282
+Finished Timing Optimization : Time (s): cpu = 00:00:19 ; elapsed = 00:00:19 . Memory (MB): peak = 1339.773 ; gain = 470.477 ; free physical = 3652 ; free virtual = 18215
 ---------------------------------------------------------------------------------
-Finished Parallel Timing Optimization  : Time (s): cpu = 00:00:20 ; elapsed = 00:00:20 . Memory (MB): peak = 1339.762 ; gain = 470.469 ; free physical = 602 ; free virtual = 21282
+Finished Parallel Timing Optimization  : Time (s): cpu = 00:00:19 ; elapsed = 00:00:19 . Memory (MB): peak = 1339.773 ; gain = 470.477 ; free physical = 3652 ; free virtual = 18215
 
 Report RTL Partitions: 
 +-+--------------+------------+----------+
 | |RTL Partition |Replication |Instances |
 +-+--------------+------------+----------+
 +-+--------------+------------+----------+
-Finished Parallel Synthesis Optimization  : Time (s): cpu = 00:00:20 ; elapsed = 00:00:20 . Memory (MB): peak = 1339.762 ; gain = 470.469 ; free physical = 602 ; free virtual = 21282
+Finished Parallel Synthesis Optimization  : Time (s): cpu = 00:00:19 ; elapsed = 00:00:19 . Memory (MB): peak = 1339.773 ; gain = 470.477 ; free physical = 3652 ; free virtual = 18215
 ---------------------------------------------------------------------------------
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:20 ; elapsed = 00:00:20 . Memory (MB): peak = 1348.777 ; gain = 479.484 ; free physical = 594 ; free virtual = 21273
+Finished Technology Mapping : Time (s): cpu = 00:00:19 ; elapsed = 00:00:19 . Memory (MB): peak = 1348.789 ; gain = 479.492 ; free physical = 3644 ; free virtual = 18207
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -251,7 +251,7 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:20 ; elapsed = 00:00:20 . Memory (MB): peak = 1348.777 ; gain = 479.484 ; free physical = 591 ; free virtual = 21271
+Finished IO Insertion : Time (s): cpu = 00:00:20 ; elapsed = 00:00:20 . Memory (MB): peak = 1348.789 ; gain = 479.492 ; free physical = 3644 ; free virtual = 18207
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -264,7 +264,7 @@ Report Check Netlist:
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:20 ; elapsed = 00:00:20 . Memory (MB): peak = 1348.777 ; gain = 479.484 ; free physical = 591 ; free virtual = 21271
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:20 ; elapsed = 00:00:20 . Memory (MB): peak = 1348.789 ; gain = 479.492 ; free physical = 3644 ; free virtual = 18207
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -276,25 +276,25 @@ Report RTL Partitions:
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:20 ; elapsed = 00:00:20 . Memory (MB): peak = 1348.777 ; gain = 479.484 ; free physical = 591 ; free virtual = 21271
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:20 ; elapsed = 00:00:20 . Memory (MB): peak = 1348.789 ; gain = 479.492 ; free physical = 3644 ; free virtual = 18207
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:00:20 ; elapsed = 00:00:20 . Memory (MB): peak = 1348.777 ; gain = 479.484 ; free physical = 591 ; free virtual = 21271
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:20 ; elapsed = 00:00:20 . Memory (MB): peak = 1348.789 ; gain = 479.492 ; free physical = 3644 ; free virtual = 18207
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:20 ; elapsed = 00:00:20 . Memory (MB): peak = 1348.777 ; gain = 479.484 ; free physical = 591 ; free virtual = 21271
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:20 ; elapsed = 00:00:20 . Memory (MB): peak = 1348.789 ; gain = 479.492 ; free physical = 3644 ; free virtual = 18207
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:00:20 ; elapsed = 00:00:20 . Memory (MB): peak = 1348.777 ; gain = 479.484 ; free physical = 591 ; free virtual = 21271
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:20 ; elapsed = 00:00:20 . Memory (MB): peak = 1348.789 ; gain = 479.492 ; free physical = 3644 ; free virtual = 18207
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -324,24 +324,24 @@ Report Instance Areas:
 |2     |  inst   |arty_mmcm_clk_wiz |     5|
 +------+---------+------------------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:20 ; elapsed = 00:00:20 . Memory (MB): peak = 1348.777 ; gain = 479.484 ; free physical = 591 ; free virtual = 21271
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:20 ; elapsed = 00:00:20 . Memory (MB): peak = 1348.789 ; gain = 479.492 ; free physical = 3644 ; free virtual = 18207
 ---------------------------------------------------------------------------------
 Synthesis finished with 0 errors, 0 critical warnings and 0 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:15 ; elapsed = 00:00:15 . Memory (MB): peak = 1348.777 ; gain = 119.391 ; free physical = 590 ; free virtual = 21269
-Synthesis Optimization Complete : Time (s): cpu = 00:00:20 ; elapsed = 00:00:21 . Memory (MB): peak = 1348.777 ; gain = 479.484 ; free physical = 590 ; free virtual = 21269
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:15 ; elapsed = 00:00:15 . Memory (MB): peak = 1348.789 ; gain = 120.398 ; free physical = 3642 ; free virtual = 18205
+Synthesis Optimization Complete : Time (s): cpu = 00:00:20 ; elapsed = 00:00:20 . Memory (MB): peak = 1348.789 ; gain = 479.492 ; free physical = 3642 ; free virtual = 18205
 INFO: [Project 1-571] Translating synthesized netlist
 INFO: [Netlist 29-17] Analyzing 2 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
-Parsing XDC File [/home/roba/perso/github/arty-designstart-cm0/ips/clock_manager/arty_mmcm/arty_mmcm_ooc.xdc] for cell 'inst'
-Finished Parsing XDC File [/home/roba/perso/github/arty-designstart-cm0/ips/clock_manager/arty_mmcm/arty_mmcm_ooc.xdc] for cell 'inst'
-Parsing XDC File [/home/roba/perso/github/arty-designstart-cm0/ips/clock_manager/arty_mmcm/arty_mmcm_board.xdc] for cell 'inst'
-Finished Parsing XDC File [/home/roba/perso/github/arty-designstart-cm0/ips/clock_manager/arty_mmcm/arty_mmcm_board.xdc] for cell 'inst'
-Parsing XDC File [/home/roba/perso/github/arty-designstart-cm0/ips/clock_manager/arty_mmcm/arty_mmcm.xdc] for cell 'inst'
-INFO: [Timing 38-35] Done setting XDC timing constraints. [/home/roba/perso/github/arty-designstart-cm0/ips/clock_manager/arty_mmcm/arty_mmcm.xdc:56]
-INFO: [Timing 38-2] Deriving generated clocks [/home/roba/perso/github/arty-designstart-cm0/ips/clock_manager/arty_mmcm/arty_mmcm.xdc:56]
-get_clocks: Time (s): cpu = 00:00:08 ; elapsed = 00:00:08 . Memory (MB): peak = 1693.281 ; gain = 344.500 ; free physical = 243 ; free virtual = 20932
-Finished Parsing XDC File [/home/roba/perso/github/arty-designstart-cm0/ips/clock_manager/arty_mmcm/arty_mmcm.xdc] for cell 'inst'
+Parsing XDC File [/home/roba/perso/github/nanorv32/rtl/ips/clock_manager/arty_mmcm/arty_mmcm_ooc.xdc] for cell 'inst'
+Finished Parsing XDC File [/home/roba/perso/github/nanorv32/rtl/ips/clock_manager/arty_mmcm/arty_mmcm_ooc.xdc] for cell 'inst'
+Parsing XDC File [/home/roba/perso/github/nanorv32/rtl/ips/clock_manager/arty_mmcm/arty_mmcm_board.xdc] for cell 'inst'
+Finished Parsing XDC File [/home/roba/perso/github/nanorv32/rtl/ips/clock_manager/arty_mmcm/arty_mmcm_board.xdc] for cell 'inst'
+Parsing XDC File [/home/roba/perso/github/nanorv32/rtl/ips/clock_manager/arty_mmcm/arty_mmcm.xdc] for cell 'inst'
+INFO: [Timing 38-35] Done setting XDC timing constraints. [/home/roba/perso/github/nanorv32/rtl/ips/clock_manager/arty_mmcm/arty_mmcm.xdc:56]
+INFO: [Timing 38-2] Deriving generated clocks [/home/roba/perso/github/nanorv32/rtl/ips/clock_manager/arty_mmcm/arty_mmcm.xdc:56]
+get_clocks: Time (s): cpu = 00:00:08 ; elapsed = 00:00:08 . Memory (MB): peak = 1693.293 ; gain = 344.500 ; free physical = 3338 ; free virtual = 17915
+Finished Parsing XDC File [/home/roba/perso/github/nanorv32/rtl/ips/clock_manager/arty_mmcm/arty_mmcm.xdc] for cell 'inst'
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
@@ -349,6 +349,6 @@ No Unisim elements were transformed.
 INFO: [Common 17-83] Releasing license: Synthesis
 30 Infos, 5 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:00:28 ; elapsed = 00:00:28 . Memory (MB): peak = 1693.281 ; gain = 752.766 ; free physical = 242 ; free virtual = 20931
-report_utilization: Time (s): cpu = 00:00:00.08 ; elapsed = 00:00:00.11 . Memory (MB): peak = 1725.301 ; gain = 0.000 ; free physical = 240 ; free virtual = 20929
-INFO: [Common 17-206] Exiting Vivado at Mon Nov 16 15:47:10 2015...
+synth_design: Time (s): cpu = 00:00:27 ; elapsed = 00:00:28 . Memory (MB): peak = 1693.293 ; gain = 752.773 ; free physical = 3337 ; free virtual = 17914
+report_utilization: Time (s): cpu = 00:00:00.09 ; elapsed = 00:00:00.13 . Memory (MB): peak = 1725.312 ; gain = 0.000 ; free physical = 3333 ; free virtual = 17911
+INFO: [Common 17-206] Exiting Vivado at Mon Mar 21 13:42:45 2016...
