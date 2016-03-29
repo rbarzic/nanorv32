@@ -248,9 +248,9 @@ spec['nanorv32']['rvc_rv32']['impl']['inst_type']['CS2-type'] = {
     'regfile' : {
         'write' : 'yes',
         'source' : 'alu',
-        'port1'  : 'rs1_c', # Added for RVC support
-        'port2'  : 'rs2_c', # Added for RVC support
-        'portw'  : 'rd_c',  # Added for RVC support
+        'port1'  : 'rs1_c_p', # Added for RVC support
+        'port2'  : 'rs2_c_p', # Added for RVC support
+        'portw'  : 'rs1_c_p',  # Added for RVC support
     },
     'datamem' : {
         'write' : 'no',
@@ -309,6 +309,8 @@ spec['nanorv32']['rvc_rv32']['impl']['inst']['c.jalr'] = {
     'regfile' : {
         'write' : 'yes',
         'source' : 'pc_exe_plus_2',
+        'portw'  : 'c_x1',  # Added for RVC support
+        'write' : 'yes',
     },
     'datamem' : {
         'write' : 'no',
@@ -442,8 +444,6 @@ spec['nanorv32']['rvc_rv32']['impl']['inst']['c.jal'] = {
     'regfile' : {
         'write' : 'yes',
         'source' : 'pc_exe_plus_2',
-        'port1'  : 'rs1', # Added for RVC support
-        'port2'  : 'rs2', # Added for RVC support
         'portw'  : 'c_x1',  # Added for RVC support
     },
 }
@@ -477,7 +477,7 @@ spec['nanorv32']['rvc_rv32']['impl']['inst']['c.add4spn'] = {
         'portw'  : 'rd_c_p', # Added for RVC support
     },
     'datamem' : {
-        'write' : 'yes',
+        'write' : 'no',
         'read' : 'no',
         'size_write' : 'word',
     },
@@ -504,6 +504,7 @@ spec['nanorv32']['rvc_rv32']['impl']['inst']['c.lw'] = {
 spec['nanorv32']['rvc_rv32']['impl']['inst']['c.sw'] = {
      'alu' : {
         'op' : 'add',
+        'portb' : 'rs1',
         'portb' : 'cimm5_cl',
     },
     'regfile' : {
@@ -521,10 +522,11 @@ spec['nanorv32']['rvc_rv32']['impl']['inst']['c.sw'] = {
 spec['nanorv32']['rvc_rv32']['impl']['inst']['c.andi'] = {
      'alu' : {
         'op' : 'and',
+        'porta' : 'rs1',
         'portb' : 'cimm5',
     },
     'regfile' : {
-        'write' : 'no',
+        'write' : 'yes',
         'port1'  : 'rs1_c_p', # Added for RVC support
         'portw'  : 'rs1_c_p', # Added for RVC support
     },
@@ -536,6 +538,7 @@ spec['nanorv32']['rvc_rv32']['impl']['inst']['c.andi'] = {
 spec['nanorv32']['rvc_rv32']['impl']['inst']['c.srai'] = {
      'alu' : {
         'op' : 'arshift',
+        'porta' : 'rs1',
         'portb' : 'cimm5',
     },
     'regfile' : {
@@ -551,11 +554,12 @@ spec['nanorv32']['rvc_rv32']['impl']['inst']['c.srai'] = {
 spec['nanorv32']['rvc_rv32']['impl']['inst']['c.srli'] = {
      'alu' : {
         'op' : 'rshift',
+        'porta' : 'rs1',
         'portb' : 'cimm5',
          
     },
     'regfile' : {
-        'write' : 'no',
+        'write' : 'yes',
         'port1'  : 'rs1_c_p', # Added for RVC support
         'portw'  : 'rs1_c_p', # Added for RVC support
     },

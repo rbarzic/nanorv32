@@ -5,6 +5,7 @@ import inst_decod as id
 import nanorv32_simu as ns
 import argparse
 import ctypes as ct
+import re
 
 
 #@begin[py_csr_address]
@@ -399,12 +400,15 @@ Put description of application here
                         help='trace file', default=None)
     parser.add_argument('--start_address', action='store', dest='start_address',
                         help='PC start address', default=0)
+    parser.add_argument('--compare', action='store', dest='compare',
+                        help='trace file to compare', default=None)
     parser.add_argument('--version', action='version', version='%(prog)s 0.1')
     return parser.parse_args()
     
     
 if __name__ == '__main__':
 
+    line_num = 0
     args= get_args()
     nrv = NanoRV32Core()
     if args.hex2 != "":
@@ -417,13 +421,42 @@ if __name__ == '__main__':
         trace = open(args.trace,'w')
     else:
         trace = None
+    if args.compare is not None:
+        compare = open(args.compare,'r')
+        compare_line =compare.readlines()
+    else:
+        compare = None
 
 
     nrv.pc = args.start_address;
     while True:
         inst = nrv.get_instruction(nrv.pc)
+        short_inst = bitfield(inst,offset=0,size=32)
         if trace:
-            trace.write("PC : 0x{:08x} I : 0x{:08x} : ".format(nrv.pc,inst))
+            trace.write("PC : 0x{:08x} I : 0x{:08x} : ".format(nrv.pc,short_inst))
+        if compare:
+           line = compare_line[line_num]
+           extracted = line.split(':', 4)
+           rtl_pc = extracted[1].replace(" ","").replace("I","")
+           rtl_inst_tmp = extracted[2].replace(" ","").replace("0x","")
+           if (bitfield(inst,offset=0,size=2) != 3):
+              model_inst = '0x%08x' % bitfield(short_inst,offset=0,size=16)
+              rtl_inst =  "0x0000" + rtl_inst_tmp[-4:]
+           else :
+              model_inst = '0x%08x' % short_inst
+              rtl_inst = "0x" + rtl_inst_tmp
+           model_pc = '0x%08x' % nrv.pc
+           if rtl_pc != model_pc:
+                print "\n-I- TEST FAILED (pc compare fail) : RTL PC : ", rtl_pc, ", Model PC " ,model_pc,", line", line_num
+                print "\n"
+                if trace:
+                    trace.close()
+                sys.exit()
+           if model_inst != rtl_inst:
+                print "\n-I- TEST FAILED (inst compare fail) : RTL INSTR : 0x{:08x}, Model INSTR :0x{:08x}, line {} \n", rtl_inst,model_inst,line_num
+                if trace:
+                    trace.close()
+                sys.exit()
         if nrv.pc == 0x00000100:
             if nrv.rf[10] == 0xCAFFE000: #x10/a0
                 print
@@ -452,12 +485,11 @@ if __name__ == '__main__':
             if c == 10:
                 print
 
-
         nrv.new_instruction(inst)
-
         inst_str =  nrv.match_instruction(inst)
+        inst_str2 = inst_str.replace('c.', '')
         if args.trace:
-            trace.write(inst_str.ljust(8))
+            trace.write(inst_str2.ljust(8))
         if inst_str != 'illegal_instruction':
             _, new_pc,txt  = nrv.execute_instruction(inst_str)
             if trace:
@@ -468,3 +500,21 @@ if __name__ == '__main__':
             if trace:
                 trace.close()
             sys.exit("-E- Illegall instruction found !")
+        if (compare) :
+           test = re.search(r"RF\[(\S+)(\s+)\] <=", txt)
+           test2 = re.search(r"RF\[(\S+)(\s+)\] <=", line)
+           test3 = re.search(r"<= 0x(\S+) ", txt)
+           test4 = re.search(r"<= 0x(\S+) ", line)
+           if not test or not test2:
+             if test[1] != test2[1]:
+                 print "\n-I- TEST FAILED (reg_dest) : RTL RD :" + test[1] + ", Model RD : " + test2[1] + " line " + line_num, " \n"
+                 if trace:
+                     trace.close()
+                 sys.exit()
+           if not test3 or not test4:
+             if test3 != test4:
+                 print "\n-I- TEST FAILED (reg_update) : RTL RD val : " + test3 + " Model RD val: " + test4 + " line " + line_num + ", \n"
+                 if trace:
+                     trace.close()
+                 sys.exit()
+           line_num = line_num +1

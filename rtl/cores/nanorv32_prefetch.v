@@ -103,10 +103,11 @@ module nanorv32_prefetch (/*AUTOARG*/
    reg  [2:0] wr_pt_r , rd_pt_r;
    wire  [3:0] wr_pt_r_plus1 = wr_pt_r + 1;
    wire  [3:0] wr_pt_r_plus2 = wr_pt_r + 2;
+   wire  [3:0] wr_pt_r_plus3 = wr_pt_r + 3;
    wire  [3:0] rd_pt_r_plus1 = rd_pt_r + 1;
    wire  [3:0] rd_pt_r_plus2 = rd_pt_r + 2;
    reg fifo_full_reg;
-   wire fifo_full = wr_pt_r_plus2[2:0] == rd_pt_r[2:0] & pstate_r != NANORV32_PSTATE_BRANCH & write_data;
+   wire fifo_full = (wr_pt_r_plus2[2:0] == rd_pt_r[2:0] | wr_pt_r_plus3[2:0] == rd_pt_r[2:0]) & pstate_r != NANORV32_PSTATE_BRANCH & write_data;
    wire fifo_empty = (wr_pt_r[2:0] == rd_pt_r[2:0] | (wr_pt_r[2:0] == rd_pt_r_plus1[2:0]) & is_32) & pstate_r != NANORV32_PSTATE_BRANCH & ~fifo_full_reg;
    reg  [15:0] iq [0:7];
    wire inst_ret = (!(stall_exe | force_stall_reset));
