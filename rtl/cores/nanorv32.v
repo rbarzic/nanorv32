@@ -671,7 +671,7 @@ module nanorv32 (/*AUTOARG*/
            // pc - but once we have fetch the new instruction, we need to start
            // fetching  the n+1 instruction
            // Fixme - this may not be valid if there is some wait-state
-           pc_next = output_new_pc  ? alu_res_res & 32'hFFFFFFFE : (is_32 ? (pc_fetch_r + 4) : (pc_fetch_r + 2));
+           pc_next = output_new_pc  ? alu_add_res & 32'hFFFFFFFE : (is_32 ? (pc_fetch_r + 4) : (pc_fetch_r + 2));
 
            // We cancel the branch if we detect a "reti"
            // while in interrupt state
