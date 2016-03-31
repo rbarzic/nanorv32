@@ -262,7 +262,7 @@ module tb_nanorv32;
   reg [31:0]    fifo_cur_time[7:0];         
   reg [31:0]    fifo_rd[7:0]  ;            
   reg [7:0]     fifo_write_rd;         
-   reg [1024:0] trace_filename;
+   reg [1024:0] trace_filename = "trace.txt";
 
    task trace;
       integer dummy;

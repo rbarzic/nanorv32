@@ -92,7 +92,7 @@ main ()
   REG   int             Run_Index;
   REG   int             Number_Of_Runs;
 
-  dhry_uart_init();
+//  dhry_uart_init();
 
   /* Initializations */
 
