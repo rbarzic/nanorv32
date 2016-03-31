@@ -15,7 +15,7 @@ steps = ["{cc}_compile",
          "{simulator}_{target}_elab",
          "{simulator}_{target}_sim",
 ]
-
+c_only_steps = ["{cc}_compile"]
 
 tpl_verilog_parameter = "VERILOG_PARAMETER += +{var_name_lc}={val}\n"
 tpl_make_variable     = "{var_name_uc}={val}\n"
@@ -144,6 +144,10 @@ A simulation launcher for the Nanorv32 project
                         default='rtl',
                         help='Simulation type (rtl, sdf,...)')
 
+    parser.add_argument('-c', action='store_true', dest='compile_only',
+                        default=False,
+                        help='Run only C compilation')
+
     parser.add_argument('-s', '--simulator', action='store', dest='simulator',
                         default='icarus',
                         choices = ['icarus','xilinx','pysim'],
@@ -154,11 +158,15 @@ A simulation launcher for the Nanorv32 project
                         default='gcc',
                         choices = ['gcc','llvm'],
 
-                        help='Select simulator (iverilog, xilinx(xlog),...)')
+                        help='Select C compiler')
 
     parser.add_argument('--noexec', action='store_true', dest='noexec',
                         default=False,
                         help='Do not execute the command')
+
+    parser.add_argument('-f', action='store_true', dest='target_fpga',
+                        default=False,
+                        help='Define FPGA=1 for C compilation (mainly to use Uart output for printf ) - Likely to be used with -c')
 
 
     parser.add_argument(dest='tests', metavar='tests', nargs='*',
@@ -185,6 +193,7 @@ if __name__ == '__main__':
     global_args['noexec'] = args.noexec
     global_args['gui'] = args.gui
     global_args['logging'] = args.logging
+    global_args['target_fpga'] = args.target_fpga
 
 
     # main loop over tests
@@ -242,7 +251,7 @@ if __name__ == '__main__':
         local_opts = av.AutoVivification()
 
         if os.path.isfile(opt_file):
-            execfile(opt_file, {}, {"cfg": local_opts})
+            execfile(opt_file, global_args, {"cfg": local_opts})
 
         # We merge (with eventually override) all the definitions
         merge_dict2(default_opts, local_opts)
@@ -339,7 +348,11 @@ if __name__ == '__main__':
 
         # Now, we are ready to launch the various jobs
         # We build the Makefile targets based on c compiler and verilator selections
-        final_step_list = [s.format(**global_args) for s in steps]
+        if args.compile_only:
+            current_steps = c_only_steps
+        else:
+            current_steps = steps
+        final_step_list = [s.format(**global_args) for s in current_steps]
         #pp.pprint(final_step_list)
 
         for s in final_step_list:

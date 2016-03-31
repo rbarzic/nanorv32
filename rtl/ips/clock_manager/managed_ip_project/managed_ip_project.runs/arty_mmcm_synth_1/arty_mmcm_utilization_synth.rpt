@@ -1,7 +1,7 @@
 Copyright 1986-2015 Xilinx, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2015.3 (lin64) Build 1368829 Mon Sep 28 20:06:39 MDT 2015
-| Date         : Mon Nov 16 15:47:09 2015
+| Date         : Mon Mar 21 13:42:44 2016
 | Host         : roba-OptiPlex-7010 running 64-bit Ubuntu 15.04
 | Command      : report_utilization -file arty_mmcm_utilization_synth.rpt -pb arty_mmcm_utilization_synth.pb
 | Design       : arty_mmcm

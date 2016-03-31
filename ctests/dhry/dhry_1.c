@@ -28,7 +28,7 @@ char            Ch_1_Glob,
 int             Arr_1_Glob [50];
 int             Arr_2_Glob [50] [50];
 
-extern int printk(const char *format, ...);
+extern int printf(const char *format, ...);
 extern char     *malloc ();
 Enumeration     Func_1 ();
   /* forward declaration necessary since Enumeration may not simply be int */
@@ -74,6 +74,7 @@ long            Begin_Insn,
 
 /* end of variables for time measurement */
 
+extern  dhry_uart_init(void);
 
 main ()
 /*****/
@@ -90,6 +91,8 @@ main ()
         Str_30          Str_2_Loc;
   REG   int             Run_Index;
   REG   int             Number_Of_Runs;
+
+//  dhry_uart_init();
 
   /* Initializations */
 
@@ -110,9 +113,9 @@ main ()
         /* Warning: With 16-Bit processors and Number_Of_Runs > 32000,  */
         /* overflow may occur for this array element.                   */
 
-  printk ("\n");
-  printk ("Dhrystone Benchmark, Version 2.1 (Language: C)\n");
-  printk ("\n");
+  printf ("\n");
+  printf ("Dhrystone Benchmark, Version 2.1 (Language: C)\n");
+  printf ("\n");
   if (Reg)
   {
     printf ("Program compiled with 'register' attribute\n");
@@ -420,9 +423,3 @@ register int    l;
         while (l--) *d++ = *s++;
 }
 #endif
-
-
-
-
-
-

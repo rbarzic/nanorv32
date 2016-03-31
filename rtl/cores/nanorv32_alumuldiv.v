@@ -29,20 +29,22 @@
 //****************************************************************************/
 module nanorv32_alumuldiv (/*AUTOARG*/
    // Outputs
-   alu_res, alu_cond, div_ready,
+   alu_res, alu_add_res, alu_cond, div_ready,
    // Inputs
-   alu_porta, alu_portb, alu_op_sel, clk, rst_n
+   alu_porta, alu_portb, alu_op_sel, interlock, clk, rst_n
    );
 
    `include "nanorv32_parameters.v"
    input [NANORV32_DATA_MSB:0] alu_porta;
    input [NANORV32_DATA_MSB:0] alu_portb;
    input [NANORV32_MUX_SEL_ALU_OP_MSB:0] alu_op_sel;
+   input                       interlock;
    input                       clk;
    input                       rst_n;
    //input [NANORV32_MUX_SEL_ALU_COND_MSB:0] alu_cond_sel;
 
    output [NANORV32_DATA_MSB:0]            alu_res;
+   output [NANORV32_DATA_MSB:0]            alu_add_res; // "Fast" path for address computation
    output                                  alu_cond;
    output                                  div_ready;
 
@@ -68,10 +70,10 @@ module nanorv32_alumuldiv (/*AUTOARG*/
                               alu_op_sel == NANORV32_MUX_SEL_ALU_OP_MULH |
                               alu_op_sel == NANORV32_MUX_SEL_ALU_OP_MULHU |
                               alu_op_sel == NANORV32_MUX_SEL_ALU_OP_MULHSU;
-   assign        div_occuring = alu_op_sel == NANORV32_MUX_SEL_ALU_OP_DIV  |
+   assign      div_occuring = (alu_op_sel == NANORV32_MUX_SEL_ALU_OP_DIV  |
                               alu_op_sel == NANORV32_MUX_SEL_ALU_OP_DIVU |
                               alu_op_sel == NANORV32_MUX_SEL_ALU_OP_REM  |
-                              alu_op_sel == NANORV32_MUX_SEL_ALU_OP_REMU;
+                              alu_op_sel == NANORV32_MUX_SEL_ALU_OP_REMU ) & ~interlock;
    wire        div_rem      = alu_op_sel == NANORV32_MUX_SEL_ALU_OP_REM  |
                               alu_op_sel == NANORV32_MUX_SEL_ALU_OP_REMU;
 //   assign div_ready = div_occuring ? div_ready_tmp :1'b1;
@@ -94,11 +96,20 @@ module nanorv32_alumuldiv (/*AUTOARG*/
    // End of automatics
    /*AUTOWIRE*/
    // port a is tos most of the time, port b is nos
+
+   reg                      alu_cond;
+
+   // Special path for addition
+   wire  [NANORV32_DATA_MSB:0] alu_add_res;
+   assign alu_add_res = alu_porta +  alu_portb;
+
    always@* begin
       alu_res = alu_portb;
       div_sign = 1'b0;
       sign_a   = 1'b0;
       sign_b   = 1'b0;
+      alu_cond = 0;
+
       case(alu_op_sel)
         NANORV32_MUX_SEL_ALU_OP_NOP: begin
            alu_res = alu_portb;
@@ -116,7 +127,7 @@ module nanorv32_alumuldiv (/*AUTOARG*/
            alu_res = alu_porta -  alu_portb;
         end
         NANORV32_MUX_SEL_ALU_OP_ADD: begin
-           alu_res = alu_porta +  alu_portb;
+           alu_res = alu_add_res;
         end
         NANORV32_MUX_SEL_ALU_OP_LSHIFT: begin
            alu_res = alu_porta << alu_portb[4:0]; // TODO : max shift amount should be a parameter
@@ -129,27 +140,33 @@ module nanorv32_alumuldiv (/*AUTOARG*/
            alu_res = $signed(alu_porta) >>> alu_portb[4:0]; // TODO : max shift amount should be a parameter
         end
         NANORV32_MUX_SEL_ALU_OP_LT_SIGNED: begin // "Less than"
-           alu_res = {{NANORV32_DATA_MSB{1'b0}},($signed(alu_porta) < $signed(alu_portb))};
+           alu_cond = ($signed(alu_porta) < $signed(alu_portb));
+           alu_res = {{NANORV32_DATA_MSB{1'b0}},alu_cond};
         end
 
         NANORV32_MUX_SEL_ALU_OP_LT_UNSIGNED: begin // "Less than"
-           alu_res = {{NANORV32_DATA_MSB{1'b0}},(alu_porta < alu_portb)};
+           alu_cond = (alu_porta < alu_portb);
+           alu_res = {{NANORV32_DATA_MSB{1'b0}},alu_cond};
         end
         // It is faster/more compact to swap the operands and drop GE code ?
         NANORV32_MUX_SEL_ALU_OP_GE_SIGNED: begin // "Greater or equal"
-           alu_res = {{NANORV32_DATA_MSB{1'b0}},($signed(alu_porta) >= $signed(alu_portb))};
+           alu_cond = ($signed(alu_porta) >= $signed(alu_portb));
+           alu_res = {{NANORV32_DATA_MSB{1'b0}},alu_cond};
         end
 
         NANORV32_MUX_SEL_ALU_OP_GE_UNSIGNED: begin // "Greater or equal"
-           alu_res = {{NANORV32_DATA_MSB{1'b0}},(alu_porta >= alu_portb)};
+           alu_cond = (alu_porta >= alu_portb);
+           alu_res = {{NANORV32_DATA_MSB{1'b0}},alu_cond};
         end
 
         // This also could probably optimized
         NANORV32_MUX_SEL_ALU_OP_EQ: begin // "Less than"
-           alu_res = {{NANORV32_DATA_MSB{1'b0}},(alu_porta == alu_portb)};
+           alu_cond = (alu_porta == alu_portb);
+           alu_res = {{NANORV32_DATA_MSB{1'b0}}, alu_cond};
         end
         NANORV32_MUX_SEL_ALU_OP_NEQ: begin // "Less than"
-           alu_res = {{NANORV32_DATA_MSB{1'b0}},(alu_porta != alu_portb)};
+           alu_cond = (alu_porta != alu_portb);
+           alu_res = {{NANORV32_DATA_MSB{1'b0}},alu_cond};
         end
         NANORV32_MUX_SEL_ALU_OP_MUL: begin // "Less than"
            sign_a  = 1'b0;
@@ -192,11 +209,13 @@ module nanorv32_alumuldiv (/*AUTOARG*/
            div_sign = 1'b0;
            sign_a   = 1'b0;
            sign_b   = 1'b0;
+           alu_cond = 0;
+
 
         end
       endcase // case (alu_op_sel)
    end // always@ *
-   assign alu_cond = (|alu_res);
+
 
 endmodule // nanorv32_alu
 /*

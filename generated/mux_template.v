@@ -12,6 +12,21 @@
         NANORV32_MUX_SEL_PC_NEXT_ALU_RES: begin
             pc_next <= ;
         end
+        NANORV32_MUX_SEL_PC_NEXT_COND_PC_PLUS_IMMSB_C: begin
+            pc_next <= ;
+        end
+        NANORV32_MUX_SEL_PC_NEXT_PLUS2: begin
+            pc_next <= ;
+        end
+//========================================
+
+    case(pc_size)
+        NANORV32_MUX_SEL_PC_SIZE_32BITS: begin
+            pc_size <= ;
+        end
+        NANORV32_MUX_SEL_PC_SIZE_16BITS: begin
+            pc_size <= ;
+        end
 //========================================
 
     case(pc_branch)
@@ -106,16 +121,40 @@
         NANORV32_MUX_SEL_ALU_PORTB_IMM12: begin
             alu_portb <= ;
         end
+        NANORV32_MUX_SEL_ALU_PORTB_CIMM5_SWSP: begin
+            alu_portb <= ;
+        end
+        NANORV32_MUX_SEL_ALU_PORTB_CIMM5_LUI: begin
+            alu_portb <= ;
+        end
         NANORV32_MUX_SEL_ALU_PORTB_IMM12HILO: begin
             alu_portb <= ;
         end
+        NANORV32_MUX_SEL_ALU_PORTB_CIMM5: begin
+            alu_portb <= ;
+        end
+        NANORV32_MUX_SEL_ALU_PORTB_CIMM5_CL: begin
+            alu_portb <= ;
+        end
+        NANORV32_MUX_SEL_ALU_PORTB_CIMM8_CIW: begin
+            alu_portb <= ;
+        end
         NANORV32_MUX_SEL_ALU_PORTB_IMM20U: begin
+            alu_portb <= ;
+        end
+        NANORV32_MUX_SEL_ALU_PORTB_CIMM10CJ: begin
+            alu_portb <= ;
+        end
+        NANORV32_MUX_SEL_ALU_PORTB_CIMM5_16SP: begin
             alu_portb <= ;
         end
         NANORV32_MUX_SEL_ALU_PORTB_IMM20UJ: begin
             alu_portb <= ;
         end
         NANORV32_MUX_SEL_ALU_PORTB_RS2: begin
+            alu_portb <= ;
+        end
+        NANORV32_MUX_SEL_ALU_PORTB_CIMM5_LWSP: begin
             alu_portb <= ;
         end
 //========================================
@@ -182,6 +221,24 @@
 
 //========================================
 
+    case(regfile_portw)
+        NANORV32_MUX_SEL_REGFILE_PORTW_RD: begin
+            regfile_portw <= ;
+        end
+        NANORV32_MUX_SEL_REGFILE_PORTW_RD_C_P: begin
+            regfile_portw <= ;
+        end
+        NANORV32_MUX_SEL_REGFILE_PORTW_RD_C: begin
+            regfile_portw <= ;
+        end
+        NANORV32_MUX_SEL_REGFILE_PORTW_C_X1: begin
+            regfile_portw <= ;
+        end
+        NANORV32_MUX_SEL_REGFILE_PORTW_RS1_C_P: begin
+            regfile_portw <= ;
+        end
+//========================================
+
     case(regfile_source)
         NANORV32_MUX_SEL_REGFILE_SOURCE_PC_EXE_PLUS_4: begin
             regfile_source <= ;
@@ -195,6 +252,9 @@
         NANORV32_MUX_SEL_REGFILE_SOURCE_DATAMEM: begin
             regfile_source <= ;
         end
+        NANORV32_MUX_SEL_REGFILE_SOURCE_PC_EXE_PLUS_2: begin
+            regfile_source <= ;
+        end
 //========================================
 
     case(regfile_write)
@@ -203,4 +263,34 @@
         end
         NANORV32_MUX_SEL_REGFILE_WRITE_NO: begin
             regfile_write <= ;
+        end
+//========================================
+
+    case(regfile_port1)
+        NANORV32_MUX_SEL_REGFILE_PORT1_C_X2: begin
+            regfile_port1 <= ;
+        end
+        NANORV32_MUX_SEL_REGFILE_PORT1_RS1_C: begin
+            regfile_port1 <= ;
+        end
+        NANORV32_MUX_SEL_REGFILE_PORT1_RS1: begin
+            regfile_port1 <= ;
+        end
+        NANORV32_MUX_SEL_REGFILE_PORT1_RS1_C_P: begin
+            regfile_port1 <= ;
+        end
+//========================================
+
+    case(regfile_port2)
+        NANORV32_MUX_SEL_REGFILE_PORT2_X0: begin
+            regfile_port2 <= ;
+        end
+        NANORV32_MUX_SEL_REGFILE_PORT2_RS2_C: begin
+            regfile_port2 <= ;
+        end
+        NANORV32_MUX_SEL_REGFILE_PORT2_RS2: begin
+            regfile_port2 <= ;
+        end
+        NANORV32_MUX_SEL_REGFILE_PORT2_RS2_C_P: begin
+            regfile_port2 <= ;
         end

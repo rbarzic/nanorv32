@@ -41,6 +41,7 @@ module nanorv32 (/*AUTOARG*/
    );
 
 `include "nanorv32_parameters.v"
+`include "nanorv32_rvc_func.v"
 
 
    input                     rst_n;
@@ -106,7 +107,9 @@ module nanorv32 (/*AUTOARG*/
 
    wire [NANORV32_DATA_MSB:0]                instruction_r;
 
+
    wire [NANORV32_DATA_MSB:0]                inst_from_buffer;
+   wire                                      is_32;
 
 
    //@begin[mux_select_declarations_as_wire]
@@ -149,10 +152,12 @@ module nanorv32 (/*AUTOARG*/
    wire                                    illegal_instruction_tmp;
    wire                                    illegal_instruction = illegal_instruction_tmp  & ~fifo_empty;
 
+
    reg [NANORV32_DATA_MSB:0]               mem2regfile;
 
    wire                                    stall_exe;
    wire                                    interlock;
+   wire                                    branch_wait;
    wire                                    div_ready;
    wire                                    stall_fetch;
    wire                                    force_stall_pstate;
@@ -173,7 +178,11 @@ module nanorv32 (/*AUTOARG*/
    wire                                     irq_ack;
 
    wire                                     allow_hidden_use_of_x0;
+   wire                                     reset_over;
 
+   reg [4:0]                                     regfile_port1;
+   reg [4:0]                                     regfile_port2;
+   reg [4:0]                                     regfile_portw;
    wire [NANORV32_DATA_MSB:0]               csr_core_rdata;
 
    // to a "return from interrupt" as been detected
@@ -193,11 +202,34 @@ module nanorv32 (/*AUTOARG*/
    wire [NANORV32_DATA_MSB:0]                   imm12sb_sext;
    wire [NANORV32_DATA_MSB:0]                   imm20u_sext;
    wire [NANORV32_DATA_MSB:0]                   imm20uj_sext;
+   wire [NANORV32_DATA_MSB:0]                   cimm12cj;
+   wire [NANORV32_DATA_MSB:0]                   cimm5;
+   wire [NANORV32_DATA_MSB:0]                   cimm5_lui;
+   wire [NANORV32_DATA_MSB:0]                   cimm5_swsp;
+   wire [NANORV32_DATA_MSB:0]                   cimm5_lwsp;
+   wire [NANORV32_DATA_MSB:0]                   cimm5_cl;
+   wire [NANORV32_DATA_MSB:0]                   cimm5_ciw;
+   wire [NANORV32_DATA_MSB:0]                   cimm5_16sp;
+   wire [NANORV32_DATA_MSB:0]                   cimm8_ciw;
+   wire [NANORV32_DATA_MSB:0]                   cimm5_cb;
 
 
    assign imm12_sext = {{20{dec_imm12 [11]}},dec_imm12[11:0]};
    assign imm12hilo_sext = {{20{dec_imm12hi[6]}},dec_imm12hi[6:0],dec_imm12lo[4:0]};
    assign imm12sb_sext = {{20{dec_immsb2[6]}},dec_immsb2[6],dec_immsb1[0],dec_immsb2[5:0],dec_immsb1[4:1],1'b0};
+   // Compressed encoding
+   assign cimm12cj      =  {{20{dec_cj_imm[10]}} , dec_cj_imm[10], dec_cj_imm[6],
+                           dec_cj_imm[8:7], dec_cj_imm[4], 
+                           dec_cj_imm[5], dec_cj_imm[0], 
+                           dec_cj_imm[9], dec_cj_imm[3:1] ,1'b0};
+   assign cimm5        =   {{26{dec_ci_immhi}},dec_ci_immhi,dec_ci_immlo};
+   assign cimm5_lui    =   {{15{dec_ci_immhi}},dec_ci_immhi,dec_ci_immlo,12'b0};
+   assign cimm5_swsp   =   {24'b0,dec_css_imm[1:0],dec_css_imm[5:2],2'b0};
+   assign cimm5_lwsp   =   {24'b0,dec_ci_immlo[1:0],dec_ci_immhi[0],dec_ci_immlo[4:2],2'b0};
+   assign cimm5_cl     =   {25'b0,dec_cl_immlo[0],dec_cl_immhi[2:0],dec_cl_immlo[1],2'b0};
+   assign cimm8_ciw    =   {24'b0,dec_ciw_imm[5:2], dec_ciw_imm[7:6],dec_ciw_imm[0],dec_ciw_imm[1],2'b0};
+   assign cimm5_16sp   =   {{22{dec_ci_immhi[0]}},dec_ci_immhi[0],dec_ci_immlo[2:1],dec_ci_immlo[3],dec_ci_immlo[0],dec_ci_immlo[4],4'b0};
+   assign cimm5_cb     =   {{23{dec_cb_offset_hi[2]}},dec_cb_offset_hi[2],dec_cb_offset_lo[4:3],dec_cb_offset_lo[0],dec_cb_offset_hi[1:0],dec_cb_offset_lo[2:1],1'b0};
 
    // Fixme - incomplete/wrong
 
@@ -220,6 +252,7 @@ module nanorv32 (/*AUTOARG*/
      U_PREFETCH_BUFFER (
                         .inst_ret       (inst_ret),
                         .inst_from_buffer(inst_from_buffer[NANORV32_DATA_MSB:0]),
+                        .is_32           (is_32),
                         .reset_over     (reset_over),
                         .fifo_empty     (fifo_empty),
                         /*AUTOINST*/
@@ -240,6 +273,7 @@ module nanorv32 (/*AUTOARG*/
                         .hrdatai        (hrdatai[NANORV32_DATA_MSB:0]),
                         .hrespi         (hrespi),
                         .hreadyi        (hreadyi),
+                        .hreadyd        (hreadyd),
                         .stall_exe      (stall_exe),
                         .force_stall_reset(force_stall_reset),
                         .rst_n          (rst_n),
@@ -253,12 +287,20 @@ module nanorv32 (/*AUTOARG*/
 
    // If an irq is detected, we override the instruction register with the code from
    // the the micro-rom in the flow controller
+
    assign instruction_r = irq_bypass_inst_reg_r ? inst_irq : inst_from_buffer;
+
+
+
+
 
 
  /* module_name AUTO_TEMPLATE(
   ); */
    nanorv32_decoder U_DECODER (
+
+                               .dec_c_rd_rs1(dec_c_rd_rs1),
+                               .dec_c_rs2(dec_c_rs2),
                                .instruction_r(instruction_r),
                                .illegal_instruction(illegal_instruction_tmp),
 
@@ -272,8 +314,84 @@ module nanorv32 (/*AUTOARG*/
                                .datamem_size_write_sel(datamem_size_write_sel),
                                .datamem_read_sel(datamem_read_sel),
                                .regfile_source_sel(regfile_source_sel),
-                               .regfile_write_sel(regfile_write_sel)
+                               .regfile_write_sel(regfile_write_sel),
+
+                               // Added for RVC support
+                               .regfile_port1_sel(regfile_port1_sel),
+                               .regfile_port2_sel(regfile_port2_sel),
+                               .regfile_portw_sel(regfile_portw_sel)
                                );
+
+   //===========================================================================
+   // Register file index - Addedd to support RVC
+   //===========================================================================
+   always @* begin
+      case(regfile_port1_sel)
+        NANORV32_MUX_SEL_REGFILE_PORT1_RS1_C_P: begin
+           regfile_port1 <= rvc_to_rv32_reg(dec_c_rs1_p);
+        end
+        NANORV32_MUX_SEL_REGFILE_PORT1_RS1_C: begin
+           regfile_port1 <= dec_c_rd_rs1;
+        end
+        NANORV32_MUX_SEL_REGFILE_PORT1_RS1: begin
+           regfile_port1 <= dec_rs1;
+        end
+        NANORV32_MUX_SEL_REGFILE_PORT1_C_X2: begin
+           regfile_port1 <= 5'h02;
+        end
+        default: begin
+           regfile_port1 <= dec_rs1;
+        end
+      endcase
+   end
+
+   always @* begin
+      case(regfile_port2_sel)
+        NANORV32_MUX_SEL_REGFILE_PORT2_X0: begin
+           regfile_port2 <= 5'h00;
+        end
+        NANORV32_MUX_SEL_REGFILE_PORT2_RS2_C: begin
+           regfile_port2 <= dec_c_rs2;
+        end
+        NANORV32_MUX_SEL_REGFILE_PORT2_RS2: begin
+           regfile_port2 <= dec_rs2;
+        end
+        NANORV32_MUX_SEL_REGFILE_PORT2_RS2_C_P: begin
+           regfile_port2 <= rvc_to_rv32_reg(dec_c_rs2_p);
+        end
+        NANORV32_MUX_SEL_REGFILE_PORT2_RS2_C_P: begin
+           regfile_port2 <= rvc_to_rv32_reg(dec_c_rs2_p);
+        end
+        default: begin
+           regfile_port2 <= dec_rs2;
+        end
+      endcase
+   end
+   always @* begin
+      case(regfile_portw_sel)
+        NANORV32_MUX_SEL_REGFILE_PORTW_RD: begin
+           regfile_portw <= dec_rd;
+        end
+        NANORV32_MUX_SEL_REGFILE_PORTW_RD_C: begin
+           regfile_portw <= dec_c_rd_rs1;
+        end
+        NANORV32_MUX_SEL_REGFILE_PORTW_C_X1: begin
+           regfile_portw <= 5'h01;
+        end
+        NANORV32_MUX_SEL_REGFILE_PORTW_RD_C_P: begin
+           regfile_portw <=  rvc_to_rv32_reg(dec_c_rs2_p);
+        end
+        NANORV32_MUX_SEL_REGFILE_PORTW_RS1_C_P: begin
+           regfile_portw <= rvc_to_rv32_reg(dec_c_rs1_p);
+        end
+        default: begin
+        end
+      endcase
+   end
+
+
+
+
    //===========================================================================
    // ALU input selection
    //===========================================================================
@@ -288,6 +406,27 @@ module nanorv32 (/*AUTOARG*/
         NANORV32_MUX_SEL_ALU_PORTB_IMM12: begin
            alu_portb = imm12_sext;
         end
+        NANORV32_MUX_SEL_ALU_PORTB_CIMM5: begin
+           alu_portb = cimm5;
+        end
+        NANORV32_MUX_SEL_ALU_PORTB_CIMM10CJ: begin
+           alu_portb = cimm12cj;
+        end
+        NANORV32_MUX_SEL_ALU_PORTB_CIMM5_CL: begin
+           alu_portb = cimm5_cl;
+        end
+        NANORV32_MUX_SEL_ALU_PORTB_CIMM8_CIW: begin
+           alu_portb = cimm8_ciw;
+        end
+        NANORV32_MUX_SEL_ALU_PORTB_CIMM5_SWSP: begin
+           alu_portb = cimm5_swsp;
+        end
+        NANORV32_MUX_SEL_ALU_PORTB_CIMM5_LWSP: begin
+           alu_portb = cimm5_lwsp;
+        end
+        NANORV32_MUX_SEL_ALU_PORTB_CIMM5_16SP: begin
+           alu_portb = cimm5_16sp;
+        end
         NANORV32_MUX_SEL_ALU_PORTB_RS2: begin
            alu_portb = rf_portb;
         end
@@ -296,6 +435,9 @@ module nanorv32 (/*AUTOARG*/
         end
         NANORV32_MUX_SEL_ALU_PORTB_IMM12HILO: begin
            alu_portb = imm12hilo_sext;
+        end
+        NANORV32_MUX_SEL_ALU_PORTB_CIMM5_LUI: begin
+           alu_portb = cimm5_lui;
         end
         default begin
            alu_portb = rf_portb;
@@ -326,6 +468,9 @@ module nanorv32 (/*AUTOARG*/
       case(regfile_source_sel)
         NANORV32_MUX_SEL_REGFILE_SOURCE_PC_EXE_PLUS_4:begin
            rd_tmp <= pc_exe_r + 4;
+        end
+        NANORV32_MUX_SEL_REGFILE_SOURCE_PC_EXE_PLUS_2:begin
+           rd_tmp <= pc_exe_r + 2;
         end
         NANORV32_MUX_SEL_REGFILE_SOURCE_ALU: begin
            rd_tmp <= alu_res;
@@ -371,7 +516,7 @@ module nanorv32 (/*AUTOARG*/
          if (hreadyd)
            begin
            write_rd2 <= (datamem_write || datamem_read) & write_rd;
-           dec_rd2   <= {NANORV32_INST_FORMAT_RD_SIZE{(datamem_write || datamem_read)}} & dec_rd;
+           dec_rd2   <= {NANORV32_INST_FORMAT_RD_SIZE{(datamem_write || datamem_read)}} & regfile_portw;
            datamem_size_read_sel_r <= {NANORV32_MUX_SEL_DATAMEM_SIZE_READ_SIZE{(datamem_write || datamem_read)}} & datamem_size_read_sel;
            end
       end
@@ -422,11 +567,7 @@ module nanorv32 (/*AUTOARG*/
           end// Mux definitions for alu
         default begin
               pc_branch <= 1'b0;
-<<<<<<< HEAD
-        end 
-=======
         end
->>>>>>> master
       endcase
    end
 
@@ -438,36 +579,50 @@ module nanorv32 (/*AUTOARG*/
 
       case(pc_next_sel)
         NANORV32_MUX_SEL_PC_NEXT_COND_PC_PLUS_IMMSB: begin
-           pc_next = (alu_cond & output_new_pc & pc_branch) ? (pc_exe_r + imm12sb_sext) : (pc_fetch_r + 4);
+           pc_next = (alu_cond & output_new_pc & pc_branch) ? (pc_exe_r + imm12sb_sext) : (is_32 ? (pc_fetch_r + 4) : (pc_fetch_r + 2));
            // branch_taken = alu_cond & !stall_exe;
-           branch_taken = alu_cond & pc_branch;
+           branch_taken = alu_cond & pc_branch & ~fifo_empty & ~interlock;
+        end
+        NANORV32_MUX_SEL_PC_NEXT_COND_PC_PLUS_IMMSB_C: begin
+           pc_next = (alu_cond & output_new_pc & pc_branch) ? (pc_exe_r + cimm5_cb) : (is_32 ? (pc_fetch_r + 4) : (pc_fetch_r + 2));
+           // branch_taken = alu_cond & !stall_exe;
+           branch_taken = alu_cond & pc_branch & ~fifo_empty & ~interlock;
         end
         NANORV32_MUX_SEL_PC_NEXT_PLUS4: begin
            if(!stall_exe) begin
-              pc_next = pc_fetch_r + 4; // Only 32-bit instruction for now
+              pc_next = (pc_fetch_r + 4); // Only 32-bit instruction for now
               branch_taken = 0;
            end
            else begin
               pc_next = pc_fetch_r; // Only 32-bit instruction for now
               branch_taken = 0;
            end
-
+        end
+        NANORV32_MUX_SEL_PC_NEXT_PLUS2: begin
+           if(!stall_exe) begin
+              pc_next = (pc_fetch_r + 2); // Only 16-bit instruction for now
+              branch_taken = 0;
+           end
+           else begin
+              pc_next = pc_fetch_r; // Only 32-bit instruction for now
+              branch_taken = 0;
+           end
         end
         NANORV32_MUX_SEL_PC_NEXT_ALU_RES: begin
            // The first cycle of a branch instruction, we need to output the
            // pc - but once we have fetch the new instruction, we need to start
            // fetching  the n+1 instruction
            // Fixme - this may not be valid if there is some wait-state
-           pc_next = output_new_pc  ? alu_res & 32'hFFFFFFFE : (pc_fetch_r + 4);
+           pc_next = output_new_pc  ? alu_res & 32'hFFFFFFFE : (is_32 ? (pc_fetch_r + 4) : (pc_fetch_r + 2));
 
            // We cancel the branch if we detect a "reti"
            // while in interrupt state
             // branch_taken = !(reti_inst_detected && interrupt_state_r);
-           branch_taken = 1'b1;
+           branch_taken = ~fifo_empty & ~interlock;
 
         end// Mux definitions for alu
         default begin
-           pc_next = pc_fetch_r + 4;
+           pc_next = (is_32 ? (pc_fetch_r + 4) : (pc_fetch_r + 2));
            branch_taken = 0;
         end
       endcase
@@ -516,9 +671,9 @@ module nanorv32 (/*AUTOARG*/
                .portb          (rf_portb[NANORV32_DATA_MSB:0]),
                // Inputs
                .allow_hidden_use_of_x0  (allow_hidden_use_of_x0),
-               .sel_porta               (dec_rs1[NANORV32_RF_PORTA_MSB:0]),
-               .sel_portb               (dec_rs2[NANORV32_RF_PORTB_MSB:0]),
-               .sel_rd                  (dec_rd[NANORV32_RF_PORTRD_MSB:0]),
+               .sel_porta               (regfile_port1[NANORV32_RF_PORTA_MSB:0]),
+               .sel_portb               (regfile_port2[NANORV32_RF_PORTB_MSB:0]),
+               .sel_rd                  (regfile_portw[NANORV32_RF_PORTRD_MSB:0]),
                .sel_rd2                 (dec_rd2[NANORV32_RF_PORTRD_MSB:0]),
                .rd                      (rd[NANORV32_DATA_MSB:0]),
                .rd2                     (rd2[NANORV32_DATA_MSB:0]),
@@ -538,6 +693,7 @@ module nanorv32 (/*AUTOARG*/
                        .alu_op_sel      (alu_op_sel[NANORV32_MUX_SEL_ALU_OP_MSB:0]),
                        .alu_porta       (alu_porta[NANORV32_DATA_MSB:0]),
                        .alu_portb       (alu_portb[NANORV32_DATA_MSB:0]),
+                       .interlock       (interlock),
                        .clk             (clk),
                        .rst_n           (rst_n));
 
@@ -560,7 +716,6 @@ module nanorv32 (/*AUTOARG*/
                        // Inputs
                        .core_csr_wdata  ({(1+(NANORV32_DATA_MSB)){1'b0}}), // Templated
                        .core_csr_write  (1'b0));                  // Templated
-
 
 
    // data memory interface
@@ -603,6 +758,7 @@ module nanorv32 (/*AUTOARG*/
                   .inst_irq             (inst_irq[NANORV32_DATA_MSB:0]),
                   // Inputs
                   .interlock           (interlock),
+                  .branch_wait          (branch_wait),
                   .branch_taken         (branch_taken),
                   .datamem_read         (datamem_read),
                   .datamem_write        (datamem_write),
@@ -619,11 +775,15 @@ module nanorv32 (/*AUTOARG*/
    // assign mem2regfile = dataif_cpu_rdata;
    // assign cpu_dataif_wdata = rf_portb;
 
-   assign cpu_dataif_req = (datamem_write || datamem_read) & data_access_cycle;
+   assign cpu_dataif_req = (datamem_write || datamem_read) & data_access_cycle &~interlock & ~fifo_empty;
    // assign stall_fetch = !codeif_cpu_early_ready  | force_stall_pstate | !codeif_cpu_ready_r;
    assign stall_fetch = force_stall_pstate | !codeif_cpu_ready_r;
-   assign interlock   = write_rd2 & (dec_rd2 == dec_rs1 | dec_rd2 == dec_rs2) & ~(htransd & hreadyd & hwrited);
-   assign stall_exe = force_stall_pstate | interlock | ~div_ready | fifo_empty;
+//   assign interlock   = write_rd2 & (dec_rd2 == dec_rs1 | dec_rd2 == dec_rs2) & ~(htransd & hreadyd & hwrited);
+   assign interlock   = write_rd2 & (dec_rd2 == regfile_port1 | dec_rd2 == regfile_port2) | 
+                        write_rd2 & ~hreadyd & (datamem_write || datamem_read); 
+
+   assign branch_wait = branch_taken & pstate_r != NANORV32_PSTATE_BRANCH & ~hreadyi;
+   assign stall_exe = force_stall_pstate | interlock | ~div_ready | fifo_empty | branch_wait; // REVISIT case where branch in a shadow store or load | pstate_r == NANORV32_PSTATE_WAITLD & ~hreadyd ;
    assign read_byte_sel = cpu_dataif_addr[1:0];
    wire  [2:0] hsized_tmp = {3{(datamem_size_read_sel == NANORV32_MUX_SEL_DATAMEM_SIZE_READ_HALFWORD_UNSIGNED |
                              datamem_size_read_sel == NANORV32_MUX_SEL_DATAMEM_SIZE_READ_HALFWORD)}} & 3'b001 |
@@ -694,12 +854,13 @@ module nanorv32 (/*AUTOARG*/
         end // UNMATCHED !!
       endcase
    end
-  wire [31:0] wdata_nxt = (dec_rs2 == dec_rd2 & write_rd2 & htransd & hwrited & hreadyd) ? mem2regfile : rf_portb ;
+  wire [31:0] wdata_nxt = ((regfile_port2 == dec_rd2) & write_rd2 & htransd & hwrited & hreadyd) ? mem2regfile : rf_portb ;
    // fixme - we don't need to mux zeros in unwritten bytes
+  reg [1:0] write_sized;
    always @* begin
       case(datamem_size_write_sel)
         NANORV32_MUX_SEL_DATAMEM_SIZE_WRITE_BYTE: begin
-
+           write_sized = 2'b00;
            case(haddrd[1:0])
              2'b00: begin
                 cpu_dataif_wdata =  {24'b0,wdata_nxt[7:0]};
@@ -724,6 +885,7 @@ module nanorv32 (/*AUTOARG*/
            endcase
         end
         NANORV32_MUX_SEL_DATAMEM_SIZE_WRITE_HALFWORD: begin
+           write_sized = 2'b01;
            case(haddrd[1])
              1'b0: begin
                 cpu_dataif_wdata =  {16'b0,wdata_nxt[15:0]};
@@ -742,10 +904,12 @@ module nanorv32 (/*AUTOARG*/
 
         end
         NANORV32_MUX_SEL_DATAMEM_SIZE_WRITE_WORD: begin
+           write_sized = 2'b10;
            cpu_dataif_wdata = wdata_nxt;
            cpu_dataif_bytesel = {4{datamem_write}};
         end
         default begin
+           write_sized = 2'b10;
            cpu_dataif_wdata = wdata_nxt;
            cpu_dataif_bytesel = {4{datamem_write}};
         end
@@ -764,7 +928,7 @@ module nanorv32 (/*AUTOARG*/
    assign hwdatad          = cpu_dataif_wdata_reg;
    assign htransd          = cpu_dataif_req;
    assign hwrited          = datamem_write;
-   assign hsized           = datamem_write ? datamem_size_write_sel : hsized_tmp ;
+   assign hsized           = datamem_write ? write_sized : hsized_tmp ;
    assign hburstd          = 3'b000 ;
    assign hmasterd         = 1'b0 ;
    assign hmasterlockd     = 1'b0 ;

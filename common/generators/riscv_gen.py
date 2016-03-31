@@ -7,6 +7,8 @@ import sys
 import pprint as pp
 from collections import defaultdict
 
+def fix_verilog_name(str):
+    return str.replace('.', '_')
 
 def get_instruction_format(spec, cpu='nanorv32'):
     """Return a dictionnary describing all instruction formats"""
@@ -14,6 +16,7 @@ def get_instruction_format(spec, cpu='nanorv32'):
     result = av.AutoVivification()
     spec_cpu = spec[cpu]
     for inst_type, format in spec_cpu['inst_type'].items():
+        print "-D- inst_type " + str(inst_type)
         if inst_type not in allready_found.keys():
             inst_format = format['format']
             for field, info in inst_format.items():
@@ -40,7 +43,8 @@ def verilog_instruction_format(inst_format):
 def verilog_inst_field(dic_inst_format):
     """Return bus description for each instruction field"""
     return ''.join([vt.decode_inst_field.format(**d)
-                    for _, d in dic_inst_format.items()]) + '\n'
+                    for _, d in dic_inst_format.items()
+                    if not d.get('Hint',False)]) + '\n'
 
 def python_inst_field(dic_inst_format):
     """Return  description for each instruction field"""
@@ -48,19 +52,20 @@ def python_inst_field(dic_inst_format):
                     for _, d in dic_inst_format.items()]) + '\n'
 
 
-def get_decode_fields(spec,dic_inst_format,cpu='nanorv32',inst_group='rv32i'):
+def get_decode_fields(spec,dic_inst_format,cpu='nanorv32',inst_group=['rv32i','rvc_rv32']):
     "return a dictionnary indexed by instruction containing fields (and values) needed to decode the instruction"
     decode_fields = {key: value for key, value in dic_inst_format.items() if 'decode' in value}
 
     res = defaultdict(list)
-    for inst,inst_data in spec[cpu][inst_group].items():
-        for k,v in inst_data['desc']['decode'].items():
-            if k in decode_fields:
-                res[inst].append({
+    for g in inst_group:
+        for inst,inst_data in spec[cpu][g].items():
+            for k,v in inst_data['desc']['decode'].items():
+                if k in decode_fields:
+                    res[inst].append({
                         'offset' : decode_fields[k]['offset'],
                         'size'   : decode_fields[k]['size'],
                         'value'  : v,
-                                })
+                    })
     return res
 
 
@@ -77,7 +82,10 @@ def build_decode_string(list_of_fields,prefix,word_size,dont_care = '?'):
             size = field ['size']
             value = field ['value']
             offset = field ['offset']
-            text = bin(value)[2:].zfill(size)
+            if value != '?':
+                text = bin(value)[2:].zfill(size)
+            else:
+                text = value
             text = text[::-1] # reverse
             bit_array = bit_array[:offset] + text + bit_array[offset+size:]
             print("bit_array : " + bit_array)
@@ -90,7 +98,7 @@ def verilog_decode_definition(decode_dic):
     res = ""
     for k, v in decode_dic.items():
         d = dict()
-        d['inst_uc'] = k.upper()
+        d['inst_uc'] = fix_verilog_name(k.upper ())
         d['val'] = v
         res += vt.decode_def.format(**d)
     return res
@@ -148,31 +156,33 @@ def merge_dict2(a, b, path=None):
     return a
 
 
-
-def merge_inst_impl(spec,impl_spec):
+def merge_inst_impl(spec,impl_spec, inst_group=['rv32i','rvc_rv32']):
     """Merge instruction type description with instruction specific implementation"""
     res = dict()
-    for inst_name, inst_data in impl_spec['nanorv32']['rv32i']['impl']['inst'].items():
-        d1 = dict()
-        d2 = dict()
-        d3 = dict()
-        d4 = dict()
-        print "inst_name : " + inst_name
-        # d2 = inst_data.copy()
-        inst_type = spec['nanorv32']['rv32i'][inst_name]['desc']['inst_type']
-        print "Instruction type : " + inst_type
-        d1 = copy.deepcopy(impl_spec['nanorv32']['rv32i']['impl']['inst_type'][inst_type])
-        d2 = copy.deepcopy(inst_data)
-        print '-'*20
-        pp.pprint(d1)
-        print '-'*20
-        pp.pprint(d2)
-        print '-'*20
-        d3 = merge_dict2(d1,d2)
-        pp.pprint(d2)
-        print '-'*20
-        res[inst_name] = copy.deepcopy(d3)
+    for g in inst_group:
+        for inst_name, inst_data in impl_spec['nanorv32'][g]['impl']['inst'].items():
+            d1 = dict()
+            d2 = dict()
+            d3 = dict()
+            d4 = dict()
+            print "-D- merge_inst_impl : inst_name : " + inst_name
+            # d2 = inst_data.copy()
+            inst_type = spec['nanorv32'][g][inst_name]['desc']['inst_type']
+            print "-D- Instruction type : " + inst_type
+            d1 = copy.deepcopy(impl_spec['nanorv32'][g]['impl']['inst_type'][inst_type])
+            d2 = copy.deepcopy(inst_data)
+            print '-'*20
+            pp.pprint(d1)
+            print '-'*20
+            pp.pprint(d2)
+            print '-'*20
+            d3 = merge_dict2(d1,d2)
+            pp.pprint(d2)
+            print '-'*20
+            res[inst_name] = copy.deepcopy(d3)
     return res
+
+
 def get_selectors_per_inst(spec,sel_list):
     """Return a dictionnary that describes all selectors ('muxes') settings  for selectors matching sel_list"""
     result = av.AutoVivification()
@@ -291,7 +301,7 @@ def verilog_decode_logic(sel_per_inst):
     res=""
     for inst,sels in sel_per_inst.items():
         d = dict()
-        d['inst_uc'] = inst.upper()
+        d['inst_uc'] = fix_verilog_name( inst.upper ())
         res += vt.decode_case.format(**d)
         for unit,port in sels.items():
             for p,val in port.items():
@@ -301,7 +311,6 @@ def verilog_decode_logic(sel_per_inst):
                 res += vt.decode_line.format(**d)
         res += vt.decode_end
     return res
-
 
 # CSR related stuff
 

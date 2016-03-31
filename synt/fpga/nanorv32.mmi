@@ -3,95 +3,95 @@
 <MemInfo Version="1" Minor="0">
     <Processor Endianness="Little" InstPath="design/nanorv32">
         <AddressSpace
-            Name="design_1_i_microblaze_0.design_1_i_microblaze_0_local_memory_dlmb_bram_if_cntlr" Begin="0" End="8191">
+            Name="design_1_i_microblaze_0.design_1_i_microblaze_0_local_memory_dlmb_bram_if_cntlr" Begin="0" End="32767">
 
             <BusBlock>
 
-<BitLane MemType="RAMB36E1" Placement="X2Y0">
+<BitLane MemType="RAMB36E1" Placement="X1Y9">
   <DataWidth MSB="1" LSB="0"/>
   <AddressRange Begin="0" End="16383"/>
   <Parity ON="false" NumBits="0"/>
 </BitLane>
 
-<BitLane MemType="RAMB36E1" Placement="X2Y5">
+<BitLane MemType="RAMB36E1" Placement="X1Y12">
   <DataWidth MSB="3" LSB="2"/>
   <AddressRange Begin="0" End="16383"/>
   <Parity ON="false" NumBits="0"/>
 </BitLane>
 
-<BitLane MemType="RAMB36E1" Placement="X2Y4">
+<BitLane MemType="RAMB36E1" Placement="X0Y6">
   <DataWidth MSB="5" LSB="4"/>
   <AddressRange Begin="0" End="16383"/>
   <Parity ON="false" NumBits="0"/>
 </BitLane>
 
-<BitLane MemType="RAMB36E1" Placement="X2Y3">
+<BitLane MemType="RAMB36E1" Placement="X1Y11">
   <DataWidth MSB="7" LSB="6"/>
   <AddressRange Begin="0" End="16383"/>
   <Parity ON="false" NumBits="0"/>
 </BitLane>
 
-<BitLane MemType="RAMB36E1" Placement="X0Y3">
+<BitLane MemType="RAMB36E1" Placement="X2Y7">
   <DataWidth MSB="9" LSB="8"/>
   <AddressRange Begin="0" End="16383"/>
   <Parity ON="false" NumBits="0"/>
 </BitLane>
 
-<BitLane MemType="RAMB36E1" Placement="X1Y4">
+<BitLane MemType="RAMB36E1" Placement="X0Y8">
   <DataWidth MSB="11" LSB="10"/>
   <AddressRange Begin="0" End="16383"/>
   <Parity ON="false" NumBits="0"/>
 </BitLane>
 
-<BitLane MemType="RAMB36E1" Placement="X0Y2">
+<BitLane MemType="RAMB36E1" Placement="X0Y5">
   <DataWidth MSB="13" LSB="12"/>
   <AddressRange Begin="0" End="16383"/>
   <Parity ON="false" NumBits="0"/>
 </BitLane>
 
-<BitLane MemType="RAMB36E1" Placement="X0Y1">
+<BitLane MemType="RAMB36E1" Placement="X1Y10">
   <DataWidth MSB="15" LSB="14"/>
   <AddressRange Begin="0" End="16383"/>
   <Parity ON="false" NumBits="0"/>
 </BitLane>
 
-<BitLane MemType="RAMB36E1" Placement="X2Y9">
+<BitLane MemType="RAMB36E1" Placement="X2Y8">
   <DataWidth MSB="17" LSB="16"/>
   <AddressRange Begin="0" End="16383"/>
   <Parity ON="false" NumBits="0"/>
 </BitLane>
 
-<BitLane MemType="RAMB36E1" Placement="X2Y10">
+<BitLane MemType="RAMB36E1" Placement="X2Y6">
   <DataWidth MSB="19" LSB="18"/>
   <AddressRange Begin="0" End="16383"/>
   <Parity ON="false" NumBits="0"/>
 </BitLane>
 
-<BitLane MemType="RAMB36E1" Placement="X1Y10">
+<BitLane MemType="RAMB36E1" Placement="X1Y8">
   <DataWidth MSB="21" LSB="20"/>
   <AddressRange Begin="0" End="16383"/>
   <Parity ON="false" NumBits="0"/>
 </BitLane>
 
-<BitLane MemType="RAMB36E1" Placement="X0Y5">
+<BitLane MemType="RAMB36E1" Placement="X1Y6">
   <DataWidth MSB="23" LSB="22"/>
   <AddressRange Begin="0" End="16383"/>
   <Parity ON="false" NumBits="0"/>
 </BitLane>
 
-<BitLane MemType="RAMB36E1" Placement="X2Y8">
+<BitLane MemType="RAMB36E1" Placement="X1Y7">
   <DataWidth MSB="25" LSB="24"/>
   <AddressRange Begin="0" End="16383"/>
   <Parity ON="false" NumBits="0"/>
 </BitLane>
 
-<BitLane MemType="RAMB36E1" Placement="X0Y6">
+<BitLane MemType="RAMB36E1" Placement="X2Y10">
   <DataWidth MSB="27" LSB="26"/>
   <AddressRange Begin="0" End="16383"/>
   <Parity ON="false" NumBits="0"/>
 </BitLane>
 
-<BitLane MemType="RAMB36E1" Placement="X1Y8">
+<BitLane MemType="RAMB36E1" Placement="X0Y7">
   <DataWidth MSB="29" LSB="28"/>
   <AddressRange Begin="0" End="16383"/>
   <Parity ON="false" NumBits="0"/>

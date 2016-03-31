@@ -20,7 +20,7 @@ else
 fi
 export LD_LIBRARY_PATH
 
-HD_PWD=/home/roba/perso/github/arty-designstart-cm0/ips/clock_manager/managed_ip_project/managed_ip_project.runs/arty_mmcm_synth_1
+HD_PWD=/home/roba/perso/github/nanorv32/rtl/ips/clock_manager/managed_ip_project/managed_ip_project.runs/arty_mmcm_synth_1
 cd "$HD_PWD"
 
 HD_LOG=runme.log

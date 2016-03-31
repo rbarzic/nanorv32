@@ -17,7 +17,7 @@ module nanorv32_ascii (/*AUTOARG*/
    output [4*8-1:0] reg_to_ascii_rd2;
    output [4*8-1:0] reg_to_ascii_rs1;
    output [4*8-1:0] reg_to_ascii_rs2;
-   input  [31:0]    instruction_r;
+   input  [34:0]    instruction_r;
    input  [4:0]    reg_rd;
    input  [4:0]    reg_rd2;
    input  [4:0]    reg_rs1;
@@ -77,7 +77,35 @@ module nanorv32_ascii (/*AUTOARG*/
           NANORV32_DECODE_DIV    : ascii_chain = "div     ";
           NANORV32_DECODE_BEQ    : ascii_chain = "beq     ";
           NANORV32_DECODE_OR     : ascii_chain = "or      ";
-          NANORV32_DECODE_SD     : ascii_chain = "sd      ";
+          NANORV32_DECODE_SD        : ascii_chain = "sd      ";
+          NANORV32_DECODE_C_SWSP    :ascii_chain ="c.swsp    ";
+          NANORV32_DECODE_C_LWSP    :ascii_chain ="c.lwsp    "; 
+          NANORV32_DECODE_C_ADDI    :ascii_chain ="c.addi    "; 
+          NANORV32_DECODE_C_ADD4SPN :ascii_chain ="c.add4spn "; 
+          NANORV32_DECODE_C_SLLI    :ascii_chain ="c.slli    "; 
+          NANORV32_DECODE_C_OR      :ascii_chain ="c.or      "; 
+          NANORV32_DECODE_C_MV      :ascii_chain ="c.mv      "; 
+          NANORV32_DECODE_C_JALR    :ascii_chain ="c.jalr    "; 
+          NANORV32_DECODE_C_BEQZ    :ascii_chain ="c.beqz    "; 
+          NANORV32_DECODE_C_BNEZ    :ascii_chain ="c.bnez    "; 
+          NANORV32_DECODE_C_SW      :ascii_chain ="c.sw      "; 
+          NANORV32_DECODE_C_LI      :ascii_chain ="c.li      "; 
+          NANORV32_DECODE_C_ADD     :ascii_chain ="c.add     "; 
+          NANORV32_DECODE_C_JR      :ascii_chain ="c.jr      "; 
+          NANORV32_DECODE_C_SRAI    :ascii_chain ="c.srai    "; 
+          NANORV32_DECODE_C_XOR     :ascii_chain ="c.xor     "; 
+          NANORV32_DECODE_C_LW      :ascii_chain ="c.lw      "; 
+          NANORV32_DECODE_C_ANDI    :ascii_chain ="c.andi    "; 
+          NANORV32_DECODE_C_EBREAK  :ascii_chain ="c.ebreak  "; 
+          NANORV32_DECODE_C_SRLI    :ascii_chain ="c.srli    "; 
+          NANORV32_DECODE_C_NOP     :ascii_chain ="c.nop     "; 
+          NANORV32_DECODE_C_SUB     :ascii_chain ="c.sub     "; 
+          NANORV32_DECODE_C_LUI     :ascii_chain ="c.lui     "; 
+          NANORV32_DECODE_C_AND     :ascii_chain ="c.and     "; 
+          NANORV32_DECODE_C_J       :ascii_chain ="c.j       "; 
+          NANORV32_DECODE_C_JAL     :ascii_chain ="c.jal     "; 
+          NANORV32_DECODE_C_ADDI16SP:ascii_chain ="c.addi16sp";
+
           default                : ascii_chain = "UNDEF   ";
      endcase
    end

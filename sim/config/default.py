@@ -18,7 +18,7 @@ define['c_compiler']['arch_opt'] = 'MAKE_VARIABLE'
 cfg['c_compiler']['arch_opt'] = '-m32 -march=RV32IM'
 
 define['c_compiler']['warnings'] = 'MAKE_VARIABLE'
-cfg['c_compiler']['warnings'] = "-Werror -Wall -Wextra -Wshadow -Wundef -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings "
+cfg['c_compiler']['warnings'] = "-Wall -Wextra -Wshadow -Wundef -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings "
 
 
 cfg['c_compiler']['warnings'] += " -Wredundant-decls -Wstrict-prototypes  -pedantic # -Wconversion "
@@ -26,6 +26,11 @@ cfg['c_compiler']['warnings'] += " -Wredundant-decls -Wstrict-prototypes  -pedan
 define['c_compiler']['optimisation_options'] = 'MAKE_VARIABLE'
 cfg['c_compiler']['optimisation_options'] = '-O3'
 
+define['c_compiler']['target_options'] = 'MAKE_VARIABLE'
+if target_fpga:
+    cfg['c_compiler']['target_options'] = ' -DFPGA=1 '
+else:
+    cfg['c_compiler']['target_options'] = ''
 
 
 define['c_compiler']['linker_script_path'] = 'MAKE_VARIABLE'
@@ -77,11 +82,18 @@ cfg['simulator']['icarus']['warnings'] = '-Wall -W no-timescale'
 define['simulator']['icarus']['vvp_opt'] = 'MAKE_VARIABLE'
 cfg['simulator']['icarus']['vvp_opt'] = ''
 
+define['simulator']['icarus']['gui'] = 'MAKE_VARIABLE'
+cfg['simulator']['icarus']['gui'] = ''
+
 if logging:
     cfg['simulator']['icarus']['vvp_opt'] += ' +vcd '
 
 if trace:
     cfg['simulator']['icarus']['options'] += ' -DTRACE='+trace
+    cfg['simulator']['icarus']['vvp_opt'] += ' +trace=' + trace
+
+if gui:
+    cfg['simulator']['icarus']['gui'] += 'cd $(TEST_DIR) && gtkwave ' + cfg['simulation']['testbench_name'] + '.vcd &'
 
 
 # Xilinx Vivado  xvlog/xelab/xsim  simulator
@@ -103,6 +115,10 @@ if gui:
 else:
     cfg['simulator']['xilinx']['xsim']['batch_or_gui'] = ' -runall '
 
+
+if trace:
+    cfg['simulator']['xilinx']['xvlog']['options'] += ' -DTRACE='+trace
+    cfg['simulator']['xilinx']['xsim']['options'] += ' +trace=' + trace
 
 
 

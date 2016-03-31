@@ -62,6 +62,22 @@ run_rv32ui: ../../riscv-tests/isa/rv32ui/$(TEST).S
 	python3 ./makehex.py $(TEST).bin 16384 > $(TEST).hex2
 	vvp testbench.exe  +vcd +program_memory=$(TEST).vmem | tee -a logs/$(TEST).run.log
 
+run_rv32c: ../../riscv-tests/isa/rv32c/$(TEST).S
+	@echo  "===================== TEST $(TEST) ============================"
+	mkdir -p logs
+	($(GNU_GCC)  $(GNU_CC_FLAGS) $(TEST_FLAGS) \
+	-L $(LINKER_SCRIPT_PATH) \
+	-T $(LINKER_SCRIPT_ROM_SRAM) \
+	$< $(STARTUP_CODE) $(SRC) -o $(TEST).elf  || echo "-I- TEST FAILED (gcc compilation)" >> logs/$(TEST).run.log) | tee  logs/$(TEST).run.log
+	$(GNU_OBJCOPY) -O binary $(TEST).elf $(TEST).bin
+	$(GNU_OBJDUMP) -d $(TEST).elf > $(TEST).lst
+	$(GNU_OBJDUMP) -t $(TEST).elf > $(TEST).map
+	$(GNU_OBJCOPY) -S $(TEST).elf -O verilog $(TEST).hex
+	hexdump -v -e ' 1/4 "%08x " "\n"' $(TEST).bin > $(TEST).vmem32 # Xilinx
+	hexdump -v -e '"@%08.8_ax  " 1/1 "%02x " "\n"' $(TEST).bin > $(TEST).vmem # iverilog
+	python3 ./makehex.py $(TEST).bin 16384 > $(TEST).hex2
+	vvp testbench.exe  +vcd +program_memory=$(TEST).vmem | tee -a logs/$(TEST).run.log
+
 
 debug: TEST=debug
 debug:
@@ -149,6 +165,30 @@ run_dhry:
 	hexdump -v -e '"@%08.8_ax  " 1/1 "%02x " "\n"' dhry.bin > dhry.vmem # iverilog
 	python3 ./makehex.py dhry.bin 16384 > dhry.hex2
 	vvp testbench.exe  +vcd +program_memory=dhry.vmem | tee -a logs/dhry.run.log
+
+run_coremark:
+	@echo  "===================== TEST coremark ============================"
+	mkdir -p logs
+	($(GNU_GCC)  $(GNU_CC_FLAGS) $(TEST_FLAGS) \
+	-L $(LINKER_SCRIPT_PATH) \
+	-T $(LINKER_SCRIPT_ROM_SRAM) \
+	$(TOP)/common/clib/printf-stdarg.c \
+	../../ctests/coremark/stdlib.c \
+	../../ctests/coremark/core_main.c \
+	../../ctests/coremark/core_list_join.c \
+	../../ctests/coremark/core_matrix.c \
+	../../ctests/coremark/core_portme.c \
+	../../ctests/coremark/core_state.c \
+	../../ctests/coremark/core_util.c \
+	$(STARTUP_CODE) -o coremark.elf  || echo "-I- TEST FAILED (gcc compilation)" >> logs/coremark.run.log) | tee  logs/coremark.run.log
+	$(GNU_OBJCOPY) -O binary coremark.elf coremark.bin
+	$(GNU_OBJDUMP) -d coremark.elf > coremark.lst
+	$(GNU_OBJDUMP) -t coremark.elf > coremark.map
+	$(GNU_OBJCOPY) -S coremark.elf -O verilog coremark.hex
+	hexdump -v -e ' 1/4 "%08x " "\n"' coremark.bin > coremark.vmem32 # Xilinx
+	hexdump -v -e '"@%08.8_ax  " 1/1 "%02x " "\n"' coremark.bin > coremark.vmem # iverilog
+	python3 ./makehex.py coremark.bin 16384 > coremark.hex2
+	vvp testbench.exe  +vcd +program_memory=coremark.vmem | tee -a logs/coremark.run.log
 
 ###################  Xilinx simulation ###############################################
 # Xilinx :

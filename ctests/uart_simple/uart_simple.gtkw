@@ -1,0 +1,26 @@
+[*]
+[*] GTKWave Analyzer v3.3.64 (w)1999-2014 BSI
+[*] Fri Mar 18 07:43:15 2016
+[*]
+[dumpfile] "/home/roba/perso/github/nanorv32/ctests/uart_simple/tb_nanorv32.vcd"
+[dumpfile_mtime] "Fri Mar 18 07:41:57 2016"
+[dumpfile_size] 2884775
+[savefile] "/home/roba/perso/github/nanorv32/ctests/uart_simple/uart_simple.gtkw"
+[timestart] 1000
+[size] 1920 1171
+[pos] -915 -569
+*-20.973566 2650000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] U_USART.
+[treeopen] U_USART.U_UART.
+[sst_width] 207
+[signals_width] 174
+[sst_expanded] 1
+[sst_vpaned_height] 356
+@28
+U_USART.uart_pad_tx
+@22
+U_USART.U_UART.u1_uart.tx_count[31:0]
+@23
+U_USART.U_UART.u1_uart.uart_divisor[31:0]
+[pattern_trace] 1
+[pattern_trace] 0

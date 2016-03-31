@@ -34,7 +34,7 @@
 
 module nanorv32_simpleahb (/*AUTOARG*/
    // Outputs
-   illegal_instruction, TDO, debug,
+   illegal_instruction, TDO, debug, uart_pad_tx,
    // Inouts
    P0,
    // Inputs
@@ -66,6 +66,9 @@ module nanorv32_simpleahb (/*AUTOARG*/
    output               TDO;
 
    output [5:0]               debug;
+
+
+   output                     uart_pad_tx; // Direct routing for debugging
 
 
 
@@ -142,7 +145,6 @@ module nanorv32_simpleahb (/*AUTOARG*/
    wire                 uart_apb_pready;        // From U_USART of uart_wrapper.v
    wire                 uart_apb_pslverr;       // From U_USART of uart_wrapper.v
    wire                 uart_irq;               // From U_USART of uart_wrapper.v
-   wire                 uart_pad_tx;            // From U_USART of uart_wrapper.v
    // End of automatics
 
    wire                           w2ahb_adbg_ack;         // From U_INSTANCE of ahbmas_wbslv_top.v
@@ -808,29 +810,29 @@ module nanorv32_simpleahb (/*AUTOARG*/
 
     ahbmas_wbslv_top U_WB2AHB (
         /*AUTOINST*/
-                                 // Outputs
-                                 .haddr                 (w2ahb_ahb_haddr[NANORV32_DATA_MSB:0]), // Templated
-                                 .hwrite                (w2ahb_ahb_hwrite), // Templated
-                                 .hsize                 (w2ahb_ahb_hsize[2:0]), // Templated
-                                 .hburst                (w2ahb_ahb_hburst[2:0]), // Templated
-                                 .hwdata                (w2ahb_ahb_hwdata[NANORV32_DATA_MSB:0]), // Templated
-                                 .htrans                (w2ahb_ahb_htrans[1:0]), // Templated
-                                 .data_o                (w2ahb_adbg_dat), // Templated
-                                 .ack_o                 (w2ahb_adbg_ack), // Templated
-                                 // Inputs
-                                 .hresetn               (rst_n),         // Templated
-                                 .hclk                  (clk),           // Templated
-                                 .hrdata                (ahb_w2ahb_hrdata[NANORV32_DATA_MSB:0]), // Templated
-                                 .hresp                 ({1'b0,ahb_w2ahb_hresp}), // Templated
-                                 .hready                (ahb_w2ahb_hready), // Templated
-                                 .data_i                (adbg_w2ahb_dat), // Templated
-                                 .addr_i                (adbg_w2ahb_adr), // Templated
-                                 .cyc_i                 (adbg_w2ahb_cyc), // Templated
-                                 .stb_i                 (adbg_w2ahb_stb), // Templated
-                                 .sel_i                 (adbg_w2ahb_sel), // Templated
-                                 .we_i                  (adbg_w2ahb_we), // Templated
-                                 .clk_i                 (clk),           // Templated
-                                 .rst_i                 (!rst_n));        // Templated
+                               // Outputs
+                               .haddr           (w2ahb_ahb_haddr[NANORV32_DATA_MSB:0]), // Templated
+                               .hwrite          (w2ahb_ahb_hwrite), // Templated
+                               .hsize           (w2ahb_ahb_hsize[2:0]), // Templated
+                               .hburst          (w2ahb_ahb_hburst[2:0]), // Templated
+                               .hwdata          (w2ahb_ahb_hwdata[NANORV32_DATA_MSB:0]), // Templated
+                               .htrans          (w2ahb_ahb_htrans[1:0]), // Templated
+                               .data_o          (w2ahb_adbg_dat), // Templated
+                               .ack_o           (w2ahb_adbg_ack), // Templated
+                               // Inputs
+                               .hresetn         (rst_n),         // Templated
+                               .hclk            (clk),           // Templated
+                               .hrdata          (ahb_w2ahb_hrdata[NANORV32_DATA_MSB:0]), // Templated
+                               .hresp           ({1'b0,ahb_w2ahb_hresp}), // Templated
+                               .hready          (ahb_w2ahb_hready), // Templated
+                               .data_i          (adbg_w2ahb_dat), // Templated
+                               .addr_i          (adbg_w2ahb_adr), // Templated
+                               .cyc_i           (adbg_w2ahb_cyc), // Templated
+                               .stb_i           (adbg_w2ahb_stb), // Templated
+                               .sel_i           (adbg_w2ahb_sel), // Templated
+                               .we_i            (adbg_w2ahb_we), // Templated
+                               .clk_i           (clk),           // Templated
+                               .rst_i           (!rst_n));        // Templated
 
 
 
