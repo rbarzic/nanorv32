@@ -232,4 +232,11 @@ prepare_trace:
 	diff -w ../../sim/verilog/trace_cut.txt trace_cut.txt  | head -n 2
 
 
+xcomp_ntl:
+	xvlog --define NO_TIME_SCALE --define NTL_SIM -f vivado_ntl_file_list.txt  $(XILINX_VIVADO)/data/verilog/src/glbl.v
+
+xelab_ntl:
+	xelab -L unisims_ver tb_nanorv32 glbl --typdelay --sdftyp tb_nanorv32.U_DUT=../../synt/fpga/chip_layout.sdf --relax --debug all
+
+
 .PHONY: iverilog_file_list.txt vivado_file_list.txt

@@ -34,6 +34,13 @@
 `define VCD_EXTRA_MODULE
 `endif
 
+`ifdef NTL_SIM
+// Xilinx clock system will generate a internal 40MHz from the Arty 100MHz internal clock
+`define CLOCK_PERIOD 10
+`else
+`define CLOCK_PERIOD 25
+`endif
+
 module tb_nanorv32;
 
    `include "nanorv32_parameters.v"
@@ -90,7 +97,7 @@ module tb_nanorv32;
 
 
 
-    /* reset_gen AUTO_TEMPLATE(
+    /* reset_gen AUTO_TEMPLATE(_n
      .reset_n              (rst_n));
      ); */
    reset_gen U_RESET_GEN (
@@ -104,7 +111,8 @@ module tb_nanorv32;
 
     /* clock_gen AUTO_TEMPLATE(
      ); */
-   clock_gen U_CLOCK_GEN (
+   clock_gen #(.period(`CLOCK_PERIOD))
+   U_CLOCK_GEN (
                           /*AUTOINST*/
                           // Outputs
                           .clk                  (clk));
@@ -119,7 +127,7 @@ module tb_nanorv32;
       integer      dummy;
 
       begin
-
+`ifndef NTL_SIM
          filename = 0;
          dummy = $value$plusargs("program_memory=%s", filename);
          if(filename ==0) begin
@@ -137,7 +145,8 @@ module tb_nanorv32;
                `CODE_RAM.RAM[i]  = tmp;
 
             end
-         end
+         end // else: !if(filename ==0)
+`endif
       end
    endtask // load_program_memory
 
@@ -158,15 +167,28 @@ module tb_nanorv32;
 
    initial begin
       #1;
+`ifndef NTL_SIM
       load_program_memory();
+`endif
       vcd_dump();
       #1000000000;
       $display("-I- TEST FAILED Timeout !");
       $finish(2);
 
+   end // initial begin
+
+   initial begin
+      #0;
+      irq_ext = 0;
+
+      P1reg = 16'h0;
+      reset_a_n = 0;
+      #10;
+      reset_a_n = 1;
    end
 
 
+`ifndef NTL_SIM
    // PC monitoring
    wire [NANORV32_DATA_MSB:0] pc;
    wire [NANORV32_DATA_MSB:0] x10_a0; // return value register
@@ -221,15 +243,7 @@ module tb_nanorv32;
    end
 
 
-   initial begin
-      #0;
-      irq_ext = 0;
 
-      P1reg = 16'h0;
-      reset_a_n = 0;
-      #10;
-      reset_a_n = 1;
-   end
 `define TRACE
 `ifdef TRACE
   wire [31:0] pc_r =  U_DUT.U_NANORV32_PIL.U_CPU.pc_exe_r;
@@ -253,15 +267,15 @@ module tb_nanorv32;
   reg [4*8-1:0] reg_to_ascii_rs2_r;
 
   reg [7:0]     fifo_pt;
-  reg [31:0]    fifo_pc_r    [7:0];         
-  reg [31:0]    fifo_data    [7:0];         
-  reg [8*8-1:0] fifo_ascii_chain[7:0];      
-  reg [4*8-1:0] fifo_reg_to_ascii_rd[7:0]; 
-  reg [4*8-1:0] fifo_reg_to_ascii_rs1[7:0]; 
-  reg [4*8-1:0] fifo_reg_to_ascii_rs2[7:0]; 
-  reg [31:0]    fifo_cur_time[7:0];         
-  reg [31:0]    fifo_rd[7:0]  ;            
-  reg [7:0]     fifo_write_rd;         
+  reg [31:0]    fifo_pc_r    [7:0];
+  reg [31:0]    fifo_data    [7:0];
+  reg [8*8-1:0] fifo_ascii_chain[7:0];
+  reg [4*8-1:0] fifo_reg_to_ascii_rd[7:0];
+  reg [4*8-1:0] fifo_reg_to_ascii_rs1[7:0];
+  reg [4*8-1:0] fifo_reg_to_ascii_rs2[7:0];
+  reg [31:0]    fifo_cur_time[7:0];
+  reg [31:0]    fifo_rd[7:0]  ;
+  reg [7:0]     fifo_write_rd;
    reg [1024:0] trace_filename = "trace.txt";
 
    task trace;
@@ -343,7 +357,7 @@ module tb_nanorv32;
                  $fwrite(f," %s, %s, %s %d ns ",fifo_reg_to_ascii_rd[0], fifo_reg_to_ascii_rs1[0], fifo_reg_to_ascii_rs2[0],fifo_cur_time[0]);
                  $fwrite(f,"\n");
           end
-          if (U_DUT.U_NANORV32_PIL.U_CPU.inst_ret && ~(U_DUT.U_NANORV32_PIL.U_CPU.htransd) && (~(load_ongoing || store_ongoing) || (load_ongoing || store_ongoing) && U_DUT.U_NANORV32_PIL.U_CPU.hreadyd)) 
+          if (U_DUT.U_NANORV32_PIL.U_CPU.inst_ret && ~(U_DUT.U_NANORV32_PIL.U_CPU.htransd) && (~(load_ongoing || store_ongoing) || (load_ongoing || store_ongoing) && U_DUT.U_NANORV32_PIL.U_CPU.hreadyd))
              begin
              $fwrite(f,"PC : 0x%08x I : 0x%08x : %s :",pc_r, data[31:0], ascii_chain) ;
              if (U_DUT.U_NANORV32_PIL.U_CPU.write_rd)
@@ -352,7 +366,7 @@ module tb_nanorv32;
              $fwrite(f,"\n");
              end
           else
-          if (U_DUT.U_NANORV32_PIL.U_CPU.inst_ret && ~(U_DUT.U_NANORV32_PIL.U_CPU.htransd) && ((load_ongoing || store_ongoing ) & ~U_DUT.U_NANORV32_PIL.U_CPU.hreadyd)) 
+          if (U_DUT.U_NANORV32_PIL.U_CPU.inst_ret && ~(U_DUT.U_NANORV32_PIL.U_CPU.htransd) && ((load_ongoing || store_ongoing ) & ~U_DUT.U_NANORV32_PIL.U_CPU.hreadyd))
              begin
              // push in fifo , waiting the store or load to release
              fifo_pc_r[fifo_pt]             <= pc_r;
@@ -395,6 +409,7 @@ module tb_nanorv32;
      end
 
 `endif
+`endif //  `ifndef NTL_SIM
 
 
 endmodule // tb_nanorv32
