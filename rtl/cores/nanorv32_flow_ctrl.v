@@ -119,8 +119,6 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
 
 
 
-   event                       dbg_evt1;
-   event                       dbg_evt2;
 
    // Makes waveform debugging easier
    wire [NANORV32_UROM_ADDR_MSB:0] irq_entry_start;

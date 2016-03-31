@@ -19,7 +19,7 @@ def nanor32_fl(context):
     })
     l.append({
         'file': "{top}/rtl/cores/nanorv32_ascii.v",
-        'targets': 'synt,sim_rtl'
+        'targets': 'sim_rtl'
     })
     l.append({
         'file': "{top}/rtl/cores/nanorv32_alu.v",
