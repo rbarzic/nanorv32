@@ -45,12 +45,13 @@ def zero_extend32(val,bits,xx=32):
 def sign_extend32(val,bits,xx=32):
     "Sign extend a 'bits' long number to xx  bit"
     sign_val = 0xFFFFFFFF << bits
+    mask = ~(-1 << xx)
     # print "sign_val = " + hex(sign_val)
     if val & (1<<(bits- 1)):
         # msb set is set in original value
-        return val | sign_val
+        return (val | sign_val) & mask
     else:
-        return val
+        return val & mask
 
 
 
@@ -232,7 +233,7 @@ class NanoRV32Core(object):
         tmp =  self.dec_ci_immlo #[4:0]
         tmp += self.dec_ci_immhi*(2**5) #[5]
         self.dec_ci_cimm5_u = tmp
-        self.dec_li_cimm5 = sign_extend32(tmp,6)
+        self.dec_ci_cimm5 = sign_extend32(tmp,6)
         #ADDI16SP
         tmp  = bitfield(self.dec_ci_immlo,offset=4,size=1) #[4]
         tmp += bitfield(self.dec_ci_immlo,offset=0,size=1)* (2) #[0]

@@ -112,7 +112,7 @@ def c_add(c):
     rs1_val = ct.c_uint32(c.rf[rs1]).value
     rs2_print = format_reg(rs2)
     rs2_val = ct.c_uint32(c.rf[rs2]).value
-    rd_val = rs1_val + rs2_val
+    rd_val = uint32(rs1_val + rs2_val)
     pc = c.pc
     # results
     c.update_rf(rd,rd_val)
@@ -129,7 +129,7 @@ def c_sub(c):
     rs1_val = ct.c_uint32(c.rf[rs1]).value
     rs2_print = format_reg(rs2)
     rs2_val = ct.c_uint32(c.rf[rs2]).value
-    rd_val = rs1_val - rs2_val
+    rd_val = uint32(rs1_val - rs2_val)
     pc = c.pc
     # results
     c.update_rf(rd,rd_val)
@@ -140,7 +140,7 @@ def c_sub(c):
 def c_and(c):
     rs1 = (c.dec_c_rs1_p+ 8)
     rs2 = (c.dec_c_rs2_p+ 8)
-    rd = c.dec_c_rd_p + 8
+    rd = c.dec_c_rs1_p + 8
     rd_print = format_reg(rd)
     rs1_print = format_reg(rs1)
     rs1_val = ct.c_uint32(c.rf[rs1]).value
@@ -195,7 +195,7 @@ def c_add4spn(c):
     rs1_print = format_reg(rs1)
     rs1_val = ct.c_uint32(c.rf[rs1]).value
     imm9 = c.dec_c_immaddi4sp
-    rd_val = rs1_val + imm9
+    rd_val = uint32(rs1_val + imm9)
     pc = c.pc
     # results
     c.update_rf(rd,rd_val)
@@ -204,7 +204,7 @@ def c_add4spn(c):
 
     return (None,new_pc,txt)
 def c_addi(c):
-    imm5 = uint32(c.dec_li_cimm5)
+    imm5 = uint32(c.dec_ci_cimm5)
     rd = c.dec_rd
     rd_print = format_reg(rd)
     imm5_shifted = uint32(imm5)
@@ -213,7 +213,7 @@ def c_addi(c):
     rd_print = format_reg(rd)
     rs1_print = format_reg(rs1)
     rs1_val = ct.c_uint32(c.rf[rs1]).value
-    rd_val = ct.c_uint32(rs1_val + imm5_shifted).value
+    rd_val = uint32(rs1_val + imm5_shifted)
     pc = c.pc
     # results
     c.update_rf(rd,rd_val)
@@ -269,7 +269,7 @@ def lui(c):
     return (None,new_pc,txt)
 
 def c_lui(c):
-    imm5 = uint32(c.dec_ci_cimm5_u)
+    imm5 = uint32(c.dec_ci_cimm5)
     rd = c.dec_rd
     rd_print = format_reg(rd)
     imm5_shifted = uint32(imm5<<12)
@@ -282,7 +282,7 @@ def c_lui(c):
 
     return (None,new_pc,txt)
 def c_li(c):
-    imm5 = uint32(c.dec_li_cimm5)
+    imm5 = uint32(c.dec_ci_cimm5)
     rd = c.dec_rd
     rd_print = format_reg(rd)
     imm5_shifted = uint32(imm5)
@@ -447,9 +447,9 @@ def store(c, mem_access_fn):
     elif (bitfield(addr,offset=0,size=2) == 3 and mem_access_fn == sb_fn):
        rs2_val_print = bitfield(c.rf[rs2],offset=0,size=8)*(2**24)
     elif (bitfield(addr,offset=0,size=2) == 0 and mem_access_fn == sh_fn):
-       rs2_val_print = bitfield(c.rf[rs2],offset=0,size=8)*(2**0)
+       rs2_val_print = bitfield(c.rf[rs2],offset=0,size=16)*(2**0)
     elif (bitfield(addr,offset=0,size=2) == 2 and mem_access_fn == sh_fn):
-       rs2_val_print = bitfield(c.rf[rs2],offset=0,size=8)*(2**16)
+       rs2_val_print = bitfield(c.rf[rs2],offset=0,size=16)*(2**16)
     else :
        rs2_val_print = uint32(c.rf[rs2])
 
@@ -826,7 +826,7 @@ sim_slli = partial(i_type,
 sim_srli = partial(i_type,
 	  op=lambda x,y: x>>(y & 0x1F),
 	  op_str='>>')
-def ci_type_shft(c,op,op_str):
+def cb2_type_shft(c,op,op_str):
     rs1 = (c.dec_c_rs1_p + 8)
     imm5 = ct.c_uint32(c.dec_ci_cimm5_u).value
     rd = (c.dec_c_rs1_p + 8)
@@ -841,14 +841,46 @@ def ci_type_shft(c,op,op_str):
     txt = "RF[{}] <= 0x{:08x} (RF[{}]=0x{:08x} {}  imm5 =0x{:08x}) ".format(rd_print,rd_val,rs1_print,rs1_val,op_str,imm5)
     return (None,new_pc,txt)
 
+def cb2_type_se(c,op,op_str):
+    rs1 = (c.dec_c_rs1_p + 8)
+    imm5 = uint32(c.dec_ci_cimm5)
+    rd = (c.dec_c_rs1_p + 8)
+    rd_print = format_reg(rd)
+    rs1_print = format_reg(rs1)
+    rs1_val = ct.c_uint32(c.rf[rs1]).value
+    rd_val = ct.c_uint32(op(rs1_val,imm5)).value
+    pc = c.pc
+    # results
+    c.update_rf(rd,rd_val)
+    new_pc = pc + 2
+    txt = "RF[{}] <= 0x{:08x} (RF[{}]=0x{:08x} {}  imm5 =0x{:08x}) ".format(rd_print,rd_val,rs1_print,rs1_val,op_str,imm5)
+    return (None,new_pc,txt)
+
+
+def ci_type_shft(c,op,op_str):
+    rs1 = (c.dec_c_rd_rs1)
+    imm5 = ct.c_uint32(c.dec_ci_cimm5_u).value
+    rd = (c.dec_c_rd_rs1)
+    rd_print = format_reg(rd)
+    rs1_print = format_reg(rs1)
+    rs1_val = ct.c_uint32(c.rf[rs1]).value
+    rd_val = ct.c_uint32(op(rs1_val,imm5)).value
+    pc = c.pc
+    # results
+    c.update_rf(rd,rd_val)
+    new_pc = pc + 2
+    txt = "RF[{}] <= 0x{:08x} (RF[{}]=0x{:08x} {}  imm5 =0x{:08x}) ".format(rd_print,rd_val,rs1_print,rs1_val,op_str,imm5)
+    return (None,new_pc,txt)
+
+
 sim_cslli = partial(ci_type_shft,
 	  op=lambda x,y: x<<(y & 0x1F),
 	  op_str='<<')
-sim_csrli = partial(ci_type_shft,
+sim_csrli = partial(cb2_type_shft,
 	  op=lambda x,y: x>>(y & 0x1F),
 	  op_str='>>')
 sim_csrai = partial(ci_type_shft,op=sra_32,op_str='>>')
-c_andi = partial(ci_type_shft,op=operator.and_,op_str='&')
+c_andi = partial(cb2_type_se,op=operator.and_,op_str='&')
 
 # CSR
 def csr_read(c,addr,csr=""):
@@ -946,11 +978,7 @@ spec['nanorv32']['rv32i']['simu']['inst']['srai'] = {
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['ori'] = {
-'func' :  lambda c: (
-c.update_rf( c.dec_rd, c.rf[c.dec_rs1] | c.dec_imm12_se) ,
-c.pc + 4,
-""
-)
+'func' :  sim_ori
 }
 
 
