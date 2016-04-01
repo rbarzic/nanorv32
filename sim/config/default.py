@@ -15,7 +15,10 @@ cfg['c_compiler']['makehex'] = '$(TOP)/common/scripts/makehex.py'
 
 
 define['c_compiler']['arch_opt'] = 'MAKE_VARIABLE'
-cfg['c_compiler']['arch_opt'] = '-m32 -march=RV32IM'
+if rvc:
+    cfg['c_compiler']['arch_opt'] = '-m32 -march=RV32IMC'
+else:
+    cfg['c_compiler']['arch_opt'] = '-m32 -march=RV32IM'
 
 define['c_compiler']['warnings'] = 'MAKE_VARIABLE'
 cfg['c_compiler']['warnings'] = "-Wall -Wextra -Wshadow -Wundef -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings "

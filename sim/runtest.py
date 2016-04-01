@@ -165,6 +165,10 @@ A simulation launcher for the Nanorv32 project
                         default=False,
                         help='Do not execute the command')
 
+    parser.add_argument('--rvc', action='store_true', dest='rvc',
+                        default=False,
+                        help='Allow usage  RVC (16-bits instructions) for the C compiler')
+
     parser.add_argument('-f', action='store_true', dest='target_fpga',
                         default=False,
                         help='Define FPGA=1 for C compilation (mainly to use Uart output for printf ) - Likely to be used with -c')
@@ -192,6 +196,7 @@ if __name__ == '__main__':
     global_args['target'] = args.target
     global_args['cc'] = args.cc
     global_args['noexec'] = args.noexec
+    global_args['rvc'] = args.rvc
     global_args['gui'] = args.gui
     global_args['logging'] = args.logging
     global_args['target_fpga'] = args.target_fpga
