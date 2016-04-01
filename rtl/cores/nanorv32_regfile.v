@@ -102,9 +102,9 @@ module nanorv32_regfile (/*AUTOARG*/
 generate
    for (i = 0; i < 32 ; i = i + 1) begin : loop
    always @(posedge clk or negedge rst_n) begin
-      if (~rst_n) 
+      if (~rst_n)
       regfile[i] <= 32'h0;
-      else 
+      else
       if(((sel_rd != 0) || allow_hidden_use_of_x0) && (sel_rd == i) && write_rd) begin
       regfile[i] <= rd;
     end
@@ -278,13 +278,14 @@ assign     x31 = 	regfile[31];
 
 
    integer     jj;
-
+   /* verilator lint_off STMTDLY */
    initial begin
       #1;
       for(jj=0;jj<32;jj=jj+1) begin
          regfile[jj] = 32'b0;
       end
    end
+   /* verilator lint_on STMTDLY */
 
 // synthesis translate_on
 

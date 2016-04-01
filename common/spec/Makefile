@@ -32,6 +32,12 @@ emacs_auto:
 ahbmli:
 	make -C $(TOP)/ml-ahb-gen all JSON=$(TOP)/common/spec/nanorv32_ahbmli.json
 	cp $(TOP)/ml-ahb-gen/chisel/Ahbmli.v $(TOP)/rtl/ips
+	sed -i "s/SYNTHESIS/AHBMLI_SYNTHESIS/" $(TOP)/rtl/ips/Ahbmli.v
+	cd $(TOP)/rtl/ips && $(TOP)/common/scripts/hdl_splitlib.pl $(TOP)/rtl/ips/Ahbmli.v
+
 
 check_simu:
 	@cat $(TOP)/common/instructions/rv32e_base.txt | xargs -n1 -IXXX  ./nanorv32_simulator.py  --hex2=../../sim/verilog/XXX.hex2
+
+test1:
+	$(TOP)/common/scripts/hdl_splitlib.pl $(TOP)/rtl/ips/Ahbmli.v

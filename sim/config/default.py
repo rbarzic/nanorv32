@@ -71,6 +71,10 @@ cfg['simulation']['default_exit_address'] = '0x00000100'
 define['simulation']['testbench_name'] = ('VERILOG_PARAMETER','MAKE_VARIABLE')
 cfg['simulation']['testbench_name'] = "tb_nanorv32"
 
+define['ahbmli_synthesis'] = 'VERILOG_DEFINE'
+cfg['ahbmli_synthesis'] = 1
+
+
 
 
 

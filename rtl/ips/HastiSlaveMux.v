@@ -235,7 +235,7 @@ module HastiSlaveMux(input clk, input reset,
   wire[31:0] T167;
   wire[31:0] T176;
 
-`ifndef SYNTHESIS
+`ifndef AHBMLI_SYNTHESIS
 // synthesis translate_off
   integer initvar;
   initial begin

@@ -141,7 +141,7 @@ module HastiBus(input clk, input reset,
   wire[31:0] T65;
   wire[31:0] T66;
 
-`ifndef SYNTHESIS
+`ifndef AHBMLI_SYNTHESIS
 // synthesis translate_off
   integer initvar;
   initial begin

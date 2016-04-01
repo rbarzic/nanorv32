@@ -123,7 +123,7 @@ module nanorv32_prefetch (/*AUTOARG*/
       end
       else begin
          if(hreadyi)
-           branch_taken_reg <= branch_taken & hreadyi & ~reset_over &  pstate_r != NANORV32_PSTATE_BRANCH; 
+           branch_taken_reg <= branch_taken & hreadyi & ~reset_over &  pstate_r != NANORV32_PSTATE_BRANCH;
       end
    end
     always @(posedge clk or negedge rst_n) begin
@@ -132,7 +132,7 @@ module nanorv32_prefetch (/*AUTOARG*/
          /*AUTORESET*/
       end
       else begin
-         if(hreadyi & ( write_data | inst_ret)) 
+         if(hreadyi & ( write_data | inst_ret))
            fifo_full_reg <= fifo_full & ~branch_taken;
       end
    end
@@ -205,8 +205,8 @@ module nanorv32_prefetch (/*AUTOARG*/
       for (i = 0; i < 4; i = i + 1) begin
         always @(posedge clk or negedge rst_n) begin
           if(rst_n == 1'b0) begin
-                iq[i*2][15:0] <= NANORV32_J0_INSTRUCTION;
-                iq[i*2+1][15:0] <= NANORV32_J0_INSTRUCTION;
+             iq[i*2][15:0] <= NANORV32_J0_INSTRUCTION[15:0];
+             iq[i*2+1][15:0] <= NANORV32_J0_INSTRUCTION[31:16];
              /*AUTORESET*/
           end else begin
             if (wr_pt_r[2:0] == i*2 & write_data & ~cancel_data)  begin
