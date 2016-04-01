@@ -147,3 +147,12 @@ else:
 if trace:
     cfg['simulator']['xilinx']['xvlog']['options'] += ' -DTRACE='+trace
     cfg['simulator']['xilinx']['xsim']['options'] += ' +trace=' + trace
+
+
+# Pysim simulator
+
+define['simulator']['pysim']['options'] = 'MAKE_VARIABLE'
+cfg['simulator']['pysim']['options'] = ' '
+
+if trace:
+    cfg['simulator']['pysim']['options'] += ' --trace='+trace
