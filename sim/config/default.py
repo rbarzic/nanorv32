@@ -108,12 +108,14 @@ cfg['simulator']['verilator']['warnings'] = ' '
 define['simulator']['verilator']['gui'] = 'MAKE_VARIABLE'
 cfg['simulator']['verilator']['gui'] = ''
 
-if logging:
-    cfg['simulator']['verilator']['vvp_opt'] += ' +vcd '
+#if logging:
+#    cfg['simulator']['verilator']['vvp_opt'] += ' +vcd '
+#else:
+#    cfg['simulator']['verilator']['vvp_opt'] += ' '
+#
+#if trace:
+#    cfg['simulator']['verilator']['options'] += ' -DTRACE='+trace
 
-if trace:
-    cfg['simulator']['verilator']['options'] += ' -DTRACE='+trace
-    cfg['simulator']['verilator']['vvp_opt'] += ' +trace=' + trace
 
 if gui:
     cfg['simulator']['verilator']['gui'] += 'cd $(TEST_DIR) && gtkwave ' + cfg['simulation']['testbench_name'] + '.vcd &'
