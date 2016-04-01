@@ -202,33 +202,35 @@ module nanorv32_prefetch (/*AUTOARG*/
    genvar i;
 
    generate
-      for (i = 0; i < 8; i = i + 1) begin
+      for (i = 0; i < 4; i = i + 1) begin
         always @(posedge clk or negedge rst_n) begin
           if(rst_n == 1'b0) begin
-                iq[i][15:0] <= NANORV32_J0_INSTRUCTION;
+                iq[i*2][15:0] <= NANORV32_J0_INSTRUCTION;
+                iq[i*2+1][15:0] <= NANORV32_J0_INSTRUCTION;
              /*AUTORESET*/
           end else begin
-            if (wr_pt_r[2:0] == i & write_data & ~cancel_data)  begin
-                iq[i][15:0] <= hrdatai[15:0];
+            if (wr_pt_r[2:0] == i*2 & write_data & ~cancel_data)  begin
+                iq[i*2][15:0] <= hrdatai[15:0];
+                iq[i*2+1][15:0] <= hrdatai[31:16];
             end
           end
         end
       end
    endgenerate
-   generate
-      for (i = 0; i < 8; i = i + 1) begin
-        always @(posedge clk or negedge rst_n) begin
-          if(rst_n == 1'b0) begin
-                iq[i][15:0] <= NANORV32_J0_INSTRUCTION;
-             /*AUTORESET*/
-          end else begin
-            if (wr_pt_r_plus1[2:0] == i & write_data & ~cancel_data)  begin
-                iq[wr_pt_r_plus1[2:0]][15:0] <= hrdatai[31:16];
-            end
-          end
-        end
-      end
-   endgenerate
+//   generate
+//      for (i = 0; i < 8; i = i + 1) begin
+//        always @(posedge clk or negedge rst_n) begin
+//          if(rst_n == 1'b0) begin
+//                iq[i][15:0] <= NANORV32_J0_INSTRUCTION;
+//             /*AUTORESET*/
+//          end else begin
+//            if (wr_pt_r_plus1[2:0] == i & write_data & ~cancel_data)  begin
+//                iq[wr_pt_r_plus1[2:0]][15:0] <= hrdatai[31:16];
+//            end
+//          end
+//        end
+//      end
+//   endgenerate
 
    always @(posedge clk or negedge rst_n) begin
       if(rst_n == 1'b0) begin
