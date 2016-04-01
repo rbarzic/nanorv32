@@ -66,12 +66,12 @@ def rtlsim_action(action1,action2):
     re_memwrite1 = re.compile(r'\s*MEM\[(?P<addr>\S+)\s*\]\s*<=\s*RF\[(?P<reg>\S*)\s*\]')
     re_memwrite2 = re.compile(r'\s*(?P<data>\S+)\s*')
     # A memory read is reported as a register write only in the RTL simulator
-    #re_memread = re.compile(r'\s*RF\[(?P<rd>\S+)\s*\]\s*<=\s*(?P<val>\S*)\s*MEM\[(?P<addr>\S+)\s*\]')
+    re_memread = re.compile(r'\s*RF\[(?P<rd>\S+)\s*\]\s*<=\s*(?P<val>\S*)\s*MEM\[(?P<addr>\S+)\s*\]')
 
     reg_write = re_reg.match(action1)
     mem_write1 = re_memwrite1.match(action1)
     mem_write2 = re_memwrite2.match(action2)
-    #mem_read = re_memread.match(action1)
+    mem_read = re_memread.match(action1)
 
     res = dict()
     if reg_write:
@@ -83,11 +83,11 @@ def rtlsim_action(action1,action2):
         res['reg'] = mem_write1.group('reg')
         res['data'] = mem_write2.group('data')
         return ('memwrite',res)
-    #elif mem_read:
-    #    res['addr'] = mem_read.group('addr')
-    #    res['reg'] = mem_read.group('reg')
-    #    res['data'] = mem_read.group('data')
-    #    return ('memread',res)
+    elif mem_read:
+        res['addr'] = mem_read.group('addr')
+        res['reg'] = mem_read.group('reg')
+        res['data'] = mem_read.group('data')
+        return ('memread',res)
     else:
         return ('not_found', {})
 
