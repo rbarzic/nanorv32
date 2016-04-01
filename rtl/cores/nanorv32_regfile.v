@@ -274,8 +274,14 @@ assign     x31 = 	regfile[31];
    assign     t6 = 	regfile[31];
 
 
+   integer     jj;
 
-
+   initial begin
+      #1;
+      for(jj=0;jj<32;jj=jj+1) begin
+         regfile[jj] = 32'b0;
+      end
+   end
 
 // synthesis translate_on
 
