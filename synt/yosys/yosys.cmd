@@ -48,3 +48,8 @@ read_verilog -DNO_RAM_INIT  -I../../adv_debug_sys/Hardware/jtag/tap/rtl/verilog/
 
 
 proc
+opt
+memory
+opt
+techmap
+opt
