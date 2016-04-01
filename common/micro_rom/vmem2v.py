@@ -39,7 +39,7 @@ if __name__ == '__main__':
     code = ""
     with open(args.vmem32) as f:
         for i,line in enumerate(f):
-            code += "        " + str(i) + ": dout<= 32'h" + line[0:8] + ";\n"
+            code += "        " + str(i) + ": dout = 32'h" + line[0:8] + ";\n"
     micro_rom_case_file = args.outdir + "/" + "micro_rom.generated.v"
     with open(micro_rom_case_file,'w') as f:
         f.write(code)

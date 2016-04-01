@@ -1,19 +1,19 @@
 # Xilinx verilog simulator specific Makefile
 
-EXTRA_V_SRC=$(wildcard $(TEST_DIR)/*.v)
+XILINX_EXTRA_V_SRC=$(wildcard $(TEST_DIR)/*.v)
 
-ifeq ($(EXTRA_V_SRC),)
-VCD_EXTRA_MODULE=
+ifeq ($(XILINX_EXTRA_V_SRC),)
+XILINX_VCD_EXTRA_MODULE=
 XELAB_EXTRA_MODULE=
 XSIM_EXTRA_MODULE=
 else
-VCD_EXTRA_MODULE=-DVCD_EXTRA_MODULE=,$(TEST)
+XILINX_VCD_EXTRA_MODULE=-DVCD_EXTRA_MODULE=,$(TEST)
 XSIM_EXTRA_MODULE=\#work.$(TEST)
 endif
 
 ##_XILINX_XVLOG_OPTS += --work worklib=$(TEST_DIR)/worklib
 ##_XILINX_XVLOG_OPTS += -L worklib=$(TEST_DIR)/worklib
-_XILINX_XVLOG_OPTS += --define NO_TIME_SCALE -f vivado_file_list.txt $(EXTRA_V_SRC)
+_XILINX_XVLOG_OPTS += --define NO_TIME_SCALE -f vivado_file_list.txt $(XILINX_EXTRA_V_SRC)
 _XILINX_XVLOG_OPTS += $(SIMULATOR_XILINX_XVLOG_OPTIONS)
 #
 #_XILINX_XELAB_OPTS += -L worklib=$(TEST_DIR)/worklib

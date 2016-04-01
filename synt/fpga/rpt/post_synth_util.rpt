@@ -1,7 +1,7 @@
 Copyright 1986-2015 Xilinx, Inc. All Rights Reserved.
 ------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2015.3 (lin64) Build 1368829 Mon Sep 28 20:06:39 MDT 2015
-| Date         : Mon Mar 21 13:44:58 2016
+| Date         : Thu Mar 31 11:08:09 2016
 | Host         : roba-OptiPlex-7010 running 64-bit Ubuntu 15.04
 | Command      : report_utilization -file ./rpt/post_synth_util.rpt
 | Design       : nanorv32_simpleahb
@@ -30,14 +30,14 @@ Table of Contents
 +-------------------------+------+-------+-----------+-------+
 |        Site Type        | Used | Fixed | Available | Util% |
 +-------------------------+------+-------+-----------+-------+
-| Slice LUTs*             | 6140 |     0 |     20800 | 29.52 |
-|   LUT as Logic          | 6140 |     0 |     20800 | 29.52 |
+| Slice LUTs*             | 5114 |     0 |     20800 | 24.59 |
+|   LUT as Logic          | 5114 |     0 |     20800 | 24.59 |
 |   LUT as Memory         |    0 |     0 |      9600 |  0.00 |
-| Slice Registers         | 2878 |     0 |     41600 |  6.92 |
-|   Register as Flip Flop | 2822 |     0 |     41600 |  6.78 |
-|   Register as Latch     |   56 |     0 |     41600 |  0.13 |
-| F7 Muxes                |  316 |     0 |     16300 |  1.94 |
-| F8 Muxes                |   64 |     0 |      8150 |  0.79 |
+| Slice Registers         | 2619 |     0 |     41600 |  6.30 |
+|   Register as Flip Flop | 2561 |     0 |     41600 |  6.16 |
+|   Register as Latch     |   58 |     0 |     41600 |  0.14 |
+| F7 Muxes                |  178 |     0 |     16300 |  1.09 |
+| F8 Muxes                |   33 |     0 |      8150 |  0.40 |
 +-------------------------+------+-------+-----------+-------+
 * Warning! The Final LUT count, after physical optimizations and full implementation, is typically lower. Run opt_design after synthesis, if not already completed, for a more realistic count.
 
@@ -54,10 +54,10 @@ Table of Contents
 | 0     |            _ |         Set |            - |
 | 0     |            _ |       Reset |            - |
 | 0     |          Yes |           - |            - |
-| 144   |          Yes |           - |          Set |
-| 1271  |          Yes |           - |        Reset |
+| 120   |          Yes |           - |          Set |
+| 1039  |          Yes |           - |        Reset |
 | 41    |          Yes |         Set |            - |
-| 1422  |          Yes |       Reset |            - |
+| 1419  |          Yes |       Reset |            - |
 +-------+--------------+-------------+--------------+
 
 
@@ -151,20 +151,20 @@ Table of Contents
 +------------+------+---------------------+
 |  Ref Name  | Used | Functional Category |
 +------------+------+---------------------+
-| LUT6       | 3561 |                 LUT |
-| FDRE       | 1422 |        Flop & Latch |
-| FDCE       | 1215 |        Flop & Latch |
-| LUT4       |  830 |                 LUT |
-| LUT2       |  826 |                 LUT |
-| LUT5       |  762 |                 LUT |
-| LUT3       |  475 |                 LUT |
-| LUT1       |  384 |                 LUT |
-| MUXF7      |  316 |               MuxFx |
-| CARRY4     |  281 |          CarryLogic |
-| FDPE       |  144 |        Flop & Latch |
-| MUXF8      |   64 |               MuxFx |
-| LDCE       |   56 |        Flop & Latch |
+| LUT6       | 2299 |                 LUT |
+| LUT3       | 1487 |                 LUT |
+| FDRE       | 1419 |        Flop & Latch |
+| FDCE       |  981 |        Flop & Latch |
+| LUT2       |  808 |                 LUT |
+| LUT4       |  714 |                 LUT |
+| LUT5       |  664 |                 LUT |
+| LUT1       |  290 |                 LUT |
+| CARRY4     |  265 |          CarryLogic |
+| MUXF7      |  178 |               MuxFx |
+| FDPE       |  120 |        Flop & Latch |
+| LDCE       |   58 |        Flop & Latch |
 | FDSE       |   41 |        Flop & Latch |
+| MUXF8      |   33 |               MuxFx |
 | RAMB36E1   |   32 |        Block Memory |
 | OBUF       |   19 |                  IO |
 | OBUFT      |    6 |                  IO |

@@ -60,10 +60,10 @@ module nanorv32_simpleahb (/*AUTOARG*/
 
    input                irq_ext;
 
-   input                TMS;
-   input                TCK;
-   input                TDI;
-   output               TDO;
+   inout                TMS;
+   inout                TCK;
+   inout                TDI;
+   inout                TDO;
 
    output [5:0]               debug;
 

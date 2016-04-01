@@ -64,10 +64,10 @@ module tb_nanorv32;
    reg [15:0]          P1reg;                     // To/From U_DUT of nanorv32_simple.v
    reg                 irq_ext;
 
-   reg                 TCK;
-   reg                 TMS;
-   reg                 TDI;
-   wire                TDO;
+   wire                 TCK;
+   wire                 TMS;
+   wire                 TDI;
+   wire                 TDO;
 
 
    /* nanorv32_simpleahb AUTO_TEMPLATE(

@@ -17,14 +17,7 @@ def nanor32_fl(context):
         'file': "{top}/rtl/cores/nanorv32_div.v",
         'targets': 'synt,sim_rtl'
     })
-    l.append({
-        'file': "{top}/rtl/cores/nanorv32_ascii.v",
-        'targets': 'sim_rtl'
-    })
-    l.append({
-        'file': "{top}/rtl/cores/nanorv32_alu.v",
-        'targets': 'synt,sim_rtl'
-    })
+
     l.append({
         'file': "{top}/rtl/cores/nanorv32_csr.v",
         'targets': 'synt,sim_rtl'
@@ -229,17 +222,24 @@ def nanor32_fl(context):
 
 
     # Testbench
+
+    l.append({
+        'file': "{top}/rtl/cores/nanorv32_ascii.v",
+        'targets': 'tb_rtl'
+    })
+
+
     l.append({
         'file': "{top}/sim/verilog/reset_gen.v",
-        'targets': 'sim_rtl'
+        'targets': 'tb_rtl'
     })
     l.append({
         'file': "{top}/sim/verilog/clock_gen.v",
-        'targets': 'sim_rtl'
+        'targets': 'tb_rtl'
     })
     l.append({
         'file': "{top}/sim/verilog/tb_nanorv32.v",
-        'targets': 'sim_rtl'
+        'targets': 'tb_rtl'
     })
 
     d.append({

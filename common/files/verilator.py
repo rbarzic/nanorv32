@@ -1,9 +1,9 @@
 # Function definitions specific to Icarus iverilog simulator
 import file_list
 
-def get_iverilog_file_list(l, d, context):
-    """Return a string that can be written to a file and used with the -c
-    option of the Icarus iverilog simulator
+def get_verilator_file_list(l, d, context):
+    """Return a string that can be written to a file and used with the -f
+    option of the Verilator simulator
 
     @param l: list of files
     @type l: list of string
@@ -16,8 +16,8 @@ def get_iverilog_file_list(l, d, context):
 
     """
     result = ""
-    filelist = file_list.get_file_list(l, context, 'sim_rtl,tb_rtl,sim_rtl_iverilog')
-    dirlist = file_list.get_dir_list(d, context, 'sim_rtl,tb_rtl,sim_rtl_iverilog')
+    filelist = file_list.get_file_list(l, context, 'sim_rtl,sim_rtl_verilator')
+    dirlist = file_list.get_dir_list(d, context, 'sim_rtl,sim_rtl_verilator')
     for d in dirlist:
         result += "+incdir+" + d + "\n"
 

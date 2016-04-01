@@ -82,20 +82,20 @@ module nanorv32_regfile (/*AUTOARG*/
 
   always @(sel_porta or regfile[sel_porta])  begin
      if((sel_porta != 0) || allow_hidden_use_of_x0) begin
-      porta <= regfile[sel_porta];
+      porta = regfile[sel_porta];
     end
     else begin
-      porta <= 0;
+      porta = 0;
     end
   end
 
 
   always @(sel_portb or regfile[sel_portb])  begin
      if((sel_portb != 0) || allow_hidden_use_of_x0) begin
-      portb <= regfile[sel_portb];
+      portb = regfile[sel_portb];
     end
     else begin
-      portb <= 0;
+      portb = 0;
     end
   end
 

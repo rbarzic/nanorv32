@@ -96,6 +96,29 @@ if gui:
     cfg['simulator']['icarus']['gui'] += 'cd $(TEST_DIR) && gtkwave ' + cfg['simulation']['testbench_name'] + '.vcd &'
 
 
+# VERILATOR simulator
+
+define['simulator']['verilator']['options'] = 'MAKE_VARIABLE'
+cfg['simulator']['verilator']['options'] = ' --cc --error-limit 2000'
+
+define['simulator']['verilator']['warnings'] = 'MAKE_VARIABLE'
+cfg['simulator']['verilator']['warnings'] = ' '
+
+
+define['simulator']['verilator']['gui'] = 'MAKE_VARIABLE'
+cfg['simulator']['verilator']['gui'] = ''
+
+if logging:
+    cfg['simulator']['verilator']['vvp_opt'] += ' +vcd '
+
+if trace:
+    cfg['simulator']['verilator']['options'] += ' -DTRACE='+trace
+    cfg['simulator']['verilator']['vvp_opt'] += ' +trace=' + trace
+
+if gui:
+    cfg['simulator']['verilator']['gui'] += 'cd $(TEST_DIR) && gtkwave ' + cfg['simulation']['testbench_name'] + '.vcd &'
+
+
 # Xilinx Vivado  xvlog/xelab/xsim  simulator
 
 define['simulator']['xilinx']['xvlog']['options'] = 'MAKE_VARIABLE'
@@ -119,8 +142,3 @@ else:
 if trace:
     cfg['simulator']['xilinx']['xvlog']['options'] += ' -DTRACE='+trace
     cfg['simulator']['xilinx']['xsim']['options'] += ' +trace=' + trace
-
-
-
-define['simulator']['icarus']['warnings'] = 'MAKE_VARIABLE'
-cfg['simulator']['icarus']['warnings'] = '-Wall -W no-timescale'

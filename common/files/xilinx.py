@@ -16,8 +16,8 @@ def get_xvlog_file_list(l, d, context):
 
     """
     result = ""
-    filelist = file_list.get_file_list(l, context, 'sim_rtl,sim_rtl_xilinx')
-    dirlist = file_list.get_dir_list(d, context, 'sim_rtl,sim_rtl_xilinx')
+    filelist = file_list.get_file_list(l, context, 'sim_rtl,sim_rtl_xilinx,tb_rtl')
+    dirlist = file_list.get_dir_list(d, context, 'sim_rtl,sim_rtl_xilinx,tb_rtl')
     for d in dirlist:
         result += "--include " + d + "\n"
 

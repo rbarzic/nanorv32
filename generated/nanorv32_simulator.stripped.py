@@ -5,6 +5,7 @@ import inst_decod as id
 import nanorv32_simu as ns
 import argparse
 import ctypes as ct
+import re
 
 
 #@begin[py_csr_address]
@@ -396,7 +397,8 @@ if __name__ == '__main__':
               rtl_inst = "0x" + rtl_inst_tmp
            model_pc = '0x%08x' % nrv.pc
            if rtl_pc != model_pc:
-                print "\n-I- TEST FAILED (pc compare fail) : RTL PC : ", rtl_pc, ", Model PC " ,model_pc,", line {} \n", line_num
+                print "\n-I- TEST FAILED (pc compare fail) : RTL PC : ", rtl_pc, ", Model PC " ,model_pc,", line", line_num
+                print "\n"
                 if trace:
                     trace.close()
                 sys.exit()
@@ -405,7 +407,6 @@ if __name__ == '__main__':
                 if trace:
                     trace.close()
                 sys.exit()
-           line_num = line_num +1
         if nrv.pc == 0x00000100:
             if nrv.rf[10] == 0xCAFFE000: #x10/a0
                 print
@@ -434,9 +435,7 @@ if __name__ == '__main__':
             if c == 10:
                 print
 
-
         nrv.new_instruction(inst)
-
         inst_str =  nrv.match_instruction(inst)
         inst_str2 = inst_str.replace('c.', '')
         if args.trace:
@@ -451,3 +450,21 @@ if __name__ == '__main__':
             if trace:
                 trace.close()
             sys.exit("-E- Illegall instruction found !")
+        if (compare) :
+           test = re.search(r"RF\[(\S+)(\s+)\] <=", txt)
+           test2 = re.search(r"RF\[(\S+)(\s+)\] <=", line)
+           test3 = re.search(r"<= 0x(\S+) ", txt)
+           test4 = re.search(r"<= 0x(\S+) ", line)
+           if not test or not test2:
+             if test[1] != test2[1]:
+                 print "\n-I- TEST FAILED (reg_dest) : RTL RD :" + test[1] + ", Model RD : " + test2[1] + " line " + line_num, " \n"
+                 if trace:
+                     trace.close()
+                 sys.exit()
+           if not test3 or not test4:
+             if test3 != test4:
+                 print "\n-I- TEST FAILED (reg_update) : RTL RD val : " + test3 + " Model RD val: " + test4 + " line " + line_num + ", \n"
+                 if trace:
+                     trace.close()
+                 sys.exit()
+           line_num = line_num +1

@@ -190,7 +190,7 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
            else if (irq && !irq_bypass_inst_reg_r) begin
               set_irq_bypass_inst = 1'b1;
               urom_addr_start_value = irq_entry_start;
-              set_interrupt_state <= 1;
+              set_interrupt_state = 1;
 
            end
            //else if ( reti_inst_detected  && interrupt_state_r) begin
@@ -224,7 +224,7 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
               // a valid branch should end the poping sequence
               // when restoring the context during a interrupt
              if(irq_restore_r) begin
-                clear_irq_restore <= 1;
+                clear_irq_restore = 1;
              end
 
 
@@ -255,7 +255,7 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
                     if (irq && !irq_bypass_inst_reg_r) begin
                        set_irq_bypass_inst = 1'b1;
                        urom_addr_start_value = irq_entry_start;
-                       set_interrupt_state <= 1;
+                       set_interrupt_state = 1;
                     end
                     else if ( reti_inst_detected  && interrupt_state_r) begin
                        set_irq_bypass_inst = 1'b1;
@@ -281,7 +281,7 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
                     if (irq && !irq_bypass_inst_reg_r) begin
                        set_irq_bypass_inst = 1'b1;
                        urom_addr_start_value = irq_entry_start;
-                       set_interrupt_state <= 1;
+                       set_interrupt_state = 1;
                     end
                     else if ( reti_inst_detected  && interrupt_state_r) begin
                        set_irq_bypass_inst = 1'b1;
@@ -332,7 +332,7 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
          /*AUTORESET*/
       end
       else begin
-        if (~(interlock | branch_wait)) 
+        if (~(interlock | branch_wait))
          pstate_r <= pstate_next;
 
       end

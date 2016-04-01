@@ -58,7 +58,7 @@ module nanorv32_urom (/*AUTOARG*/
       //@begin[micro_rom]
       //@end[micro_rom]
         default: begin
-           dout<= 32'h0000000;
+           dout = 32'h0000000;
         end
 
       endcase

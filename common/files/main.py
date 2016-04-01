@@ -1,6 +1,7 @@
 import nanorv32_fl
 import iverilog
 import xilinx
+import verilator
 import argparse
 
 
@@ -15,6 +16,9 @@ Put description of application here
                    """)
     parser.add_argument('--iverilog', action='store', dest='iverilog',
                         help='iverilog file list', default="")
+
+    parser.add_argument('--verilator', action='store', dest='verilator',
+                        help='Verilator file list', default="")
 
     parser.add_argument('--vivado_sim', action='store', dest='vivado_sim',
                         help='Vivado simulator file list', default="")
@@ -55,6 +59,12 @@ if args.iverilog != "":
     print "-I- iverilog generation"""
     txt = iverilog.get_iverilog_file_list(l, d, context)
     with open(args.iverilog,'w')  as f:
+        f.write(txt)
+
+if args.verilator != "":
+    print "-I- Verilator generation"""
+    txt = verilator.get_verilator_file_list(l, d, context)
+    with open(args.verilator,'w')  as f:
         f.write(txt)
 
 if args.vivado_sim != "":

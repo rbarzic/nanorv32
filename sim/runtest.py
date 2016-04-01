@@ -26,6 +26,7 @@ tpl_main_makefile_footer  = """
 
 include {config_rel_dir}/gcc.mk
 include {config_rel_dir}/icarus.mk
+include {config_rel_dir}/verilator.mk
 include {config_rel_dir}/xilinx.mk
 include {config_rel_dir}/pysim.mk
 
@@ -150,7 +151,7 @@ A simulation launcher for the Nanorv32 project
 
     parser.add_argument('-s', '--simulator', action='store', dest='simulator',
                         default='icarus',
-                        choices = ['icarus','xilinx','pysim'],
+                        choices = ['icarus','xilinx','pysim','verilator'],
 
                         help='Select simulator (iverilog, xilinx(xlog),...)')
 
