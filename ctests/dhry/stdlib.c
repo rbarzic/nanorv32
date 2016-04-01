@@ -17,7 +17,11 @@ int heap_memory_used = 0;
 long time()
 {
 	int cycles;
+#ifdef NO_RD_INST
+        cycles = 200000;
+#else
 	asm("rdcycle %0" : "=r"(cycles));
+#endif
 	// printf("[time() -> %d]", cycles);
 	return cycles;
 }
@@ -25,7 +29,11 @@ long time()
 long insn()
 {
 	int insns;
-	asm("rdinstret %0" : "=r"(insns));
+#ifdef NO_RD_INST
+        insns = 100000;
+#else
+        asm("rdinstret %0" : "=r"(insns));
+#endif
 	// printf("[insn() -> %d]", insns);
 	return insns;
 }

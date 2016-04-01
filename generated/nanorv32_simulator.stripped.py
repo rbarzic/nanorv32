@@ -64,7 +64,7 @@ class NanoRV32Core(object):
         # Build dictionnaries for the decoder
         self.mask_dict = {inst :  int("0b" + get_mask (id.decode[inst]),2) for inst in id.decode.keys ()}
         self.match_dict = {inst : int( "0b" + get_match(id.decode[inst]),2) for inst in id.decode.keys()}
-        self.data_memory = [0x55]*(self.datamem_size) # byte-addressed memory
+        self.data_memory = [0x0]*(self.datamem_size) # byte-addressed memory
         self.code_memory = [0]*(self.codemem_size) # byte-addressed memory
         self.csr = [0xCAFEBABE]*0x1000
         self.init_csr()
@@ -193,12 +193,12 @@ class NanoRV32Core(object):
 
         # CSS (SWSP)
         tmp = bitfield(self.dec_css_imm,offset=2,size=4)*(2**2)
-        tmp += bitfield(self.dec_css_imm, offset=0, size=2)*(2**6) 
+        tmp += bitfield(self.dec_css_imm, offset=0, size=2)*(2**6)
         self.dec_swsp_imm = tmp
         #CI (LWSP)
         tmp = bitfield(self.dec_ci_immlo,offset=2,size=3)*(2**2)
-        tmp += bitfield(self.dec_ci_immhi, offset=0, size=1)*(2**5) 
-        tmp += bitfield(self.dec_ci_immlo, offset=0, size=2)*(2**6) 
+        tmp += bitfield(self.dec_ci_immhi, offset=0, size=1)*(2**5)
+        tmp += bitfield(self.dec_ci_immlo, offset=0, size=2)*(2**6)
         self.dec_lwsp_imm = tmp
         # JAL or J
         tmp = bitfield(self.dec_cj_imm,offset=1,size=3)*2
@@ -246,21 +246,21 @@ class NanoRV32Core(object):
            match = self.match_dict[i]
            if (inst_match & mask) == match:
        	      return i
-       
+
        return 'illegal_instruction'
 
     def execute_instruction(self,inst_str):
        "Execute the current instruction"
        if inst_str in ns.spec['nanorv32']['rv32i']['simu']['inst']:
            f = dict(ns.spec ['nanorv32']['rv32i']['simu']['inst'][inst_str])
-       
+
            return f['func'](self)
        elif inst_str in ns.spec['nanorv32']['rvc_rv32']['simu']['inst']:
            f = dict(ns.spec ['nanorv32']['rvc_rv32']['simu']['inst'][inst_str])
-       
+
            return f['func'](self)
-    
-    
+
+
     def dump_regfile(self, num_col=4):
        nb_reg = len(self.rf)
        i = 0
@@ -269,7 +269,7 @@ class NanoRV32Core(object):
        	      sys.stdout.write("x{:02d}=0x{:08X} ".format(i,self.rf[i]))
        	      i += 1
               print
-    
+
     def load_code_memory(self,hex2_file):
        with open(hex2_file) as f:
            addr = 0;
@@ -280,7 +280,7 @@ class NanoRV32Core(object):
               self.code_memory[addr+2] = (word>>16) & 0x0FF
               self.code_memory[addr+3] = (word>>24) & 0x0FF
               addr += 4
-    
+
     def get_instruction(self, addr):
        addr_f = self.fix_address(addr)
        tmp0 = self.code_memory[addr_f] & 0x0FF
@@ -293,25 +293,25 @@ class NanoRV32Core(object):
        tmp += (tmp3<< 24)
        if bitfield(tmp,offset=7,size=5) == 0x00:
           is_rs1_eq_0 = 1
-       else: 
-          is_rs1_eq_0 = 0 
+       else:
+          is_rs1_eq_0 = 0
        if bitfield(tmp,offset=7,size=5) == 0x02:
           is_rs1_eq_2 = 1
        else :
-          is_rs1_eq_2 = 0 
+          is_rs1_eq_2 = 0
        if bitfield(tmp,offset=2,size=5) == 0x00:
           is_rs2_eq_0 = 1
        else :
-          is_rs2_eq_0 = 0 
+          is_rs2_eq_0 = 0
        tmp += (is_rs1_eq_0<<32)
        tmp += (is_rs1_eq_2<<33)
        tmp += (is_rs2_eq_0<<34)
        return tmp
-    
+
     def csr_read(self, addr):
        return self.csr[addr]
-    
-    
+
+
     def update_csr(self):
        self.csr[NANORV32_CSR_ADDR_CYCLE] +=1
        self.csr[NANORV32_CSR_ADDR_TIME] +=1
@@ -319,16 +319,16 @@ class NanoRV32Core(object):
        if self.csr[NANORV32_CSR_ADDR_CYCLE] == 0x100000000:
            self.csr[NANORV32_CSR_ADDR_CYCLE] = 0
            self.csr[NANORV32_CSR_ADDR_CYCLEH] += 1
-       
+
        if self.csr[NANORV32_CSR_ADDR_TIME] == 0x100000000:
            self.csr[NANORV32_CSR_ADDR_TIME] = 0
            self.csr[NANORV32_CSR_ADDR_TIMEH] += 1
-       
+
        if self.csr[NANORV32_CSR_ADDR_INSTRET] == 0x100000000:
            self.csr[NANORV32_CSR_ADDR_INSTRET] = 0
            self.csr[NANORV32_CSR_ADDR_INSTRETH] += 1
        pass
-       
+
     def init_csr(self):
        self.csr[NANORV32_CSR_ADDR_CYCLE] = 0
        self.csr[NANORV32_CSR_ADDR_CYCLEH] = 0
@@ -336,7 +336,7 @@ class NanoRV32Core(object):
        self.csr[NANORV32_CSR_ADDR_TIMEH] = 0
        self.csr[NANORV32_CSR_ADDR_INSTRET] = 0
        self.csr[NANORV32_CSR_ADDR_INSTRETH] = 0
-    
+
 def get_args():
     """
     Get command line arguments
@@ -354,8 +354,8 @@ Put description of application here
                         help='trace file to compare', default=None)
     parser.add_argument('--version', action='version', version='%(prog)s 0.1')
     return parser.parse_args()
-    
-    
+
+
 if __name__ == '__main__':
 
     line_num = 0
@@ -439,7 +439,8 @@ if __name__ == '__main__':
         inst_str =  nrv.match_instruction(inst)
         inst_str2 = inst_str.replace('c.', '')
         if args.trace:
-            trace.write(inst_str2.ljust(8))
+            trace.write(inst_str.ljust(8))
+            #trace.write(inst_str2.ljust(8))
         if inst_str != 'illegal_instruction':
             _, new_pc,txt  = nrv.execute_instruction(inst_str)
             if trace:

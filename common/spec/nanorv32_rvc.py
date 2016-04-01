@@ -88,7 +88,7 @@ spec['nanorv32']['inst_type']['CJ-type']['format'] = {
 spec['nanorv32']['inst_type']['CS2-type']['format'] = {
     'opcodervc': {'size': 2, 'offset': 0, 'decode': True},
     'c_rs2_p': {'size': 3, 'offset': 2},
-    'cb2_dec':{'size': 2, 'offset': 5, 'decode': True},
+    'cs2_func2':{'size': 2, 'offset': 5, 'decode': True},
     'c_rs1_p': {'size': 3, 'offset': 7},
     'c_func6': {'size': 6, 'offset': 10, 'decode': True},
     'hint_rvc_rd_rs1_is_zero' : {'size': 1, 'offset': 32, 'decode': True, 'Hint' : True},
@@ -101,7 +101,7 @@ spec['nanorv32']['inst_type']['CB2-type']['format'] = {
     'opcodervc': {'size': 2, 'offset': 0, 'decode': True},
     'cb2_immlo': {'size': 5, 'offset': 2},
     'c_rs1_p': {'size': 3, 'offset': 7},
-    'c_func2': {'size': 2, 'offset': 10},
+    'cb2_func2': {'size': 2, 'offset': 10, 'decode': True},
     'cb2_immlo': {'size': 1, 'offset': 12},
     'c_func3': {'size': 3, 'offset': 13, 'decode': True},
     'hint_rvc_rd_rs1_is_zero' : {'size': 1, 'offset': 32, 'decode': True, 'Hint' : True},
@@ -253,7 +253,7 @@ spec['nanorv32']['rvc_rv32']['c.srli']['desc'] = {
     'inst_type' : 'CB2-type',
     'decode' : {
         'opcodervc' : 0b01,
-        'cb2_dec'   : 0b00,
+        'cb2_func2'   : 0b00,
         'c_func3'     : 0b100,
         'hint_rvc_rd_rs1_is_zero' : '?',
         'hint_rvc_rd_rs1_is_two' : '?',
@@ -265,7 +265,7 @@ spec['nanorv32']['rvc_rv32']['c.srai']['desc'] = {
     'inst_type' : 'CB2-type',
     'decode' : {
         'opcodervc' : 0b01,
-        'cb2_dec'   : 0b01,
+        'cb2_func2'   : 0b01,
         'c_func3'     : 0b100,
         'hint_rvc_rd_rs1_is_zero' : '?',
         'hint_rvc_rd_rs1_is_two' : '?',
@@ -277,7 +277,7 @@ spec['nanorv32']['rvc_rv32']['c.andi']['desc'] = {
     'inst_type' : 'CB2-type',
     'decode' : {
         'opcodervc' : 0b01,
-        'cb2_dec'   : 0b10,
+        'cb2_func2'   : 0b10,
         'c_func3'     : 0b100,
         'hint_rvc_rd_rs1_is_zero' : '?',
         'hint_rvc_rd_rs1_is_two' : '?',
@@ -312,7 +312,7 @@ spec['nanorv32']['rvc_rv32']['c.sub']['desc'] = {
     'inst_type' : 'CS2-type',
     'decode' : {
         'opcodervc' : 0b01,
-        'cb2_dec'   : 0b00,
+        'cs2_func2'   : 0b00,
         'c_func6'   : 0b100011,
         'hint_rvc_rd_rs1_is_zero' : '?',
         'hint_rvc_rd_rs1_is_two' : '?',
@@ -324,7 +324,7 @@ spec['nanorv32']['rvc_rv32']['c.xor']['desc'] = {
     'inst_type' : 'CS2-type',
     'decode' : {
         'opcodervc' : 0b01,
-        'cb2_dec'   : 0b01,
+        'cs2_func2'   : 0b01,
         'c_func6'   : 0b100011,
         'hint_rvc_rd_rs1_is_zero' : '?',
         'hint_rvc_rd_rs1_is_two' : '?',
@@ -336,7 +336,7 @@ spec['nanorv32']['rvc_rv32']['c.or']['desc'] = {
     'inst_type' : 'CS2-type',
     'decode' : {
         'opcodervc' : 0b01,
-        'cb2_dec'   : 0b10,
+        'cs2_func2'   : 0b10,
         'c_func6'   : 0b100011,
         'hint_rvc_rd_rs1_is_zero' : '?',
         'hint_rvc_rd_rs1_is_two' : '?',
@@ -348,7 +348,7 @@ spec['nanorv32']['rvc_rv32']['c.and']['desc'] = {
     'inst_type' : 'CS2-type',
     'decode' : {
         'opcodervc' : 0b01,
-        'cb2_dec'   : 0b11,
+        'cs2_func2'   : 0b11,
         'c_func6'   : 0b100011,
         'hint_rvc_rd_rs1_is_zero' : '?',
         'hint_rvc_rd_rs1_is_two' : '?',

@@ -74,7 +74,7 @@ SECTIONS
 		__bss_start__ = .;
 		*(.bss*)
 		*(.sbss*)
-/*		*(COMMON)*/
+		*(COMMON)
 		. = ALIGN(4);
 		__bss_end__ = .;
 	} > RAM
@@ -101,7 +101,7 @@ SECTIONS
 	.stack_dummy (COPY):
 	{
 		*(.stack*)
-	} > RAM 
+	} > RAM
 
 	/* Set stack top to end of RAM, and stack limit move down by
 	 * size of stack_dummy section */

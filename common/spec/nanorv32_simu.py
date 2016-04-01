@@ -123,7 +123,7 @@ def c_add(c):
 def c_sub(c):
     rs1 = (c.dec_c_rs1_p+ 8)
     rs2 = (c.dec_c_rs2_p+ 8)
-    rd = c.dec_c_rd_p +8
+    rd = c.dec_c_rs1_p +8
     rd_print = format_reg(rd)
     rs1_print = format_reg(rs1)
     rs1_val = ct.c_uint32(c.rf[rs1]).value
@@ -157,7 +157,7 @@ def c_and(c):
 def c_or(c):
     rs1 = (c.dec_c_rs1_p+ 8)
     rs2 = (c.dec_c_rs2_p+ 8)
-    rd = (c.dec_c_rd_p +8)
+    rd = (c.dec_c_rs1_p +8)
     rd_print = format_reg(rd)
     rs1_print = format_reg(rs1)
     rs1_val = ct.c_uint32(c.rf[rs1]).value
@@ -174,7 +174,7 @@ def c_or(c):
 def c_xor(c):
     rs1 = (c.dec_c_rs1_p+ 8)
     rs2 = (c.dec_c_rs2_p+ 8)
-    rd = (c.dec_c_rd_p +8)
+    rd = (c.dec_c_rs1_p +8)
     rd_print = format_reg(rd)
     rs1_print = format_reg(rs1)
     rs1_val = ct.c_uint32(c.rf[rs1]).value
@@ -392,7 +392,7 @@ def sim_jalr(c):
     rd  = c.dec_rd
     rd_print = format_reg(rd)
     rs1_val = uint32(c.rf[rs1])
-    
+
     offset = uint32(c.dec_imm12_se)
     pc = uint32(c.pc)
     rd_val = uint32(pc +4)
@@ -428,12 +428,12 @@ def store(c, mem_access_fn):
     rs2 = c.dec_rs2
     rs1_print = format_reg(rs1)
     rs2_print = format_reg(rs2)
-    
+
     rs1_val = uint32(c.rf[rs1])
     rs2_val = uint32(c.rf[rs2])
     offset = uint32(c.dec_store_imm12_se)
     pc = uint32(c.pc)
-    addr = uint32(rs1_val + offset) 
+    addr = uint32(rs1_val + offset)
     # Mem access (using a function passed as a parameter)
     mem_access_fn(c,addr,rs2_val)
     new_pc = uint32(pc + 4)
@@ -452,7 +452,7 @@ def store(c, mem_access_fn):
        rs2_val_print = bitfield(c.rf[rs2],offset=0,size=8)*(2**16)
     else :
        rs2_val_print = uint32(c.rf[rs2])
-    
+
     txt = " MEM[0x{:08x}] <= RF[{}] : 0x{:08x} (RF[{}]=0x{:08x} +   offset=0x{:08x}) ".format(addr,rs2_print,rs2_val_print,rs1_print,rs1_val,offset)
     return (None,new_pc,txt)
 
@@ -504,7 +504,7 @@ def cstore_sp(c, mem_access_fn):
     rs2 = c.dec_c_rs2
     rs1_print = format_reg(rs1)
     rs2_print = format_reg(rs2)
-    
+
     rs1_val = uint32(c.rf[rs1])
     rs2_val = uint32(c.rf[rs2])
     offset = uint32(c.dec_swsp_imm)
@@ -515,7 +515,7 @@ def cstore_sp(c, mem_access_fn):
     new_pc = uint32(pc + 2)
     txt = " MEM[0x{:08x}] <= RF[{}] : 0x{:08x} (RF[{}]=0x{:08x} +   offset=0x{:08x}) ".format(addr,rs2_print,rs2_val,rs1_print,rs1_val,offset)
     return (None,new_pc,txt)
-    
+
 def cload_sp(c, mem_access_fn):
     rs1 = 2
     rd  = c.dec_c_rd_rs1
@@ -539,7 +539,7 @@ def cstore(c, mem_access_fn):
     rs2 = (c.dec_c_rs2_p+8)
     rs1_print = format_reg(rs1)
     rs2_print = format_reg(rs2)
-    
+
     rs1_val = uint32(c.rf[rs1])
     rs2_val = uint32(c.rf[rs2])
     offset = uint32(c.dec_c_ls_imm)
@@ -573,11 +573,11 @@ def mulh(a,b):
    a32 = uint32(a)
    b32 = uint32(b)
    #print "Mulh 0x{:08x} * 0x{:08x} ".format(a32,b32)
-   
+
    s_a = ((a32>>31) & 0x01) == 1
    s_b = ((b32>>31) & 0x01) == 1
    #print "s_a = {} s_b = {} ".format(s_a, s_b)
-   
+
    if (not s_a)  and  (not s_b):
       # both positive
       return uint32((a32*b32)>>32)
@@ -597,17 +597,17 @@ def mulh(a,b):
       b32_pos = uint32(~b32+1)
       # result is negative
       return uint32 (comp2(a32_pos*b32_pos)>>32)
-   
+
 def mulhu(a,b):
    a32 = uint32(a)
    b32 = uint32(b)
    return (a32*b32)>>32
-   
-   
+
+
 def mulhsu(a,b):
    a32 = uint32(a)
    b32_pos = uint32(b)
-   
+
    s_a = ((a32>>31) & 0x01) == 1
    if s_a:
       # one negative, one positive
@@ -623,13 +623,13 @@ def div(a,b):
     a32 = uint32(a)
     b32 = uint32(b)
     #print "Div 0x{:08x} * 0x{:08x} ".format(a32,b32)
-    
+
     s_a = ((a32>>31) & 0x01) == 1
     s_b = ((b32>>31) & 0x01) == 1
     #print "s_a = {} s_b = {} ".format(s_a, s_b)
     if(b32==0):
        return uint32(-1)
-    
+
     if (not s_a)  and  (not s_b):
     # both positive
        return uint32(a32/b32)
@@ -640,7 +640,7 @@ def div(a,b):
     elif s_a and  (not s_b):
        # a negative, b positive
        a32_pos = uint32(~a32 +1)
-       b32_pos = b32 
+       b32_pos = b32
        #  result is negative
        return uint32 (comp2(a32_pos/b32_pos))
     else:
@@ -655,13 +655,13 @@ def rem(a,b):
     a32 = uint32(a)
     b32 = uint32(b)
     #print "Rem 0x{:08x} / 0x{:08x} ".format(a32,b32)
-    
+
     s_a = ((a32>>31) & 0x01) == 1
     s_b = ((b32>>31) & 0x01) == 1
     #print "s_a = {} s_b = {} ".format(s_a, s_b)
     if(b32==0):
        return a32
-    
+
     if (not s_a)  and  (not s_b):
     # both positive
        return uint32(a32%b32)
@@ -690,7 +690,7 @@ def rem(a,b):
 def divu(a,b):
    a32 = uint32(a)
    b32 = uint32(b)
-   
+
    if(b32==0):
       return uint32(-1)
    else:
@@ -699,12 +699,12 @@ def divu(a,b):
 def remu(a,b):
    a32 = uint32(a)
    b32 = uint32(b)
-   
+
    if(b32==0):
       return uint32(a32)
    else:
       return uint32(a32%b32)
-   
+
 
 
 
@@ -728,11 +728,11 @@ def lt_comp_signed(a,b):
     a32 = uint32(a)
     b32 = uint32(b)
     #print "Compare 0x{:08x} < 0x{:08x} ".format(a32,b32)
-    
+
     s_a = ((a32>>31) & 0x01) == 1
     s_b = ((b32>>31) & 0x01) == 1
     #print "s_a = {} s_b = {} ".format(s_a, s_b)
-    
+
     if (not s_a)  and  (not s_b):
     # both positive
        return 1 if a32 < b32 else 0
@@ -752,11 +752,11 @@ def ge_comp_signed(a,b):
     a32 = uint32(a)
     b32 = uint32(b)
     #print "Compare 0x{:08x} < 0x{:08x} ".format(a32,b32)
-    
+
     s_a = ((a32>>31) & 0x01) == 1
     s_b = ((b32>>31) & 0x01) == 1
     #print "s_a = {} s_b = {} ".format(s_a, s_b)
-    
+
     if (not s_a)  and  (not s_b):
     # both positive
        return 1 if a32 >= b32 else 0
@@ -847,8 +847,8 @@ sim_cslli = partial(ci_type_shft,
 sim_csrli = partial(ci_type_shft,
 	  op=lambda x,y: x>>(y & 0x1F),
 	  op_str='>>')
-sim_csrai = partial(ci_type_shft,op=sra_32,op_str='>>') 
-c_andi = partial(ci_type_shft,op=operator.and_,op_str='&') 
+sim_csrai = partial(ci_type_shft,op=sra_32,op_str='>>')
+c_andi = partial(ci_type_shft,op=operator.and_,op_str='&')
 
 # CSR
 def csr_read(c,addr,csr=""):
@@ -860,7 +860,7 @@ def csr_read(c,addr,csr=""):
    c.update_rf(rd,rd_val)
    new_pc = uint32(pc + 4)
    txt = "RF[rd={:02d}] <= 0x{:08x} (CSR : {:s} 0x{:08x}  ) ".format(rd,rd_val,csr,addr)
-   
+
    return (None,new_pc,txt)
 
 

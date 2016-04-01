@@ -170,10 +170,10 @@ module nanorv32 (/*AUTOARG*/
     wire [NANORV32_INST_FORMAT_CB_OFFSET_LO_MSB:0] dec_cb_offset_lo  = instruction_r[NANORV32_INST_FORMAT_CB_OFFSET_LO_OFFSET +: NANORV32_INST_FORMAT_CB_OFFSET_LO_SIZE];
     wire [NANORV32_INST_FORMAT_CB_OFFSET_HI_MSB:0] dec_cb_offset_hi  = instruction_r[NANORV32_INST_FORMAT_CB_OFFSET_HI_OFFSET +: NANORV32_INST_FORMAT_CB_OFFSET_HI_SIZE];
     wire [NANORV32_INST_FORMAT_CJ_IMM_MSB:0] dec_cj_imm  = instruction_r[NANORV32_INST_FORMAT_CJ_IMM_OFFSET +: NANORV32_INST_FORMAT_CJ_IMM_SIZE];
-    wire [NANORV32_INST_FORMAT_CB2_DEC_MSB:0] dec_cb2_dec  = instruction_r[NANORV32_INST_FORMAT_CB2_DEC_OFFSET +: NANORV32_INST_FORMAT_CB2_DEC_SIZE];
+    wire [NANORV32_INST_FORMAT_CS2_FUNC2_MSB:0] dec_cs2_func2  = instruction_r[NANORV32_INST_FORMAT_CS2_FUNC2_OFFSET +: NANORV32_INST_FORMAT_CS2_FUNC2_SIZE];
     wire [NANORV32_INST_FORMAT_C_FUNC6_MSB:0] dec_c_func6  = instruction_r[NANORV32_INST_FORMAT_C_FUNC6_OFFSET +: NANORV32_INST_FORMAT_C_FUNC6_SIZE];
-    wire [NANORV32_INST_FORMAT_C_FUNC2_MSB:0] dec_c_func2  = instruction_r[NANORV32_INST_FORMAT_C_FUNC2_OFFSET +: NANORV32_INST_FORMAT_C_FUNC2_SIZE];
     wire [NANORV32_INST_FORMAT_CB2_IMMLO_MSB:0] dec_cb2_immlo  = instruction_r[NANORV32_INST_FORMAT_CB2_IMMLO_OFFSET +: NANORV32_INST_FORMAT_CB2_IMMLO_SIZE];
+    wire [NANORV32_INST_FORMAT_CB2_FUNC2_MSB:0] dec_cb2_func2  = instruction_r[NANORV32_INST_FORMAT_CB2_FUNC2_OFFSET +: NANORV32_INST_FORMAT_CB2_FUNC2_SIZE];
    //@end[instruction_fields]
 
    reg                                       write_rd;
@@ -417,9 +417,7 @@ module nanorv32 (/*AUTOARG*/
         NANORV32_MUX_SEL_REGFILE_PORT2_RS2_C_P: begin
            regfile_port2 = rvc_to_rv32_reg(dec_c_rs2_p);
         end
-        NANORV32_MUX_SEL_REGFILE_PORT2_RS2_C_P: begin
-           regfile_port2 = rvc_to_rv32_reg(dec_c_rs2_p);
-        end
+
         default: begin
            regfile_port2 = dec_rs2;
         end

@@ -149,8 +149,8 @@ else:
 
 
 if trace:
-    cfg['simulator']['xilinx']['xvlog']['options'] += ' -DTRACE='+trace
-    cfg['simulator']['xilinx']['xsim']['options'] += ' +trace=' + trace
+    cfg['simulator']['xilinx']['xvlog']['options'] += ' --define TRACE='+trace
+    cfg['simulator']['xilinx']['xsim']['options'] += ' -testplusarg trace=' + trace
 
 
 # Pysim simulator

@@ -24,6 +24,9 @@ A tol to check trace differences for the Nanorv32
     parser.add_argument('--rvc', action='store_true', dest='rvc',
                         default=False,
                         help='RVC mode')
+    parser.add_argument('--skip_inst_comp', action='store_true', dest='skip_inst_comp',
+                        default=False,
+                        help='Skip the comparison of the instruction strings')
 
     return parser.parse_args()
 
@@ -175,7 +178,7 @@ if __name__ == '__main__':
                     print "pysim  : " + str(ll_pysim)
                     print "rtlsim : " + str(ll_rtlsim)
 
-                elif inst_pysim != inst_rtlsim:
+                elif (inst_pysim != inst_rtlsim) and not args.skip_inst_comp:
                     print "-E- Error comparing Instruction - line {}".format(line)
                     print "Line {}".format(line)
                     print "pysim  : " + str(ll_pysim)

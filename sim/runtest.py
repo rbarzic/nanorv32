@@ -173,6 +173,10 @@ A simulation launcher for the Nanorv32 project
                         default=False,
                         help='Define FPGA=1 for C compilation (mainly to use Uart output for printf ) - Likely to be used with -c')
 
+    parser.add_argument('--cdefines', action='store', dest='cdefines',
+                        default=None,
+                        help='Comma separated list of define/value  : XX=1,YY=2')
+
 
     parser.add_argument(dest='tests', metavar='tests', nargs='*',
                         help='Path(es) to the test')
@@ -201,6 +205,16 @@ if __name__ == '__main__':
     global_args['logging'] = args.logging
     global_args['target_fpga'] = args.target_fpga
 
+    # process cdefines arguments
+    cdefines_txt = ""
+    if args.cdefines:
+        cdefines = args.cdefines.split(',')
+        for df in cdefines:
+            d = dict()
+            def_l = df.split('=')
+            d['var_name_uc'] = def_l[0]
+            d['val'] = def_l[1]
+            cdefines_txt += tpl_c_define.format(**d)
 
     # main loop over tests
     for test in args.tests:
@@ -275,7 +289,7 @@ if __name__ == '__main__':
         # depending of the expected type (as defined in the define[][]...[])
         # in the default.py
 
-        txt = ""
+        txt = cdefines_txt
         for path,v  in all_data:
 
             d = dict() # use for string format(**d)
