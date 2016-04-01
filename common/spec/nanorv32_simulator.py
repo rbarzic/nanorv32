@@ -70,7 +70,7 @@ class NanoRV32Core(object):
         # Build dictionnaries for the decoder
         self.mask_dict = {inst :  int("0b" + get_mask (id.decode[inst]),2) for inst in id.decode.keys ()}
         self.match_dict = {inst : int( "0b" + get_match(id.decode[inst]),2) for inst in id.decode.keys()}
-        self.data_memory = [0x55]*(self.datamem_size) # byte-addressed memory
+        self.data_memory = [0x0]*(self.datamem_size) # byte-addressed memory
         self.code_memory = [0]*(self.codemem_size) # byte-addressed memory
         self.csr = [0xCAFEBABE]*0x1000
         self.init_csr()

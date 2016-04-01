@@ -383,7 +383,7 @@ def c_nop(c):
 
     pc = uint32(c.pc)
     new_pc = uint32(pc + 2 ) # lsb must be zero
-    txt = ""
+    txt = "RF[zero] <= 0x00000000"
 
     return (None,new_pc,txt)
 
@@ -392,7 +392,7 @@ def sim_jalr(c):
     rd  = c.dec_rd
     rd_print = format_reg(rd)
     rs1_val = uint32(c.rf[rs1])
-
+    
     offset = uint32(c.dec_imm12_se)
     pc = uint32(c.pc)
     rd_val = uint32(pc +4)
@@ -410,7 +410,7 @@ def load(c, mem_access_fn):
     rs1_val = uint32(c.rf[rs1])
     offset = uint32(c.dec_imm12_se)
     pc = uint32(c.pc)
-    addr = rs1_val + offset
+    addr = uint32(rs1_val + offset)
     # Mem access (using a function passed as a parameter)
     rd_val = mem_access_fn(c,addr)
     new_pc = uint32(pc + 4)
@@ -419,46 +419,66 @@ def load(c, mem_access_fn):
     return (None,new_pc,txt)
 
 
+def bitfield(data,offset,size):
+    mask = (1<<(size))-1
+    tmp = data >> offset
+    return tmp & mask
 def store(c, mem_access_fn):
     rs1 = c.dec_rs1
     rs2 = c.dec_rs2
     rs1_print = format_reg(rs1)
     rs2_print = format_reg(rs2)
-
+    
     rs1_val = uint32(c.rf[rs1])
     rs2_val = uint32(c.rf[rs2])
     offset = uint32(c.dec_store_imm12_se)
     pc = uint32(c.pc)
-    addr = rs1_val + offset
+    addr = uint32(rs1_val + offset) 
     # Mem access (using a function passed as a parameter)
     mem_access_fn(c,addr,rs2_val)
     new_pc = uint32(pc + 4)
-    txt = " MEM[0x{:08x}] <= RF[{}] : 0x{:08x} (RF[{}]=0x{:08x} +   offset=0x{:08x}) ".format(addr,rs2_print,rs2_val,rs1_print,rs1_val,offset)
+    rs2_val_print =0
+    if (bitfield(addr,offset=0,size=2) == 0 and mem_access_fn == sb_fn):
+       rs2_val_print = bitfield(c.rf[rs2],offset=0,size=8)
+    elif (bitfield(addr,offset=0,size=2) == 1 and mem_access_fn == sb_fn):
+       rs2_val_print = bitfield(c.rf[rs2],offset=0,size=8)*(2**8)
+    elif (bitfield(addr,offset=0,size=2) == 2 and mem_access_fn == sb_fn):
+       rs2_val_print = bitfield(c.rf[rs2],offset=0,size=8)*(2**16)
+    elif (bitfield(addr,offset=0,size=2) == 3 and mem_access_fn == sb_fn):
+       rs2_val_print = bitfield(c.rf[rs2],offset=0,size=8)*(2**24)
+    elif (bitfield(addr,offset=0,size=2) == 0 and mem_access_fn == sh_fn):
+       rs2_val_print = bitfield(c.rf[rs2],offset=0,size=8)*(2**0)
+    elif (bitfield(addr,offset=0,size=2) == 2 and mem_access_fn == sh_fn):
+       rs2_val_print = bitfield(c.rf[rs2],offset=0,size=8)*(2**16)
+    else :
+       rs2_val_print = uint32(c.rf[rs2])
+    
+    txt = " MEM[0x{:08x}] <= RF[{}] : 0x{:08x} (RF[{}]=0x{:08x} +   offset=0x{:08x}) ".format(addr,rs2_print,rs2_val_print,rs1_print,rs1_val,offset)
     return (None,new_pc,txt)
 
 def lw_fn(c,addr):
-    return c.mem_read_word(addr)
+   return c.mem_read_word(addr)
 
 def lh_fn(c,addr):
-    return c.mem_read_halfword(addr)
+   return c.mem_read_halfword(addr)
 
 def lhu_fn(c,addr):
-    return c.mem_read_halfword_u(addr)
+   return c.mem_read_halfword_u(addr)
 
 def lb_fn(c,addr):
-    return c.mem_read_byte(addr)
+   return c.mem_read_byte(addr)
 
 
 def lbu_fn(c,addr):
-    return c.mem_read_byte_u(addr)
+   return c.mem_read_byte_u(addr)
 
 
 def sw_fn(c,addr,data):
-    return c.mem_write_word(addr,data)
+   return c.mem_write_word(addr,data)
 def sh_fn(c,addr,data):
-    return c.mem_write_halfword(addr,data)
+   return c.mem_write_halfword(addr,data)
 def sb_fn(c,addr,data):
-    return c.mem_write_byte(addr,data)
+   return c.mem_write_byte(addr,data)
 
 
 
@@ -484,7 +504,7 @@ def cstore_sp(c, mem_access_fn):
     rs2 = c.dec_c_rs2
     rs1_print = format_reg(rs1)
     rs2_print = format_reg(rs2)
-
+    
     rs1_val = uint32(c.rf[rs1])
     rs2_val = uint32(c.rf[rs2])
     offset = uint32(c.dec_swsp_imm)
@@ -495,7 +515,7 @@ def cstore_sp(c, mem_access_fn):
     new_pc = uint32(pc + 2)
     txt = " MEM[0x{:08x}] <= RF[{}] : 0x{:08x} (RF[{}]=0x{:08x} +   offset=0x{:08x}) ".format(addr,rs2_print,rs2_val,rs1_print,rs1_val,offset)
     return (None,new_pc,txt)
-
+    
 def cload_sp(c, mem_access_fn):
     rs1 = 2
     rd  = c.dec_c_rd_rs1
@@ -519,7 +539,7 @@ def cstore(c, mem_access_fn):
     rs2 = (c.dec_c_rs2_p+8)
     rs1_print = format_reg(rs1)
     rs2_print = format_reg(rs2)
-
+    
     rs1_val = uint32(c.rf[rs1])
     rs2_val = uint32(c.rf[rs2])
     offset = uint32(c.dec_c_ls_imm)
@@ -532,160 +552,159 @@ def cstore(c, mem_access_fn):
     return (None,new_pc,txt)
 
 def cload(c, mem_access_fn):
-    rs1 = c.dec_c_rs1_p+8
-    rd  = c.dec_c_rs2_p+8
-    rd_print = format_reg(rd)
-    rs1_print = format_reg(rs1)
-    rs1_val = uint32(c.rf[rs1])
-    offset = uint32(c.dec_c_ls_imm)
-    pc = uint32(c.pc)
-    addr = rs1_val + offset
-    # Mem access (using a function passed as a parameter)
-    rd_val = mem_access_fn(c,addr)
-    new_pc = uint32(pc + 2)
-    c.update_rf(rd,rd_val)
-    txt = "RF[{}] <= 0x{:08x} MEM[0x{:08x}] (RF[{}]=0x{:08x} +   offset=0x{:08x}) ".format(rd_print,rd_val,addr,rs1_print,rs1_val,offset)
-    return (None,new_pc,txt)
+   rs1 = c.dec_c_rs1_p+8
+   rd  = c.dec_c_rs2_p+8
+   rd_print = format_reg(rd)
+   rs1_print = format_reg(rs1)
+   rs1_val = uint32(c.rf[rs1])
+   offset = uint32(c.dec_c_ls_imm)
+   pc = uint32(c.pc)
+   addr = rs1_val + offset
+   # Mem access (using a function passed as a parameter)
+   rd_val = mem_access_fn(c,addr)
+   new_pc = uint32(pc + 2)
+   c.update_rf(rd,rd_val)
+   txt = "RF[{}] <= 0x{:08x} MEM[0x{:08x}] (RF[{}]=0x{:08x} +   offset=0x{:08x}) ".format(rd_print,rd_val,addr,rs1_print,rs1_val,offset)
+   return (None,new_pc,txt)
 
 c_sw = partial(cstore,mem_access_fn=sw_fn)
 c_lw = partial(cload,mem_access_fn=lw_fn)
 def mulh(a,b):
-    a32 = uint32(a)
-    b32 = uint32(b)
-    #print "Mulh 0x{:08x} * 0x{:08x} ".format(a32,b32)
-
-    s_a = ((a32>>31) & 0x01) == 1
-    s_b = ((b32>>31) & 0x01) == 1
-    #print "s_a = {} s_b = {} ".format(s_a, s_b)
-
-    if (not s_a)  and  (not s_b):
-        # both positive
-        return uint32((a32*b32)>>32)
-    elif (s_a and  s_b):
-        a32_pos = uint32(~a32 +1)
-        b32_pos = uint32(~b32 +1)
-        return uint32((a32_pos*b32_pos)>>32)
-    elif s_a and  (not s_b):
-        # a negative, b positive
-        a32_pos = uint32(~a32 +1)
-        b32_pos = b32
-        # result is negative
-        return uint32 (comp2(a32_pos*b32_pos)>>32)
-    else:
-        # a positive, b negative
-        a32_pos = a32
-        b32_pos = uint32(~b32+1)
-        # result is negative
-        return uint32 (comp2(a32_pos*b32_pos)>>32)
-
+   a32 = uint32(a)
+   b32 = uint32(b)
+   #print "Mulh 0x{:08x} * 0x{:08x} ".format(a32,b32)
+   
+   s_a = ((a32>>31) & 0x01) == 1
+   s_b = ((b32>>31) & 0x01) == 1
+   #print "s_a = {} s_b = {} ".format(s_a, s_b)
+   
+   if (not s_a)  and  (not s_b):
+      # both positive
+      return uint32((a32*b32)>>32)
+   elif (s_a and  s_b):
+      a32_pos = uint32(~a32 +1)
+      b32_pos = uint32(~b32 +1)
+      return uint32((a32_pos*b32_pos)>>32)
+   elif s_a and  (not s_b):
+      # a negative, b positive
+      a32_pos = uint32(~a32 +1)
+      b32_pos = b32
+      # result is negative
+      return uint32 (comp2(a32_pos*b32_pos)>>32)
+   else:
+      # a positive, b negative
+      a32_pos = a32
+      b32_pos = uint32(~b32+1)
+      # result is negative
+      return uint32 (comp2(a32_pos*b32_pos)>>32)
+   
 def mulhu(a,b):
-    a32 = uint32(a)
-    b32 = uint32(b)
-    return (a32*b32)>>32
-
-
+   a32 = uint32(a)
+   b32 = uint32(b)
+   return (a32*b32)>>32
+   
+   
 def mulhsu(a,b):
-    a32 = uint32(a)
-    b32_pos = uint32(b)
-
-    s_a = ((a32>>31) & 0x01) == 1
-    if s_a:
-        # one negative, one positive
-        a32_pos = uint32(comp2(a32))
-        # result is negative
-        return uint32 (comp2(a32_pos*b32_pos)>>32)
-    else:
-        a32_pos = a32
-        # result is positive
-        return uint32((a32_pos*b32_pos)>>32)
-
+   a32 = uint32(a)
+   b32_pos = uint32(b)
+   
+   s_a = ((a32>>31) & 0x01) == 1
+   if s_a:
+      # one negative, one positive
+      a32_pos = uint32(comp2(a32))
+      # result is negative
+      return uint32 (comp2(a32_pos*b32_pos)>>32)
+   else:
+      a32_pos = a32
+      # result is positive
+      return uint32((a32_pos*b32_pos)>>32)
 
 def div(a,b):
     a32 = uint32(a)
     b32 = uint32(b)
     #print "Div 0x{:08x} * 0x{:08x} ".format(a32,b32)
-
+    
     s_a = ((a32>>31) & 0x01) == 1
     s_b = ((b32>>31) & 0x01) == 1
     #print "s_a = {} s_b = {} ".format(s_a, s_b)
     if(b32==0):
-        return uint32(-1)
-
+       return uint32(-1)
+    
     if (not s_a)  and  (not s_b):
-        # both positive
-        return uint32(a32/b32)
+    # both positive
+       return uint32(a32/b32)
     elif (s_a and  s_b):
-        a32_pos = uint32(~a32 +1)
-        b32_pos = uint32(~b32 +1)
-        return uint32(a32_pos/b32_pos)
+       a32_pos = uint32(~a32 +1)
+       b32_pos = uint32(~b32 +1)
+       return uint32(a32_pos/b32_pos)
     elif s_a and  (not s_b):
-        # a negative, b positive
-        a32_pos = uint32(~a32 +1)
-        b32_pos = b32
-        # result is negative
-        return uint32 (comp2(a32_pos/b32_pos))
+       # a negative, b positive
+       a32_pos = uint32(~a32 +1)
+       b32_pos = b32 
+       #  result is negative
+       return uint32 (comp2(a32_pos/b32_pos))
     else:
-        # a positive, b negative
-        a32_pos = a32
-        b32_pos = uint32(~b32+1)
-        # result is negative
-        return uint32 (comp2(a32_pos/b32_pos))
+       # a positive, b negative
+       a32_pos = a32
+       b32_pos = uint32(~b32+1)
+       # result is negative
+       return uint32 (comp2(a32_pos/b32_pos))
 
 
 def rem(a,b):
     a32 = uint32(a)
     b32 = uint32(b)
     #print "Rem 0x{:08x} / 0x{:08x} ".format(a32,b32)
-
+    
     s_a = ((a32>>31) & 0x01) == 1
     s_b = ((b32>>31) & 0x01) == 1
     #print "s_a = {} s_b = {} ".format(s_a, s_b)
     if(b32==0):
-        return a32
-
+       return a32
+    
     if (not s_a)  and  (not s_b):
-        # both positive
-        return uint32(a32%b32)
+    # both positive
+       return uint32(a32%b32)
     elif (s_a and  s_b):
-        a32_pos = uint32(~a32 +1)
-        b32_pos = uint32(~b32 +1)
-        # result is negative !
-        return uint32(comp2(a32_pos%b32_pos))
+       a32_pos = uint32(~a32 +1)
+       b32_pos = uint32(~b32 +1)
+       # result is negative !
+       return uint32(comp2(a32_pos%b32_pos))
     elif s_a and  (not s_b):
-        # a negative, b positive
-        a32_pos = uint32(~a32 +1)
-        b32_pos = b32
-        # result is negative
-        return uint32 (comp2(a32_pos%b32_pos))
+       # a negative, b positive
+       a32_pos = uint32(~a32 +1)
+       b32_pos = b32
+       # result is negative
+       return uint32 (comp2(a32_pos%b32_pos))
     else:
-        # a positive, b negative
-        a32_pos = a32
-        b32_pos = uint32(~b32+1)
+       # a positive, b negative
+       a32_pos = a32
+       b32_pos = uint32(~b32+1)
        #print "a32_pos = {:d} b32_pos = {:d}".format(a32_pos,b32_pos)
-        # result is positive !
-        return uint32 (a32_pos%b32_pos)
+       # result is positive !
+       return uint32 (a32_pos%b32_pos)
 
 
 
 
 def divu(a,b):
-    a32 = uint32(a)
-    b32 = uint32(b)
-
-    if(b32==0):
-        return uint32(-1)
-    else:
-        return uint32(a32/b32)
+   a32 = uint32(a)
+   b32 = uint32(b)
+   
+   if(b32==0):
+      return uint32(-1)
+   else:
+      return uint32(a32/b32)
 
 def remu(a,b):
-    a32 = uint32(a)
-    b32 = uint32(b)
-
-    if(b32==0):
-        return uint32(a32)
-    else:
-        return uint32(a32%b32)
-
+   a32 = uint32(a)
+   b32 = uint32(b)
+   
+   if(b32==0):
+      return uint32(a32)
+   else:
+      return uint32(a32%b32)
+   
 
 
 
@@ -709,23 +728,23 @@ def lt_comp_signed(a,b):
     a32 = uint32(a)
     b32 = uint32(b)
     #print "Compare 0x{:08x} < 0x{:08x} ".format(a32,b32)
-
+    
     s_a = ((a32>>31) & 0x01) == 1
     s_b = ((b32>>31) & 0x01) == 1
     #print "s_a = {} s_b = {} ".format(s_a, s_b)
-
+    
     if (not s_a)  and  (not s_b):
-        # both positive
-        return 1 if a32 < b32 else 0
+    # both positive
+       return 1 if a32 < b32 else 0
     elif (s_a and  s_b):
-        # both negative
-        return 1 if a32 < b32 else 0
+    # both negative
+       return 1 if a32 < b32 else 0
     elif s_a and  (not s_b):
-        # a negative, b positive
-        return 1
+    # a negative, b positive
+       return 1
     else:
-        # b positive, a negative
-        return 0
+    # b positive, a negative
+       return 0
 
 
 
@@ -733,42 +752,42 @@ def ge_comp_signed(a,b):
     a32 = uint32(a)
     b32 = uint32(b)
     #print "Compare 0x{:08x} < 0x{:08x} ".format(a32,b32)
-
+    
     s_a = ((a32>>31) & 0x01) == 1
     s_b = ((b32>>31) & 0x01) == 1
     #print "s_a = {} s_b = {} ".format(s_a, s_b)
-
+    
     if (not s_a)  and  (not s_b):
-        # both positive
-        return 1 if a32 >= b32 else 0
+    # both positive
+       return 1 if a32 >= b32 else 0
     elif (s_a and  s_b):
-        # both negative
-        return 1 if a32 >= b32 else 0
+    # both negative
+       return 1 if a32 >= b32 else 0
     elif s_a and  (not s_b):
-        # a negative, b positive
-        return 0
+    # a negative, b positive
+       return 0
     else:
-        # b positive, a negative
-        return 1
+    # b positive, a negative
+       return 1
 
 
 
 
 
 sim_slt = partial(r_type,
-                  op=lt_comp_signed,
-                  op_str='<')
+	  op=lt_comp_signed,
+	  op_str='<')
 sim_sltu = partial(r_type,
-                  op=operator.lt,
-                  op_str='<')
+	  op=operator.lt,
+	  op_str='<')
 
 sim_slti = partial(i_type,
-                  op=lt_comp_signed,
-                  op_str='<')
+	  op=lt_comp_signed,
+	  op_str='<')
 
 sim_sltiu = partial(i_type,
-                  op=operator.lt,
-                  op_str='<')
+	  op=operator.lt,
+	  op_str='<')
 
 sim_bne = partial(cond_branch,op=operator.ne)
 sim_beq = partial(cond_branch,op=operator.eq)
@@ -782,31 +801,31 @@ sim_bgeu = partial(cond_branch,op=operator.ge)
 # Shift (R-type)
 
 def sra_32(a,b):
-    if(a & 0x80000000):
-        # msb is set
-        tmp = (a>>(b & 0x1F))
-        mask = 0xFFFFFFFF<<(32-(b & 0x1F))
-        return (tmp | mask) & 0x0FFFFFFFF
-    else:
-        # msb not set
-        return (a>>(b & 0x1F)) & 0x0FFFFFFFF
+   if(a & 0x80000000):
+     # msb is set
+     tmp = (a>>(b & 0x1F))
+     mask = 0xFFFFFFFF<<(32-(b & 0x1F))
+     return (tmp | mask) & 0x0FFFFFFFF
+   else:
+     # msb not set
+     return (a>>(b & 0x1F)) & 0x0FFFFFFFF
 
 sim_sra = partial(r_type,op=sra_32,op_str='>>') # FIXME
 sim_sll = partial(r_type,
-                  op=lambda x,y: x<<(y & 0x1F),
-                  op_str='<<')
+	  op=lambda x,y: x<<(y & 0x1F),
+	  op_str='<<')
 sim_srl = partial(r_type,
-                  op=lambda x,y: x>>(y & 0x1F),
-                  op_str='>>')
+	  op=lambda x,y: x>>(y & 0x1F),
+	  op_str='>>')
 
 # SHift (I-type)
 sim_srai = partial(i_type,op=sra_32,op_str='>>') # FIXME
 sim_slli = partial(i_type,
-                  op=lambda x,y: x<<(y & 0x1F),
-                  op_str='<<')
+	  op=lambda x,y: x<<(y & 0x1F),
+	  op_str='<<')
 sim_srli = partial(i_type,
-                  op=lambda x,y: x>>(y & 0x1F),
-                  op_str='>>')
+	  op=lambda x,y: x>>(y & 0x1F),
+	  op_str='>>')
 def ci_type_shft(c,op,op_str):
     rs1 = (c.dec_c_rs1_p + 8)
     imm5 = ct.c_uint32(c.dec_ci_cimm5_u).value
@@ -823,26 +842,26 @@ def ci_type_shft(c,op,op_str):
     return (None,new_pc,txt)
 
 sim_cslli = partial(ci_type_shft,
-                  op=lambda x,y: x<<(y & 0x1F),
-                  op_str='<<')
+	  op=lambda x,y: x<<(y & 0x1F),
+	  op_str='<<')
 sim_csrli = partial(ci_type_shft,
-                  op=lambda x,y: x>>(y & 0x1F),
-                  op_str='>>')
+	  op=lambda x,y: x>>(y & 0x1F),
+	  op_str='>>')
 sim_csrai = partial(ci_type_shft,op=sra_32,op_str='>>') 
 c_andi = partial(ci_type_shft,op=operator.and_,op_str='&') 
 
 # CSR
 def csr_read(c,addr,csr=""):
-    addr = uint32(c.dec_imm12)
-    rd  = c.dec_rd
-    rd_val = c.csr_read(addr)
-    pc = uint32(c.pc)
-    # results
-    c.update_rf(rd,rd_val)
-    new_pc = uint32(pc + 4)
-    txt = "RF[rd={:02d}] <= 0x{:08x} (CSR : {:s} 0x{:08x}  ) ".format(rd,rd_val,csr,addr)
-
-    return (None,new_pc,txt)
+   addr = uint32(c.dec_imm12)
+   rd  = c.dec_rd
+   rd_val = c.csr_read(addr)
+   pc = uint32(c.pc)
+   # results
+   c.update_rf(rd,rd_val)
+   new_pc = uint32(pc + 4)
+   txt = "RF[rd={:02d}] <= 0x{:08x} (CSR : {:s} 0x{:08x}  ) ".format(rd,rd_val,csr,addr)
+   
+   return (None,new_pc,txt)
 
 
 
@@ -856,112 +875,112 @@ sim_rdinstreth = partial(csr_read,addr=0xC82,csr="InstRetH")
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['jalr'] = {
-    'func' : sim_jalr
+'func' : sim_jalr
 }
 
 
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['addi'] = {
-   'func' :  sim_addi
+'func' :  sim_addi
 }
 
 spec['nanorv32']['rv32i']['simu']['inst']['mul'] = {
-    'func' : sim_mul
+'func' : sim_mul
 }
 
 spec['nanorv32']['rv32i']['simu']['inst']['mulh'] = {
-    'func' : sim_mulh
+'func' : sim_mulh
 }
 spec['nanorv32']['rv32i']['simu']['inst']['mulhsu'] = {
-    'func' :  sim_mulhsu
+'func' :  sim_mulhsu
 }
 spec['nanorv32']['rv32i']['simu']['inst']['mulhu'] = {
-    'func' : sim_mulhu
+'func' : sim_mulhu
 }
 
 spec['nanorv32']['rv32i']['simu']['inst']['div'] = {
-    'func' : sim_div
+'func' : sim_div
 }
 
 spec['nanorv32']['rv32i']['simu']['inst']['divu'] = {
-    'func' :  sim_divu
+'func' :  sim_divu
 
 }
 spec['nanorv32']['rv32i']['simu']['inst']['rem'] = {
-     'func' :  sim_rem
+'func' :  sim_rem
 }
 spec['nanorv32']['rv32i']['simu']['inst']['remu'] = {
-    'func' : sim_remu
+'func' : sim_remu
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['slli'] = {
-    'func' :  sim_slli
+'func' :  sim_slli
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['slti'] = {
-    'func' :  sim_slti
+'func' :  sim_slti
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['sltiu'] = {
-    'func' :  sim_sltiu
+'func' :  sim_sltiu
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['xori'] = {
-    'func' : sim_xori
+'func' : sim_xori
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['srli'] = {
-    'func' : sim_srli
+'func' : sim_srli
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['srai'] = {
-    'func' : sim_srai
+'func' : sim_srai
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['ori'] = {
-    'func' :  lambda c: (
-        c.update_rf( c.dec_rd, c.rf[c.dec_rs1] | c.dec_imm12_se) ,
-        c.pc + 4,
-        ""
-    )
+'func' :  lambda c: (
+c.update_rf( c.dec_rd, c.rf[c.dec_rs1] | c.dec_imm12_se) ,
+c.pc + 4,
+""
+)
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['andi'] = {
-    'func' : sim_andi
+'func' : sim_andi
 }
 
 
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['lw'] = {
-    'func' :  sim_lw
+'func' :  sim_lw
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['lbu'] = {
-    'func' :  sim_lbu
+'func' :  sim_lbu
 }
 
 spec['nanorv32']['rv32i']['simu']['inst']['lb'] = {
-    'func' :  sim_lb
+'func' :  sim_lb
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['lhu'] = {
-    'func' :  sim_lhu
+'func' :  sim_lhu
 }
 
 spec['nanorv32']['rv32i']['simu']['inst']['lh'] = {
-    'func' :  sim_lh
+'func' :  sim_lh
 }
 
 
@@ -977,7 +996,7 @@ spec['nanorv32']['rv32i']['simu']['inst']['fence_i'] = {
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['beq'] = {
-    'func' :  sim_beq
+'func' :  sim_beq
 }
 
 
@@ -985,50 +1004,50 @@ spec['nanorv32']['rv32i']['simu']['inst']['beq'] = {
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['bne'] = {
-    'func' : sim_bne
-    #lambda c: (
-    #    None,
-    #    c.pc + c.dec_sb_offset if c.rf[c.dec_rs1] != c.rf[c.dec_rs2] else c.pc + 4,
-    #    ""
-    #
-    #)
+'func' : sim_bne
+#lambda c: (
+#    None,
+#    c.pc + c.dec_sb_offset if c.rf[c.dec_rs1] != c.rf[c.dec_rs2] else c.pc + 4,
+#    ""
+#
+#)
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['blt'] = {
-    'func' :  sim_blt
+'func' :  sim_blt
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['bge'] = {
-    'func' : sim_bge
+'func' : sim_bge
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['bltu'] = {
-     'func' :  sim_bltu
+'func' :  sim_bltu
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['bgeu'] = {
-   'func' :  sim_bgeu
+'func' :  sim_bgeu
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['lui'] = {
-    'func' :  lui
+'func' :  lui
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['auipc'] = {
-    'func' :  auipc
+'func' :  auipc
 }
 
 
 # {{{ add
 
 spec['nanorv32']['rv32i']['simu']['inst']['add'] = {
-    'func' : sim_add
+'func' : sim_add
 }
 
 # }}}
@@ -1036,7 +1055,7 @@ spec['nanorv32']['rv32i']['simu']['inst']['add'] = {
 # {{{ sub
 
 spec['nanorv32']['rv32i']['simu']['inst']['sub'] = {
-    'func' : sim_sub
+'func' : sim_sub
 }
 
 # }}}
@@ -1044,43 +1063,43 @@ spec['nanorv32']['rv32i']['simu']['inst']['sub'] = {
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['sll'] = {
-    'func' :  sim_sll
+'func' :  sim_sll
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['slt'] = {
-    'func' :  sim_slt
+'func' :  sim_slt
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['sltu'] = {
-    'func' :sim_sltu
+'func' :sim_sltu
 
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['xor'] = {
-    'func' : sim_xor
+'func' : sim_xor
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['srl'] = {
-    'func' :  sim_srl
+'func' :  sim_srl
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['sra'] = {
-     'func' :  sim_sra
+'func' :  sim_sra
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['or'] = {
-    'func' : sim_or
+'func' : sim_or
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['and'] = {
-    'func' : sim_and
+'func' : sim_and
 }
 
 
@@ -1095,18 +1114,18 @@ spec['nanorv32']['rv32i']['simu']['inst']['sbreak'] = {
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['sb'] = {
-    'func' :  sim_sb
+'func' :  sim_sb
 
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['sh'] = {
-    'func' :  sim_sh
+'func' :  sim_sh
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['sw'] = {
-    'func' :  sim_sw
+'func' :  sim_sw
 }
 
 
@@ -1116,63 +1135,63 @@ spec['nanorv32']['rv32i']['simu']['inst']['sw'] = {
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['jal'] = {
-     'func' :  sim_jal
+'func' :  sim_jal
 }
 
 
 spec['nanorv32']['rv32i']['simu']['inst']['rdtime'] = {
-     'func' :  sim_rdtime
+'func' :  sim_rdtime
 }
 spec['nanorv32']['rv32i']['simu']['inst']['rdtimeh'] = {
-     'func' :  sim_rdtimeh
+'func' :  sim_rdtimeh
 }
 spec['nanorv32']['rv32i']['simu']['inst']['rdcycle'] = {
-     'func' :  sim_rdcycle
+'func' :  sim_rdcycle
 }
 spec['nanorv32']['rv32i']['simu']['inst']['rdcycleh'] = {
-     'func' :  sim_rdcycleh
+'func' :  sim_rdcycleh
 }
 spec['nanorv32']['rv32i']['simu']['inst']['rdinstret'] = {
-     'func' :  sim_rdinstret
+'func' :  sim_rdinstret
 }
 spec['nanorv32']['rv32i']['simu']['inst']['rdinstreth'] = {
-     'func' :  sim_rdinstreth
+'func' :  sim_rdinstreth
 }
 spec['nanorv32']['rvc_rv32']['simu']['inst']['c.lui'] = {
-     'func' :  c_lui
+'func' :  c_lui
 }
 spec['nanorv32']['rvc_rv32']['simu']['inst']['c.swsp'] = {
-     'func' :  c_swsp
+'func' :  c_swsp
 }
 spec['nanorv32']['rvc_rv32']['simu']['inst']['c.jal'] = {
-    'func' : c_jal
+'func' : c_jal
 }
 spec['nanorv32']['rvc_rv32']['simu']['inst']['c.beqz'] = {
-    'func' : c_beqz
+'func' : c_beqz
 }
 spec['nanorv32']['rvc_rv32']['simu']['inst']['c.bnez'] = {
-    'func' : c_bnez
+'func' : c_bnez
 }
 spec['nanorv32']['rvc_rv32']['simu']['inst']['c.mv'] = {
-    'func' : c_mv
+'func' : c_mv
 }
 spec['nanorv32']['rvc_rv32']['simu']['inst']['c.add'] = {
-    'func' : c_add
+'func' : c_add
 }
 spec['nanorv32']['rvc_rv32']['simu']['inst']['c.sub'] = {
-    'func' : c_sub
+'func' : c_sub
 }
 spec['nanorv32']['rvc_rv32']['simu']['inst']['c.li'] = {
-    'func' : c_li
+'func' : c_li
 }
 spec['nanorv32']['rvc_rv32']['simu']['inst']['c.lwsp'] = {
-    'func' : c_lwsp
+'func' : c_lwsp
 }
 spec['nanorv32']['rvc_rv32']['simu']['inst']['c.j'] = {
-    'func' : c_j
+'func' : c_j
 }
 spec['nanorv32']['rvc_rv32']['simu']['inst']['c.jr'] = {
-    'func' : c_jr
+'func' : c_jr
 }
 spec['nanorv32']['rvc_rv32']['simu']['inst']['c.nop'] = {
     'func' : c_nop
