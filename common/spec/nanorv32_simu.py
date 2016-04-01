@@ -829,7 +829,7 @@ sim_csrli = partial(ci_type_shft,
                   op=lambda x,y: x>>(y & 0x1F),
                   op_str='>>')
 sim_csrai = partial(ci_type_shft,op=sra_32,op_str='>>') 
-c_andi = partial(ci_type_shft,op=sra_32,op_str='&') 
+c_andi = partial(ci_type_shft,op=operator.and_,op_str='&') 
 
 # CSR
 def csr_read(c,addr,csr=""):
