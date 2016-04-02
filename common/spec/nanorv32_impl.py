@@ -10,7 +10,6 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['R-type'] = {
     'pc' : {
         'next' : 'plus4',
         'branch' :'no',
-        'size'   : '32bits'
     },
     'alu' : {
         'porta' : 'rs1',
@@ -42,7 +41,6 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['I-type'] = {
     'pc' : {
         'next' : 'plus4',
         'branch' :'no',
-        'size'   : '32bits'
 
     },
     'alu' : {
@@ -71,7 +69,6 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['S-type'] = {
     'pc' : {
         'next' : 'plus4',
         'branch' :'no',
-        'size'   : '32bits'
     },
     'alu' : {
         'porta' : 'rs1',
@@ -100,7 +97,6 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['SB-type'] = {
     'pc' : {
         'next' : 'cond_pc_plus_immsb', # conditional branch
         'branch' :'yes',
-        'size'   : '32bits'
     },
     'alu' : {
         'porta' : 'rs1',
@@ -129,7 +125,6 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['U-type'] = {
     'pc' : {
         'next' : 'plus4',
         'branch' :'no',
-        'size'   : '32bits'
     },
     'alu' : {
         'porta' : 'pc_exe',
@@ -157,7 +152,6 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['UJ-type'] = {
     'pc' : {
         'next' : 'alu_res',
         'branch' :'yes',
-        'size'   : '32bits'
     },
     'alu' : {
         'porta' : 'pc_exe',
@@ -186,7 +180,6 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['AS-type'] = {
     'pc' : {
         'next' : 'plus4',
         'branch' :'no',
-        'size'   : '32bits'
     },
     'alu' : {
         'porta' : 'rs1',
@@ -217,7 +210,6 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['SYS1-type'] = {
     'pc' : {
         'next' : 'plus4',
         'branch' :'no',
-        'size'   : '32bits'
     },
     'alu' : {
         'porta' : 'rs1',
@@ -246,7 +238,6 @@ spec['nanorv32']['rv32i']['impl']['inst_type']['SYS2-type'] = {
     'pc' : {
         'next' : 'plus4',
         'branch' :'no',
-        'size'   : '32bits'
     },
     'alu' : {
         'porta' : 'rs1',

@@ -2,7 +2,6 @@ spec['nanorv32']['rvc_rv32']['impl']['inst_type']['CR-type'] = {
     'pc' : {
         'next' : 'plus2',
         'branch' :'no',
-        'size'   : '16bits'
     },
     'alu' : {
         'porta' : 'rs1',
@@ -32,7 +31,6 @@ spec['nanorv32']['rvc_rv32']['impl']['inst_type']['CI-type'] = {
     'pc' : {
         'next' : 'plus2',
         'branch' :'no',
-        'size'   : '16bits'
     },
     'alu' : {
         'porta' : 'rs1',
@@ -61,7 +59,6 @@ spec['nanorv32']['rvc_rv32']['impl']['inst_type']['CSS-type'] = {
     'pc' : {
         'next' : 'plus2',
         'branch' :'no',
-        'size'   : '16bits'
     },
     'alu' : {
         'porta' : 'rs1',
@@ -87,7 +84,6 @@ spec['nanorv32']['rvc_rv32']['impl']['inst_type']['CIW-type'] = {
     'pc' : {
         'next' : 'plus2',
         'branch' :'no',
-        'size'   : '16bits'
     },
     'alu' : {
         'porta' : 'rs1',
@@ -116,7 +112,6 @@ spec['nanorv32']['rvc_rv32']['impl']['inst_type']['CL-type'] = {
     'pc' : {
         'next' : 'plus2',
         'branch' :'no',
-        'size'   : '16bits'
     },
     'alu' : {
         'porta' : 'rs1',
@@ -146,7 +141,6 @@ spec['nanorv32']['rvc_rv32']['impl']['inst_type']['CS-type'] = {
     'pc' : {
         'next' : 'plus2',
         'branch' :'no',
-        'size'   : '16bits'
     },
     'alu' : {
         'porta' : 'rs1',
@@ -176,7 +170,6 @@ spec['nanorv32']['rvc_rv32']['impl']['inst_type']['CB-type'] = {
     'pc' : {
         'next' : 'plus2',
         'branch' :'yes',
-        'size'   : '16bits'
     },
     'alu' : {
         'porta' : 'rs1',
@@ -206,7 +199,6 @@ spec['nanorv32']['rvc_rv32']['impl']['inst_type']['CJ-type'] = {
     'pc' : {
         'next' : 'plus2',
         'branch' :'no',
-        'size'   : '16bits'
     },
     'alu' : {
         'porta' : 'rs1',
@@ -236,7 +228,6 @@ spec['nanorv32']['rvc_rv32']['impl']['inst_type']['CS2-type'] = {
     'pc' : {
         'next' : 'plus2',
         'branch' :'no',
-        'size'   : '16bits'
     },
     'alu' : {
         'porta' : 'rs1',
@@ -265,7 +256,6 @@ spec['nanorv32']['rvc_rv32']['impl']['inst_type']['CB2-type'] = {
     'pc' : {
         'next' : 'plus2',
         'branch' :'no',
-        'size'   : '16bits'
     },
     'alu' : {
         'porta' : 'rs1',
@@ -556,7 +546,7 @@ spec['nanorv32']['rvc_rv32']['impl']['inst']['c.srli'] = {
         'op' : 'rshift',
         'porta' : 'rs1',
         'portb' : 'cimm5',
-         
+
     },
     'regfile' : {
         'write' : 'yes',

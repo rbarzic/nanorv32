@@ -190,8 +190,6 @@ module nanorv32 (/*AUTOARG*/
    reg [NANORV32_MUX_SEL_DATAMEM_SIZE_READ_MSB:0] datamem_size_read_sel_r;
 
 
-
-
    genvar i;
 
    //===========================================================================
@@ -360,9 +358,7 @@ module nanorv32 (/*AUTOARG*/
         NANORV32_MUX_SEL_REGFILE_PORT2_RS2_C_P: begin
            regfile_port2 = rvc_to_rv32_reg(dec_c_rs2_p);
         end
-        NANORV32_MUX_SEL_REGFILE_PORT2_RS2_C_P: begin
-           regfile_port2 = rvc_to_rv32_reg(dec_c_rs2_p);
-        end
+
         default: begin
            regfile_port2 = dec_rs2;
         end

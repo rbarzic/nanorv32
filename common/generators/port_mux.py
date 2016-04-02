@@ -28,7 +28,13 @@ cfg['pad']['function']['C'] = {
 
 cfg['pad']['function']['anatest1'] = {
     'priority' : 200,
-    'desc' : "Analog test mode",
+    'desc' : "Analog test mode 1",
+
+}
+
+cfg['pad']['function']['anatest2'] = {
+    'priority' : 199,
+    'desc' : "Analog test mode 2",
 
 }
 
@@ -89,8 +95,14 @@ ip['usart']['pads']['miso'] = {
 
 
 
-ip['rcosc']['pads']['out'] = {
-    'dout' : '@_pad_tx_dout',
+ip['rcosc']['pads']['tclk'] = {
+    'dout' : '@_pad_tclk_dout',
+
+}
+
+ip['bandgap']['pads']['ten'] = {
+    'oe'   : "1'b0",
+    'din'   : 'pad_@_ten_din',
 
 }
 
@@ -105,16 +117,29 @@ pads['P0']['pmux']= {
 pads['P1']['pmux']= {
     'func_A' : 'uart0/rx',
     'func_B' : 'spi/mosi',
-    'anatest1' : 'rscoc/out'
+    'anatest2' : 'rscoc/out'
 }
 
 
 def get_control_signals(cfg):
     return [x for x in cfg['pad']['control']]
 
+def get_pad_functions(pads,pad):
+    "return the list of functions mapped to a particular pad"
+    return pads[pad].keys()
 
 for pad  in pads.keys():
     print "-I Port {}".format(pad)
     # get functions used by this pad, sorted by decreasing priority
     ordered_func = [f for f in pads[pad]['pmux']]
     pp.pprint(ordered_func)
+    control_signals = get_control_signals(cfg)
+    pp.pprint(control_signals)
+    print "*"*80
+    for pad,pmux in  pads.items():
+        print "-I- Pad {}".format(pad)
+        pp.pprint(get_pad_functions(pads,pad))
+        pad_funcs = [f for f in ordered_func if f in get_pad_functions(pads,pad)]
+        for func in pad_funcs:
+            print "-I-     Function {}".format(func)
+            pass

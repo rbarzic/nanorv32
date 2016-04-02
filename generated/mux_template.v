@@ -20,15 +20,6 @@
         end
 //========================================
 
-    case(pc_size)
-        NANORV32_MUX_SEL_PC_SIZE_32BITS: begin
-            pc_size <= ;
-        end
-        NANORV32_MUX_SEL_PC_SIZE_16BITS: begin
-            pc_size <= ;
-        end
-//========================================
-
     case(pc_branch)
         NANORV32_MUX_SEL_PC_BRANCH_YES: begin
             pc_branch <= ;

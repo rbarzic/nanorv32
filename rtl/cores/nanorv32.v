@@ -115,7 +115,6 @@ module nanorv32 (/*AUTOARG*/
    //@begin[mux_select_declarations_as_wire]
 
     wire  [NANORV32_MUX_SEL_PC_NEXT_MSB:0] pc_next_sel;
-    wire  [NANORV32_MUX_SEL_PC_SIZE_MSB:0] pc_size_sel;
     wire  [NANORV32_MUX_SEL_PC_BRANCH_MSB:0] pc_branch_sel;
     wire  [NANORV32_MUX_SEL_ALU_OP_MSB:0] alu_op_sel;
     wire  [NANORV32_MUX_SEL_ALU_PORTB_MSB:0] alu_portb_sel;
@@ -245,8 +244,6 @@ module nanorv32 (/*AUTOARG*/
 
    // to a "return from interrupt" as been detected
    reg [NANORV32_MUX_SEL_DATAMEM_SIZE_READ_MSB:0] datamem_size_read_sel_r;
-
-
 
 
    genvar i;
