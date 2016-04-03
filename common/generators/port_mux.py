@@ -1,11 +1,13 @@
 #!/usr/bin/env python
+import sys
 import AutoVivification as av
 
 import pprint as pp
 
 cfg = av.AutoVivification()
-ip = av.AutoVivification()
+ips = av.AutoVivification()
 pads = av.AutoVivification()
+instances = av.AutoVivification()
 
 cfg['pad']['function']['A'] = {
     'priority' : 100,
@@ -67,26 +69,26 @@ cfg['pad']['control']['oe'] = {
 
 
 
-ip['usart']['pads']['tx'] = {
+ips['usart']['sig_grp']['tx'] = {
     'dout' : '@_pad_tx_dout',
     'oe' : '@_pad_tx_oe',
 
 }
 
-ip['usart']['pads']['rx'] = {
+ips['usart']['sig_grp']['rx'] = {
     'din' : 'pad_@_rx_din',
 
 }
 
 
-ip['spi']['pads']['mosi'] = {
+ips['spi']['sig_grp']['mosi'] = {
     'dout' : '@_pad_mosi_dout',
     'oe' : '@_pad_mosi_oe',
     'din' : 'pad_@_mosi_din',
 
 }
 
-ip['usart']['pads']['miso'] = {
+ips['spi']['sig_grp']['miso'] = {
     'dout' : '@_pad_miso_dout',
     'oe' : '@_pad_miso_oe',
     'din' : 'pad_@_miso_din',
@@ -94,13 +96,19 @@ ip['usart']['pads']['miso'] = {
 }
 
 
+instances['usart0'] = 'usart'
+instances['usart0'] = 'usart'
+instances['spi'] = 'spi'
+instances['rcosc'] = 'rcosc'
+instances['bandgap'] = 'bandgap'
 
-ip['rcosc']['pads']['tclk'] = {
+
+ips['rcosc']['sig_grp']['tclk'] = {
     'dout' : '@_pad_tclk_dout',
 
 }
 
-ip['bandgap']['pads']['ten'] = {
+ips['bandgap']['sig_grp']['ten'] = {
     'oe'   : "1'b0",
     'din'   : 'pad_@_ten_din',
 
@@ -109,15 +117,15 @@ ip['bandgap']['pads']['ten'] = {
 
 
 pads['P0']['pmux']= {
-    'A' : 'uart0/tx',
+    'A' : 'usart0/tx',
     'B' : 'spi/miso',
-    'anatest1' : 'rscoc/out'
+    'anatest1' : 'rcosc/tclk'
 }
 
 pads['P1']['pmux']= {
-    'func_A' : 'uart0/rx',
+    'func_A' : 'usart0/rx',
     'func_B' : 'spi/mosi',
-    'anatest2' : 'rscoc/out'
+    'anatest2' : 'bandgap/ten'
 }
 
 
@@ -126,7 +134,15 @@ def get_control_signals(cfg):
 
 def get_pad_functions(pads,pad):
     "return the list of functions mapped to a particular pad"
-    return pads[pad].keys()
+    return pads[pad]['pmux'].keys()
+
+def type_of_instance(inst):
+    if inst in instances:
+        return instances[inst]
+    else:
+        print "-E- instance {} not found !".format(inst)
+
+
 
 for pad  in pads.keys():
     print "-I Port {}".format(pad)
@@ -138,8 +154,21 @@ for pad  in pads.keys():
     print "*"*80
     for pad,pmux in  pads.items():
         print "-I- Pad {}".format(pad)
-        pp.pprint(get_pad_functions(pads,pad))
+        # pp.pprint(get_pad_functions(pads,pad))
         pad_funcs = [f for f in ordered_func if f in get_pad_functions(pads,pad)]
         for func in pad_funcs:
-            print "-I-     Function {}".format(func)
-            pass
+            inst = pmux['pmux'][func].split('/')[0]
+            ip        = type_of_instance( inst)
+            sig_group = pmux['pmux'][func].split('/')[1]
+            print "-I-     Function {} - Inst : {}({}) Signal group : {}".format(func,inst,ip,sig_group)
+            # get each signals
+            # all_signals = ips[ip]['sig_grp'][sig_group]
+            # TODO : check correctness of sigmal group
+            if ip in ips:
+                all_signals = ips[ip]['sig_grp'][sig_group]
+                for ctrl,sig in all_signals.items():
+                    print "-I          signal {} for controlling <{}>".format(sig,ctrl)
+            else:
+                print "-E- Unknown IP : {}".format(ip)
+
+            # print "-I-       Signal".format(sig)
