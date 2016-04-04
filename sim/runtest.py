@@ -208,8 +208,9 @@ if __name__ == '__main__':
     # process cdefines arguments
     cdefines_txt = ""
     cdefines_dict = av.AutoVivification()
-    cdefines_dict['c_compiler']['extra_defines'] = ""
+
     if args.cdefines:
+        cdefines_dict['c_compiler']['extra_defines'] = ""
         cdefines = args.cdefines.split(',')
         for df in cdefines:
             d = dict()
@@ -280,7 +281,8 @@ if __name__ == '__main__':
         merge_dict2(default_opts, local_opts)
         merge_dict2(default_opts, override_opts)
         # finally, what is defined on the command line
-        merge_dict2(default_opts, cdefines_dict)
+        if cdefines_dict:
+            merge_dict2(default_opts, cdefines_dict)
 
         # we merge the spec and define dictionnary
         # we get a list of tupples  (  (a,b) (c,d) ....)
