@@ -19,7 +19,7 @@ c_only_steps = ["{cc}_compile"]
 
 tpl_verilog_parameter = "VERILOG_PARAMETER += +{var_name_lc}={val}\n"
 tpl_make_variable     = "{var_name_uc}={val}\n"
-tpl_c_define          = "C_DEFINES += -D{var_name_uc}={val}\n"
+tpl_c_define          = " -D{var_name_uc}={val}"
 tpl_verilog_define    = "VERILOG_DEFINES += -D{var_name_uc}={val}\n"
 
 tpl_main_makefile_footer  = """
@@ -175,7 +175,7 @@ A simulation launcher for the Nanorv32 project
 
     parser.add_argument('--cdefines', action='store', dest='cdefines',
                         default=None,
-                        help='Comma separated list of define/value  : XX=1,YY=2')
+                        help='Comma separated list of define/value that will override the extra_defines definition  : XX=1,YY=2')
 
 
     parser.add_argument(dest='tests', metavar='tests', nargs='*',
@@ -207,6 +207,8 @@ if __name__ == '__main__':
 
     # process cdefines arguments
     cdefines_txt = ""
+    cdefines_dict = av.AutoVivification()
+    cdefines_dict['c_compiler']['extra_defines'] = ""
     if args.cdefines:
         cdefines = args.cdefines.split(',')
         for df in cdefines:
@@ -214,7 +216,8 @@ if __name__ == '__main__':
             def_l = df.split('=')
             d['var_name_uc'] = def_l[0]
             d['val'] = def_l[1]
-            cdefines_txt += tpl_c_define.format(**d)
+            cdefines_dict['c_compiler']['extra_defines'] += tpl_c_define.format(**d)
+
 
     # main loop over tests
     for test in args.tests:
@@ -276,8 +279,10 @@ if __name__ == '__main__':
         # We merge (with eventually override) all the definitions
         merge_dict2(default_opts, local_opts)
         merge_dict2(default_opts, override_opts)
+        # finally, what is defined on the command line
+        merge_dict2(default_opts, cdefines_dict)
 
-        # we merge the sped and define dictionnary
+        # we merge the spec and define dictionnary
         # we get a list of tupples  (  (a,b) (c,d) ....)
         # with the first element being a list representing the "path" in the hierarchy
         # of nested directories (use pp.pprint to see the result eventuall)
