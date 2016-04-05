@@ -8,6 +8,10 @@ cfg = av.AutoVivification()
 ips = av.AutoVivification()
 pads = av.AutoVivification()
 instances = av.AutoVivification()
+iocells = av.AutoVivification()
+padring  = av.AutoVivification()
+
+pin_muxing = av.AutoVivification()
 
 cfg['pad']['function']['A'] = {
     'priority' : 100,
@@ -116,17 +120,98 @@ ips['bandgap']['sig_grp']['ten'] = {
 
 
 
-pads['P0']['pmux']= {
+pin_muxing['P0']= {
     'A' : 'usart0/tx',
     'B' : 'spi/miso',
     'anatest1' : 'rcosc/tclk'
 }
 
-pads['P1']['pmux']= {
+pin_muxing['P1']= {
     'func_A' : 'usart0/rx',
     'func_B' : 'spi/mosi',
     'anatest2' : 'bandgap/ten'
 }
+
+
+pin_muxing['USBPAD@dm']= {
+    'func_A' : 'usb/dm',
+}
+
+pin_muxing['USBPAD@dm']= {
+    'func_A' : 'usb/dp',
+}
+
+
+
+padring['P0']['type'] = 'stdpad3v3p180n'
+padring['P0']['order'] = 1
+
+
+padring['P1']['type'] = 'stdpad3v3p180n'
+padring['P1']['order'] = 10
+
+padring['USBPAD']['type'] = 'stdpad3v3p180n'
+padring['USBPAD']['order'] = 15
+
+
+
+
+# Standard I/O pad
+# definition
+iocells['stdpad3v3p180n']['type'] = 'io'
+
+# Mapping of IOCELL pin to generic control signal
+iocells['stdpad3v3180n']['pads']['pad']['dout'] = {
+    'signal' : 'i18dout',
+    'polarity' : 'active_high'
+}
+iocells['stdpad3v3180n']['pads']['pad']['din'] = {
+    'signal' : 'o18din',
+    'polarity' : 'active_high'
+}
+
+iocells['stdpad3v3180n']['pads']['pad']['oe'] = {
+    'signal' : 'i18oe',
+    'polarity' : 'active_high'
+}
+
+
+# Standard I/O pad
+# definition
+iocells['usbpad3v3p180n']['type'] = 'custom'
+
+# Mapping of IOCELL pin to generic control signal
+
+# DM pin
+iocells['usbpad3v3180n']['pads']['dm']['dout'] = {
+    'signal' : 'i18dout[0]',
+    'polarity' : 'active_high'
+}
+iocells['usbpad3v3180n']['pads']['dm']['din'] = {
+    'signal' : 'o18din[0]',
+    'polarity' : 'active_high'
+}
+
+iocells['stdpad3v3180n']['pads']['dm']['oe'] = {
+    'signal' : 'i18oe[0]',
+    'polarity' : 'active_high'
+}
+# DP pin
+iocells['usbpad3v3180n']['pads']['dp']['dout'] = {
+    'signal' : 'i18dout[1]',
+    'polarity' : 'active_high'
+}
+iocells['usbpad3v3180n']['pads']['dp']['din'] = {
+    'signal' : 'o18din[1]',
+    'polarity' : 'active_high'
+}
+
+iocells['usbpad3v3180n']['pads']['dp']['oe'] = {
+    'signal' : 'i18oe[1]',
+    'polarity' : 'active_high'
+}
+
+
 
 
 def get_control_signals(cfg):
@@ -142,33 +227,54 @@ def type_of_instance(inst):
     else:
         print "-E- instance {} not found !".format(inst)
 
+def get_signal_for_iocell(iocell, pad, func):
+    "Return signal and polarity for the fucntion (dout,din, oe...) for the pad of the  iocell"
+    pass
 
+def get pad_names(inst_pad):
+    "Return an array of all pad names for this instance - array will have one element for std pads"
+    pass
 
-for pad  in pads.keys():
-    print "-I Port {}".format(pad)
-    # get functions used by this pad, sorted by decreasing priority
-    ordered_func = [f for f in pads[pad]['pmux']]
+#for pad  in pads.keys():
+#    print "-I Port {}".format(pad)
+#    # get functions used by this pad, sorted by decreasing priority
+#    ordered_func = [f for f in pads[pad]['pmux']]
+#    pp.pprint(ordered_func)
+#    control_signals = get_control_signals(cfg)
+#    pp.pprint(control_signals)
+print "-I- Let's go"
+for pad,pmux in  pin_muxing.items():
+    print "*"*80
+    ordered_func = [f for f in pads[pad]['pmux']] # FIXME - this is not ordered
     pp.pprint(ordered_func)
     control_signals = get_control_signals(cfg)
     pp.pprint(control_signals)
-    print "*"*80
-    for pad,pmux in  pads.items():
-        print "-I- Pad {}".format(pad)
-        # pp.pprint(get_pad_functions(pads,pad))
-        pad_funcs = [f for f in ordered_func if f in get_pad_functions(pads,pad)]
-        for func in pad_funcs:
-            inst = pmux['pmux'][func].split('/')[0]
-            ip        = type_of_instance( inst)
-            sig_group = pmux['pmux'][func].split('/')[1]
-            print "-I-     Function {} - Inst : {}({}) Signal group : {}".format(func,inst,ip,sig_group)
-            # get each signals
-            # all_signals = ips[ip]['sig_grp'][sig_group]
-            # TODO : check correctness of sigmal group
-            if ip in ips:
-                all_signals = ips[ip]['sig_grp'][sig_group]
-                for ctrl,sig in all_signals.items():
-                    print "-I          signal {} for controlling <{}>".format(sig,ctrl)
-            else:
-                print "-E- Unknown IP : {}".format(ip)
+    print "-I- Pad {}".format(pad)
+    # pp.pprint(get_pad_functions(pads,pad))
+    pad_funcs = [f for f in ordered_func if f in get_pad_functions(pads,pad)]
+    if '@' in pad:
+        # we have a couple pad/instance name
+        pass
+    else:
+        # pad = instance name
+        # we need to get the pad name for this instance
+
+    for func in pad_funcs:
+        inst = pmux['pmux'][func].split('/')[0]
+        ip        = type_of_instance( inst)
+        sig_group = pmux['pmux'][func].split('/')[1]
+        print "-I-     Function {} - Inst : {}({}) Signal group : {}".format(func,inst,ip,sig_group)
+        # get each signals
+        # all_signals = ips[ip]['sig_grp'][sig_group]
+        # TODO : check correctness of sigmal group
+        if ip in ips:
+            all_signals = ips[ip]['sig_grp'][sig_group]
+            for ctrl,sig in all_signals.items():
+                print "-I          signal {} for controlling <{}>".format(sig,ctrl)
+        else:
+            print "-E- Unknown IP : {}".format(ip)
+
+        # Now found the signals supported by the current pad of the IO cell
+        #get_signal_for_iocell()
 
             # print "-I-       Signal".format(sig)
