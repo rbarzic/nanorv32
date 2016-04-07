@@ -278,6 +278,9 @@ for pm, val  in pin_muxing.items():
     iocell_inst = get_iocell_instance(pm)
     iocell_type = get_iocell_type_from_instance(iocell_inst)
     current_pad = get_iocell_pad(iocells, iocell_type, pm)
+    glb_control_signals = get_control_signals(cfg)
+    control_signals = get_control_signals_for_pad(iocells,iocell_type, current_pad)
+
     print "Type of iocell is {} (using {}) ".format( iocell_type, iocell_inst)
     print "Pad  of iocell is {}  ".format( get_iocell_pad(iocells, iocell_type, pm))
 
@@ -285,3 +288,11 @@ for pm, val  in pin_muxing.items():
 
     # get list of control signal this pad support
     print "List of actual control signals {}  ".format( get_control_signals_for_pad(iocells,iocell_type, current_pad))
+
+    for ctrl in glb_control_signals:
+        if ctrl in control_signals:
+            print "Control signal - supported {}".format(ctrl)
+            pass
+        else:
+            print "Control signal - unsupported {}".format(ctrl)
+            pass
