@@ -11,7 +11,9 @@ definition_list = ['offset', 'size']
 regs = av.AutoVivification()
 cfg = av.AutoVivification()
 cfg['prefix'] = 'NRV32_DBGIF'
-cfg['addr_msb'] = 12
+cfg['addr_msb'] = 11
+cfg['v_include_pre'] = ""
+cfg['v_include_post'] = ""
 
 
 regs['dbgctrl']['addr'] = 0
@@ -187,7 +189,7 @@ def get_verilog_reg_decl_code(cfg,regs,ip, bus='apb'):
             df['size_str'] = get_verilog_size_string(size)
             _,df['description'] = get_def_field_prop(cfg, regs, reg, f,
                                                      'description',
-                                                     "no descprition provided")
+                                                     "no description provided")
             txt += vt.tpl_verilog_reg_decl.format(**df)
 
     return txt
