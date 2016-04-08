@@ -8,56 +8,6 @@ import pprint as pp
 
 definition_list = ['offset', 'size']
 
-regs = av.AutoVivification()
-cfg = av.AutoVivification()
-cfg['prefix'] = 'NRV32_DBGIF'
-cfg['addr_msb'] = 11
-cfg['v_include_pre'] = ""
-cfg['v_include_post'] = ""
-
-
-regs['dbgctrl']['addr'] = 0
-regs['dbgctrl']['description'] = "Debug Control Register"
-regs['dbgctrl']['width'] = 32
-
-regs['dbgctrl']['fields']["stepping"] = {
-    'offset' : 0,
-    'size'   :   1,
-    'access' : 'rw',
-    'reset_value' : 0,
-    'description' : 'CPU will stop after each instruction '
-}
-
-regs['dbgctrl']['fields']["bkp0"] = {
-    'offset' : 8,
-    'size'   :   1,
-    'access' : 'rw',
-    'reset_value' : 0,
-    'description' : 'Breakpoint unit 0 is enabled'
-}
-
-regs['bkpt0']['addr'] = 4
-regs['bkpt0']['description'] = "Debug Control Register #0"
-regs['bkpt0']['width'] = 32
-
-regs['bkpt0']['fields']["addr"] = {
-    'offset' : 0,
-    'size'   :   32,
-    'access' : 'rw',
-    'reset_value' : 0,
-}
-
-regs['bkpt1']['addr'] = 4
-regs['bkpt1']['description'] = "Debug Control Register #0"
-regs['bkpt1']['width'] = 32
-
-regs['bkpt1']['fields']["addr"] = {
-    'offset' : 0,
-    'size'   :   32,
-    'access' : 'rw',
-    'reset_value' : 0
-}
-
 
 
 def get_verilog_size_string(size):
@@ -234,6 +184,10 @@ Put description of application here
                         help='Main verilog file', default="")
     parser.add_argument('--vparams', action='store', dest='vparams',
                         help='Verilog parameter  file', default="")
+    parser.add_argument('--spec', action='store', dest='spec',
+                        help='Spec file (in Python)', default="")
+
+
     parser.add_argument('--version', action='version', version='%(prog)s 0.1')
     return parser.parse_args()
 
@@ -241,15 +195,22 @@ Put description of application here
 
 if __name__ == '__main__':
     args= get_args()
+    cfg = av.AutoVivification()
+    regs = av.AutoVivification()
+    # Read the spec
+    global_args  = dict() # unused for now
+    execfile(args.spec, global_args, {"cfg": cfg, "regs" : regs})
+    pp.pprint(cfg)
 
+    ip_name = cfg['ip_name']
     d = dict()
-    d['ip_name'] = 'uart'
+    d['ip_name'] = ip_name
     d['addr_msb'] = 10
-    d['read_access_code'] = get_verilog_read_access_code(cfg,regs,'uart')
-    d['write_access_code'] = get_verilog_write_access_code(cfg,regs,'uart')
-    d['reset_code'] = get_verilog_reset_code(cfg,regs,'uart')
-    d['reg_decl_code'] = get_verilog_reg_decl_code(cfg,regs,'uart')
-    d['io_decl_code']  = get_verilog_io_decl_code(cfg,regs,'uart')
+    d['read_access_code'] = get_verilog_read_access_code(cfg,regs,ip_name)
+    d['write_access_code'] = get_verilog_write_access_code(cfg,regs,ip_name)
+    d['reset_code'] = get_verilog_reset_code(cfg,regs,ip_name)
+    d['reg_decl_code'] = get_verilog_reg_decl_code(cfg,regs,ip_name)
+    d['io_decl_code']  = get_verilog_io_decl_code(cfg,regs,ip_name)
 
     final_txt = vt.tpl_verilog_apbif.format(**d)
     with open(args.vif, 'w') as fh:
