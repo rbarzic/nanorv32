@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import sys
 import AutoVivification as av
-
+import operator
 import pprint as pp
 
 cfg = av.AutoVivification()
@@ -135,18 +135,18 @@ pin_muxing['P0']= {
 }
 
 pin_muxing['P1']= {
-    'func_A' : 'usart0/rx',
-    'func_B' : 'spi/mosi',
+    'A' : 'usart0/rx',
+    'B' : 'spi/mosi',
     'anatest2' : 'bandgap/ten'
 }
 
 
 pin_muxing['USBPAD@dm']= {
-    'func_A' : 'usb/dm',
+    'A' : 'usb/dm',
 }
 
 pin_muxing['USBPAD@dp']= {
-    'func_A' : 'usb/dp',
+    'A' : 'usb/dp',
 }
 
 
@@ -221,13 +221,19 @@ iocells['usbpad3v3p180n']['pads']['dp']['oe'] = {
 
 
 
+def get_functions(cfg):
+    "Return functionsl sorted by decreasing priority"
+    print "-D- get_functions"
+    return sorted(cfg['pad']['function'].items(), key=lambda x : -x[1]['priority'])
+
+
 
 def get_control_signals(cfg):
     return [x for x in cfg['pad']['control']]
 
-def get_pad_functions(pads,pad):
-    "return the list of functions mapped to a particular pad"
-    return pads[pad]['pmux'].keys()
+def get_pmux_functions(pin_muxing,pm):
+    "return the list of functions mapped to a particular pin_muxing entry"
+    return pin_muxing[pm].keys()
 
 def type_of_instance(inst):
     if inst in instances:
@@ -274,6 +280,7 @@ print "Pad list for {} : {}".format('USBPAD',str(get_pad_names(padring, iocells,
 
 
 for pm, val  in pin_muxing.items():
+    print "="*80
     print "Pin muxing for {}".format(pm)
     iocell_inst = get_iocell_instance(pm)
     iocell_type = get_iocell_type_from_instance(iocell_inst)
@@ -292,7 +299,18 @@ for pm, val  in pin_muxing.items():
     for ctrl in glb_control_signals:
         if ctrl in control_signals:
             print "Control signal - supported {}".format(ctrl)
-            pass
+            for f in get_functions(cfg):
+                current_function_list = get_pmux_functions(pin_muxing, pm)
+                #print "-D-    Function list : {}".format(current_function_list)
+                #print "-D-                  : {}".format(get_functions(cfg))
+                #print "-D-                  : {}".format(f[0])
+
+                if f[0] in current_function_list:
+                    print "-I     Priority {}".format(f)
+
+                    pass
+                else:
+                    print "Function <{}> not used by this pin_mux entry".format(f[0])
         else:
             print "Control signal - unsupported {}".format(ctrl)
             pass
