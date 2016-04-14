@@ -56,9 +56,10 @@ if __name__ == '__main__':
     # pp.pprint(keilproj)
     group_array = keilproj['Project']['Targets']['Target']['Groups']['Group']
     for g in  group_array:
-        print "="*80
-
         group_name = g['GroupName']
-        pp.pprint(group_name)
-        files = g['Files']['File']
-        pp.pprint(files)
+        # pp.pprint(group_name)
+        if ('Files' in g)  and ('File' in g['Files']):
+            files = g['Files']['File']
+            for f in files:
+                if 'FilePath' in f:
+                    print "File : {}".format(f['FilePath'])

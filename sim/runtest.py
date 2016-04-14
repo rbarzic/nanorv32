@@ -269,6 +269,10 @@ if __name__ == '__main__':
         # and the override file
         execfile("./config/override.py", global_args, {"cfg": override_opts})
 
+        if args.verbosity>3:
+            print "Parsing override.py (using test_dir  {})".format(test_dir)
+            pp.pprint(override_opts)
+
 
         if args.verbosity>0:
             print "Parsing options for test {}".format(test)

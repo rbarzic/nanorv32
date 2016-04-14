@@ -21,7 +21,7 @@ else:
     cfg['c_compiler']['arch_opt'] = '-m32 -march=RV32IM'
 
 define['c_compiler']['warnings'] = 'MAKE_VARIABLE'
-cfg['c_compiler']['warnings'] = "-Wall -Wextra -Wshadow -Wundef -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings "
+cfg['c_compiler']['warnings'] = " -std=c99 -Wall -Wextra -Wshadow  -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings "
 
 
 cfg['c_compiler']['warnings'] += " -Wredundant-decls -Wstrict-prototypes  -pedantic # -Wconversion "
