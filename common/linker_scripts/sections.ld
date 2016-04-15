@@ -1,5 +1,5 @@
 /*  Based on a ARM example */
-ENTRY(Reset_Handler)
+/* ENTRY(Reset_Handler) */
 
 SECTIONS
 {
@@ -25,7 +25,10 @@ SECTIONS
  		*(SORT(.dtors.*))
  		*(.dtors)
 
+                *(.rdata)
 		*(.rodata*)
+		*(.rodata.*)
+                *(.gnu.linkonce.r.*)
 
 		KEEP(*(.eh_frame*))
 	} > ROM
@@ -39,6 +42,8 @@ SECTIONS
 		*(vtable)
 		*(.data*)
 		*(.sdata*)
+                *(.srodata.*)
+                *(.gnu.linkonce.s.*)
 
 		. = ALIGN(4);
 		/* preinit data */

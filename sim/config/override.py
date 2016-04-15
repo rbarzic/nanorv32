@@ -15,17 +15,15 @@ if test_is_a_file and (test_dir == "../riscv-tests/isa/rv32ui"):
 # Opus codec on Nanorv32
 if test == "../../opus":
     print "-I- Special setup for the opus codec"
-    #cfg['c_compiler']['extra_c_sources'] = "$(TEST_DIR)/" + "nanorv32/main.c"
-    #cfg['c_compiler']['extra_c_sources'] = "$(TEST_DIR)/" + "nanorv32/retarget.c "
-    cfg['c_compiler']['extra_c_sources'] = "$(TEST_DIR)/"  + "src/opus.c "
+    cfg['c_compiler']['extra_c_sources'] = "$(TEST_DIR)/" + "nanorv32/main.c "
+    cfg['c_compiler']['extra_c_sources'] += "$(TEST_DIR)/" + "nanorv32/retarget.c "
+    cfg['c_compiler']['extra_c_sources'] += "$(TEST_DIR)/"  + "src/opus.c "
     cfg['c_compiler']['extra_c_sources'] += "$(TEST_DIR)/" + "src/opus_decoder.c "
-    cfg['c_compiler']['extra_c_sources'] += "$(TEST_DIR)/" + "src/opus_demo.c "
     cfg['c_compiler']['extra_c_sources'] += "$(TEST_DIR)/" + "src/opus_encoder.c "
     cfg['c_compiler']['extra_c_sources'] += "$(TEST_DIR)/" + "src/opus_multistream.c "
     cfg['c_compiler']['extra_c_sources'] += "$(TEST_DIR)/" + "src/opus_multistream_decoder.c "
     cfg['c_compiler']['extra_c_sources'] += "$(TEST_DIR)/" + "src/opus_multistream_encoder.c "
     cfg['c_compiler']['extra_c_sources'] += "$(TEST_DIR)/" + "src/repacketizer.c "
-    cfg['c_compiler']['extra_c_sources'] += "$(TEST_DIR)/" + "src/analysis.c "
     cfg['c_compiler']['extra_c_sources'] += "$(TEST_DIR)/" + "src/mlp.c "
     cfg['c_compiler']['extra_c_sources'] += "$(TEST_DIR)/" + "src/mlp_data.c "
     cfg['c_compiler']['extra_c_sources'] += "$(TEST_DIR)/" + "celt/bands.c "
@@ -46,8 +44,8 @@ if test == "../../opus":
     cfg['c_compiler']['extra_c_sources'] += "$(TEST_DIR)/" + "celt/quant_bands.c "
     cfg['c_compiler']['extra_c_sources'] += "$(TEST_DIR)/" + "celt/rate.c "
     cfg['c_compiler']['extra_c_sources'] += "$(TEST_DIR)/" + "celt/vq.c "
-    cfg['c_compiler']['extra_c_sources'] += "$(TEST_DIR)/" + "celt/arm/arm_celt_map.c "
-    cfg['c_compiler']['extra_c_sources'] += "$(TEST_DIR)/" + "celt/arm/armcpu.c "
+    #cfg['c_compiler']['extra_c_sources'] += "$(TEST_DIR)/" + "celt/arm/arm_celt_map.c "
+    #cfg['c_compiler']['extra_c_sources'] += "$(TEST_DIR)/" + "celt/arm/armcpu.c "
     cfg['c_compiler']['extra_c_sources'] += "$(TEST_DIR)/" + "silk/A2NLSF.c "
     cfg['c_compiler']['extra_c_sources'] += "$(TEST_DIR)/" + "silk/ana_filt_bank_1.c "
     cfg['c_compiler']['extra_c_sources'] += "$(TEST_DIR)/" + "silk/biquad_alt.c "
@@ -149,10 +147,27 @@ if test == "../../opus":
     cfg['c_compiler']['extra_c_sources'] += "$(TEST_DIR)/" + "silk/fixed/solve_LS_FIX.c "
     cfg['c_compiler']['extra_c_sources'] += "$(TEST_DIR)/" + "silk/fixed/vector_ops_FIX.c "
     cfg['c_compiler']['extra_c_sources'] += "$(TEST_DIR)/" + "silk/fixed/warped_autocorrelation_FIX.c "
+    cfg['c_compiler']['extra_c_sources'] += '$(TOP)/common/clib/printf-stdarg.c '
+    cfg['c_compiler']['extra_c_sources'] += '$(TOP)/common/clib/memcpy.c '
+    cfg['c_compiler']['extra_c_sources'] += '$(TOP)/common/clib/memmove.c '
+    cfg['c_compiler']['extra_c_sources'] += '$(TOP)/common/clib/memset.S '
 
-    cfg['c_compiler']['extra_incdirs'] = " -I$(TEST_DIR)/include  "
+
+
+
+
+
+    cfg['c_compiler']['extra_incdirs'] = ' -I$(TOP)/common/clib '
+    cfg['c_compiler']['extra_incdirs'] += " -I$(TEST_DIR)/include  "
     cfg['c_compiler']['extra_incdirs'] += " -I$(TEST_DIR)/celt "
     cfg['c_compiler']['extra_incdirs'] += " -I$(TEST_DIR)/silk "
     cfg['c_compiler']['extra_incdirs'] += " -I$(TEST_DIR)/silk/fixed "
 
-    cfg['c_compiler']['extra_defines'] = " -DVAR_ARRAYS -DOPUS_BUILD -DFIXED_POINT -DDISABLE_FLOAT_API -DENABLE_ASSERTIONS -DENABLE_SWO "
+    cfg['c_compiler']['extra_defines'] = " -DVAR_ARRAYS -DOPUS_BUILD -DFIXED_POINT -DDISABLE_FLOAT_API  -DENABLE_SWO"
+    if target_fpga:
+        cfg['c_compiler']['extra_c_sources'] += ' $(TOP)/common/clib/uart.c '
+        cfg['c_compiler']['extra_defines'] = ' -DUART_PUTCHAR=putchar_uart0 '
+
+    cfg['c_compiler']['default_lib_opt'] = " -Wl,--gc-sections "
+    cfg['c_compiler']['optimisation_options'] = '-O3 -fdata-sections -ffunction-sections'
+    cfg['c_compiler']['linker_script'] = '$(LINKER_SCRIPT_PATH)/nanorv32_rom_sram_256k.ld'

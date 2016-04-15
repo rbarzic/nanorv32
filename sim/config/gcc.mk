@@ -45,4 +45,4 @@ gcc_vmem:
 	hexdump -v -e '"@%08.8_ax  " 1/1 "%02x " "\n"' $(TEST).bin > $(TEST_DIR)/$(TEST_DIR)/$(TEST).vmem # iverilog
 
 gcc_hex2:
-	python3 $(C_COMPILER_MAKEHEX) $(TEST_DIR)/$(TEST).bin 16384 > $(TEST_DIR)/$(TEST).hex2
+	python3 $(C_COMPILER_MAKEHEX) $(TEST_DIR)/$(TEST).bin $(APPLICATION_MAX_CODE_SIZE) > $(TEST_DIR)/$(TEST).hex2
