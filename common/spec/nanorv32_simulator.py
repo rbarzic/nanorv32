@@ -61,10 +61,10 @@ class NanoRV32Core(object):
 
     def __init__(self):
         # Data memory
-        self.datamem_size = 65536
+        self.datamem_size = 65536*8
         self.datamem_start = 0x00000000
         # Code memory
-        self.codemem_size = 65536
+        self.codemem_size = 65536*8
         self.codemem_start = 0x00000000
         self.rf = [0]*32
         self.pc = 0
@@ -78,7 +78,7 @@ class NanoRV32Core(object):
 
     def fix_address(self,addr):
         "Wrap address to avoid accessing unexistant memory"
-        return addr & 0x0000FFFF # 64K
+        return addr & 0x000FFFFF # 16*64K
 
     def decode_address(self, addr):
         "Select a memory, depending of the address"
@@ -128,7 +128,7 @@ class NanoRV32Core(object):
 
     def mem_read_halfword(self,addr):
         if(addr & 0x01):
-            raise UnalignedAddressError("-E- Write Half word : " + hex(addr) )
+            raise UnalignedAddressError("-E- Read Half word : " + hex(addr) )
         mem = self.decode_address(addr)
         addr_f = self.fix_address(addr)
         tmp0 = mem[addr_f] & 0x0FF
@@ -137,7 +137,7 @@ class NanoRV32Core(object):
 
     def mem_read_halfword_u(self,addr):
         if(addr & 0x01):
-            raise UnalignedAddressError("-E- Write Half word : " + hex(addr) )
+            raise UnalignedAddressError("-E- Read Half word : " + hex(addr) )
         mem = self.decode_address(addr)
         addr_f = self.fix_address(addr)
         tmp0 = mem[addr_f] & 0x0FF
@@ -325,12 +325,14 @@ class NanoRV32Core(object):
        with open(hex2_file) as f:
            addr = 0;
            for line in f:
-              word = int(line,16)
-              self.code_memory[addr] = word & 0x0FF
-              self.code_memory[addr+1] = (word>>8) & 0x0FF
-              self.code_memory[addr+2] = (word>>16) & 0x0FF
-              self.code_memory[addr+3] = (word>>24) & 0x0FF
-              addr += 4
+               # print "addr = {}".format(addr)
+               word = int(line,16)
+               self.code_memory[addr] = word & 0x0FF
+               self.code_memory[addr+1] = (word>>8) & 0x0FF
+               self.code_memory[addr+2] = (word>>16) & 0x0FF
+               self.code_memory[addr+3] = (word>>24) & 0x0FF
+               addr += 4
+
 
     def get_instruction(self, addr):
        addr_f = self.fix_address(addr)

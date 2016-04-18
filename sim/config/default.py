@@ -1,3 +1,7 @@
+define['application']['max_code_size_in_word'] = 'MAKE_VARIABLE'
+cfg['application']['max_code_size_in_word'] = 131072
+
+
 define['c_compiler']['prefix'] = 'MAKE_VARIABLE'
 cfg['c_compiler']['prefix'] = 'riscv32-unknown-elf-'
 
