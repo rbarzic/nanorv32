@@ -5,6 +5,7 @@ import re
 import sys
 import pprint as pp
 import pickle
+from operator import itemgetter
 
 def get_args():
     """
@@ -25,4 +26,8 @@ if __name__ == '__main__':
         with open(args.profile) as f:
             profile_info = pickle.load(f)
             pp.pprint(profile_info)
+            pairs = [(x,profile_info[x]['__count__']) for x in profile_info.keys()]
+            #pp.pprint(pairs)
+            sorted_pairs = sorted(pairs, key=itemgetter(1))
+            pp.pprint(sorted_pairs)
         print "-I Done"
