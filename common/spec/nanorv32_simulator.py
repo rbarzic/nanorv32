@@ -2,10 +2,11 @@
 import sys
 import pprint as pp
 import inst_decod as id
-import nanorv32_simu as ns
 import argparse
 import ctypes as ct
 import re
+import nanorv32_simu as ns
+import nanorv32_simu_profiler as prof
 
 
 #@begin[py_csr_address]
@@ -395,7 +396,7 @@ def get_args():
     Get command line arguments
     """
     parser = argparse.ArgumentParser(description="""
-Put description of application here
+    A simulator for the Nanorv32 CPU
                    """)
     parser.add_argument('--hex2', action='store', dest='hex2',
                         help='hex2 file to be load in the memory', default="")
@@ -405,12 +406,18 @@ Put description of application here
                         help='PC start address', default=0)
     parser.add_argument('--compare', action='store', dest='compare',
                         help='trace file to compare', default=None)
+    parser.add_argument('--map', action='store', dest='mapdata',
+                        help='map file from objdump -t, needed for profiling', default=None)
+
+    parser.add_argument('--profile', action='store', dest='profile',
+                        help='File to store profiling data', default=None)
     parser.add_argument('--version', action='version', version='%(prog)s 0.1')
     return parser.parse_args()
 
 
 if __name__ == '__main__':
-
+    profiling = False
+    prof_file = None
     line_num = 0
     args= get_args()
     nrv = NanoRV32Core()
@@ -431,12 +438,36 @@ if __name__ == '__main__':
         compare = None
 
 
+    if args.mapdata:
+        mapdata = prof.read_objdump_map_file(args.mapdata)
+        func_addr_array   = mapdata.keys()
+        func_addr_array_l = len(func_addr_array)
+    else:
+        mapdata = None
+        func_addr_array   = []
+        func_addr_array_l = 0
+
+
+    if args.profile:
+        profiling = True
+        prof_file = open(args.profile,'w')
+
+
+
+
+
+
+
     nrv.pc = args.start_address;
     while True:
         inst = nrv.get_instruction(nrv.pc)
         short_inst = bitfield(inst,offset=0,size=32)
         if trace:
             trace.write("PC : 0x{:08x} I : 0x{:08x} : ".format(nrv.pc,short_inst))
+        if profiling:
+            func= prof.get_function_at(mapdata, func_addr_array, func_addr_array_l, nrv.pc )
+            prof_file.write("PC : 0x{:08x} F {} \n".format(nrv.pc, func))
+
         if compare:
            line = compare_line[line_num]
            extracted = line.split(':', 4)

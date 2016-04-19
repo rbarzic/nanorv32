@@ -15,6 +15,12 @@ steps = ["{cc}_compile",
          "{simulator}_{target}_elab",
          "{simulator}_{target}_sim",
 ]
+
+noccomp_steps = [
+         "{simulator}_{target}_build",
+         "{simulator}_{target}_elab",
+         "{simulator}_{target}_sim",
+]
 c_only_steps = ["{cc}_compile"]
 
 tpl_verilog_parameter = "VERILOG_PARAMETER += +{var_name_lc}={val}\n"
@@ -165,6 +171,10 @@ A simulation launcher for the Nanorv32 project
                         default=False,
                         help='Do not execute the command')
 
+    parser.add_argument('--noccomp', action='store_true', dest='noccomp',
+                        default=False,
+                        help='Skip C compilation')
+
     parser.add_argument('--rvc', action='store_true', dest='rvc',
                         default=False,
                         help='Allow usage  RVC (16-bits instructions) for the C compiler')
@@ -176,6 +186,11 @@ A simulation launcher for the Nanorv32 project
     parser.add_argument('--cdefines', action='store', dest='cdefines',
                         default=None,
                         help='Comma separated list of define/value that will override the extra_defines definition  : XX=1,YY=2')
+
+
+    parser.add_argument('--map', action='store', dest='map',
+                        default=None,
+                        help='Map file for profiling')
 
 
     parser.add_argument(dest='tests', metavar='tests', nargs='*',
@@ -204,6 +219,7 @@ if __name__ == '__main__':
     global_args['gui'] = args.gui
     global_args['logging'] = args.logging
     global_args['target_fpga'] = args.target_fpga
+    global_args['noccomp'] = args.noccomp
 
     # process cdefines arguments
     cdefines_txt = ""
@@ -381,6 +397,8 @@ if __name__ == '__main__':
         # We build the Makefile targets based on c compiler and verilator selections
         if args.compile_only:
             current_steps = c_only_steps
+        elif args.noccomp:
+            current_steps = noccomp_steps
         else:
             current_steps = steps
         final_step_list = [s.format(**global_args) for s in current_steps]
