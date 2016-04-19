@@ -5,6 +5,7 @@ import inst_decod as id
 import argparse
 import ctypes as ct
 import re
+import pickle
 import nanorv32_simu as ns
 import nanorv32_simu_profiler as prof
 
@@ -414,11 +415,16 @@ def get_args():
     parser.add_argument('--version', action='version', version='%(prog)s 0.1')
     return parser.parse_args()
 
+def close_profiling(profile_info,f):
+    pp.pprint(profile_info)
+    pickle.dump( profile_info, f)
+    pass
 
 if __name__ == '__main__':
     profiling = False
     prof_file = None
     line_num = 0
+    profile_info = dict()
     args= get_args()
     nrv = NanoRV32Core()
     if args.hex2 != "":
@@ -458,6 +464,7 @@ if __name__ == '__main__':
 
 
 
+
     nrv.pc = args.start_address;
     while True:
         inst = nrv.get_instruction(nrv.pc)
@@ -466,7 +473,8 @@ if __name__ == '__main__':
             trace.write("PC : 0x{:08x} I : 0x{:08x} : ".format(nrv.pc,short_inst))
         if profiling:
             func= prof.get_function_at(mapdata, func_addr_array, func_addr_array_l, nrv.pc )
-            prof_file.write("PC : 0x{:08x} F {} \n".format(nrv.pc, func))
+        else:
+            func = "undefined"
 
         if compare:
            line = compare_line[line_num]
@@ -485,11 +493,16 @@ if __name__ == '__main__':
                 print "\n"
                 if trace:
                     trace.close()
+                if profiling:
+                    close_profiling(profile_info,prof_file)
+
                 sys.exit()
            if model_inst != rtl_inst:
                 print "\n-I- TEST FAILED (inst compare fail) : RTL INSTR : 0x{:08x}, Model INSTR :0x{:08x}, line {} \n", rtl_inst,model_inst,line_num
                 if trace:
                     trace.close()
+                if profiling:
+                    close_profiling(profile_info,prof_file)
                 sys.exit()
         if nrv.pc == 0x00000100:
             if nrv.rf[10] == 0xCAFFE000: #x10/a0
@@ -497,6 +510,8 @@ if __name__ == '__main__':
                 print "\n-I- TEST OK\n"
                 if trace:
                     trace.close()
+                if profiling:
+                    close_profiling(profile_info,prof_file)
                 sys.exit()
             elif nrv.rf[10] == 0xDEADD000: #x10/a0
                 print
@@ -504,6 +519,8 @@ if __name__ == '__main__':
                 print "\n-I- TEST FAILED\n"
                 if trace:
                     trace.close()
+                if profiling:
+                    close_profiling(profile_info,prof_file)
                 sys.exit()
             else:
                 print
@@ -511,6 +528,8 @@ if __name__ == '__main__':
                 print "\n-I- TEST FAILED (unknown reason)\n"
                 if trace:
                     trace.close()
+                if profiling:
+                    close_profiling(profile_info,prof_file)
                 sys.exit()
 
         if nrv.pc == 0x0088:
@@ -534,7 +553,22 @@ if __name__ == '__main__':
         else:
             if trace:
                 trace.close()
+            if profiling:
+                close_profiling(profile_info,prof_file)
             sys.exit("-E- Illegall instruction found !")
+        if profiling:
+            if func in profile_info:
+                profile_info[func]['__count__'] += 1
+            else:
+                profile_info[func] = dict()
+                profile_info[func]['__count__'] = 1
+
+            if inst_str in profile_info[func]:
+                profile_info[func][inst_str] += 1
+            else:
+                profile_info[func][inst_str] = 1
+
+
         if (compare) :
            test = re.search(r"RF\[(\S+)(\s+)\] <=", txt)
            test2 = re.search(r"RF\[(\S+)(\s+)\] <=", line)
@@ -545,11 +579,16 @@ if __name__ == '__main__':
                  print "\n-I- TEST FAILED (reg_dest) : RTL RD :" + test[1] + ", Model RD : " + test2[1] + " line " + line_num, " \n"
                  if trace:
                      trace.close()
+                 if profiling:
+                     close_profiling(profile_info,prof_file)
+
                  sys.exit()
            if not test3 or not test4:
              if test3 != test4:
                  print "\n-I- TEST FAILED (reg_update) : RTL RD val : " + test3 + " Model RD val: " + test4 + " line " + line_num + ", \n"
                  if trace:
                      trace.close()
+                 if profiling:
+                     close_profiling(profile_info,prof_file)
                  sys.exit()
            line_num = line_num +1
