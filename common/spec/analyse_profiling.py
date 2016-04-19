@@ -30,4 +30,7 @@ if __name__ == '__main__':
             #pp.pprint(pairs)
             sorted_pairs = sorted(pairs, key=itemgetter(1))
             pp.pprint(sorted_pairs)
-        print "-I Done"
+            cycle = 0
+            for f,c in sorted_pairs:
+                cycle += c
+        print "-I Done - Cycles : {}".format(cycle)
