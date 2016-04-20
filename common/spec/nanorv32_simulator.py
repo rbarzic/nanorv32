@@ -465,13 +465,21 @@ if __name__ == '__main__':
 
 
 
+    previous_func = "" # for trace with profiling
+    caller = ""
+    short_inst = 0
     nrv.pc = args.start_address;
+    func = "undefined"
+    call_stack = ['s','init_code']
+    call_stack_main_found = False
     while True:
+        previous_short_inst = short_inst
         inst = nrv.get_instruction(nrv.pc)
         short_inst = bitfield(inst,offset=0,size=32)
         if trace:
             trace.write("PC : 0x{:08x} I : 0x{:08x} : ".format(nrv.pc,short_inst))
         if profiling:
+            previous_func = func
             func= prof.get_function_at(mapdata, func_addr_array, func_addr_array_l, nrv.pc )
         else:
             func = "undefined"
@@ -546,6 +554,21 @@ if __name__ == '__main__':
             #trace.write(inst_str2.ljust(8))
         if inst_str != 'illegal_instruction':
             _, new_pc,txt  = nrv.execute_instruction(inst_str)
+            if func == "main":
+                call_stack_main_found = True
+            if profiling :
+                if call_stack_main_found :
+                    if (func != previous_func):
+                        # something has changed
+                        if func in call_stack:
+                            # this was one the previous call frame (because there are some optimization)
+                            # if a function calls another function and return straight away
+                            while(call_stack[-1] != func):
+                                call_stack.pop()
+                        else:
+                            # we go deeper in call stack
+                            call_stack.append(func)
+                txt += " func : " + func + " $" + '->'.join(call_stack)
             if trace:
                 trace.write(" : " + txt + '\n')
             nrv.pc = new_pc
