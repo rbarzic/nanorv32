@@ -412,6 +412,9 @@ def get_args():
 
     parser.add_argument('--profile', action='store', dest='profile',
                         help='File to store profiling data', default=None)
+
+    parser.add_argument('--start_prof', action='store', dest='start_prof',
+                        help='Name of the function that will trigger the start of the profiling', default='main')
     parser.add_argument('--version', action='version', version='%(prog)s 0.1')
     return parser.parse_args()
 
@@ -471,7 +474,8 @@ if __name__ == '__main__':
     nrv.pc = args.start_address;
     func = "undefined"
     call_stack = ['s','init_code']
-    call_stack_main_found = False
+    call_stack_start_found = False
+    start_prof_found = False
     while True:
         previous_short_inst = short_inst
         inst = nrv.get_instruction(nrv.pc)
@@ -554,10 +558,12 @@ if __name__ == '__main__':
             #trace.write(inst_str2.ljust(8))
         if inst_str != 'illegal_instruction':
             _, new_pc,txt  = nrv.execute_instruction(inst_str)
-            if func == "main":
-                call_stack_main_found = True
+            if func == 'main':
+                call_stack_start_found = True
+            if func == args.start_prof:
+                start_prof_found = True
             if profiling :
-                if call_stack_main_found :
+                if call_stack_start_found :
                     if (func != previous_func):
                         # something has changed
                         if func in call_stack:
@@ -579,7 +585,10 @@ if __name__ == '__main__':
             if profiling:
                 close_profiling(profile_info,prof_file)
             sys.exit("-E- Illegall instruction found !")
-        if profiling:
+        # We start profiling only when the specific function is found
+        # and we continue until this function is found in the call stack
+        # so that we will stop monitoring when we exit this function
+        if profiling and start_prof_found and args.start_prof in call_stack:
             if func in profile_info:
                 profile_info[func]['__count__'] += 1
             else:
