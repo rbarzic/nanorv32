@@ -70,6 +70,22 @@ module tb_nanorv32;
    wire                 TDO;
 
 
+   // JTAG/SWD driver support
+   reg                  TCK_r; // to be able to drive TMS/TCK from testbench files
+   reg                  TMS_r;
+   reg                  TDI_r;
+
+   assign TCK = TCK_r;
+   assign TMS = TMS_r;
+   assign TDI = TDI_r;
+   initial begin
+      TCK_r = 1'bz;
+      TMS_r = 1'bz;
+      TDI_r = 1'bz;
+
+   end
+
+
    /* nanorv32_simpleahb AUTO_TEMPLATE(
      .clk_in                  (clk),
      ); */

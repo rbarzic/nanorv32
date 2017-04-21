@@ -8,9 +8,9 @@
 `define CPU `TB.U_DUT.U_NANORV32_PIL.U_CPU
 `define RF `TB.U_DUT.U_NANORV32_PIL.U_CPU.U_REG_FILE
 
-`define TCK `TB.TCK
-`define TMS `TB.TMS
-`define TDI `TB.TDI
+`define TCK `TB.TCK_r
+`define TMS `TB.TMS_r
+`define TDI `TB.TDI_r
 `define TDO `TB.U_DUT.TDO
 
 
