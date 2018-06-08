@@ -17,3 +17,8 @@ set_property -dict { PACKAGE_PIN C15   IOSTANDARD LVCMOS33 } [get_ports { TDO }]
 | 51:48 | W      | Operation code                                                                  |
 | 47:16 | W      | Address The first WishBone address which will be read from or written to        |
 |  15:0 | W      | Count     Total number of words to be transferred. Must be greater than 0.    - |
+
+
+* Code upload
+
+sudo ./nanorv32_jtag_uploader.py ../ctests/gpio_toggle_infinite/gpio_toggle_infinite.ihex -r
