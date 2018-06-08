@@ -1,12 +1,12 @@
-Copyright 1986-2015 Xilinx, Inc. All Rights Reserved.
+Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 ------------------------------------------------------------------------------------
-| Tool Version : Vivado v.2015.4 (lin64) Build 1412921 Wed Nov 18 09:44:32 MST 2015
-| Date         : Sat Apr  2 14:33:36 2016
-| Host         : ThinkPad-T420s running 64-bit Ubuntu 15.04
+| Tool Version : Vivado v.2018.1 (lin64) Build 2188600 Wed Apr  4 18:39:19 MDT 2018
+| Date         : Fri Jun  8 20:56:15 2018
+| Host         : corei7n2015 running 64-bit Ubuntu 16.04.4 LTS
 | Command      : report_timing_summary -file ./rpt/post_synth_timing_summary.rpt
 | Design       : nanorv32_simpleahb
 | Device       : 7a35t-csg324
-| Speed File   : -1  PRODUCTION 1.14 2014-09-11
+| Speed File   : -1  PRODUCTION 1.21 2018-02-08
 ------------------------------------------------------------------------------------
 
 Timing Summary Report
@@ -52,335 +52,335 @@ Table of Contents
 
 1. checking no_clock
 --------------------
- There are 56 register/latch pins with no clock driven by root clock pin: U_ADBG_TOP/i_dbg_wb/wb_biu_i/wr_reg_reg/C (HIGH)
+ There are 56 register/latch pins with no clock driven by root clock pin: U_ADBG_TOP/i_dbg_wb/wb_biu_i/wr_reg_reg/Q (HIGH)
 
- There are 24 register/latch pins with no clock driven by root clock pin: U_APB_BRIDGE/bridge/haddr_reg_reg[24]/C (HIGH)
+ There are 24 register/latch pins with no clock driven by root clock pin: U_APB_BRIDGE/bridge/haddr_reg_reg[24]/Q (HIGH)
 
- There are 24 register/latch pins with no clock driven by root clock pin: U_APB_BRIDGE/bridge/haddr_reg_reg[25]/C (HIGH)
+ There are 24 register/latch pins with no clock driven by root clock pin: U_APB_BRIDGE/bridge/haddr_reg_reg[25]/Q (HIGH)
 
- There are 24 register/latch pins with no clock driven by root clock pin: U_APB_BRIDGE/bridge/haddr_reg_reg[26]/C (HIGH)
+ There are 24 register/latch pins with no clock driven by root clock pin: U_APB_BRIDGE/bridge/haddr_reg_reg[26]/Q (HIGH)
 
- There are 24 register/latch pins with no clock driven by root clock pin: U_APB_BRIDGE/bridge/haddr_reg_reg[27]/C (HIGH)
+ There are 24 register/latch pins with no clock driven by root clock pin: U_APB_BRIDGE/bridge/haddr_reg_reg[27]/Q (HIGH)
 
- There are 24 register/latch pins with no clock driven by root clock pin: U_APB_BRIDGE/bridge/haddr_reg_reg[28]/C (HIGH)
+ There are 24 register/latch pins with no clock driven by root clock pin: U_APB_BRIDGE/bridge/haddr_reg_reg[28]/Q (HIGH)
 
- There are 24 register/latch pins with no clock driven by root clock pin: U_APB_BRIDGE/bridge/haddr_reg_reg[29]/C (HIGH)
+ There are 24 register/latch pins with no clock driven by root clock pin: U_APB_BRIDGE/bridge/haddr_reg_reg[29]/Q (HIGH)
 
- There are 24 register/latch pins with no clock driven by root clock pin: U_APB_BRIDGE/bridge/haddr_reg_reg[30]/C (HIGH)
+ There are 24 register/latch pins with no clock driven by root clock pin: U_APB_BRIDGE/bridge/haddr_reg_reg[30]/Q (HIGH)
 
- There are 24 register/latch pins with no clock driven by root clock pin: U_APB_BRIDGE/bridge/haddr_reg_reg[31]/C (HIGH)
+ There are 24 register/latch pins with no clock driven by root clock pin: U_APB_BRIDGE/bridge/haddr_reg_reg[31]/Q (HIGH)
 
- There are 24 register/latch pins with no clock driven by root clock pin: U_APB_BRIDGE/bridge/state_reg[0]/C (HIGH)
+ There are 24 register/latch pins with no clock driven by root clock pin: U_APB_BRIDGE/bridge/state_reg[0]/Q (HIGH)
 
- There are 24 register/latch pins with no clock driven by root clock pin: U_APB_BRIDGE/bridge/state_reg[1]/C (HIGH)
+ There are 24 register/latch pins with no clock driven by root clock pin: U_APB_BRIDGE/bridge/state_reg[1]/Q (HIGH)
 
- There are 5 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_DECODER/regfile_portw_sel_reg[0]/G (HIGH)
+ There are 5 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_DECODER/regfile_portw_sel_reg[0]/Q (HIGH)
 
- There are 5 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_DECODER/regfile_portw_sel_reg[1]/G (HIGH)
+ There are 5 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_DECODER/regfile_portw_sel_reg[1]/Q (HIGH)
 
- There are 5 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_DECODER/regfile_portw_sel_reg[2]/G (HIGH)
+ There are 5 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_DECODER/regfile_portw_sel_reg[2]/Q (HIGH)
 
- There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_FLOW_CTRL/irq_bypass_inst_reg_r_reg/C (HIGH)
+ There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_FLOW_CTRL/irq_bypass_inst_reg_r_reg/Q (HIGH)
 
- There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_FLOW_CTRL/urom_addr_r_reg[0]/C (HIGH)
+ There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_FLOW_CTRL/urom_addr_r_reg[0]/Q (HIGH)
 
- There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_FLOW_CTRL/urom_addr_r_reg[1]/C (HIGH)
+ There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_FLOW_CTRL/urom_addr_r_reg[1]/Q (HIGH)
 
- There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_FLOW_CTRL/urom_addr_r_reg[2]/C (HIGH)
+ There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_FLOW_CTRL/urom_addr_r_reg[2]/Q (HIGH)
 
- There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_FLOW_CTRL/urom_addr_r_reg[3]/C (HIGH)
+ There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_FLOW_CTRL/urom_addr_r_reg[3]/Q (HIGH)
 
- There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_FLOW_CTRL/urom_addr_r_reg[4]/C (HIGH)
+ There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_FLOW_CTRL/urom_addr_r_reg[4]/Q (HIGH)
 
- There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_FLOW_CTRL/urom_addr_r_reg[5]/C (HIGH)
+ There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_FLOW_CTRL/urom_addr_r_reg[5]/Q (HIGH)
 
- There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[0][0]/C (HIGH)
+ There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[0][0]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[0][10]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[0][10]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[0][11]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[0][11]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[0][12]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[0][12]/Q (HIGH)
 
- There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[0][13]/C (HIGH)
+ There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[0][13]/Q (HIGH)
 
- There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[0][14]/C (HIGH)
+ There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[0][14]/Q (HIGH)
 
- There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[0][15]/C (HIGH)
+ There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[0][15]/Q (HIGH)
 
- There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[0][1]/C (HIGH)
+ There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[0][1]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[0][2]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[0][2]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[0][3]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[0][3]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[0][4]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[0][4]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[0][5]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[0][5]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[0][6]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[0][6]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[0][7]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[0][7]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[0][8]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[0][8]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[0][9]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[0][9]/Q (HIGH)
 
- There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[1][0]/C (HIGH)
+ There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[1][0]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[1][10]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[1][10]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[1][11]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[1][11]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[1][12]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[1][12]/Q (HIGH)
 
- There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[1][13]/C (HIGH)
+ There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[1][13]/Q (HIGH)
 
- There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[1][14]/C (HIGH)
+ There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[1][14]/Q (HIGH)
 
- There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[1][15]/C (HIGH)
+ There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[1][15]/Q (HIGH)
 
- There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[1][1]/C (HIGH)
+ There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[1][1]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[1][2]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[1][2]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[1][3]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[1][3]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[1][4]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[1][4]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[1][5]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[1][5]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[1][6]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[1][6]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[1][7]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[1][7]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[1][8]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[1][8]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[1][9]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[0].iq_reg[1][9]/Q (HIGH)
 
- There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[2][0]/C (HIGH)
+ There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[2][0]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[2][10]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[2][10]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[2][11]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[2][11]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[2][12]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[2][12]/Q (HIGH)
 
- There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[2][13]/C (HIGH)
+ There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[2][13]/Q (HIGH)
 
- There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[2][14]/C (HIGH)
+ There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[2][14]/Q (HIGH)
 
- There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[2][15]/C (HIGH)
+ There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[2][15]/Q (HIGH)
 
- There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[2][1]/C (HIGH)
+ There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[2][1]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[2][2]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[2][2]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[2][3]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[2][3]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[2][4]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[2][4]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[2][5]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[2][5]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[2][6]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[2][6]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[2][7]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[2][7]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[2][8]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[2][8]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[2][9]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[2][9]/Q (HIGH)
 
- There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[3][0]/C (HIGH)
+ There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[3][0]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[3][10]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[3][10]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[3][11]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[3][11]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[3][12]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[3][12]/Q (HIGH)
 
- There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[3][13]/C (HIGH)
+ There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[3][13]/Q (HIGH)
 
- There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[3][14]/C (HIGH)
+ There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[3][14]/Q (HIGH)
 
- There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[3][15]/C (HIGH)
+ There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[3][15]/Q (HIGH)
 
- There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[3][1]/C (HIGH)
+ There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[3][1]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[3][2]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[3][2]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[3][3]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[3][3]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[3][4]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[3][4]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[3][5]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[3][5]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[3][6]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[3][6]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[3][7]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[3][7]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[3][8]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[3][8]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[3][9]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[1].iq_reg[3][9]/Q (HIGH)
 
- There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[4][0]/C (HIGH)
+ There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[4][0]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[4][10]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[4][10]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[4][11]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[4][11]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[4][12]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[4][12]/Q (HIGH)
 
- There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[4][13]/C (HIGH)
+ There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[4][13]/Q (HIGH)
 
- There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[4][14]/C (HIGH)
+ There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[4][14]/Q (HIGH)
 
- There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[4][15]/C (HIGH)
+ There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[4][15]/Q (HIGH)
 
- There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[4][1]/C (HIGH)
+ There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[4][1]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[4][2]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[4][2]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[4][3]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[4][3]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[4][4]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[4][4]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[4][5]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[4][5]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[4][6]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[4][6]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[4][7]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[4][7]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[4][8]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[4][8]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[4][9]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[4][9]/Q (HIGH)
 
- There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[5][0]/C (HIGH)
+ There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[5][0]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[5][10]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[5][10]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[5][11]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[5][11]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[5][12]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[5][12]/Q (HIGH)
 
- There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[5][13]/C (HIGH)
+ There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[5][13]/Q (HIGH)
 
- There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[5][14]/C (HIGH)
+ There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[5][14]/Q (HIGH)
 
- There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[5][15]/C (HIGH)
+ There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[5][15]/Q (HIGH)
 
- There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[5][1]/C (HIGH)
+ There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[5][1]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[5][2]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[5][2]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[5][3]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[5][3]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[5][4]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[5][4]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[5][5]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[5][5]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[5][6]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[5][6]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[5][7]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[5][7]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[5][8]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[5][8]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[5][9]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[2].iq_reg[5][9]/Q (HIGH)
 
- There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[6][0]/C (HIGH)
+ There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[6][0]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[6][10]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[6][10]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[6][11]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[6][11]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[6][12]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[6][12]/Q (HIGH)
 
- There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[6][13]/C (HIGH)
+ There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[6][13]/Q (HIGH)
 
- There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[6][14]/C (HIGH)
+ There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[6][14]/Q (HIGH)
 
- There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[6][15]/C (HIGH)
+ There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[6][15]/Q (HIGH)
 
- There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[6][1]/C (HIGH)
+ There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[6][1]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[6][2]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[6][2]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[6][3]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[6][3]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[6][4]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[6][4]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[6][5]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[6][5]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[6][6]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[6][6]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[6][7]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[6][7]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[6][8]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[6][8]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[6][9]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[6][9]/Q (HIGH)
 
- There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[7][0]/C (HIGH)
+ There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[7][0]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[7][10]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[7][10]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[7][11]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[7][11]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[7][12]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[7][12]/Q (HIGH)
 
- There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[7][13]/C (HIGH)
+ There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[7][13]/Q (HIGH)
 
- There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[7][14]/C (HIGH)
+ There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[7][14]/Q (HIGH)
 
- There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[7][15]/C (HIGH)
+ There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[7][15]/Q (HIGH)
 
- There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[7][1]/C (HIGH)
+ There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[7][1]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[7][2]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[7][2]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[7][3]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[7][3]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[7][4]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[7][4]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[7][5]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[7][5]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[7][6]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[7][6]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[7][7]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[7][7]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[7][8]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[7][8]/Q (HIGH)
 
- There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[7][9]/C (HIGH)
+ There are 7 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[7][9]/Q (HIGH)
 
- There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/rd_pt_r_reg[0]/C (HIGH)
+ There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/rd_pt_r_reg[0]/Q (HIGH)
 
- There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/rd_pt_r_reg[1]/C (HIGH)
+ There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/rd_pt_r_reg[1]/Q (HIGH)
 
- There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/rd_pt_r_reg[2]/C (HIGH)
+ There are 10 register/latch pins with no clock driven by root clock pin: U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/rd_pt_r_reg[2]/Q (HIGH)
 
- There are 56 register/latch pins with no clock driven by root clock pin: U_WB2AHB/flag_reg/C (HIGH)
+ There are 56 register/latch pins with no clock driven by root clock pin: U_WB2AHB/flag_reg/Q (HIGH)
 
- There are 24 register/latch pins with no clock driven by root clock pin: u_ahbmatrix/xbar/HastiBus/R33_reg/C (HIGH)
+ There are 24 register/latch pins with no clock driven by root clock pin: u_ahbmatrix/xbar/HastiBus/R33_reg/Q (HIGH)
 
- There are 24 register/latch pins with no clock driven by root clock pin: u_ahbmatrix/xbar/HastiBus/R36_reg/C (HIGH)
+ There are 24 register/latch pins with no clock driven by root clock pin: u_ahbmatrix/xbar/HastiBus/R36_reg/Q (HIGH)
 
- There are 24 register/latch pins with no clock driven by root clock pin: u_ahbmatrix/xbar/HastiBus/R38_reg/C (HIGH)
+ There are 24 register/latch pins with no clock driven by root clock pin: u_ahbmatrix/xbar/HastiBus/R38_reg/Q (HIGH)
 
- There are 24 register/latch pins with no clock driven by root clock pin: u_ahbmatrix/xbar/HastiBus/skb_valid_reg/C (HIGH)
+ There are 24 register/latch pins with no clock driven by root clock pin: u_ahbmatrix/xbar/HastiBus/skb_valid_reg/Q (HIGH)
 
- There are 24 register/latch pins with no clock driven by root clock pin: u_ahbmatrix/xbar/HastiSlaveMux/R26_reg/C (HIGH)
+ There are 24 register/latch pins with no clock driven by root clock pin: u_ahbmatrix/xbar/HastiSlaveMux/R26_reg/Q (HIGH)
 
- There are 24 register/latch pins with no clock driven by root clock pin: u_ahbmatrix/xbar/HastiSlaveMux/R47_reg/C (HIGH)
+ There are 24 register/latch pins with no clock driven by root clock pin: u_ahbmatrix/xbar/HastiSlaveMux/R47_reg/Q (HIGH)
 
- There are 24 register/latch pins with no clock driven by root clock pin: u_ahbmatrix/xbar/HastiSlaveMux_1/R26_reg/C (HIGH)
+ There are 24 register/latch pins with no clock driven by root clock pin: u_ahbmatrix/xbar/HastiSlaveMux_1/R26_reg/Q (HIGH)
 
- There are 24 register/latch pins with no clock driven by root clock pin: u_ahbmatrix/xbar/HastiSlaveMux_1/R47_reg/C (HIGH)
+ There are 24 register/latch pins with no clock driven by root clock pin: u_ahbmatrix/xbar/HastiSlaveMux_1/R47_reg/Q (HIGH)
 
- There are 24 register/latch pins with no clock driven by root clock pin: u_ahbmatrix/xbar/HastiSlaveMux_2/R26_reg/C (HIGH)
+ There are 24 register/latch pins with no clock driven by root clock pin: u_ahbmatrix/xbar/HastiSlaveMux_2/R26_reg/Q (HIGH)
 
- There are 24 register/latch pins with no clock driven by root clock pin: u_ahbmatrix/xbar/HastiSlaveMux_2/R47_reg/C (HIGH)
+ There are 24 register/latch pins with no clock driven by root clock pin: u_ahbmatrix/xbar/HastiSlaveMux_2/R47_reg/Q (HIGH)
 
- There are 24 register/latch pins with no clock driven by root clock pin: u_tcm0/U_AHB_TO_SSRAM/HREADYOUT_reg/C (HIGH)
+ There are 24 register/latch pins with no clock driven by root clock pin: u_tcm0/U_AHB_TO_SSRAM/HREADYOUT_reg/Q (HIGH)
 
- There are 24 register/latch pins with no clock driven by root clock pin: u_tcm1/U_AHB_TO_SSRAM/HREADYOUT_reg/C (HIGH)
+ There are 24 register/latch pins with no clock driven by root clock pin: u_tcm1/U_AHB_TO_SSRAM/HREADYOUT_reg/Q (HIGH)
 
 
 2. checking constant_clock
@@ -454,7 +454,7 @@ Table of Contents
 
     WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints     WPWS(ns)     TPWS(ns)  TPWS Failing Endpoints  TPWS Total Endpoints  
     -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------     --------     --------  ----------------------  --------------------  
-     -1.781     -964.785                   1024                 6500       -4.762     -194.221                     43                 6500        3.000        0.000                       0                  2830  
+     -0.762     -315.410                    928                 8003       -4.762     -194.225                     43                 8003        3.000        0.000                       0                  2884  
 
 
 Timing constraints are not met.
@@ -480,9 +480,9 @@ clk_in                {0.000 5.000}      10.000          100.000
 
 Clock                     WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints     WPWS(ns)     TPWS(ns)  TPWS Failing Endpoints  TPWS Total Endpoints  
 -----                     -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------     --------     --------  ----------------------  --------------------  
-TCK                        16.790        0.000                      0                  942        0.139        0.000                      0                  942       24.500        0.000                       0                   503  
+TCK                        17.097        0.000                      0                  975        0.139        0.000                      0                  975       24.500        0.000                       0                   536  
 clk_in                                                                                                                                                                  3.000        0.000                       0                     1  
-  clk_50m_arty_mmcm        -1.781     -964.785                   1024                 4947        0.076        0.000                      0                 4947       12.000        0.000                       0                  2323  
+  clk_50m_arty_mmcm        -0.762     -315.410                    928                 4982        0.076        0.000                      0                 4982       12.000        0.000                       0                  2344  
   clkfbout_arty_mmcm                                                                                                                                                    7.845        0.000                       0                     3  
 
 
@@ -493,8 +493,8 @@ clk_in                                                                          
 
 From Clock         To Clock               WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints  
 ----------         --------               -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------  
-clk_50m_arty_mmcm  TCK                     26.053        0.000                      0                   43       -4.762     -194.221                     43                   43  
-TCK                clk_50m_arty_mmcm       15.639        0.000                      0                  142        1.932        0.000                      0                  142  
+clk_50m_arty_mmcm  TCK                     26.053        0.000                      0                   43       -4.762     -194.225                     43                   43  
+TCK                clk_50m_arty_mmcm       15.904        0.000                      0                  142        1.931        0.000                      0                  142  
 
 
 ------------------------------------------------------------------------------------------------
@@ -504,8 +504,9 @@ TCK                clk_50m_arty_mmcm       15.639        0.000                  
 
 Path Group         From Clock         To Clock               WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints  
 ----------         ----------         --------               -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------  
-**async_default**  TCK                TCK                     42.927        0.000                      0                  456        0.739        0.000                      0                  456  
-**async_default**  TCK                clk_50m_arty_mmcm       12.706        0.000                      0                   74        2.517        0.000                      0                   74  
+**async_default**  TCK                TCK                     42.954        0.000                      0                  477        0.346        0.000                      0                  477  
+**async_default**  TCK                clk_50m_arty_mmcm       12.733        0.000                      0                   76        2.123        0.000                      0                   76  
+**async_default**  clk_50m_arty_mmcm  clk_50m_arty_mmcm        9.431        0.000                      0                 1412       13.092        0.000                      0                 1412  
 
 
 ------------------------------------------------------------------------------------------------
@@ -518,7 +519,7 @@ Path Group         From Clock         To Clock               WNS(ns)      TNS(ns
 From Clock:  TCK
   To Clock:  TCK
 
-Setup :            0  Failing Endpoints,  Worst Slack       16.790ns,  Total Violation        0.000ns
+Setup :            0  Failing Endpoints,  Worst Slack       17.097ns,  Total Violation        0.000ns
 Hold  :            0  Failing Endpoints,  Worst Slack        0.139ns,  Total Violation        0.000ns
 PW    :            0  Failing Endpoints,  Worst Slack       24.500ns,  Total Violation        0.000ns
 ---------------------------------------------------------------------------------------------------
@@ -526,16 +527,16 @@ PW    :            0  Failing Endpoints,  Worst Slack       24.500ns,  Total Vio
 
 Max Delay Paths
 --------------------------------------------------------------------------------------
-Slack (MET) :             16.790ns  (required time - arrival time)
-  Source:                 U_ADBG_TOP/i_dbg_cpu_or1k/bit_count_reg[2]/C
+Slack (MET) :             17.097ns  (required time - arrival time)
+  Source:                 U_ADBG_TOP/i_dbg_wb/bit_count_reg[1]/C
                             (rising edge-triggered cell FDCE clocked by TCK  {rise@0.000ns fall@25.000ns period=50.000ns})
   Destination:            U_TAP_TOP/tdo_pad_o_reg/D
                             (falling edge-triggered cell FDRE clocked by TCK  {rise@0.000ns fall@25.000ns period=50.000ns})
   Path Group:             TCK
   Path Type:              Setup (Max at Slow Process Corner)
   Requirement:            25.000ns  (TCK fall@25.000ns - TCK rise@0.000ns)
-  Data Path Delay:        8.062ns  (logic 2.032ns (25.205%)  route 6.030ns (74.795%))
-  Logic Levels:           9  (LUT5=2 LUT6=6 MUXF7=1)
+  Data Path Delay:        7.755ns  (logic 1.743ns (22.476%)  route 6.012ns (77.524%))
+  Logic Levels:           9  (LUT4=1 LUT5=1 LUT6=7)
   Clock Path Skew:        -0.145ns (DCD - SCD + CPR)
     Destination Clock Delay (DCD):    2.727ns = ( 27.727 - 25.000 ) 
     Source Clock Delay      (SCD):    2.987ns
@@ -554,29 +555,29 @@ Slack (MET) :             16.790ns  (required time - arrival time)
     D15                  IBUF (Prop_ibuf_I_O)         1.508     1.508 r  TCK_IBUF_inst/O
                          net (fo=1, unplaced)         0.800     2.307    U_TOP_IO/pad_tap_tck_in
                          BUFG (Prop_bufg_I_O)         0.096     2.403 r  U_TOP_IO/U_TCK_BUF/O
-                         net (fo=502, unplaced)       0.584     2.987    U_ADBG_TOP/i_dbg_cpu_or1k/tck_i
-                         FDCE                                         r  U_ADBG_TOP/i_dbg_cpu_or1k/bit_count_reg[2]/C
+                         net (fo=535, unplaced)       0.584     2.987    U_ADBG_TOP/i_dbg_wb/tck_i
+                         FDCE                                         r  U_ADBG_TOP/i_dbg_wb/bit_count_reg[1]/C
   -------------------------------------------------------------------    -------------------
-                         FDCE (Prop_fdce_C_Q)         0.456     3.443 f  U_ADBG_TOP/i_dbg_cpu_or1k/bit_count_reg[2]/Q
-                         net (fo=6, unplaced)         0.997     4.440    U_ADBG_TOP/i_dbg_cpu_or1k/bit_count_reg__0[2]
-                         LUT6 (Prop_lut6_I0_O)        0.295     4.735 r  U_ADBG_TOP/i_dbg_cpu_or1k/FSM_sequential_module_state[1]_i_7/O
-                         net (fo=3, unplaced)         0.920     5.655    U_ADBG_TOP/i_dbg_cpu_or1k/bit_count_32
-                         LUT6 (Prop_lut6_I2_O)        0.124     5.779 r  U_ADBG_TOP/i_dbg_cpu_or1k/module_tdo_o_INST_0_i_25/O
-                         net (fo=2, unplaced)         0.913     6.692    U_ADBG_TOP/i_dbg_cpu_or1k/module_tdo_o_INST_0_i_25_n_1
-                         LUT5 (Prop_lut5_I0_O)        0.124     6.816 r  U_ADBG_TOP/i_dbg_cpu_or1k/module_tdo_o_INST_0_i_20/O
-                         net (fo=11, unplaced)        0.948     7.764    U_ADBG_TOP/i_dbg_cpu_or1k/module_tdo_o_INST_0_i_20_n_1
-                         LUT6 (Prop_lut6_I3_O)        0.124     7.888 r  U_ADBG_TOP/i_dbg_cpu_or1k/module_tdo_o_INST_0_i_9/O
-                         net (fo=1, unplaced)         0.000     7.888    U_ADBG_TOP/i_dbg_cpu_or1k/module_tdo_o_INST_0_i_9_n_1
-                         MUXF7 (Prop_muxf7_I1_O)      0.245     8.133 r  U_ADBG_TOP/i_dbg_cpu_or1k/module_tdo_o_INST_0_i_2/O
-                         net (fo=1, unplaced)         0.452     8.585    U_ADBG_TOP/i_dbg_cpu_or1k/tdo_output_sel[1]
-                         LUT6 (Prop_lut6_I2_O)        0.298     8.883 r  U_ADBG_TOP/i_dbg_cpu_or1k/module_tdo_o_INST_0/O
-                         net (fo=1, unplaced)         0.902     9.785    U_ADBG_TOP/tdo_cpu0
-                         LUT6 (Prop_lut6_I1_O)        0.124     9.909 r  U_ADBG_TOP/tdo_o_INST_0/O
-                         net (fo=1, unplaced)         0.449    10.358    U_TAP_TOP/debug_tdo_i
-                         LUT5 (Prop_lut5_I0_O)        0.118    10.476 r  U_TAP_TOP/tdo_pad_o_i_3/O
-                         net (fo=1, unplaced)         0.449    10.925    U_TAP_TOP/tdo_pad_o_i_3_n_1
-                         LUT6 (Prop_lut6_I2_O)        0.124    11.049 r  U_TAP_TOP/tdo_pad_o_i_1/O
-                         net (fo=1, unplaced)         0.000    11.049    U_TAP_TOP/tdo_pad_o_i_1_n_1
+                         FDCE (Prop_fdce_C_Q)         0.456     3.443 r  U_ADBG_TOP/i_dbg_wb/bit_count_reg[1]/Q
+                         net (fo=6, unplaced)         0.997     4.440    U_ADBG_TOP/i_dbg_wb/bit_count_reg__0[1]
+                         LUT6 (Prop_lut6_I0_O)        0.295     4.735 f  U_ADBG_TOP/i_dbg_wb/FSM_onehot_module_state[10]_i_2/O
+                         net (fo=2, unplaced)         0.460     5.195    U_ADBG_TOP/i_dbg_wb/FSM_onehot_module_state[10]_i_2_n_1
+                         LUT4 (Prop_lut4_I2_O)        0.124     5.319 f  U_ADBG_TOP/i_dbg_wb/FSM_onehot_module_state[10]_i_1/O
+                         net (fo=4, unplaced)         0.926     6.245    U_ADBG_TOP/i_dbg_wb/FSM_onehot_module_state[10]_i_1_n_1
+                         LUT6 (Prop_lut6_I0_O)        0.124     6.369 f  U_ADBG_TOP/i_dbg_wb/module_tdo_o_INST_0_i_23/O
+                         net (fo=2, unplaced)         0.913     7.282    U_ADBG_TOP/i_dbg_wb/module_tdo_o_INST_0_i_23_n_1
+                         LUT6 (Prop_lut6_I1_O)        0.124     7.406 f  U_ADBG_TOP/i_dbg_wb/module_tdo_o_INST_0_i_10/O
+                         net (fo=3, unplaced)         0.467     7.873    U_ADBG_TOP/i_dbg_wb/module_tdo_o_INST_0_i_10_n_1
+                         LUT6 (Prop_lut6_I4_O)        0.124     7.997 r  U_ADBG_TOP/i_dbg_wb/module_tdo_o_INST_0_i_3/O
+                         net (fo=1, unplaced)         0.449     8.446    U_ADBG_TOP/i_dbg_wb/module_tdo_o_INST_0_i_3_n_1
+                         LUT6 (Prop_lut6_I4_O)        0.124     8.570 r  U_ADBG_TOP/i_dbg_wb/module_tdo_o_INST_0/O
+                         net (fo=1, unplaced)         0.902     9.472    U_ADBG_TOP/tdo_wb
+                         LUT6 (Prop_lut6_I1_O)        0.124     9.596 r  U_ADBG_TOP/tdo_o_INST_0/O
+                         net (fo=1, unplaced)         0.449    10.045    U_TAP_TOP/debug_tdo_i
+                         LUT5 (Prop_lut5_I0_O)        0.124    10.169 r  U_TAP_TOP/tdo_pad_o_i_2/O
+                         net (fo=1, unplaced)         0.449    10.618    U_TAP_TOP/tdo_pad_o_i_2_n_1
+                         LUT6 (Prop_lut6_I1_O)        0.124    10.742 r  U_TAP_TOP/tdo_pad_o_i_1/O
+                         net (fo=1, unplaced)         0.000    10.742    U_TAP_TOP/tdo_pad_o_i_1_n_1
                          FDRE                                         r  U_TAP_TOP/tdo_pad_o_reg/D
   -------------------------------------------------------------------    -------------------
 
@@ -586,16 +587,16 @@ Slack (MET) :             16.790ns  (required time - arrival time)
     D15                  IBUF (Prop_ibuf_I_O)         1.437    26.437 f  TCK_IBUF_inst/O
                          net (fo=1, unplaced)         0.760    27.197    U_TOP_IO/pad_tap_tck_in
                          BUFG (Prop_bufg_I_O)         0.091    27.288 f  U_TOP_IO/U_TCK_BUF/O
-                         net (fo=502, unplaced)       0.439    27.727    U_TAP_TOP/tck_pad_i
+                         net (fo=535, unplaced)       0.439    27.727    U_TAP_TOP/tck_pad_i
                          FDRE                                         r  U_TAP_TOP/tdo_pad_o_reg/C  (IS_INVERTED)
                          clock pessimism              0.116    27.842    
                          clock uncertainty           -0.035    27.807    
                          FDRE (Setup_fdre_C_D)        0.032    27.839    U_TAP_TOP/tdo_pad_o_reg
   -------------------------------------------------------------------
                          required time                         27.839    
-                         arrival time                         -11.049    
+                         arrival time                         -10.742    
   -------------------------------------------------------------------
-                         slack                                 16.790    
+                         slack                                 17.097    
 
 
 
@@ -626,7 +627,7 @@ Slack (MET) :             0.139ns  (arrival time - required time)
     D15                  IBUF (Prop_ibuf_I_O)         0.275     0.275 r  TCK_IBUF_inst/O
                          net (fo=1, unplaced)         0.337     0.612    U_TOP_IO/pad_tap_tck_in
                          BUFG (Prop_bufg_I_O)         0.026     0.638 r  U_TOP_IO/U_TCK_BUF/O
-                         net (fo=502, unplaced)       0.114     0.752    U_ADBG_TOP/i_dbg_jsp/jsp_biu_i/bytesavail_syncreg/CLKB
+                         net (fo=535, unplaced)       0.114     0.752    U_ADBG_TOP/i_dbg_jsp/jsp_biu_i/bytesavail_syncreg/CLKB
                          FDPE                                         r  U_ADBG_TOP/i_dbg_jsp/jsp_biu_i/bytesavail_syncreg/ack_toggle_reg/C
   -------------------------------------------------------------------    -------------------
                          FDPE (Prop_fdpe_C_Q)         0.141     0.893 f  U_ADBG_TOP/i_dbg_jsp/jsp_biu_i/bytesavail_syncreg/ack_toggle_reg/Q
@@ -642,7 +643,7 @@ Slack (MET) :             0.139ns  (arrival time - required time)
     D15                  IBUF (Prop_ibuf_I_O)         0.463     0.463 r  TCK_IBUF_inst/O
                          net (fo=1, unplaced)         0.355     0.818    U_TOP_IO/pad_tap_tck_in
                          BUFG (Prop_bufg_I_O)         0.029     0.847 r  U_TOP_IO/U_TCK_BUF/O
-                         net (fo=502, unplaced)       0.259     1.106    U_ADBG_TOP/i_dbg_jsp/jsp_biu_i/bytesavail_syncreg/CLKB
+                         net (fo=535, unplaced)       0.259     1.106    U_ADBG_TOP/i_dbg_jsp/jsp_biu_i/bytesavail_syncreg/CLKB
                          FDPE                                         r  U_ADBG_TOP/i_dbg_jsp/jsp_biu_i/bytesavail_syncreg/ack_toggle_reg/C
                          clock pessimism             -0.209     0.897    
                          FDPE (Hold_fdpe_C_D)         0.091     0.988    U_ADBG_TOP/i_dbg_jsp/jsp_biu_i/bytesavail_syncreg/ack_toggle_reg
@@ -665,8 +666,8 @@ Sources:            { TCK }
 
 Check Type        Corner  Lib Pin  Reference Pin  Required(ns)  Actual(ns)  Slack(ns)  Location  Pin
 Min Period        n/a     BUFG/I   n/a            2.155         50.000      47.845               U_TOP_IO/U_TCK_BUF/I
-Low Pulse Width   Slow    FDCE/C   n/a            0.500         25.000      24.500               U_ADBG_TOP/i_dbg_cpu_2/FSM_sequential_module_state_reg[0]/C
-High Pulse Width  Slow    FDCE/C   n/a            0.500         25.000      24.500               U_TAP_TOP/latched_jtag_ir_reg[0]/C
+Low Pulse Width   Fast    FDPE/C   n/a            0.500         25.000      24.500               U_ADBG_TOP/i_dbg_cpu_2/FSM_onehot_module_state_reg[0]/C
+High Pulse Width  Fast    FDCE/C   n/a            0.500         25.000      24.500               U_TAP_TOP/latched_jtag_ir_reg[0]/C
 
 
 
@@ -699,7 +700,7 @@ High Pulse Width  Slow    MMCME2_ADV/CLKIN1  n/a            2.000         5.000 
 From Clock:  clk_50m_arty_mmcm
   To Clock:  clk_50m_arty_mmcm
 
-Setup :         1024  Failing Endpoints,  Worst Slack       -1.781ns,  Total Violation     -964.785ns
+Setup :          928  Failing Endpoints,  Worst Slack       -0.762ns,  Total Violation     -315.410ns
 Hold  :            0  Failing Endpoints,  Worst Slack        0.076ns,  Total Violation        0.000ns
 PW    :            0  Failing Endpoints,  Worst Slack       12.000ns,  Total Violation        0.000ns
 ---------------------------------------------------------------------------------------------------
@@ -707,16 +708,16 @@ PW    :            0  Failing Endpoints,  Worst Slack       12.000ns,  Total Vio
 
 Max Delay Paths
 --------------------------------------------------------------------------------------
-Slack (VIOLATED) :        -1.781ns  (required time - arrival time)
-  Source:                 U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/rd_pt_r_reg[0]/C
+Slack (VIOLATED) :        -0.762ns  (required time - arrival time)
+  Source:                 U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[6][11]/C
                             (rising edge-triggered cell FDCE clocked by clk_50m_arty_mmcm  {rise@0.000ns fall@12.500ns period=25.000ns})
-  Destination:            U_NANORV32_PIL/U_CPU/U_REG_FILE/loop[0].regfile_reg[0][30]/D
+  Destination:            U_NANORV32_PIL/U_CPU/U_REG_FILE/loop[0].regfile_reg[0][31]/D
                             (rising edge-triggered cell FDCE clocked by clk_50m_arty_mmcm  {rise@0.000ns fall@12.500ns period=25.000ns})
   Path Group:             clk_50m_arty_mmcm
   Path Type:              Setup (Max at Slow Process Corner)
   Requirement:            25.000ns  (clk_50m_arty_mmcm rise@25.000ns - clk_50m_arty_mmcm rise@0.000ns)
-  Data Path Delay:        26.581ns  (logic 13.672ns (51.436%)  route 12.909ns (48.564%))
-  Logic Levels:           41  (CARRY4=16 DSP48E1=2 LUT2=3 LUT3=2 LUT4=1 LUT5=4 LUT6=11 MUXF7=2)
+  Data Path Delay:        25.561ns  (logic 12.710ns (49.723%)  route 12.851ns (50.277%))
+  Logic Levels:           35  (CARRY4=17 DSP48E1=2 LUT2=2 LUT3=3 LUT6=10 MUXF7=1)
   Clock Path Skew:        -0.145ns (DCD - SCD + CPR)
     Destination Clock Delay (DCD):    -2.231ns = ( 22.769 - 25.000 ) 
     Source Clock Delay      (SCD):    -1.555ns
@@ -738,112 +739,101 @@ Slack (VIOLATED) :        -1.781ns  (required time - arrival time)
                                                      -5.108    -3.035 r  U_CLK_GEN/U_MCM/inst/mmcm_adv_inst/CLKOUT0
                          net (fo=1, unplaced)         0.800    -2.235    U_CLK_GEN/U_MCM/inst/clk_50m_arty_mmcm
                          BUFG (Prop_bufg_I_O)         0.096    -2.139 r  U_CLK_GEN/U_MCM/inst/clkout1_buf/O
-                         net (fo=2321, unplaced)      0.584    -1.555    U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/clk
-                         FDCE                                         r  U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/rd_pt_r_reg[0]/C
+                         net (fo=2342, unplaced)      0.584    -1.555    U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/clk
+                         FDCE                                         r  U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[6][11]/C
   -------------------------------------------------------------------    -------------------
-                         FDCE (Prop_fdce_C_Q)         0.456    -1.099 r  U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/rd_pt_r_reg[0]/Q
-                         net (fo=70, unplaced)        0.832    -0.267    U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/rd_pt_r[0]
-                         LUT3 (Prop_lut3_I0_O)        0.295     0.028 r  U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/inst_from_buffer[31]_INST_0_i_1/O
-                         net (fo=16, unplaced)        0.529     0.557    U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/inst_from_buffer[31]_INST_0_i_1_n_1
-                         MUXF7 (Prop_muxf7_S_O)       0.296     0.853 f  U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/inst_from_buffer[28]_INST_0/O
-                         net (fo=4, unplaced)         0.476     1.329    U_NANORV32_PIL/U_CPU/inst_from_buffer[28]
-                         LUT3 (Prop_lut3_I0_O)        0.298     1.627 f  U_NANORV32_PIL/U_CPU/U_DECODER_i_4/O
-                         net (fo=5, unplaced)         0.447     2.074    U_NANORV32_PIL/U_CPU/U_DECODER/instruction_r[28]
-                         LUT2 (Prop_lut2_I0_O)        0.150     2.224 f  U_NANORV32_PIL/U_CPU/U_DECODER/alu_portb_sel[3]_INST_0_i_10/O
-                         net (fo=1, unplaced)         0.449     2.673    U_NANORV32_PIL/U_CPU/U_DECODER/alu_portb_sel[3]_INST_0_i_10_n_1
-                         LUT6 (Prop_lut6_I0_O)        0.124     2.797 f  U_NANORV32_PIL/U_CPU/U_DECODER/alu_portb_sel[3]_INST_0_i_9/O
-                         net (fo=1, unplaced)         0.449     3.246    U_NANORV32_PIL/U_CPU/U_DECODER/alu_portb_sel[3]_INST_0_i_9_n_1
-                         LUT6 (Prop_lut6_I1_O)        0.124     3.370 r  U_NANORV32_PIL/U_CPU/U_DECODER/alu_portb_sel[3]_INST_0_i_6/O
-                         net (fo=2, unplaced)         0.460     3.830    U_NANORV32_PIL/U_CPU/U_DECODER/alu_portb_sel[3]_INST_0_i_6_n_1
-                         LUT6 (Prop_lut6_I2_O)        0.124     3.954 r  U_NANORV32_PIL/U_CPU/U_DECODER/alu_portb_sel[2]_INST_0_i_5/O
-                         net (fo=1, unplaced)         0.449     4.403    U_NANORV32_PIL/U_CPU/U_DECODER/alu_portb_sel[2]_INST_0_i_5_n_1
-                         LUT6 (Prop_lut6_I5_O)        0.124     4.527 f  U_NANORV32_PIL/U_CPU/U_DECODER/alu_portb_sel[2]_INST_0/O
-                         net (fo=41, unplaced)        0.979     5.506    U_NANORV32_PIL/U_CPU/alu_portb_sel[2]
-                         LUT4 (Prop_lut4_I0_O)        0.150     5.656 r  U_NANORV32_PIL/U_CPU/U_ALU_i_95/O
-                         net (fo=2, unplaced)         0.913     6.569    U_NANORV32_PIL/U_CPU/U_ALU_i_95_n_1
-                         LUT5 (Prop_lut5_I0_O)        0.124     6.693 r  U_NANORV32_PIL/U_CPU/U_ALU_i_114/O
-                         net (fo=1, unplaced)         0.449     7.142    U_NANORV32_PIL/U_CPU/U_ALU_i_114_n_1
-                         LUT6 (Prop_lut6_I5_O)        0.124     7.266 r  U_NANORV32_PIL/U_CPU/U_ALU_i_89/O
-                         net (fo=1, unplaced)         0.449     7.715    U_NANORV32_PIL/U_CPU/U_ALU_i_89_n_1
-                         LUT6 (Prop_lut6_I0_O)        0.124     7.839 r  U_NANORV32_PIL/U_CPU/U_ALU_i_57/O
-                         net (fo=26, unplaced)        0.515     8.354    U_NANORV32_PIL/U_CPU/U_ALU/alu_portb[7]
-                         LUT6 (Prop_lut6_I0_O)        0.124     8.478 r  U_NANORV32_PIL/U_CPU/U_ALU/mul_res_tmp_i_38/O
-                         net (fo=1, unplaced)         0.000     8.478    U_NANORV32_PIL/U_CPU/U_ALU/mul_b0[7]
-                         CARRY4 (Prop_carry4_S[3]_CO[3])
-                                                      0.401     8.879 r  U_NANORV32_PIL/U_CPU/U_ALU/mul_res_tmp_i_8/CO[3]
-                         net (fo=1, unplaced)         0.000     8.879    U_NANORV32_PIL/U_CPU/U_ALU/mul_res_tmp_i_8_n_1
+                         FDCE (Prop_fdce_C_Q)         0.456    -1.099 r  U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[6][11]/Q
+                         net (fo=2, unplaced)         0.976    -0.123    U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/genblk1[3].iq_reg[6]__0[11]
+                         LUT6 (Prop_lut6_I0_O)        0.295     0.172 r  U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/inst_from_buffer[27]_INST_0_i_2/O
+                         net (fo=1, unplaced)         0.000     0.172    U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/inst_from_buffer[27]_INST_0_i_2_n_1
+                         MUXF7 (Prop_muxf7_I1_O)      0.245     0.417 r  U_NANORV32_PIL/U_CPU/U_PREFETCH_BUFFER/inst_from_buffer[27]_INST_0/O
+                         net (fo=2, unplaced)         0.463     0.880    U_NANORV32_PIL/U_CPU/inst_from_buffer[27]
+                         LUT3 (Prop_lut3_I2_O)        0.298     1.178 r  U_NANORV32_PIL/U_CPU/U_DECODER_i_5/O
+                         net (fo=79, unplaced)        0.996     2.174    U_NANORV32_PIL/U_CPU/U_DECODER/instruction_r[27]
+                         LUT3 (Prop_lut3_I0_O)        0.150     2.324 r  U_NANORV32_PIL/U_CPU/U_DECODER/alu_op_sel[2]_INST_0_i_18/O
+                         net (fo=1, unplaced)         1.111     3.435    U_NANORV32_PIL/U_CPU/U_DECODER/alu_op_sel[2]_INST_0_i_18_n_1
+                         LUT6 (Prop_lut6_I0_O)        0.124     3.559 r  U_NANORV32_PIL/U_CPU/U_DECODER/alu_op_sel[2]_INST_0_i_7/O
+                         net (fo=1, unplaced)         0.902     4.461    U_NANORV32_PIL/U_CPU/U_DECODER/alu_op_sel[2]_INST_0_i_7_n_1
+                         LUT6 (Prop_lut6_I0_O)        0.124     4.585 f  U_NANORV32_PIL/U_CPU/U_DECODER/alu_op_sel[2]_INST_0_i_1/O
+                         net (fo=1, unplaced)         1.111     5.696    U_NANORV32_PIL/U_CPU/U_DECODER/alu_op_sel[2]_INST_0_i_1_n_1
+                         LUT6 (Prop_lut6_I0_O)        0.124     5.820 r  U_NANORV32_PIL/U_CPU/U_DECODER/alu_op_sel[2]_INST_0/O
+                         net (fo=108, unplaced)       1.212     7.032    U_NANORV32_PIL/U_CPU/U_ALU/alu_op_sel[2]
+                         LUT6 (Prop_lut6_I1_O)        0.124     7.156 r  U_NANORV32_PIL/U_CPU/U_ALU/mul_res_tmp__1_i_17/O
+                         net (fo=95, unplaced)        0.547     7.703    U_NANORV32_PIL/U_CPU/U_ALU/p_0_in3_out
+                         LUT2 (Prop_lut2_I0_O)        0.124     7.827 r  U_NANORV32_PIL/U_CPU/U_ALU/mul_res_tmp__1_i_20/O
+                         net (fo=1, unplaced)         0.000     7.827    U_NANORV32_PIL/U_CPU/U_ALU/mul_a0[1]
+                         CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.550     8.377 r  U_NANORV32_PIL/U_CPU/U_ALU/mul_res_tmp__1_i_4/CO[3]
+                         net (fo=1, unplaced)         0.009     8.386    U_NANORV32_PIL/U_CPU/U_ALU/mul_res_tmp__1_i_4_n_1
                          CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.114     8.993 r  U_NANORV32_PIL/U_CPU/U_ALU/mul_res_tmp_i_7/CO[3]
-                         net (fo=1, unplaced)         0.000     8.993    U_NANORV32_PIL/U_CPU/U_ALU/mul_res_tmp_i_7_n_1
+                                                      0.114     8.500 r  U_NANORV32_PIL/U_CPU/U_ALU/mul_res_tmp__1_i_3/CO[3]
+                         net (fo=1, unplaced)         0.000     8.500    U_NANORV32_PIL/U_CPU/U_ALU/mul_res_tmp__1_i_3_n_1
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     8.614 r  U_NANORV32_PIL/U_CPU/U_ALU/mul_res_tmp__1_i_2/CO[3]
+                         net (fo=1, unplaced)         0.000     8.614    U_NANORV32_PIL/U_CPU/U_ALU/mul_res_tmp__1_i_2_n_1
                          CARRY4 (Prop_carry4_CI_O[1])
-                                                      0.348     9.341 r  U_NANORV32_PIL/U_CPU/U_ALU/mul_res_tmp_i_6/O[1]
-                         net (fo=2, unplaced)         0.800    10.141    U_NANORV32_PIL/U_CPU/U_ALU/mul_res_tmp_i_6_n_7
-                         DSP48E1 (Prop_dsp48e1_B[13]_PCOUT[47])
-                                                      4.030    14.171 r  U_NANORV32_PIL/U_CPU/U_ALU/mul_res_tmp__1/PCOUT[47]
-                         net (fo=1, unplaced)         0.055    14.226    U_NANORV32_PIL/U_CPU/U_ALU/mul_res_tmp__1_n_107
+                                                      0.348     8.962 r  U_NANORV32_PIL/U_CPU/U_ALU/mul_res_tmp__1_i_1/O[1]
+                         net (fo=1, unplaced)         0.800     9.762    U_NANORV32_PIL/U_CPU/U_ALU/p_1_in[13]
+                         DSP48E1 (Prop_dsp48e1_A[13]_PCOUT[47])
+                                                      4.215    13.977 r  U_NANORV32_PIL/U_CPU/U_ALU/mul_res_tmp__1/PCOUT[47]
+                         net (fo=1, unplaced)         0.055    14.032    U_NANORV32_PIL/U_CPU/U_ALU/mul_res_tmp__1_n_107
                          DSP48E1 (Prop_dsp48e1_PCIN[47]_P[0])
-                                                      1.518    15.744 r  U_NANORV32_PIL/U_CPU/U_ALU/mul_res_tmp__2/P[0]
-                         net (fo=2, unplaced)         0.800    16.544    U_NANORV32_PIL/U_CPU/U_ALU/mul_res_tmp__2_n_106
-                         LUT2 (Prop_lut2_I0_O)        0.124    16.668 r  U_NANORV32_PIL/U_CPU/U_ALU/alu_res[19]_INST_0_i_41/O
-                         net (fo=1, unplaced)         0.000    16.668    U_NANORV32_PIL/U_CPU/U_ALU/alu_res[19]_INST_0_i_41_n_1
+                                                      1.518    15.550 r  U_NANORV32_PIL/U_CPU/U_ALU/mul_res_tmp__2/P[0]
+                         net (fo=2, unplaced)         0.800    16.349    U_NANORV32_PIL/U_CPU/U_ALU/mul_res_tmp__2_n_106
+                         LUT2 (Prop_lut2_I0_O)        0.124    16.473 r  U_NANORV32_PIL/U_CPU/U_ALU/alu_res[19]_INST_0_i_38/O
+                         net (fo=1, unplaced)         0.000    16.473    U_NANORV32_PIL/U_CPU/U_ALU/alu_res[19]_INST_0_i_38_n_1
                          CARRY4 (Prop_carry4_S[1]_CO[3])
-                                                      0.550    17.218 r  U_NANORV32_PIL/U_CPU/U_ALU/alu_res[19]_INST_0_i_27/CO[3]
-                         net (fo=1, unplaced)         0.009    17.227    U_NANORV32_PIL/U_CPU/U_ALU/alu_res[19]_INST_0_i_27_n_1
+                                                      0.550    17.023 r  U_NANORV32_PIL/U_CPU/U_ALU/alu_res[19]_INST_0_i_31/CO[3]
+                         net (fo=1, unplaced)         0.009    17.032    U_NANORV32_PIL/U_CPU/U_ALU/alu_res[19]_INST_0_i_31_n_1
                          CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.114    17.341 r  U_NANORV32_PIL/U_CPU/U_ALU/alu_res[23]_INST_0_i_26/CO[3]
-                         net (fo=1, unplaced)         0.000    17.341    U_NANORV32_PIL/U_CPU/U_ALU/alu_res[23]_INST_0_i_26_n_1
+                                                      0.114    17.146 r  U_NANORV32_PIL/U_CPU/U_ALU/alu_res[23]_INST_0_i_30/CO[3]
+                         net (fo=1, unplaced)         0.000    17.146    U_NANORV32_PIL/U_CPU/U_ALU/alu_res[23]_INST_0_i_30_n_1
                          CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.114    17.455 r  U_NANORV32_PIL/U_CPU/U_ALU/alu_res[27]_INST_0_i_26/CO[3]
-                         net (fo=1, unplaced)         0.000    17.455    U_NANORV32_PIL/U_CPU/U_ALU/alu_res[27]_INST_0_i_26_n_1
+                                                      0.114    17.260 r  U_NANORV32_PIL/U_CPU/U_ALU/alu_res[27]_INST_0_i_30/CO[3]
+                         net (fo=1, unplaced)         0.000    17.260    U_NANORV32_PIL/U_CPU/U_ALU/alu_res[27]_INST_0_i_30_n_1
                          CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.114    17.569 r  U_NANORV32_PIL/U_CPU/U_ALU/alu_res[31]_INST_0_i_27/CO[3]
-                         net (fo=1, unplaced)         0.000    17.569    U_NANORV32_PIL/U_CPU/U_ALU/alu_res[31]_INST_0_i_27_n_1
+                                                      0.114    17.374 r  U_NANORV32_PIL/U_CPU/U_ALU/alu_res[31]_INST_0_i_36/CO[3]
+                         net (fo=1, unplaced)         0.000    17.374    U_NANORV32_PIL/U_CPU/U_ALU/alu_res[31]_INST_0_i_36_n_1
                          CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.114    17.683 r  U_NANORV32_PIL/U_CPU/U_ALU/alu_res[3]_INST_0_i_28/CO[3]
-                         net (fo=1, unplaced)         0.000    17.683    U_NANORV32_PIL/U_CPU/U_ALU/alu_res[3]_INST_0_i_28_n_1
+                                                      0.114    17.488 r  U_NANORV32_PIL/U_CPU/U_ALU/alu_res[3]_INST_0_i_29/CO[3]
+                         net (fo=1, unplaced)         0.000    17.488    U_NANORV32_PIL/U_CPU/U_ALU/alu_res[3]_INST_0_i_29_n_1
                          CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.114    17.797 r  U_NANORV32_PIL/U_CPU/U_ALU/alu_res[7]_INST_0_i_26/CO[3]
-                         net (fo=1, unplaced)         0.000    17.797    U_NANORV32_PIL/U_CPU/U_ALU/alu_res[7]_INST_0_i_26_n_1
+                                                      0.114    17.602 r  U_NANORV32_PIL/U_CPU/U_ALU/alu_res[8]_INST_0_i_25/CO[3]
+                         net (fo=1, unplaced)         0.000    17.602    U_NANORV32_PIL/U_CPU/U_ALU/alu_res[8]_INST_0_i_25_n_1
                          CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.114    17.911 r  U_NANORV32_PIL/U_CPU/U_ALU/alu_res[11]_INST_0_i_26/CO[3]
-                         net (fo=1, unplaced)         0.000    17.911    U_NANORV32_PIL/U_CPU/U_ALU/alu_res[11]_INST_0_i_26_n_1
-                         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.114    18.025 r  U_NANORV32_PIL/U_CPU/U_ALU/alu_res[15]_INST_0_i_26/CO[3]
-                         net (fo=1, unplaced)         0.000    18.025    U_NANORV32_PIL/U_CPU/U_ALU/alu_res[15]_INST_0_i_26_n_1
-                         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.114    18.139 r  U_NANORV32_PIL/U_CPU/U_ALU/alu_res[19]_INST_0_i_26/CO[3]
-                         net (fo=1, unplaced)         0.000    18.139    U_NANORV32_PIL/U_CPU/U_ALU/alu_res[19]_INST_0_i_26_n_1
-                         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.114    18.253 r  U_NANORV32_PIL/U_CPU/U_ALU/alu_res[23]_INST_0_i_25/CO[3]
-                         net (fo=1, unplaced)         0.000    18.253    U_NANORV32_PIL/U_CPU/U_ALU/alu_res[23]_INST_0_i_25_n_1
-                         CARRY4 (Prop_carry4_CI_O[1])
-                                                      0.348    18.601 r  U_NANORV32_PIL/U_CPU/U_ALU/alu_res[27]_INST_0_i_25/O[1]
-                         net (fo=1, unplaced)         0.611    19.212    U_NANORV32_PIL/U_CPU/U_ALU/mul_res_tmp__3[57]
-                         LUT2 (Prop_lut2_I0_O)        0.306    19.518 r  U_NANORV32_PIL/U_CPU/U_ALU/alu_res[27]_INST_0_i_16/O
-                         net (fo=1, unplaced)         0.000    19.518    U_NANORV32_PIL/U_CPU/U_ALU/alu_res[27]_INST_0_i_16_n_1
-                         CARRY4 (Prop_carry4_S[1]_CO[3])
-                                                      0.550    20.068 r  U_NANORV32_PIL/U_CPU/U_ALU/alu_res[27]_INST_0_i_7/CO[3]
-                         net (fo=1, unplaced)         0.000    20.068    U_NANORV32_PIL/U_CPU/U_ALU/alu_res[27]_INST_0_i_7_n_1
+                                                      0.114    17.716 r  U_NANORV32_PIL/U_CPU/U_ALU/alu_res[8]_INST_0_i_24/CO[3]
+                         net (fo=1, unplaced)         0.000    17.716    U_NANORV32_PIL/U_CPU/U_ALU/alu_res[8]_INST_0_i_24_n_1
                          CARRY4 (Prop_carry4_CI_O[2])
-                                                      0.256    20.324 r  U_NANORV32_PIL/U_CPU/U_ALU/alu_res[31]_INST_0_i_9/O[2]
-                         net (fo=3, unplaced)         0.470    20.794    U_NANORV32_PIL/U_CPU/U_ALU/data16[30]
-                         LUT5 (Prop_lut5_I0_O)        0.301    21.095 r  U_NANORV32_PIL/U_CPU/U_ALU/alu_res[30]_INST_0_i_10/O
-                         net (fo=1, unplaced)         0.449    21.544    U_NANORV32_PIL/U_CPU/U_ALU/alu_res[30]_INST_0_i_10_n_1
-                         LUT6 (Prop_lut6_I5_O)        0.124    21.668 r  U_NANORV32_PIL/U_CPU/U_ALU/alu_res[30]_INST_0_i_5/O
-                         net (fo=1, unplaced)         0.000    21.668    U_NANORV32_PIL/U_CPU/U_ALU/alu_res[30]_INST_0_i_5_n_1
-                         MUXF7 (Prop_muxf7_I1_O)      0.245    21.913 r  U_NANORV32_PIL/U_CPU/U_ALU/alu_res[30]_INST_0_i_1/O
-                         net (fo=1, unplaced)         0.452    22.365    U_NANORV32_PIL/U_CPU/U_ALU/alu_res[30]_INST_0_i_1_n_1
-                         LUT6 (Prop_lut6_I0_O)        0.298    22.663 r  U_NANORV32_PIL/U_CPU/U_ALU/alu_res[30]_INST_0/O
-                         net (fo=1, unplaced)         0.449    23.112    U_NANORV32_PIL/U_CPU/alu_res[30]
-                         LUT5 (Prop_lut5_I0_O)        0.124    23.236 r  U_NANORV32_PIL/U_CPU/U_REG_FILE_i_140/O
-                         net (fo=1, unplaced)         0.449    23.685    U_NANORV32_PIL/U_CPU/U_REG_FILE_i_140_n_1
-                         LUT6 (Prop_lut6_I5_O)        0.124    23.809 r  U_NANORV32_PIL/U_CPU/U_REG_FILE_i_80/O
-                         net (fo=1, unplaced)         0.449    24.258    U_NANORV32_PIL/U_CPU/U_REG_FILE_i_80_n_1
-                         LUT5 (Prop_lut5_I4_O)        0.124    24.382 r  U_NANORV32_PIL/U_CPU/U_REG_FILE_i_12/O
-                         net (fo=32, unplaced)        0.520    24.902    U_NANORV32_PIL/U_CPU/U_REG_FILE/rd[30]
-                         LUT6 (Prop_lut6_I0_O)        0.124    25.026 r  U_NANORV32_PIL/U_CPU/U_REG_FILE/loop[0].regfile[0][30]_i_1/O
-                         net (fo=1, unplaced)         0.000    25.026    U_NANORV32_PIL/U_CPU/U_REG_FILE/loop[0].regfile[0][30]_i_1_n_1
-                         FDCE                                         r  U_NANORV32_PIL/U_CPU/U_REG_FILE/loop[0].regfile_reg[0][30]/D
+                                                      0.256    17.972 r  U_NANORV32_PIL/U_CPU/U_ALU/alu_res[15]_INST_0_i_30/O[2]
+                         net (fo=1, unplaced)         0.905    18.877    U_NANORV32_PIL/U_CPU/U_ALU/mul_res_tmp__3[46]
+                         LUT3 (Prop_lut3_I2_O)        0.301    19.178 r  U_NANORV32_PIL/U_CPU/U_ALU/alu_res[15]_INST_0_i_16/O
+                         net (fo=1, unplaced)         0.000    19.178    U_NANORV32_PIL/U_CPU/U_ALU/alu_res[15]_INST_0_i_16_n_1
+                         CARRY4 (Prop_carry4_S[2]_CO[3])
+                                                      0.398    19.576 r  U_NANORV32_PIL/U_CPU/U_ALU/alu_res[15]_INST_0_i_9/CO[3]
+                         net (fo=1, unplaced)         0.000    19.576    U_NANORV32_PIL/U_CPU/U_ALU/alu_res[15]_INST_0_i_9_n_1
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114    19.690 r  U_NANORV32_PIL/U_CPU/U_ALU/alu_res[19]_INST_0_i_9/CO[3]
+                         net (fo=1, unplaced)         0.000    19.690    U_NANORV32_PIL/U_CPU/U_ALU/alu_res[19]_INST_0_i_9_n_1
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114    19.804 r  U_NANORV32_PIL/U_CPU/U_ALU/alu_res[23]_INST_0_i_9/CO[3]
+                         net (fo=1, unplaced)         0.000    19.804    U_NANORV32_PIL/U_CPU/U_ALU/alu_res[23]_INST_0_i_9_n_1
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114    19.918 r  U_NANORV32_PIL/U_CPU/U_ALU/alu_res[27]_INST_0_i_9/CO[3]
+                         net (fo=1, unplaced)         0.000    19.918    U_NANORV32_PIL/U_CPU/U_ALU/alu_res[27]_INST_0_i_9_n_1
+                         CARRY4 (Prop_carry4_CI_O[3])
+                                                      0.329    20.247 r  U_NANORV32_PIL/U_CPU/U_ALU/alu_res[31]_INST_0_i_9/O[3]
+                         net (fo=3, unplaced)         0.636    20.883    U_NANORV32_PIL/U_CPU/U_ALU/data16[31]
+                         LUT6 (Prop_lut6_I2_O)        0.307    21.190 r  U_NANORV32_PIL/U_CPU/U_ALU/alu_res[31]_INST_0_i_3/O
+                         net (fo=1, unplaced)         0.902    22.092    U_NANORV32_PIL/U_CPU/U_ALU/alu_res[31]_INST_0_i_3_n_1
+                         LUT6 (Prop_lut6_I5_O)        0.124    22.216 r  U_NANORV32_PIL/U_CPU/U_ALU/alu_res[31]_INST_0/O
+                         net (fo=1, unplaced)         0.449    22.665    U_NANORV32_PIL/U_CPU/alu_res[31]
+                         LUT6 (Prop_lut6_I2_O)        0.124    22.789 r  U_NANORV32_PIL/U_CPU/U_REG_FILE_i_76/O
+                         net (fo=1, unplaced)         0.449    23.238    U_NANORV32_PIL/U_CPU/U_REG_FILE_i_76_n_1
+                         LUT6 (Prop_lut6_I0_O)        0.124    23.362 r  U_NANORV32_PIL/U_CPU/U_REG_FILE_i_11/O
+                         net (fo=32, unplaced)        0.520    23.882    U_NANORV32_PIL/U_CPU/U_REG_FILE/rd[31]
+                         LUT6 (Prop_lut6_I0_O)        0.124    24.006 r  U_NANORV32_PIL/U_CPU/U_REG_FILE/loop[0].regfile[0][31]_i_2/O
+                         net (fo=1, unplaced)         0.000    24.006    U_NANORV32_PIL/U_CPU/U_REG_FILE/loop[0].regfile[0][31]_i_2_n_1
+                         FDCE                                         r  U_NANORV32_PIL/U_CPU/U_REG_FILE/loop[0].regfile_reg[0][31]/D
   -------------------------------------------------------------------    -------------------
 
                          (clock clk_50m_arty_mmcm rise edge)
@@ -853,19 +843,19 @@ Slack (VIOLATED) :        -1.781ns  (required time - arrival time)
     E3                   IBUF (Prop_ibuf_I_O)         1.418    26.418 r  U_CLK_GEN/U_MCM/inst/clkin1_ibufg/O
                          net (fo=1, unplaced)         0.439    26.857    U_CLK_GEN/U_MCM/inst/clk_in_arty_mmcm
                          MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
-                                                     -5.378    21.479 r  U_CLK_GEN/U_MCM/inst/mmcm_adv_inst/CLKOUT0
+                                                     -5.378    21.480 r  U_CLK_GEN/U_MCM/inst/mmcm_adv_inst/CLKOUT0
                          net (fo=1, unplaced)         0.760    22.239    U_CLK_GEN/U_MCM/inst/clk_50m_arty_mmcm
                          BUFG (Prop_bufg_I_O)         0.091    22.330 r  U_CLK_GEN/U_MCM/inst/clkout1_buf/O
-                         net (fo=2321, unplaced)      0.439    22.769    U_NANORV32_PIL/U_CPU/U_REG_FILE/clk
-                         FDCE                                         r  U_NANORV32_PIL/U_CPU/U_REG_FILE/loop[0].regfile_reg[0][30]/C
+                         net (fo=2342, unplaced)      0.439    22.769    U_NANORV32_PIL/U_CPU/U_REG_FILE/clk
+                         FDCE                                         r  U_NANORV32_PIL/U_CPU/U_REG_FILE/loop[0].regfile_reg[0][31]/C
                          clock pessimism              0.531    23.300    
                          clock uncertainty           -0.085    23.215    
-                         FDCE (Setup_fdce_C_D)        0.029    23.244    U_NANORV32_PIL/U_CPU/U_REG_FILE/loop[0].regfile_reg[0][30]
+                         FDCE (Setup_fdce_C_D)        0.029    23.244    U_NANORV32_PIL/U_CPU/U_REG_FILE/loop[0].regfile_reg[0][31]
   -------------------------------------------------------------------
                          required time                         23.244    
-                         arrival time                         -25.026    
+                         arrival time                         -24.006    
   -------------------------------------------------------------------
-                         slack                                 -1.781    
+                         slack                                 -0.762    
 
 
 
@@ -881,7 +871,7 @@ Slack (MET) :             0.076ns  (arrival time - required time)
   Path Group:             clk_50m_arty_mmcm
   Path Type:              Hold (Min at Fast Process Corner)
   Requirement:            0.000ns  (clk_50m_arty_mmcm rise@0.000ns - clk_50m_arty_mmcm rise@0.000ns)
-  Data Path Delay:        0.326ns  (logic 0.235ns (71.982%)  route 0.091ns (28.018%))
+  Data Path Delay:        0.326ns  (logic 0.235ns (72.075%)  route 0.091ns (27.925%))
   Logic Levels:           1  (CARRY4=1)
   Clock Path Skew:        0.145ns (DCD - SCD - CPR)
     Destination Clock Delay (DCD):    -1.063ns
@@ -900,14 +890,14 @@ Slack (MET) :             0.076ns  (arrival time - required time)
                                                      -1.776    -1.405 r  U_CLK_GEN/U_MCM/inst/mmcm_adv_inst/CLKOUT0
                          net (fo=1, unplaced)         0.337    -1.068    U_CLK_GEN/U_MCM/inst/clk_50m_arty_mmcm
                          BUFG (Prop_bufg_I_O)         0.026    -1.042 r  U_CLK_GEN/U_MCM/inst/clkout1_buf/O
-                         net (fo=2321, unplaced)      0.114    -0.928    U_NANORV32_PIL/U_CPU/U_ALU/u_div/clk
+                         net (fo=2342, unplaced)      0.114    -0.928    U_NANORV32_PIL/U_CPU/U_ALU/u_div/clk
                          FDRE                                         r  U_NANORV32_PIL/U_CPU/U_ALU/u_div/a_reg[32]/C
   -------------------------------------------------------------------    -------------------
                          FDRE (Prop_fdre_C_Q)         0.141    -0.787 r  U_NANORV32_PIL/U_CPU/U_ALU/u_div/a_reg[32]/Q
                          net (fo=4, unplaced)         0.091    -0.696    U_NANORV32_PIL/U_CPU/U_ALU/u_div/a_reg_n_1_[32]
                          CARRY4 (Prop_carry4_DI[0]_O[1])
                                                       0.094    -0.602 r  U_NANORV32_PIL/U_CPU/U_ALU/u_div/a_reg[35]_i_1/O[1]
-                         net (fo=1, unplaced)         0.000    -0.602    U_NANORV32_PIL/U_CPU/U_ALU/u_div/a0[33]
+                         net (fo=1, unplaced)         0.000    -0.602    U_NANORV32_PIL/U_CPU/U_ALU/u_div/in10[33]
                          FDRE                                         r  U_NANORV32_PIL/U_CPU/U_ALU/u_div/a_reg[33]/D
   -------------------------------------------------------------------    -------------------
 
@@ -921,7 +911,7 @@ Slack (MET) :             0.076ns  (arrival time - required time)
                                                      -2.410    -1.706 r  U_CLK_GEN/U_MCM/inst/mmcm_adv_inst/CLKOUT0
                          net (fo=1, unplaced)         0.355    -1.351    U_CLK_GEN/U_MCM/inst/clk_50m_arty_mmcm
                          BUFG (Prop_bufg_I_O)         0.029    -1.322 r  U_CLK_GEN/U_MCM/inst/clkout1_buf/O
-                         net (fo=2321, unplaced)      0.259    -1.063    U_NANORV32_PIL/U_CPU/U_ALU/u_div/clk
+                         net (fo=2342, unplaced)      0.259    -1.063    U_NANORV32_PIL/U_CPU/U_ALU/u_div/clk
                          FDRE                                         r  U_NANORV32_PIL/U_CPU/U_ALU/u_div/a_reg[33]/C
                          clock pessimism              0.280    -0.783    
                          FDRE (Hold_fdre_C_D)         0.105    -0.678    U_NANORV32_PIL/U_CPU/U_ALU/u_div/a_reg[33]
@@ -945,8 +935,8 @@ Sources:            { U_CLK_GEN/U_MCM/inst/mmcm_adv_inst/CLKOUT0 }
 Check Type        Corner  Lib Pin             Reference Pin  Required(ns)  Actual(ns)  Slack(ns)  Location  Pin
 Min Period        n/a     RAMB36E1/CLKARDCLK  n/a            2.576         25.000      22.424               u_tcm0/U_RAM/RAM_reg_1_0/CLKARDCLK
 Max Period        n/a     MMCME2_ADV/CLKOUT0  n/a            213.360       25.000      188.360              U_CLK_GEN/U_MCM/inst/mmcm_adv_inst/CLKOUT0
-Low Pulse Width   Slow    FDCE/C              n/a            0.500         12.500      12.000               U_NANORV32_PIL/U_CPU/U_REG_FILE/loop[4].regfile_reg[4][0]/C
-High Pulse Width  Slow    FDCE/C              n/a            0.500         12.500      12.000               U_NANORV32_PIL/U_CPU/U_REG_FILE/loop[4].regfile_reg[4][0]/C
+Low Pulse Width   Slow    FDPE/C              n/a            0.500         12.500      12.000               u_tcm1/U_AHB_TO_SSRAM/HREADYOUT_reg/C
+High Pulse Width  Slow    FDPE/C              n/a            0.500         12.500      12.000               u_tcm1/U_AHB_TO_SSRAM/HREADYOUT_reg/C
 
 
 
@@ -978,7 +968,7 @@ From Clock:  clk_50m_arty_mmcm
   To Clock:  TCK
 
 Setup :            0  Failing Endpoints,  Worst Slack       26.053ns,  Total Violation        0.000ns
-Hold  :           43  Failing Endpoints,  Worst Slack       -4.762ns,  Total Violation     -194.221ns
+Hold  :           43  Failing Endpoints,  Worst Slack       -4.762ns,  Total Violation     -194.225ns
 ---------------------------------------------------------------------------------------------------
 
 
@@ -1016,7 +1006,7 @@ Slack (MET) :             26.053ns  (required time - arrival time)
                                                      -2.410    23.294 r  U_CLK_GEN/U_MCM/inst/mmcm_adv_inst/CLKOUT0
                          net (fo=1, unplaced)         0.355    23.649    U_CLK_GEN/U_MCM/inst/clk_50m_arty_mmcm
                          BUFG (Prop_bufg_I_O)         0.029    23.678 r  U_CLK_GEN/U_MCM/inst/clkout1_buf/O
-                         net (fo=2321, unplaced)      0.259    23.937    U_ADBG_TOP/i_dbg_wb/wb_biu_i/wb_clk_i
+                         net (fo=2342, unplaced)      0.259    23.937    U_ADBG_TOP/i_dbg_wb/wb_biu_i/wb_clk_i
                          FDCE                                         r  U_ADBG_TOP/i_dbg_wb/wb_biu_i/data_out_reg_reg[0]/C
   -------------------------------------------------------------------    -------------------
                          FDCE (Prop_fdce_C_Q)         0.175    24.112 r  U_ADBG_TOP/i_dbg_wb/wb_biu_i/data_out_reg_reg[0]/Q
@@ -1032,7 +1022,7 @@ Slack (MET) :             26.053ns  (required time - arrival time)
     D15                  IBUF (Prop_ibuf_I_O)         0.275    50.275 r  TCK_IBUF_inst/O
                          net (fo=1, unplaced)         0.337    50.612    U_TOP_IO/pad_tap_tck_in
                          BUFG (Prop_bufg_I_O)         0.026    50.638 r  U_TOP_IO/U_TCK_BUF/O
-                         net (fo=502, unplaced)       0.114    50.752    U_ADBG_TOP/i_dbg_wb/tck_i
+                         net (fo=535, unplaced)       0.114    50.752    U_ADBG_TOP/i_dbg_wb/tck_i
                          FDCE                                         r  U_ADBG_TOP/i_dbg_wb/data_out_shift_reg_reg[0]/C
                          clock pessimism              0.000    50.752    
                          clock uncertainty           -0.183    50.569    
@@ -1057,7 +1047,7 @@ Slack (VIOLATED) :        -4.762ns  (arrival time - required time)
   Path Group:             TCK
   Path Type:              Hold (Min at Slow Process Corner)
   Requirement:            0.000ns  (TCK rise@0.000ns - clk_50m_arty_mmcm rise@0.000ns)
-  Data Path Delay:        0.696ns  (logic 0.367ns (52.753%)  route 0.329ns (47.247%))
+  Data Path Delay:        0.695ns  (logic 0.367ns (52.825%)  route 0.328ns (47.175%))
   Logic Levels:           0  
   Clock Path Skew:        5.218ns (DCD - SCD - CPR)
     Destination Clock Delay (DCD):    2.987ns
@@ -1078,14 +1068,14 @@ Slack (VIOLATED) :        -4.762ns  (arrival time - required time)
     E3                   IBUF (Prop_ibuf_I_O)         1.418     1.418 r  U_CLK_GEN/U_MCM/inst/clkin1_ibufg/O
                          net (fo=1, unplaced)         0.439     1.857    U_CLK_GEN/U_MCM/inst/clk_in_arty_mmcm
                          MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
-                                                     -5.378    -3.521 r  U_CLK_GEN/U_MCM/inst/mmcm_adv_inst/CLKOUT0
+                                                     -5.378    -3.520 r  U_CLK_GEN/U_MCM/inst/mmcm_adv_inst/CLKOUT0
                          net (fo=1, unplaced)         0.760    -2.761    U_CLK_GEN/U_MCM/inst/clk_50m_arty_mmcm
                          BUFG (Prop_bufg_I_O)         0.091    -2.670 r  U_CLK_GEN/U_MCM/inst/clkout1_buf/O
-                         net (fo=2321, unplaced)      0.439    -2.231    U_ADBG_TOP/i_dbg_jsp/jsp_biu_i/bytesavail_syncreg/CLKA
+                         net (fo=2342, unplaced)      0.439    -2.231    U_ADBG_TOP/i_dbg_jsp/jsp_biu_i/bytesavail_syncreg/CLKA
                          FDCE                                         r  U_ADBG_TOP/i_dbg_jsp/jsp_biu_i/bytesavail_syncreg/regA_reg[0]/C
   -------------------------------------------------------------------    -------------------
                          FDCE (Prop_fdce_C_Q)         0.367    -1.864 r  U_ADBG_TOP/i_dbg_jsp/jsp_biu_i/bytesavail_syncreg/regA_reg[0]/Q
-                         net (fo=2, unplaced)         0.329    -1.535    U_ADBG_TOP/i_dbg_jsp/jsp_biu_i/bytesavail_syncreg/regA[0]
+                         net (fo=2, unplaced)         0.328    -1.536    U_ADBG_TOP/i_dbg_jsp/jsp_biu_i/bytesavail_syncreg/regA[0]
                          FDCE                                         r  U_ADBG_TOP/i_dbg_jsp/jsp_biu_i/bytesavail_syncreg/regB_reg[0]/D
   -------------------------------------------------------------------    -------------------
 
@@ -1095,14 +1085,14 @@ Slack (VIOLATED) :        -4.762ns  (arrival time - required time)
     D15                  IBUF (Prop_ibuf_I_O)         1.508     1.508 r  TCK_IBUF_inst/O
                          net (fo=1, unplaced)         0.800     2.307    U_TOP_IO/pad_tap_tck_in
                          BUFG (Prop_bufg_I_O)         0.096     2.403 r  U_TOP_IO/U_TCK_BUF/O
-                         net (fo=502, unplaced)       0.584     2.987    U_ADBG_TOP/i_dbg_jsp/jsp_biu_i/bytesavail_syncreg/CLKB
+                         net (fo=535, unplaced)       0.584     2.987    U_ADBG_TOP/i_dbg_jsp/jsp_biu_i/bytesavail_syncreg/CLKB
                          FDCE                                         r  U_ADBG_TOP/i_dbg_jsp/jsp_biu_i/bytesavail_syncreg/regB_reg[0]/C
                          clock pessimism              0.000     2.987    
-                         clock uncertainty            0.183     3.171    
-                         FDCE (Hold_fdce_C_D)         0.056     3.227    U_ADBG_TOP/i_dbg_jsp/jsp_biu_i/bytesavail_syncreg/regB_reg[0]
+                         clock uncertainty            0.183     3.170    
+                         FDCE (Hold_fdce_C_D)         0.056     3.226    U_ADBG_TOP/i_dbg_jsp/jsp_biu_i/bytesavail_syncreg/regB_reg[0]
   -------------------------------------------------------------------
-                         required time                         -3.227    
-                         arrival time                          -1.535    
+                         required time                         -3.226    
+                         arrival time                          -1.536    
   -------------------------------------------------------------------
                          slack                                 -4.762    
 
@@ -1114,23 +1104,23 @@ Slack (VIOLATED) :        -4.762ns  (arrival time - required time)
 From Clock:  TCK
   To Clock:  clk_50m_arty_mmcm
 
-Setup :            0  Failing Endpoints,  Worst Slack       15.639ns,  Total Violation        0.000ns
-Hold  :            0  Failing Endpoints,  Worst Slack        1.932ns,  Total Violation        0.000ns
+Setup :            0  Failing Endpoints,  Worst Slack       15.904ns,  Total Violation        0.000ns
+Hold  :            0  Failing Endpoints,  Worst Slack        1.931ns,  Total Violation        0.000ns
 ---------------------------------------------------------------------------------------------------
 
 
 Max Delay Paths
 --------------------------------------------------------------------------------------
-Slack (MET) :             15.639ns  (required time - arrival time)
+Slack (MET) :             15.904ns  (required time - arrival time)
   Source:                 U_ADBG_TOP/i_dbg_wb/wb_biu_i/wr_reg_reg/C
                             (rising edge-triggered cell FDCE clocked by TCK  {rise@0.000ns fall@25.000ns period=50.000ns})
-  Destination:            u_tcm0/U_AHB_TO_SSRAM/write_en_r_reg/D
-                            (rising edge-triggered cell FDCE clocked by clk_50m_arty_mmcm  {rise@0.000ns fall@12.500ns period=25.000ns})
+  Destination:            u_tcm0/U_AHB_TO_SSRAM/HREADYOUT_reg/D
+                            (rising edge-triggered cell FDPE clocked by clk_50m_arty_mmcm  {rise@0.000ns fall@12.500ns period=25.000ns})
   Path Group:             clk_50m_arty_mmcm
   Path Type:              Setup (Max at Slow Process Corner)
   Requirement:            25.000ns  (clk_50m_arty_mmcm rise@25.000ns - TCK rise@0.000ns)
-  Data Path Delay:        3.989ns  (logic 1.149ns (28.804%)  route 2.840ns (71.196%))
-  Logic Levels:           4  (LUT3=2 LUT4=1 LUT6=1)
+  Data Path Delay:        3.724ns  (logic 1.123ns (30.156%)  route 2.601ns (69.844%))
+  Logic Levels:           4  (LUT3=1 LUT4=1 LUT5=2)
   Clock Path Skew:        -5.218ns (DCD - SCD + CPR)
     Destination Clock Delay (DCD):    -2.231ns = ( 22.769 - 25.000 ) 
     Source Clock Delay      (SCD):    2.987ns
@@ -1149,20 +1139,20 @@ Slack (MET) :             15.639ns  (required time - arrival time)
     D15                  IBUF (Prop_ibuf_I_O)         1.508     1.508 r  TCK_IBUF_inst/O
                          net (fo=1, unplaced)         0.800     2.307    U_TOP_IO/pad_tap_tck_in
                          BUFG (Prop_bufg_I_O)         0.096     2.403 r  U_TOP_IO/U_TCK_BUF/O
-                         net (fo=502, unplaced)       0.584     2.987    U_ADBG_TOP/i_dbg_wb/wb_biu_i/tck_i
+                         net (fo=535, unplaced)       0.584     2.987    U_ADBG_TOP/i_dbg_wb/wb_biu_i/tck_i
                          FDCE                                         r  U_ADBG_TOP/i_dbg_wb/wb_biu_i/wr_reg_reg/C
   -------------------------------------------------------------------    -------------------
                          FDCE (Prop_fdce_C_Q)         0.456     3.443 r  U_ADBG_TOP/i_dbg_wb/wb_biu_i/wr_reg_reg/Q
                          net (fo=8, unplaced)         0.349     3.792    u_ahbmatrix/xbar/HastiBus/io_master_hwrite
                          LUT3 (Prop_lut3_I2_O)        0.295     4.087 r  u_ahbmatrix/xbar/HastiBus/io_slaves_2_hwrite_INST_0/O
-                         net (fo=3, unplaced)         1.129     5.216    u_ahbmatrix/xbar/HastiSlaveMux_1/io_ins_0_hwrite
-                         LUT6 (Prop_lut6_I0_O)        0.124     5.340 r  u_ahbmatrix/xbar/HastiSlaveMux_1/io_out_hwrite_INST_0_i_2/O
-                         net (fo=1, unplaced)         0.449     5.789    u_ahbmatrix/xbar/HastiSlaveMux_1/io_out_hwrite_INST_0_i_2_n_1
-                         LUT3 (Prop_lut3_I2_O)        0.124     5.913 r  u_ahbmatrix/xbar/HastiSlaveMux_1/io_out_hwrite_INST_0/O
-                         net (fo=2, unplaced)         0.913     6.826    u_tcm0/U_AHB_TO_SSRAM/HWRITE
-                         LUT4 (Prop_lut4_I0_O)        0.150     6.976 r  u_tcm0/U_AHB_TO_SSRAM/write_en_r_i_1/O
-                         net (fo=1, unplaced)         0.000     6.976    u_tcm0/U_AHB_TO_SSRAM/write_valid
-                         FDCE                                         r  u_tcm0/U_AHB_TO_SSRAM/write_en_r_reg/D
+                         net (fo=3, unplaced)         0.920     5.007    u_ahbmatrix/xbar/HastiSlaveMux_1/io_ins_0_hwrite
+                         LUT4 (Prop_lut4_I3_O)        0.124     5.131 r  u_ahbmatrix/xbar/HastiSlaveMux_1/io_out_hwrite_INST_0_i_1/O
+                         net (fo=1, unplaced)         0.419     5.550    u_ahbmatrix/xbar/HastiSlaveMux_1/io_out_hwrite_INST_0_i_1_n_1
+                         LUT5 (Prop_lut5_I4_O)        0.124     5.674 r  u_ahbmatrix/xbar/HastiSlaveMux_1/io_out_hwrite_INST_0/O
+                         net (fo=2, unplaced)         0.913     6.587    u_tcm0/U_AHB_TO_SSRAM/HWRITE
+                         LUT5 (Prop_lut5_I1_O)        0.124     6.711 r  u_tcm0/U_AHB_TO_SSRAM/HREADYOUT_i_1/O
+                         net (fo=1, unplaced)         0.000     6.711    u_tcm0/U_AHB_TO_SSRAM/HREADYOUT_i_1_n_1
+                         FDPE                                         r  u_tcm0/U_AHB_TO_SSRAM/HREADYOUT_reg/D
   -------------------------------------------------------------------    -------------------
 
                          (clock clk_50m_arty_mmcm rise edge)
@@ -1172,19 +1162,19 @@ Slack (MET) :             15.639ns  (required time - arrival time)
     E3                   IBUF (Prop_ibuf_I_O)         1.418    26.418 r  U_CLK_GEN/U_MCM/inst/clkin1_ibufg/O
                          net (fo=1, unplaced)         0.439    26.857    U_CLK_GEN/U_MCM/inst/clk_in_arty_mmcm
                          MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
-                                                     -5.378    21.479 r  U_CLK_GEN/U_MCM/inst/mmcm_adv_inst/CLKOUT0
+                                                     -5.378    21.480 r  U_CLK_GEN/U_MCM/inst/mmcm_adv_inst/CLKOUT0
                          net (fo=1, unplaced)         0.760    22.239    U_CLK_GEN/U_MCM/inst/clk_50m_arty_mmcm
                          BUFG (Prop_bufg_I_O)         0.091    22.330 r  U_CLK_GEN/U_MCM/inst/clkout1_buf/O
-                         net (fo=2321, unplaced)      0.439    22.769    u_tcm0/U_AHB_TO_SSRAM/HCLK
-                         FDCE                                         r  u_tcm0/U_AHB_TO_SSRAM/write_en_r_reg/C
+                         net (fo=2342, unplaced)      0.439    22.769    u_tcm0/U_AHB_TO_SSRAM/HCLK
+                         FDPE                                         r  u_tcm0/U_AHB_TO_SSRAM/HREADYOUT_reg/C
                          clock pessimism              0.000    22.769    
                          clock uncertainty           -0.183    22.586    
-                         FDCE (Setup_fdce_C_D)        0.029    22.615    u_tcm0/U_AHB_TO_SSRAM/write_en_r_reg
+                         FDPE (Setup_fdpe_C_D)        0.029    22.615    u_tcm0/U_AHB_TO_SSRAM/HREADYOUT_reg
   -------------------------------------------------------------------
                          required time                         22.615    
-                         arrival time                          -6.976    
+                         arrival time                          -6.711    
   -------------------------------------------------------------------
-                         slack                                 15.639    
+                         slack                                 15.904    
 
 
 
@@ -1192,7 +1182,7 @@ Slack (MET) :             15.639ns  (required time - arrival time)
 
 Min Delay Paths
 --------------------------------------------------------------------------------------
-Slack (MET) :             1.932ns  (arrival time - required time)
+Slack (MET) :             1.931ns  (arrival time - required time)
   Source:                 U_ADBG_TOP/i_dbg_wb/wb_biu_i/data_in_reg_reg[0]/C
                             (rising edge-triggered cell FDCE clocked by TCK  {rise@0.000ns fall@25.000ns period=50.000ns})
   Destination:            U_WB2AHB/hwdata_reg[0]/D
@@ -1200,7 +1190,7 @@ Slack (MET) :             1.932ns  (arrival time - required time)
   Path Group:             clk_50m_arty_mmcm
   Path Type:              Hold (Min at Fast Process Corner)
   Requirement:            0.000ns  (clk_50m_arty_mmcm rise@0.000ns - TCK rise@0.000ns)
-  Data Path Delay:        0.282ns  (logic 0.141ns (49.963%)  route 0.141ns (50.037%))
+  Data Path Delay:        0.282ns  (logic 0.141ns (50.038%)  route 0.141ns (49.962%))
   Logic Levels:           0  
   Clock Path Skew:        -1.816ns (DCD - SCD - CPR)
     Destination Clock Delay (DCD):    -1.063ns
@@ -1220,11 +1210,11 @@ Slack (MET) :             1.932ns  (arrival time - required time)
     D15                  IBUF (Prop_ibuf_I_O)         0.275     0.275 r  TCK_IBUF_inst/O
                          net (fo=1, unplaced)         0.337     0.612    U_TOP_IO/pad_tap_tck_in
                          BUFG (Prop_bufg_I_O)         0.026     0.638 r  U_TOP_IO/U_TCK_BUF/O
-                         net (fo=502, unplaced)       0.114     0.752    U_ADBG_TOP/i_dbg_wb/wb_biu_i/tck_i
+                         net (fo=535, unplaced)       0.114     0.752    U_ADBG_TOP/i_dbg_wb/wb_biu_i/tck_i
                          FDCE                                         r  U_ADBG_TOP/i_dbg_wb/wb_biu_i/data_in_reg_reg[0]/C
   -------------------------------------------------------------------    -------------------
                          FDCE (Prop_fdce_C_Q)         0.141     0.893 r  U_ADBG_TOP/i_dbg_wb/wb_biu_i/data_in_reg_reg[0]/Q
-                         net (fo=1, unplaced)         0.141     1.035    U_WB2AHB/data_i[0]
+                         net (fo=1, unplaced)         0.141     1.034    U_WB2AHB/data_i[0]
                          FDRE                                         r  U_WB2AHB/hwdata_reg[0]/D
   -------------------------------------------------------------------    -------------------
 
@@ -1238,16 +1228,16 @@ Slack (MET) :             1.932ns  (arrival time - required time)
                                                      -2.410    -1.706 r  U_CLK_GEN/U_MCM/inst/mmcm_adv_inst/CLKOUT0
                          net (fo=1, unplaced)         0.355    -1.351    U_CLK_GEN/U_MCM/inst/clk_50m_arty_mmcm
                          BUFG (Prop_bufg_I_O)         0.029    -1.322 r  U_CLK_GEN/U_MCM/inst/clkout1_buf/O
-                         net (fo=2321, unplaced)      0.259    -1.063    U_WB2AHB/clk_i
+                         net (fo=2342, unplaced)      0.259    -1.063    U_WB2AHB/clk_i
                          FDRE                                         r  U_WB2AHB/hwdata_reg[0]/C
                          clock pessimism              0.000    -1.063    
                          clock uncertainty            0.183    -0.880    
                          FDRE (Hold_fdre_C_D)        -0.017    -0.897    U_WB2AHB/hwdata_reg[0]
   -------------------------------------------------------------------
                          required time                          0.897    
-                         arrival time                           1.035    
+                         arrival time                           1.034    
   -------------------------------------------------------------------
-                         slack                                  1.932    
+                         slack                                  1.931    
 
 
 
@@ -1258,14 +1248,14 @@ Path Group:  **async_default**
 From Clock:  TCK
   To Clock:  TCK
 
-Setup :            0  Failing Endpoints,  Worst Slack       42.927ns,  Total Violation        0.000ns
-Hold  :            0  Failing Endpoints,  Worst Slack        0.739ns,  Total Violation        0.000ns
+Setup :            0  Failing Endpoints,  Worst Slack       42.954ns,  Total Violation        0.000ns
+Hold  :            0  Failing Endpoints,  Worst Slack        0.346ns,  Total Violation        0.000ns
 ---------------------------------------------------------------------------------------------------
 
 
 Max Delay Paths
 --------------------------------------------------------------------------------------
-Slack (MET) :             42.927ns  (required time - arrival time)
+Slack (MET) :             42.954ns  (required time - arrival time)
   Source:                 U_ADBG_TOP/i_dbg_wb/bit_count_reg[1]/C
                             (rising edge-triggered cell FDCE clocked by TCK  {rise@0.000ns fall@25.000ns period=50.000ns})
   Destination:            U_ADBG_TOP/i_dbg_wb/wb_biu_i/addr_reg_reg[0]/CLR
@@ -1273,8 +1263,8 @@ Slack (MET) :             42.927ns  (required time - arrival time)
   Path Group:             **async_default**
   Path Type:              Recovery (Max at Slow Process Corner)
   Requirement:            50.000ns  (TCK rise@50.000ns - TCK rise@0.000ns)
-  Data Path Delay:        6.484ns  (logic 1.371ns (21.144%)  route 5.113ns (78.856%))
-  Logic Levels:           6  (LUT2=1 LUT4=1 LUT5=2 LUT6=2)
+  Data Path Delay:        6.457ns  (logic 1.371ns (21.233%)  route 5.086ns (78.767%))
+  Logic Levels:           6  (LUT2=1 LUT3=1 LUT4=1 LUT6=3)
   Clock Path Skew:        -0.145ns (DCD - SCD + CPR)
     Destination Clock Delay (DCD):    2.727ns = ( 52.727 - 50.000 ) 
     Source Clock Delay      (SCD):    2.987ns
@@ -1293,23 +1283,23 @@ Slack (MET) :             42.927ns  (required time - arrival time)
     D15                  IBUF (Prop_ibuf_I_O)         1.508     1.508 r  TCK_IBUF_inst/O
                          net (fo=1, unplaced)         0.800     2.307    U_TOP_IO/pad_tap_tck_in
                          BUFG (Prop_bufg_I_O)         0.096     2.403 r  U_TOP_IO/U_TCK_BUF/O
-                         net (fo=502, unplaced)       0.584     2.987    U_ADBG_TOP/i_dbg_wb/tck_i
+                         net (fo=535, unplaced)       0.584     2.987    U_ADBG_TOP/i_dbg_wb/tck_i
                          FDCE                                         r  U_ADBG_TOP/i_dbg_wb/bit_count_reg[1]/C
   -------------------------------------------------------------------    -------------------
                          FDCE (Prop_fdce_C_Q)         0.456     3.443 r  U_ADBG_TOP/i_dbg_wb/bit_count_reg[1]/Q
-                         net (fo=5, unplaced)         0.993     4.436    U_ADBG_TOP/i_dbg_wb/bit_count_reg__0[1]
-                         LUT6 (Prop_lut6_I0_O)        0.295     4.731 f  U_ADBG_TOP/i_dbg_wb/FSM_sequential_module_state[1]_i_7/O
-                         net (fo=3, unplaced)         0.920     5.651    U_ADBG_TOP/i_dbg_wb/bit_count_32
-                         LUT6 (Prop_lut6_I2_O)        0.124     5.775 f  U_ADBG_TOP/i_dbg_wb/module_tdo_o_INST_0_i_21/O
-                         net (fo=1, unplaced)         0.902     6.677    U_ADBG_TOP/i_dbg_wb/module_tdo_o_INST_0_i_21_n_1
-                         LUT5 (Prop_lut5_I0_O)        0.124     6.801 f  U_ADBG_TOP/i_dbg_wb/module_tdo_o_INST_0_i_12/O
-                         net (fo=8, unplaced)         0.487     7.288    U_ADBG_TOP/i_dbg_wb/module_tdo_o_INST_0_i_12_n_1
-                         LUT2 (Prop_lut2_I1_O)        0.124     7.412 r  U_ADBG_TOP/i_dbg_wb/module_tdo_o_INST_0_i_9/O
-                         net (fo=3, unplaced)         0.467     7.879    U_ADBG_TOP/i_dbg_wb/module_tdo_o_INST_0_i_9_n_1
-                         LUT5 (Prop_lut5_I3_O)        0.124     8.003 f  U_ADBG_TOP/i_dbg_wb/wb_biu_i_i_6/O
-                         net (fo=3, unplaced)         0.467     8.470    U_ADBG_TOP/i_dbg_wb/wb_biu_i_i_6_n_1
-                         LUT4 (Prop_lut4_I1_O)        0.124     8.594 f  U_ADBG_TOP/i_dbg_wb/wb_biu_i_i_1/O
-                         net (fo=103, unplaced)       0.877     9.471    U_ADBG_TOP/i_dbg_wb/wb_biu_i/rst_i
+                         net (fo=6, unplaced)         0.997     4.440    U_ADBG_TOP/i_dbg_wb/bit_count_reg__0[1]
+                         LUT6 (Prop_lut6_I0_O)        0.295     4.735 f  U_ADBG_TOP/i_dbg_wb/FSM_onehot_module_state[10]_i_2/O
+                         net (fo=2, unplaced)         0.460     5.195    U_ADBG_TOP/i_dbg_wb/FSM_onehot_module_state[10]_i_2_n_1
+                         LUT4 (Prop_lut4_I2_O)        0.124     5.319 f  U_ADBG_TOP/i_dbg_wb/FSM_onehot_module_state[10]_i_1/O
+                         net (fo=4, unplaced)         0.926     6.245    U_ADBG_TOP/i_dbg_wb/FSM_onehot_module_state[10]_i_1_n_1
+                         LUT6 (Prop_lut6_I0_O)        0.124     6.369 f  U_ADBG_TOP/i_dbg_wb/module_tdo_o_INST_0_i_23/O
+                         net (fo=2, unplaced)         0.913     7.282    U_ADBG_TOP/i_dbg_wb/module_tdo_o_INST_0_i_23_n_1
+                         LUT6 (Prop_lut6_I1_O)        0.124     7.406 f  U_ADBG_TOP/i_dbg_wb/module_tdo_o_INST_0_i_10/O
+                         net (fo=3, unplaced)         0.437     7.843    U_ADBG_TOP/i_dbg_wb/module_tdo_o_INST_0_i_10_n_1
+                         LUT3 (Prop_lut3_I0_O)        0.124     7.967 f  U_ADBG_TOP/i_dbg_wb/wb_biu_i_i_6/O
+                         net (fo=5, unplaced)         0.477     8.444    U_ADBG_TOP/i_dbg_wb/wb_biu_i_i_6_n_1
+                         LUT2 (Prop_lut2_I1_O)        0.124     8.568 f  U_ADBG_TOP/i_dbg_wb/wb_biu_i_i_1/O
+                         net (fo=103, unplaced)       0.876     9.444    U_ADBG_TOP/i_dbg_wb/wb_biu_i/rst_i
                          FDCE                                         f  U_ADBG_TOP/i_dbg_wb/wb_biu_i/addr_reg_reg[0]/CLR
   -------------------------------------------------------------------    -------------------
 
@@ -1319,16 +1309,16 @@ Slack (MET) :             42.927ns  (required time - arrival time)
     D15                  IBUF (Prop_ibuf_I_O)         1.437    51.437 r  TCK_IBUF_inst/O
                          net (fo=1, unplaced)         0.760    52.197    U_TOP_IO/pad_tap_tck_in
                          BUFG (Prop_bufg_I_O)         0.091    52.288 r  U_TOP_IO/U_TCK_BUF/O
-                         net (fo=502, unplaced)       0.439    52.727    U_ADBG_TOP/i_dbg_wb/wb_biu_i/tck_i
+                         net (fo=535, unplaced)       0.439    52.727    U_ADBG_TOP/i_dbg_wb/wb_biu_i/tck_i
                          FDCE                                         r  U_ADBG_TOP/i_dbg_wb/wb_biu_i/addr_reg_reg[0]/C
                          clock pessimism              0.116    52.842    
                          clock uncertainty           -0.035    52.807    
                          FDCE (Recov_fdce_C_CLR)     -0.409    52.398    U_ADBG_TOP/i_dbg_wb/wb_biu_i/addr_reg_reg[0]
   -------------------------------------------------------------------
                          required time                         52.398    
-                         arrival time                          -9.471    
+                         arrival time                          -9.444    
   -------------------------------------------------------------------
-                         slack                                 42.927    
+                         slack                                 42.954    
 
 
 
@@ -1336,16 +1326,16 @@ Slack (MET) :             42.927ns  (required time - arrival time)
 
 Min Delay Paths
 --------------------------------------------------------------------------------------
-Slack (MET) :             0.739ns  (arrival time - required time)
-  Source:                 U_TAP_TOP/FSM_sequential_TAP_state_reg[1]/C
-                            (rising edge-triggered cell FDCE clocked by TCK  {rise@0.000ns fall@25.000ns period=50.000ns})
-  Destination:            U_ADBG_TOP/i_dbg_cpu_2/FSM_sequential_module_state_reg[0]/CLR
+Slack (MET) :             0.346ns  (arrival time - required time)
+  Source:                 U_TAP_TOP/FSM_onehot_TAP_state_reg[0]/C
+                            (rising edge-triggered cell FDPE clocked by TCK  {rise@0.000ns fall@25.000ns period=50.000ns})
+  Destination:            U_ADBG_TOP/i_dbg_cpu_2/FSM_onehot_module_state_reg[10]/CLR
                             (removal check against rising-edge clock TCK  {rise@0.000ns fall@25.000ns period=50.000ns})
   Path Group:             **async_default**
   Path Type:              Removal (Min at Fast Process Corner)
   Requirement:            0.000ns  (TCK rise@0.000ns - TCK rise@0.000ns)
-  Data Path Delay:        0.790ns  (logic 0.239ns (30.256%)  route 0.551ns (69.744%))
-  Logic Levels:           1  (LUT4=1)
+  Data Path Delay:        0.344ns  (logic 0.141ns (41.018%)  route 0.203ns (58.982%))
+  Logic Levels:           0  
   Clock Path Skew:        0.145ns (DCD - SCD - CPR)
     Destination Clock Delay (DCD):    1.106ns
     Source Clock Delay      (SCD):    0.752ns
@@ -1359,14 +1349,12 @@ Slack (MET) :             0.739ns  (arrival time - required time)
     D15                  IBUF (Prop_ibuf_I_O)         0.275     0.275 r  TCK_IBUF_inst/O
                          net (fo=1, unplaced)         0.337     0.612    U_TOP_IO/pad_tap_tck_in
                          BUFG (Prop_bufg_I_O)         0.026     0.638 r  U_TOP_IO/U_TCK_BUF/O
-                         net (fo=502, unplaced)       0.114     0.752    U_TAP_TOP/tck_pad_i
-                         FDCE                                         r  U_TAP_TOP/FSM_sequential_TAP_state_reg[1]/C
+                         net (fo=535, unplaced)       0.114     0.752    U_TAP_TOP/tck_pad_i
+                         FDPE                                         r  U_TAP_TOP/FSM_onehot_TAP_state_reg[0]/C
   -------------------------------------------------------------------    -------------------
-                         FDCE (Prop_fdce_C_Q)         0.141     0.893 r  U_TAP_TOP/FSM_sequential_TAP_state_reg[1]/Q
-                         net (fo=52, unplaced)        0.166     1.059    U_TAP_TOP/TAP_state[1]
-                         LUT4 (Prop_lut4_I3_O)        0.098     1.157 f  U_TAP_TOP/test_logic_reset_o_INST_0/O
-                         net (fo=429, unplaced)       0.385     1.542    U_ADBG_TOP/i_dbg_cpu_2/rst_i
-                         FDCE                                         f  U_ADBG_TOP/i_dbg_cpu_2/FSM_sequential_module_state_reg[0]/CLR
+                         FDPE (Prop_fdpe_C_Q)         0.141     0.893 f  U_TAP_TOP/FSM_onehot_TAP_state_reg[0]/Q
+                         net (fo=465, unplaced)       0.203     1.096    U_ADBG_TOP/i_dbg_cpu_2/rst_i
+                         FDCE                                         f  U_ADBG_TOP/i_dbg_cpu_2/FSM_onehot_module_state_reg[10]/CLR
   -------------------------------------------------------------------    -------------------
 
                          (clock TCK rise edge)        0.000     0.000 r  
@@ -1375,15 +1363,15 @@ Slack (MET) :             0.739ns  (arrival time - required time)
     D15                  IBUF (Prop_ibuf_I_O)         0.463     0.463 r  TCK_IBUF_inst/O
                          net (fo=1, unplaced)         0.355     0.818    U_TOP_IO/pad_tap_tck_in
                          BUFG (Prop_bufg_I_O)         0.029     0.847 r  U_TOP_IO/U_TCK_BUF/O
-                         net (fo=502, unplaced)       0.259     1.106    U_ADBG_TOP/i_dbg_cpu_2/tck_i
-                         FDCE                                         r  U_ADBG_TOP/i_dbg_cpu_2/FSM_sequential_module_state_reg[0]/C
+                         net (fo=535, unplaced)       0.259     1.106    U_ADBG_TOP/i_dbg_cpu_2/tck_i
+                         FDCE                                         r  U_ADBG_TOP/i_dbg_cpu_2/FSM_onehot_module_state_reg[10]/C
                          clock pessimism             -0.209     0.897    
-                         FDCE (Remov_fdce_C_CLR)     -0.094     0.803    U_ADBG_TOP/i_dbg_cpu_2/FSM_sequential_module_state_reg[0]
+                         FDCE (Remov_fdce_C_CLR)     -0.147     0.750    U_ADBG_TOP/i_dbg_cpu_2/FSM_onehot_module_state_reg[10]
   -------------------------------------------------------------------
-                         required time                         -0.803    
-                         arrival time                           1.542    
+                         required time                         -0.750    
+                         arrival time                           1.096    
   -------------------------------------------------------------------
-                         slack                                  0.739    
+                         slack                                  0.346    
 
 
 
@@ -1394,14 +1382,14 @@ Path Group:  **async_default**
 From Clock:  TCK
   To Clock:  clk_50m_arty_mmcm
 
-Setup :            0  Failing Endpoints,  Worst Slack       12.706ns,  Total Violation        0.000ns
-Hold  :            0  Failing Endpoints,  Worst Slack        2.517ns,  Total Violation        0.000ns
+Setup :            0  Failing Endpoints,  Worst Slack       12.733ns,  Total Violation        0.000ns
+Hold  :            0  Failing Endpoints,  Worst Slack        2.123ns,  Total Violation        0.000ns
 ---------------------------------------------------------------------------------------------------
 
 
 Max Delay Paths
 --------------------------------------------------------------------------------------
-Slack (MET) :             12.706ns  (required time - arrival time)
+Slack (MET) :             12.733ns  (required time - arrival time)
   Source:                 U_ADBG_TOP/i_dbg_wb/bit_count_reg[1]/C
                             (rising edge-triggered cell FDCE clocked by TCK  {rise@0.000ns fall@25.000ns period=50.000ns})
   Destination:            U_ADBG_TOP/i_dbg_wb/wb_biu_i/data_out_reg_reg[0]/CLR
@@ -1409,8 +1397,8 @@ Slack (MET) :             12.706ns  (required time - arrival time)
   Path Group:             **async_default**
   Path Type:              Recovery (Max at Slow Process Corner)
   Requirement:            25.000ns  (clk_50m_arty_mmcm rise@25.000ns - TCK rise@0.000ns)
-  Data Path Delay:        6.484ns  (logic 1.371ns (21.144%)  route 5.113ns (78.856%))
-  Logic Levels:           6  (LUT2=1 LUT4=1 LUT5=2 LUT6=2)
+  Data Path Delay:        6.457ns  (logic 1.371ns (21.233%)  route 5.086ns (78.767%))
+  Logic Levels:           6  (LUT2=1 LUT3=1 LUT4=1 LUT6=3)
   Clock Path Skew:        -5.218ns (DCD - SCD + CPR)
     Destination Clock Delay (DCD):    -2.231ns = ( 22.769 - 25.000 ) 
     Source Clock Delay      (SCD):    2.987ns
@@ -1429,23 +1417,23 @@ Slack (MET) :             12.706ns  (required time - arrival time)
     D15                  IBUF (Prop_ibuf_I_O)         1.508     1.508 r  TCK_IBUF_inst/O
                          net (fo=1, unplaced)         0.800     2.307    U_TOP_IO/pad_tap_tck_in
                          BUFG (Prop_bufg_I_O)         0.096     2.403 r  U_TOP_IO/U_TCK_BUF/O
-                         net (fo=502, unplaced)       0.584     2.987    U_ADBG_TOP/i_dbg_wb/tck_i
+                         net (fo=535, unplaced)       0.584     2.987    U_ADBG_TOP/i_dbg_wb/tck_i
                          FDCE                                         r  U_ADBG_TOP/i_dbg_wb/bit_count_reg[1]/C
   -------------------------------------------------------------------    -------------------
                          FDCE (Prop_fdce_C_Q)         0.456     3.443 r  U_ADBG_TOP/i_dbg_wb/bit_count_reg[1]/Q
-                         net (fo=5, unplaced)         0.993     4.436    U_ADBG_TOP/i_dbg_wb/bit_count_reg__0[1]
-                         LUT6 (Prop_lut6_I0_O)        0.295     4.731 f  U_ADBG_TOP/i_dbg_wb/FSM_sequential_module_state[1]_i_7/O
-                         net (fo=3, unplaced)         0.920     5.651    U_ADBG_TOP/i_dbg_wb/bit_count_32
-                         LUT6 (Prop_lut6_I2_O)        0.124     5.775 f  U_ADBG_TOP/i_dbg_wb/module_tdo_o_INST_0_i_21/O
-                         net (fo=1, unplaced)         0.902     6.677    U_ADBG_TOP/i_dbg_wb/module_tdo_o_INST_0_i_21_n_1
-                         LUT5 (Prop_lut5_I0_O)        0.124     6.801 f  U_ADBG_TOP/i_dbg_wb/module_tdo_o_INST_0_i_12/O
-                         net (fo=8, unplaced)         0.487     7.288    U_ADBG_TOP/i_dbg_wb/module_tdo_o_INST_0_i_12_n_1
-                         LUT2 (Prop_lut2_I1_O)        0.124     7.412 r  U_ADBG_TOP/i_dbg_wb/module_tdo_o_INST_0_i_9/O
-                         net (fo=3, unplaced)         0.467     7.879    U_ADBG_TOP/i_dbg_wb/module_tdo_o_INST_0_i_9_n_1
-                         LUT5 (Prop_lut5_I3_O)        0.124     8.003 f  U_ADBG_TOP/i_dbg_wb/wb_biu_i_i_6/O
-                         net (fo=3, unplaced)         0.467     8.470    U_ADBG_TOP/i_dbg_wb/wb_biu_i_i_6_n_1
-                         LUT4 (Prop_lut4_I1_O)        0.124     8.594 f  U_ADBG_TOP/i_dbg_wb/wb_biu_i_i_1/O
-                         net (fo=103, unplaced)       0.877     9.471    U_ADBG_TOP/i_dbg_wb/wb_biu_i/rst_i
+                         net (fo=6, unplaced)         0.997     4.440    U_ADBG_TOP/i_dbg_wb/bit_count_reg__0[1]
+                         LUT6 (Prop_lut6_I0_O)        0.295     4.735 f  U_ADBG_TOP/i_dbg_wb/FSM_onehot_module_state[10]_i_2/O
+                         net (fo=2, unplaced)         0.460     5.195    U_ADBG_TOP/i_dbg_wb/FSM_onehot_module_state[10]_i_2_n_1
+                         LUT4 (Prop_lut4_I2_O)        0.124     5.319 f  U_ADBG_TOP/i_dbg_wb/FSM_onehot_module_state[10]_i_1/O
+                         net (fo=4, unplaced)         0.926     6.245    U_ADBG_TOP/i_dbg_wb/FSM_onehot_module_state[10]_i_1_n_1
+                         LUT6 (Prop_lut6_I0_O)        0.124     6.369 f  U_ADBG_TOP/i_dbg_wb/module_tdo_o_INST_0_i_23/O
+                         net (fo=2, unplaced)         0.913     7.282    U_ADBG_TOP/i_dbg_wb/module_tdo_o_INST_0_i_23_n_1
+                         LUT6 (Prop_lut6_I1_O)        0.124     7.406 f  U_ADBG_TOP/i_dbg_wb/module_tdo_o_INST_0_i_10/O
+                         net (fo=3, unplaced)         0.437     7.843    U_ADBG_TOP/i_dbg_wb/module_tdo_o_INST_0_i_10_n_1
+                         LUT3 (Prop_lut3_I0_O)        0.124     7.967 f  U_ADBG_TOP/i_dbg_wb/wb_biu_i_i_6/O
+                         net (fo=5, unplaced)         0.477     8.444    U_ADBG_TOP/i_dbg_wb/wb_biu_i_i_6_n_1
+                         LUT2 (Prop_lut2_I1_O)        0.124     8.568 f  U_ADBG_TOP/i_dbg_wb/wb_biu_i_i_1/O
+                         net (fo=103, unplaced)       0.876     9.444    U_ADBG_TOP/i_dbg_wb/wb_biu_i/rst_i
                          FDCE                                         f  U_ADBG_TOP/i_dbg_wb/wb_biu_i/data_out_reg_reg[0]/CLR
   -------------------------------------------------------------------    -------------------
 
@@ -1456,19 +1444,19 @@ Slack (MET) :             12.706ns  (required time - arrival time)
     E3                   IBUF (Prop_ibuf_I_O)         1.418    26.418 r  U_CLK_GEN/U_MCM/inst/clkin1_ibufg/O
                          net (fo=1, unplaced)         0.439    26.857    U_CLK_GEN/U_MCM/inst/clk_in_arty_mmcm
                          MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
-                                                     -5.378    21.479 r  U_CLK_GEN/U_MCM/inst/mmcm_adv_inst/CLKOUT0
+                                                     -5.378    21.480 r  U_CLK_GEN/U_MCM/inst/mmcm_adv_inst/CLKOUT0
                          net (fo=1, unplaced)         0.760    22.239    U_CLK_GEN/U_MCM/inst/clk_50m_arty_mmcm
                          BUFG (Prop_bufg_I_O)         0.091    22.330 r  U_CLK_GEN/U_MCM/inst/clkout1_buf/O
-                         net (fo=2321, unplaced)      0.439    22.769    U_ADBG_TOP/i_dbg_wb/wb_biu_i/wb_clk_i
+                         net (fo=2342, unplaced)      0.439    22.769    U_ADBG_TOP/i_dbg_wb/wb_biu_i/wb_clk_i
                          FDCE                                         r  U_ADBG_TOP/i_dbg_wb/wb_biu_i/data_out_reg_reg[0]/C
                          clock pessimism              0.000    22.769    
                          clock uncertainty           -0.183    22.586    
                          FDCE (Recov_fdce_C_CLR)     -0.409    22.177    U_ADBG_TOP/i_dbg_wb/wb_biu_i/data_out_reg_reg[0]
   -------------------------------------------------------------------
                          required time                         22.177    
-                         arrival time                          -9.471    
+                         arrival time                          -9.444    
   -------------------------------------------------------------------
-                         slack                                 12.706    
+                         slack                                 12.733    
 
 
 
@@ -1476,16 +1464,16 @@ Slack (MET) :             12.706ns  (required time - arrival time)
 
 Min Delay Paths
 --------------------------------------------------------------------------------------
-Slack (MET) :             2.517ns  (arrival time - required time)
-  Source:                 U_TAP_TOP/FSM_sequential_TAP_state_reg[1]/C
-                            (rising edge-triggered cell FDCE clocked by TCK  {rise@0.000ns fall@25.000ns period=50.000ns})
-  Destination:            U_ADBG_TOP/i_dbg_jsp/jsp_biu_i/bytesavail_syncreg/ack_sff/srflop_reg/CLR
+Slack (MET) :             2.123ns  (arrival time - required time)
+  Source:                 U_TAP_TOP/FSM_onehot_TAP_state_reg[0]/C
+                            (rising edge-triggered cell FDPE clocked by TCK  {rise@0.000ns fall@25.000ns period=50.000ns})
+  Destination:            U_ADBG_TOP/i_dbg_jsp/jsp_biu_i/FSM_onehot_rd_fsm_state_reg[1]/CLR
                             (removal check against rising-edge clock clk_50m_arty_mmcm  {rise@0.000ns fall@12.500ns period=25.000ns})
   Path Group:             **async_default**
   Path Type:              Removal (Min at Fast Process Corner)
   Requirement:            0.000ns  (clk_50m_arty_mmcm rise@0.000ns - TCK rise@0.000ns)
-  Data Path Delay:        0.790ns  (logic 0.239ns (30.256%)  route 0.551ns (69.744%))
-  Logic Levels:           1  (LUT4=1)
+  Data Path Delay:        0.344ns  (logic 0.141ns (41.018%)  route 0.203ns (58.982%))
+  Logic Levels:           0  
   Clock Path Skew:        -1.816ns (DCD - SCD - CPR)
     Destination Clock Delay (DCD):    -1.063ns
     Source Clock Delay      (SCD):    0.752ns
@@ -1504,14 +1492,12 @@ Slack (MET) :             2.517ns  (arrival time - required time)
     D15                  IBUF (Prop_ibuf_I_O)         0.275     0.275 r  TCK_IBUF_inst/O
                          net (fo=1, unplaced)         0.337     0.612    U_TOP_IO/pad_tap_tck_in
                          BUFG (Prop_bufg_I_O)         0.026     0.638 r  U_TOP_IO/U_TCK_BUF/O
-                         net (fo=502, unplaced)       0.114     0.752    U_TAP_TOP/tck_pad_i
-                         FDCE                                         r  U_TAP_TOP/FSM_sequential_TAP_state_reg[1]/C
+                         net (fo=535, unplaced)       0.114     0.752    U_TAP_TOP/tck_pad_i
+                         FDPE                                         r  U_TAP_TOP/FSM_onehot_TAP_state_reg[0]/C
   -------------------------------------------------------------------    -------------------
-                         FDCE (Prop_fdce_C_Q)         0.141     0.893 r  U_TAP_TOP/FSM_sequential_TAP_state_reg[1]/Q
-                         net (fo=52, unplaced)        0.166     1.059    U_TAP_TOP/TAP_state[1]
-                         LUT4 (Prop_lut4_I3_O)        0.098     1.157 f  U_TAP_TOP/test_logic_reset_o_INST_0/O
-                         net (fo=429, unplaced)       0.385     1.542    U_ADBG_TOP/i_dbg_jsp/jsp_biu_i/bytesavail_syncreg/ack_sff/RESET
-                         FDCE                                         f  U_ADBG_TOP/i_dbg_jsp/jsp_biu_i/bytesavail_syncreg/ack_sff/srflop_reg/CLR
+                         FDPE (Prop_fdpe_C_Q)         0.141     0.893 f  U_TAP_TOP/FSM_onehot_TAP_state_reg[0]/Q
+                         net (fo=465, unplaced)       0.203     1.096    U_ADBG_TOP/i_dbg_jsp/jsp_biu_i/rst_i
+                         FDCE                                         f  U_ADBG_TOP/i_dbg_jsp/jsp_biu_i/FSM_onehot_rd_fsm_state_reg[1]/CLR
   -------------------------------------------------------------------    -------------------
 
                          (clock clk_50m_arty_mmcm rise edge)
@@ -1524,16 +1510,164 @@ Slack (MET) :             2.517ns  (arrival time - required time)
                                                      -2.410    -1.706 r  U_CLK_GEN/U_MCM/inst/mmcm_adv_inst/CLKOUT0
                          net (fo=1, unplaced)         0.355    -1.351    U_CLK_GEN/U_MCM/inst/clk_50m_arty_mmcm
                          BUFG (Prop_bufg_I_O)         0.029    -1.322 r  U_CLK_GEN/U_MCM/inst/clkout1_buf/O
-                         net (fo=2321, unplaced)      0.259    -1.063    U_ADBG_TOP/i_dbg_jsp/jsp_biu_i/bytesavail_syncreg/ack_sff/DEST_CLK
-                         FDCE                                         r  U_ADBG_TOP/i_dbg_jsp/jsp_biu_i/bytesavail_syncreg/ack_sff/srflop_reg/C
+                         net (fo=2342, unplaced)      0.259    -1.063    U_ADBG_TOP/i_dbg_jsp/jsp_biu_i/wb_clk_i
+                         FDCE                                         r  U_ADBG_TOP/i_dbg_jsp/jsp_biu_i/FSM_onehot_rd_fsm_state_reg[1]/C
                          clock pessimism              0.000    -1.063    
                          clock uncertainty            0.183    -0.880    
-                         FDCE (Remov_fdce_C_CLR)     -0.094    -0.974    U_ADBG_TOP/i_dbg_jsp/jsp_biu_i/bytesavail_syncreg/ack_sff/srflop_reg
+                         FDCE (Remov_fdce_C_CLR)     -0.147    -1.027    U_ADBG_TOP/i_dbg_jsp/jsp_biu_i/FSM_onehot_rd_fsm_state_reg[1]
   -------------------------------------------------------------------
-                         required time                          0.974    
-                         arrival time                           1.542    
+                         required time                          1.027    
+                         arrival time                           1.096    
   -------------------------------------------------------------------
-                         slack                                  2.517    
+                         slack                                  2.123    
+
+
+
+
+
+---------------------------------------------------------------------------------------------------
+Path Group:  **async_default**
+From Clock:  clk_50m_arty_mmcm
+  To Clock:  clk_50m_arty_mmcm
+
+Setup :            0  Failing Endpoints,  Worst Slack        9.431ns,  Total Violation        0.000ns
+Hold  :            0  Failing Endpoints,  Worst Slack       13.092ns,  Total Violation        0.000ns
+---------------------------------------------------------------------------------------------------
+
+
+Max Delay Paths
+--------------------------------------------------------------------------------------
+Slack (MET) :             9.431ns  (required time - arrival time)
+  Source:                 U_CPUCTRL/cpuctrl_out_r_reg[0]/C
+                            (rising edge-triggered cell FDCE clocked by clk_50m_arty_mmcm  {rise@0.000ns fall@12.500ns period=25.000ns})
+  Destination:            U_RESET_GEN/rst_async_n_m_reg/CLR
+                            (recovery check against rising-edge clock clk_50m_arty_mmcm  {rise@0.000ns fall@12.500ns period=25.000ns})
+  Path Group:             **async_default**
+  Path Type:              Recovery (Max at Slow Process Corner)
+  Requirement:            12.500ns  (clk_50m_arty_mmcm fall@12.500ns - clk_50m_arty_mmcm rise@0.000ns)
+  Data Path Delay:        2.433ns  (logic 0.875ns (35.964%)  route 1.558ns (64.036%))
+  Logic Levels:           2  (LUT1=1 LUT2=1)
+  Clock Path Skew:        -0.145ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    -2.231ns = ( 10.269 - 12.500 ) 
+    Source Clock Delay      (SCD):    -1.555ns
+    Clock Pessimism Removal (CPR):    0.531ns
+  Clock Uncertainty:      0.085ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Discrete Jitter          (DJ):    0.154ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk_50m_arty_mmcm rise edge)
+                                                      0.000     0.000 r  
+    E3                                                0.000     0.000 r  clk_in (IN)
+                         net (fo=0)                   0.000     0.000    U_CLK_GEN/U_MCM/inst/clk_in
+    E3                   IBUF (Prop_ibuf_I_O)         1.489     1.489 r  U_CLK_GEN/U_MCM/inst/clkin1_ibufg/O
+                         net (fo=1, unplaced)         0.584     2.073    U_CLK_GEN/U_MCM/inst/clk_in_arty_mmcm
+                         MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -5.108    -3.035 r  U_CLK_GEN/U_MCM/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, unplaced)         0.800    -2.235    U_CLK_GEN/U_MCM/inst/clk_50m_arty_mmcm
+                         BUFG (Prop_bufg_I_O)         0.096    -2.139 r  U_CLK_GEN/U_MCM/inst/clkout1_buf/O
+                         net (fo=2342, unplaced)      0.584    -1.555    U_CPUCTRL/clk_apb
+                         FDCE                                         r  U_CPUCTRL/cpuctrl_out_r_reg[0]/C
+  -------------------------------------------------------------------    -------------------
+                         FDCE (Prop_fdce_C_Q)         0.456    -1.099 f  U_CPUCTRL/cpuctrl_out_r_reg[0]/Q
+                         net (fo=2, unplaced)         0.322    -0.777    U_CPUCTRL_n_50
+                         LUT2 (Prop_lut2_I1_O)        0.295    -0.482 r  U_RESET_GEN_i_1/O
+                         net (fo=1, unplaced)         0.449    -0.033    U_RESET_GEN/rst_async_n
+                         LUT1 (Prop_lut1_I0_O)        0.124     0.091 f  U_RESET_GEN/rst_async_n_r_i_1/O
+                         net (fo=2, unplaced)         0.787     0.878    U_RESET_GEN/rst_async_n_r_i_1_n_1
+                         FDCE                                         f  U_RESET_GEN/rst_async_n_m_reg/CLR
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk_50m_arty_mmcm fall edge)
+                                                     12.500    12.500 f  
+    E3                                                0.000    12.500 f  clk_in (IN)
+                         net (fo=0)                   0.000    12.500    U_CLK_GEN/U_MCM/inst/clk_in
+    E3                   IBUF (Prop_ibuf_I_O)         1.418    13.918 f  U_CLK_GEN/U_MCM/inst/clkin1_ibufg/O
+                         net (fo=1, unplaced)         0.439    14.357    U_CLK_GEN/U_MCM/inst/clk_in_arty_mmcm
+                         MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -5.378     8.980 f  U_CLK_GEN/U_MCM/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, unplaced)         0.760     9.739    U_CLK_GEN/U_MCM/inst/clk_50m_arty_mmcm
+                         BUFG (Prop_bufg_I_O)         0.091     9.830 f  U_CLK_GEN/U_MCM/inst/clkout1_buf/O
+                         net (fo=2342, unplaced)      0.439    10.269    U_RESET_GEN/clk
+                         FDCE                                         r  U_RESET_GEN/rst_async_n_m_reg/C  (IS_INVERTED)
+                         clock pessimism              0.531    10.800    
+                         clock uncertainty           -0.085    10.715    
+                         FDCE (Recov_fdce_C_CLR)     -0.406    10.309    U_RESET_GEN/rst_async_n_m_reg
+  -------------------------------------------------------------------
+                         required time                         10.309    
+                         arrival time                          -0.878    
+  -------------------------------------------------------------------
+                         slack                                  9.431    
+
+
+
+
+
+Min Delay Paths
+--------------------------------------------------------------------------------------
+Slack (MET) :             13.092ns  (arrival time - required time)
+  Source:                 U_RESET_GEN/rst_async_n_r_reg/C
+                            (falling edge-triggered cell FDCE clocked by clk_50m_arty_mmcm  {rise@0.000ns fall@12.500ns period=25.000ns})
+  Destination:            U_NANORV32_PIL/U_CPU/U_ALU/u_div/FSM_sequential_state_reg[0]/CLR
+                            (removal check against rising-edge clock clk_50m_arty_mmcm  {rise@0.000ns fall@12.500ns period=25.000ns})
+  Path Group:             **async_default**
+  Path Type:              Removal (Min at Fast Process Corner)
+  Requirement:            -12.500ns  (clk_50m_arty_mmcm rise@0.000ns - clk_50m_arty_mmcm fall@12.500ns)
+  Data Path Delay:        0.728ns  (logic 0.244ns (33.521%)  route 0.484ns (66.479%))
+  Logic Levels:           1  (LUT1=1)
+  Clock Path Skew:        0.145ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    -1.063ns
+    Source Clock Delay      (SCD):    -0.928ns = ( 11.572 - 12.500 ) 
+    Clock Pessimism Removal (CPR):    -0.280ns
+  Clock Uncertainty:      0.085ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Discrete Jitter          (DJ):    0.154ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk_50m_arty_mmcm fall edge)
+                                                     12.500    12.500 f  
+    E3                                                0.000    12.500 f  clk_in (IN)
+                         net (fo=0)                   0.000    12.500    U_CLK_GEN/U_MCM/inst/clk_in
+    E3                   IBUF (Prop_ibuf_I_O)         0.257    12.757 f  U_CLK_GEN/U_MCM/inst/clkin1_ibufg/O
+                         net (fo=1, unplaced)         0.114    12.871    U_CLK_GEN/U_MCM/inst/clk_in_arty_mmcm
+                         MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -1.776    11.095 f  U_CLK_GEN/U_MCM/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, unplaced)         0.337    11.432    U_CLK_GEN/U_MCM/inst/clk_50m_arty_mmcm
+                         BUFG (Prop_bufg_I_O)         0.026    11.458 f  U_CLK_GEN/U_MCM/inst/clkout1_buf/O
+                         net (fo=2342, unplaced)      0.114    11.572    U_RESET_GEN/clk
+                         FDCE                                         r  U_RESET_GEN/rst_async_n_r_reg/C  (IS_INVERTED)
+  -------------------------------------------------------------------    -------------------
+                         FDCE (Prop_fdce_C_Q)         0.146    11.718 r  U_RESET_GEN/rst_async_n_r_reg/Q
+                         net (fo=13, unplaced)        0.152    11.870    U_NANORV32_PIL/U_CPU/U_ALU/u_div/rst_n
+                         LUT1 (Prop_lut1_I0_O)        0.098    11.968 f  U_NANORV32_PIL/U_CPU/U_ALU/u_div/FSM_sequential_state[1]_i_2/O
+                         net (fo=2, unplaced)         0.332    12.300    U_NANORV32_PIL/U_CPU/U_ALU/u_div/FSM_sequential_state[1]_i_2_n_1
+                         FDCE                                         f  U_NANORV32_PIL/U_CPU/U_ALU/u_div/FSM_sequential_state_reg[0]/CLR
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk_50m_arty_mmcm rise edge)
+                                                      0.000     0.000 r  
+    E3                                                0.000     0.000 r  clk_in (IN)
+                         net (fo=0)                   0.000     0.000    U_CLK_GEN/U_MCM/inst/clk_in
+    E3                   IBUF (Prop_ibuf_I_O)         0.445     0.445 r  U_CLK_GEN/U_MCM/inst/clkin1_ibufg/O
+                         net (fo=1, unplaced)         0.259     0.704    U_CLK_GEN/U_MCM/inst/clk_in_arty_mmcm
+                         MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -2.410    -1.706 r  U_CLK_GEN/U_MCM/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, unplaced)         0.355    -1.351    U_CLK_GEN/U_MCM/inst/clk_50m_arty_mmcm
+                         BUFG (Prop_bufg_I_O)         0.029    -1.322 r  U_CLK_GEN/U_MCM/inst/clkout1_buf/O
+                         net (fo=2342, unplaced)      0.259    -1.063    U_NANORV32_PIL/U_CPU/U_ALU/u_div/clk
+                         FDCE                                         r  U_NANORV32_PIL/U_CPU/U_ALU/u_div/FSM_sequential_state_reg[0]/C
+                         clock pessimism              0.280    -0.783    
+                         clock uncertainty            0.085    -0.699    
+                         FDCE (Remov_fdce_C_CLR)     -0.094    -0.793    U_NANORV32_PIL/U_CPU/U_ALU/u_div/FSM_sequential_state_reg[0]
+  -------------------------------------------------------------------
+                         required time                          0.793    
+                         arrival time                          12.300    
+  -------------------------------------------------------------------
+                         slack                                 13.092    
 
 
 

@@ -10,12 +10,14 @@ void delay(uint32_t d) {
 
 int main(void) {
     uint32_t * GPIO_P0 = (uint32_t*)0xF0000000;
-
+    uint32_t i = 0;
     while(1) {
-        *GPIO_P0 = 0x01;
-        delay(2000000);
+        i++;
+        i = i%4;
+        *GPIO_P0 = 0x01<<i;
+        delay(100000*1);
         *GPIO_P0 = 0x00;
-        delay(2000000);
+        delay(100000*1);
 
     }
     return 0;

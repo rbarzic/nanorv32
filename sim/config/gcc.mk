@@ -15,7 +15,7 @@ CC_FLAGS += $(C_COMPILER_TARGET_OPTIONS)
 
 
 # we split the tasks to get correct return error code (Make will stop on first error)
-gcc_compile: _gcc_compile gcc_bin gcc_lst gcc_map gcc_hex gcc_vmem32 gcc_vmem gcc_hex2
+gcc_compile: _gcc_compile gcc_bin gcc_lst gcc_map gcc_hex gcc_ihex gcc_vmem32 gcc_vmem gcc_hex2
 
 
 
@@ -38,6 +38,8 @@ gcc_map:
 gcc_hex:
 	$(C_COMPILER_OBJCOPY) -S $(TEST_DIR)/$(TEST).elf -O verilog $(TEST_DIR)/$(TEST).hex
 
+gcc_ihex:
+	$(C_COMPILER_OBJCOPY) -S $(TEST_DIR)/$(TEST).elf -O ihex $(TEST_DIR)/$(TEST).ihex
 gcc_vmem32:
 	hexdump -v -e ' 1/4 "%08x " "\n"' $(TEST_DIR)/$(TEST).bin > $(TEST_DIR)/$(TEST).vmem32 # Xilinx
 

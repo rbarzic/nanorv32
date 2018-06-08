@@ -15,3 +15,6 @@
 	path = wisbone_2_ahb
 	url = https://github.com/rbarzic/wisbone_2_ahb.git
 	branch = master
+[submodule "apb_bridge"]
+	path = apb_bridge
+	url = https://github.com/rbarzic/apb-bridge.git

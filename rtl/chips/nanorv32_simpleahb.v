@@ -34,11 +34,11 @@
 
 module nanorv32_simpleahb (/*AUTOARG*/
    // Outputs
-   illegal_instruction, TDO, debug, uart_pad_tx,
+   illegal_instruction, debug, uart_pad_tx,
    // Inouts
-   P0,
+   P0, TMS, TCK, TDI, TDO,
    // Inputs
-   clk_in, rst_n, irq_ext, TMS, TCK, TDI
+   clk_in, rst_n, irq_ext
    );
 
 `include "nanorv32_parameters.v"
@@ -85,6 +85,11 @@ module nanorv32_simpleahb (/*AUTOARG*/
    wire                 adbg_w2ahb_we;          // From U_ADBG_TOP of adbg_top.v
    wire [NANORV32_DATA_MSB:0] ahb_w2ahb_hrdata; // From u_ahbmatrix of Ahbmli.v
    wire                 ahb_w2ahb_hready;       // From u_ahbmatrix of Ahbmli.v
+   wire [31:0]          apb_cpuctrl_paddr;      // From U_APB_BRIDGE of Apbbridge.v
+   wire                 apb_cpuctrl_penable;    // From U_APB_BRIDGE of Apbbridge.v
+   wire                 apb_cpuctrl_psel;       // From U_APB_BRIDGE of Apbbridge.v
+   wire [31:0]          apb_cpuctrl_pwdata;     // From U_APB_BRIDGE of Apbbridge.v
+   wire                 apb_cpuctrl_pwrite;     // From U_APB_BRIDGE of Apbbridge.v
    wire [31:0]          apb_gpio_paddr;         // From U_APB_BRIDGE of Apbbridge.v
    wire                 apb_gpio_penable;       // From U_APB_BRIDGE of Apbbridge.v
    wire                 apb_gpio_psel;          // From U_APB_BRIDGE of Apbbridge.v
@@ -106,6 +111,9 @@ module nanorv32_simpleahb (/*AUTOARG*/
    wire [31:0]          apb_uart_pwdata;        // From U_APB_BRIDGE of Apbbridge.v
    wire                 apb_uart_pwrite;        // From U_APB_BRIDGE of Apbbridge.v
    wire                 clk;                    // From U_CLK_GEN of nanorv32_clkgen.v
+   wire [31:0]          cpuctrl_apb_prdata;     // From U_CPUCTRL of cpuctrl.v
+   wire                 cpuctrl_apb_pready;     // From U_CPUCTRL of cpuctrl.v
+   wire                 cpuctrl_apb_pslverr;    // From U_CPUCTRL of cpuctrl.v
    wire                 debug_tap_tdo;          // From U_ADBG_TOP of adbg_top.v
    wire [31:0]          gpio_apb_prdata;        // From U_GPIO of gpio_apb.v
    wire                 gpio_apb_pready;        // From U_GPIO of gpio_apb.v
@@ -127,6 +135,7 @@ module nanorv32_simpleahb (/*AUTOARG*/
    wire [CHIP_PORT_A_WIDTH-1:0] pmux_pad_dout;  // From U_PORT_MUX of port_mux.v
    wire [CHIP_PORT_A_WIDTH-1:0] pmux_pad_ie;    // From U_PORT_MUX of port_mux.v
    wire [CHIP_PORT_A_WIDTH-1:0] pmux_pad_oe;    // From U_PORT_MUX of port_mux.v
+   wire                 rst_cpu_n;              // From U_RESET_GEN of reset_generator.v
    wire                 tap_debug_capture_dr;   // From U_TAP_TOP of tap_top.v
    wire                 tap_debug_debug_select; // From U_TAP_TOP of tap_top.v
    wire                 tap_debug_pause_dr;     // From U_TAP_TOP of tap_top.v
@@ -241,13 +250,14 @@ module nanorv32_simpleahb (/*AUTOARG*/
 
    wire [5:0]                     debug;
 
-
+   wire [15:0]         cpuctrl_out_r;        // From U_CPUCTRL of cpuctrl.v
    /* nanorv32_pil AUTO_TEMPLATE(
     .hmasteri            (),
     .hmasterlocki        (hmastlocki),
     .hmasterd            (),
     .hmasterlockd        (hmastlockd),
     .irq            (intc_cpu_irq),
+    .rst_n             (rst_cpu_n),
     ); */
    nanorv32_pil
      U_NANORV32_PIL (
@@ -275,7 +285,7 @@ module nanorv32_simpleahb (/*AUTOARG*/
                      .irq_ack           (irq_ack),
                      // Inputs
                      .clk               (clk),
-                     .rst_n             (rst_n),
+                     .rst_n             (rst_cpu_n),             // Templated
                      .hrdatad           (hrdatad[NANORV32_DATA_MSB:0]),
                      .hreadyd           (hreadyd),
                      .hrespd            (hrespd),
@@ -469,16 +479,21 @@ module nanorv32_simpleahb (/*AUTOARG*/
                            .io_gpio_psel        (apb_gpio_psel), // Templated
                            .io_gpio_penable     (apb_gpio_penable), // Templated
                            .io_gpio_pwdata      (apb_gpio_pwdata[31:0]), // Templated
-                           .io_intc_paddr       (apb_intc_paddr[31:0]), // Templated
-                           .io_intc_pwrite      (apb_intc_pwrite), // Templated
-                           .io_intc_psel        (apb_intc_psel), // Templated
-                           .io_intc_penable     (apb_intc_penable), // Templated
-                           .io_intc_pwdata      (apb_intc_pwdata[31:0]), // Templated
+                           .io_cpuctrl_paddr    (apb_cpuctrl_paddr[31:0]), // Templated
+                           .io_cpuctrl_pwrite   (apb_cpuctrl_pwrite), // Templated
+                           .io_cpuctrl_psel     (apb_cpuctrl_psel), // Templated
+                           .io_cpuctrl_penable  (apb_cpuctrl_penable), // Templated
+                           .io_cpuctrl_pwdata   (apb_cpuctrl_pwdata[31:0]), // Templated
                            .io_timer_paddr      (apb_timer_paddr[31:0]), // Templated
                            .io_timer_pwrite     (apb_timer_pwrite), // Templated
                            .io_timer_psel       (apb_timer_psel), // Templated
                            .io_timer_penable    (apb_timer_penable), // Templated
                            .io_timer_pwdata     (apb_timer_pwdata[31:0]), // Templated
+                           .io_intc_paddr       (apb_intc_paddr[31:0]), // Templated
+                           .io_intc_pwrite      (apb_intc_pwrite), // Templated
+                           .io_intc_psel        (apb_intc_psel), // Templated
+                           .io_intc_penable     (apb_intc_penable), // Templated
+                           .io_intc_pwdata      (apb_intc_pwdata[31:0]), // Templated
                            // Inputs
                            .clk                 (clk),
                            .reset               (~rst_n),        // Templated
@@ -498,12 +513,15 @@ module nanorv32_simpleahb (/*AUTOARG*/
                            .io_gpio_prdata      (gpio_apb_prdata[31:0]), // Templated
                            .io_gpio_pready      (gpio_apb_pready), // Templated
                            .io_gpio_pslverr     (gpio_apb_pslverr), // Templated
-                           .io_intc_prdata      (intc_apb_prdata[31:0]), // Templated
-                           .io_intc_pready      (intc_apb_pready), // Templated
-                           .io_intc_pslverr     (intc_apb_pslverr), // Templated
+                           .io_cpuctrl_prdata   (cpuctrl_apb_prdata[31:0]), // Templated
+                           .io_cpuctrl_pready   (cpuctrl_apb_pready), // Templated
+                           .io_cpuctrl_pslverr  (cpuctrl_apb_pslverr), // Templated
                            .io_timer_prdata     (timer_apb_prdata[31:0]), // Templated
                            .io_timer_pready     (timer_apb_pready), // Templated
-                           .io_timer_pslverr    (timer_apb_pslverr)); // Templated
+                           .io_timer_pslverr    (timer_apb_pslverr), // Templated
+                           .io_intc_prdata      (intc_apb_prdata[31:0]), // Templated
+                           .io_intc_pready      (intc_apb_pready), // Templated
+                           .io_intc_pslverr     (intc_apb_pslverr)); // Templated
 
 
 
@@ -879,6 +897,29 @@ module nanorv32_simpleahb (/*AUTOARG*/
                     .tap_pad_tdo_oe     (tap_pad_tdo_oe));
 
 
+    /* cpuctrl AUTO_TEMPLATE(
+
+     .clk_apb            (clk),
+     .rst_apb_n          (rst_n),
+
+     ); */
+   cpuctrl U_CPUCTRL (
+                      .cpuctrl_out_r    (cpuctrl_out_r[15:0]),
+                           /*AUTOINST*/
+                      // Outputs
+                      .cpuctrl_apb_prdata(cpuctrl_apb_prdata[31:0]),
+                      .cpuctrl_apb_pready(cpuctrl_apb_pready),
+                      .cpuctrl_apb_pslverr(cpuctrl_apb_pslverr),
+                      // Inputs
+                      .apb_cpuctrl_psel (apb_cpuctrl_psel),
+                      .apb_cpuctrl_paddr(apb_cpuctrl_paddr[11:0]),
+                      .apb_cpuctrl_penable(apb_cpuctrl_penable),
+                      .apb_cpuctrl_pwrite(apb_cpuctrl_pwrite),
+                      .apb_cpuctrl_pwdata(apb_cpuctrl_pwdata[31:0]),
+                      .clk_apb          (clk),                   // Templated
+                      .rst_apb_n        (rst_n));                 // Templated
+
+
 
 
 
@@ -896,6 +937,23 @@ module nanorv32_simpleahb (/*AUTOARG*/
                                // Inputs
                                .clk_in          (clk_in),
                                .rst_n           (rst_n));
+
+
+
+
+    /* reset_generator AUTO_TEMPLATE(
+     .rst_n          (rst_cpu_n),
+     // Inputs
+     .clk            (clk),
+     .rst_async_n    (rst_n & (!cpuctrl_out_r[0])),
+     ); */
+   reset_generator U_RESET_GEN (
+                           /*AUTOINST*/
+                                // Outputs
+                                .rst_n          (rst_cpu_n),     // Templated
+                                // Inputs
+                                .clk            (clk),           // Templated
+                                .rst_async_n    (rst_n & (!cpuctrl_out_r[0]))); // Templated
 
 
 

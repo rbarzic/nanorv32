@@ -138,6 +138,14 @@ def nanor32_fl(context):
         'file': "{top}/rtl/ips/gpio_apb.v",
         'targets': 'synt,sim_rtl'
     })
+    l.append({
+        'file': "{top}/rtl/ips/cpuctrl.v",
+        'targets': 'synt,sim_rtl'
+    })
+    l.append({
+        'file': "{top}/rtl/ips/reset_generator.v",
+        'targets': 'synt,sim_rtl'
+    })
 
     l.append({
         'file': "{top}/rtl/imported_from_ultraembedded/uart.v",
