@@ -20,9 +20,9 @@ cfg['c_compiler']['makehex'] = '$(TOP)/common/scripts/makehex.py'
 
 define['c_compiler']['arch_opt'] = 'MAKE_VARIABLE'
 if rvc:
-    cfg['c_compiler']['arch_opt'] = '-m32 -march=RV32IMC'
+    cfg['c_compiler']['arch_opt'] = '-march=rv32imc'
 else:
-    cfg['c_compiler']['arch_opt'] = '-m32 -march=RV32IM'
+    cfg['c_compiler']['arch_opt'] = '-march=rv32im   -Wl,--no-relax'
 
 define['c_compiler']['warnings'] = 'MAKE_VARIABLE'
 cfg['c_compiler']['warnings'] = " -std=c99 -Wall -Wextra -Wshadow  -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings "

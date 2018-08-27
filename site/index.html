@@ -89,7 +89,9 @@
         
             <li><a href="#synthesis-using-vivado">Synthesis using Vivado</a></li>
         
-            <li><a href="#simulation-using-vivado">Simulation  using Vivado</a></li>
+            <li><a href="#uploading-code-using-the-jtag-port">Uploading code using the JTAG port</a></li>
+        
+            <li><a href="#simulation-using-vivado-outdated">Simulation  using Vivado (outdated)</a></li>
         
             <li><a href="#simulation-using-verilator">Simulation  using Verilator</a></li>
         
@@ -132,13 +134,15 @@ riscv-test    # imported github module, various test programs for the riscv arch
 rtl/cores     # the nanorv32 CPU files
 rtl/ips       # "IP" verilog models (memory, peripherals, bus interfaces,....)
 rtl/chips     # top-level and "chip" specific files
-sim/verilog   # main directory for verilog simulation using iverilog or Xilinx
+sim           # directory containing the simulation launcher
 synt/fpga     # main directory for FPGA synthesis using Xilinx Vivado
 </code></pre>
 <h2 id="installation">Installation</h2>
 <h3 id="cloning-from-github">Cloning from github</h3>
 <p>This project uses submodules. To clone it you need to run the following commands :</p>
-<pre><code class="bash">git clone --recursive git@github.com:rbarzic/nanorv32.git
+<pre><code class="bash">git clone git@github.com:rbarzic/nanorv32.git
+cd nanorv32
+git submodule update --init
 </code></pre>
 
 <h3 id="dependencies">Dependencies</h3>
@@ -151,17 +155,8 @@ synt/fpga     # main directory for FPGA synthesis using Xilinx Vivado
 <p>See https://github.com/steveicarus/iverilog</p>
 <h4 id="riscv32-gcc">Riscv32 gcc</h4>
 <p>A 32-bit version of the toolchain is needed.</p>
-<p>See https://github.com/ucb-bar/riscv-sodor#building-a-rv32i-toolchain.</p>
-<p>For example :</p>
-<pre><code class="bash">$ sudo mkdir -p /opt/riscv32i
-$ sudo chown $USER /opt/riscv32i
-$ git clone git@github.com:riscv/riscv-gnu-toolchain.git
-$ cd riscv-gnu-toolchain
-$ mkdir build; cd build
-$ ../configure --prefix=/opt/riscv32i  --disable-float --disable-atomic --with-xlen=32 --with-arch=I
-$ make install
-</code></pre>
-
+<p>To build such a toolchain, please follws the instruction provided by the PicoRV32 project on github :</p>
+<p>https://github.com/cliffordwolf/picorv32#building-a-pure-rv32i-toolchain</p>
 <h4 id="others">Others</h4>
 <p>To run the regression on multiple cores at a time, you need GNU parallel.</p>
 <p>On debian/Unbuntu :</p>
@@ -169,41 +164,35 @@ $ make install
 </code></pre>
 
 <h2 id="simulation-using-icarus-iverilog">Simulation  using Icarus iverilog</h2>
-<h3 id="verilog-compilation">Verilog compilation</h3>
-<pre><code class="bash">cd sim/verilog
-make compile
-</code></pre>
-
-<p>Note : the file iverilog_file_list.txt is generated from the file common/files/nanorv32_fl.py.
-If you need to add verilog files to the project, you should add them to the nanorv32_fl.py file instead and run :</p>
-<pre><code class="bash">make iverilog_file_list.txt
-</code></pre>
-
-<h3 id="simulation">Simulation</h3>
-<h4 id="running-a-test-from-the-riscv-testsisarv32ui-list">Running a test from the riscv-tests/isa/rv32ui list</h4>
-<p>Under sim/verilog :</p>
-<pre><code class="bash">make run_rv32ui TEST=&lt;test_name&gt;
+<h3 id="running-a-test-written-in-c">Running a test written in C</h3>
+<p>C-based tests are located under the <top>/ctests directory.
+Each test consists in one or several C files together with a configuration file <em>options.py</em>.</p>
+<p>C compilation, RTL database compilation and simulation can be launched with the Python script <em>runtest.py</em> under the <top>/sim directory</p>
+<p>Under sim :</p>
+<pre><code class="bash">#./runtest.py  &lt;path to test directory&gt;
+# Example :
+./runtest.py  ../ctests/gpio_toggle
 
 </code></pre>
 
-<p>For example :</p>
-<pre><code class="bash">make run_rv32ui TEST=addi
-</code></pre>
-
-<h4 id="running-a-c-based-test">Running a C-based test</h4>
-<p>C programs are expected to be stored under the ctests/<test_name>/<test_name>.c</p>
-<p>Under sim/verilog :</p>
-<pre><code class="bash">make run_ctest TEST=&lt;test_name&gt;
+<p>The result should be</p>
+<pre><code>[OK]      gcc_compile
+[OK]      icarus_rtl_build
+[OK]      icarus_rtl_elab
+[OK]      icarus_rtl_sim
 
 </code></pre>
 
-<p>For example :</p>
-<pre><code class="bash">make run_ctest TEST=gpio_toggle
-</code></pre>
-
+<p>To see the commands used during the C compilation, the Verilog compilation and the simulation, add the option <em>-v</em> to the previous command line.</p>
 <h3 id="viewing-the-waveform">Viewing the waveform</h3>
-<p>Using gtkwave :</p>
-<pre><code class="bash">make wave
+<p>First, the simulation must be launched with the -l option to turn-on the logging of all signals to a vcd file :</p>
+<pre><code class="bash"># Example :
+./runtest.py  -v -l ../ctests/gpio_toggle
+
+</code></pre>
+
+<p>Then  using gtkwave, you can open the vcd file that has been created in the directory of the test</p>
+<pre><code class="bash">tkwave ../ctests/gpio_toggle/tb_nanorv32.vcd &amp;
 </code></pre>
 
 <h2 id="synthesis-using-vivado">Synthesis using Vivado</h2>
@@ -211,14 +200,80 @@ If you need to add verilog files to the project, you should add them to the nano
 <pre><code class="bash">source /opt/Xilinx/Vivado/&lt;vivado version&gt;/settings64.sh
 </code></pre>
 
-<p>Then</p>
+<p>Then, in the <top>/synt/fpga directory, type :</p>
 <pre><code class="bash">make synt
 </code></pre>
 
 <p>Note : The code is loaded in the ROM using the file
-synt/fpga/code.hex. So you must make a link between a existing *.hex2 file to
-the code.hex before launching the synthesis.</p>
-<h2 id="simulation-using-vivado">Simulation  using Vivado</h2>
+synt/fpga/code.hex. So if you want to have a specific program preloaded, you must make a link between an existing *.hex2 file to the code.hex before launching the synthesis.</p>
+<p>Important note : The reset pin in mapped to the SW0 switc on the ARTY7 board. The switch must be in the position toward the board center for the reset to be released.</p>
+<h2 id="uploading-code-using-the-jtag-port">Uploading code using the JTAG port</h2>
+<p>The Nanorv32 project includes a JTAG interface (implemented using the adv_debug_sys project) that allows new CPU code to be uploaded into the FPGA without the need of a new synthesis.</p>
+<p>A python script for uploading code using a FT232H-based USB-to-JTAG converter is provided under <top>/jtag.</p>
+<h3 id="jtag-pin-mapping-for-the-arty7-board">JTAG pin mapping for the Arty7 board</h3>
+<p>The JTAG pins are mapped on the JB connector (TCK is a special clock pin)</p>
+<table>
+<thead>
+<tr>
+<th>Pin</th>
+<th>FPGA pin</th>
+<th>Arty7 JB pin name</th>
+<th>Arty7 JB pin number</th>
+<th>FT232H pin</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TMS</td>
+<td>E15</td>
+<td>P1</td>
+<td>1</td>
+<td>AD3 (16)</td>
+</tr>
+<tr>
+<td>TDI</td>
+<td>E16</td>
+<td>P2</td>
+<td>2</td>
+<td>AD1 (14)</td>
+</tr>
+<tr>
+<td>TCK</td>
+<td>D15</td>
+<td>P3</td>
+<td>3</td>
+<td>AD0 (13)</td>
+</tr>
+<tr>
+<td>TDO</td>
+<td>C15</td>
+<td>P3</td>
+<td>4</td>
+<td>AD2 (15)</td>
+</tr>
+</tbody>
+</table>
+<p>(P5 is GND and P6 is VCC on the JB 2x6 PMOD connector)</p>
+<h3 id="c-code-compilation">C Code compilation</h3>
+<p>The compilation of the C code to be uploaded is done using the same python script (runtest.py) as for the simulation.
+The <em>.c</em> option must be used if you want to  prevent   the RTL database compilation and simulation.</p>
+<pre><code class="bash"># For example (while under &lt;top&gt;/sim) :
+./runtest.py -c -v ../ctests/gpio_toggle_infinite
+</code></pre>
+
+<p>A Intel hex file is created under the test directory test</p>
+<h3 id="code-upload">Code upload</h3>
+<p>The Intel hex file can be uploaded using the following command :</p>
+<pre><code class="bash"># Example (while under &lt;top&gt;/sim) :
+sudo ../jtag/nanorv32_jtag_uploader.py ../ctests/gpio_toggle_infinite/gpio_toggle_infinite.ihex -r
+</code></pre>
+
+<p>The <em>-r</em> option is used to force a reset after the code upload so that the CPU can start executing the code right away</p>
+<p>The pyftdi and intelhex Python modules  may need to be installed for the comman above to work properly :</p>
+<pre><code class="bash">sudo pip install pyftdi intelhex
+</code></pre>
+
+<h2 id="simulation-using-vivado-outdated">Simulation  using Vivado (outdated)</h2>
 <h3 id="compilation">Compilation</h3>
 <pre><code class="bash">make xcomp
 make xelab

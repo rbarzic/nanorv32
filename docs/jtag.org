@@ -1,0 +1,31 @@
+* Constraints :
+
+
+```
+set_property -dict { PACKAGE_PIN E15   IOSTANDARD LVCMOS33 } [get_ports { TMS }]; #IO_L11P_T1_SRCC_15 Sch=jb_p[1]
+set_property -dict { PACKAGE_PIN E16   IOSTANDARD LVCMOS33 } [get_ports { TDI }]; #IO_L11N_T1_SRCC_15 Sch=jb_n[1]
+set_property -dict { PACKAGE_PIN D15   IOSTANDARD LVCMOS33 } [get_ports { TCK }]; #IO_L12P_T1_MRCC_15 Sch=jb_p[2]
+set_property -dict { PACKAGE_PIN C15   IOSTANDARD LVCMOS33 } [get_ports { TDO }]; #IO_L12N_T1_MRCC_15 Sch=jb_n[2]
+```
+
+
+
+* DONE [#B] Commands from adv_debug_sys
+  CLOSED: [2018-08-27 ma. 20:00]
+
+|  Bit# | Access | Description                                                                     |
+|    52 | W      | Top-Level Select - Set to '0' for all sub-module commands                       |
+| 51:48 | W      | Operation code                                                                  |
+| 47:16 | W      | Address The first WishBone address which will be read from or written to        |
+|  15:0 | W      | Count     Total number of words to be transferred. Must be greater than 0.    - |
+
+
+* Code upload
+
+sudo ./nanorv32_jtag_uploader.py ../ctests/gpio_toggle_infinite/gpio_toggle_infinite.ihex -r
+
+** Compilation
+
+./runtest.py -c ../ctests/gpio_toggle_infinite
+
+sudo pip install pyftdi intelhex
