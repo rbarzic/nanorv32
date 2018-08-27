@@ -10,7 +10,8 @@ set_property -dict { PACKAGE_PIN C15   IOSTANDARD LVCMOS33 } [get_ports { TDO }]
 
 
 
-* Commands from adv_debug_sys
+* DONE [#B] Commands from adv_debug_sys
+  CLOSED: [2018-08-27 ma. 20:00]
 
 |  Bit# | Access | Description                                                                     |
 |    52 | W      | Top-Level Select - Set to '0' for all sub-module commands                       |
@@ -22,3 +23,9 @@ set_property -dict { PACKAGE_PIN C15   IOSTANDARD LVCMOS33 } [get_ports { TDO }]
 * Code upload
 
 sudo ./nanorv32_jtag_uploader.py ../ctests/gpio_toggle_infinite/gpio_toggle_infinite.ihex -r
+
+** Compilation
+
+./runtest.py -c ../ctests/gpio_toggle_infinite
+
+sudo pip install pyftdi intelhex
