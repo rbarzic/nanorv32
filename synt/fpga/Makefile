@@ -8,6 +8,9 @@ export XILINX_PART
 synt:
 	vivado -mode tcl -source vivado.tcl
 
+# sudo /opt/Xilinx/SDK/2018.1/bin/hw_server
+prog:
+	vivado -mode tcl -source  prog.tcl
 
 mmi:
 	python yaml2mmi.py > nanorv32.mmi

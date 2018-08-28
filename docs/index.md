@@ -212,11 +212,35 @@ sudo ../jtag/nanorv32_jtag_uploader.py ../ctests/gpio_toggle_infinite/gpio_toggl
 The *-r* option is used to force a reset after the code upload so that the CPU can start executing the code right away
 
 
+Note the code update is actually very slow - This should be fix soon.
 
 
 The pyftdi and intelhex Python modules  may need to be installed for the comman above to work properly :
 ```bash
 sudo pip install pyftdi intelhex
+```
+
+
+## UART output
+
+
+An UART is implemented in the device and pins are routed to the ARTY7 onboard serial-to-usb converter.
+
+To see the uart in action. compile the code with the -f option - this will replace the printf output through the verilog testbench by an output through the UART.
+
+
+See the <top>/ctest/uart_simple  verification program for an example on how to access the uart through the prinft function.
+
+```bash
+# Example (while under <top>/sim) :
+./runtest.py    ../ctests/uart_simple -v -f -c
+sudo ../jtag/nanorv32_jtag_uploader.py ../ctests/uart_simple/uart_simple.ihex -r
+
+```
+
+Baudrate is set to 38400 for this example. To visualize the UART output using miniterm.py :
+```bash
+miniterm.py /dev/ttyUSB1 38400
 ```
 
 
