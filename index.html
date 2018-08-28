@@ -91,6 +91,8 @@
         
             <li><a href="#uploading-code-using-the-jtag-port">Uploading code using the JTAG port</a></li>
         
+            <li><a href="#uart-output">UART output</a></li>
+        
             <li><a href="#simulation-using-vivado-outdated">Simulation  using Vivado (outdated)</a></li>
         
             <li><a href="#simulation-using-verilator">Simulation  using Verilator</a></li>
@@ -269,8 +271,23 @@ sudo ../jtag/nanorv32_jtag_uploader.py ../ctests/gpio_toggle_infinite/gpio_toggl
 </code></pre>
 
 <p>The <em>-r</em> option is used to force a reset after the code upload so that the CPU can start executing the code right away</p>
+<p>Note the code update is actually very slow - This should be fix soon.</p>
 <p>The pyftdi and intelhex Python modules  may need to be installed for the comman above to work properly :</p>
 <pre><code class="bash">sudo pip install pyftdi intelhex
+</code></pre>
+
+<h2 id="uart-output">UART output</h2>
+<p>An UART is implemented in the device and pins are routed to the ARTY7 onboard serial-to-usb converter.</p>
+<p>To see the uart in action. compile the code with the -f option - this will replace the printf output through the verilog testbench by an output through the UART.</p>
+<p>See the <top>/ctest/uart_simple  verification program for an example on how to access the uart through the prinft function.</p>
+<pre><code class="bash"># Example (while under &lt;top&gt;/sim) :
+./runtest.py    ../ctests/uart_simple -v -f -c
+sudo ../jtag/nanorv32_jtag_uploader.py ../ctests/uart_simple/uart_simple.ihex -r
+
+</code></pre>
+
+<p>Baudrate is set to 38400 for this example. To visualize the UART output using miniterm.py :</p>
+<pre><code class="bash">miniterm.py /dev/ttyUSB1 38400
 </code></pre>
 
 <h2 id="simulation-using-vivado-outdated">Simulation  using Vivado (outdated)</h2>
