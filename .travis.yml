@@ -9,7 +9,7 @@ before_install:
   - sudo apt-get install -y build-essential iverilog
 
 script:
-  - make -C sim/verilog compile
+  - cd sim && ./runtest.py  --buildonly  ../ctests/gpio_toggle -v
 
 notifications:
   webhooks:

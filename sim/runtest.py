@@ -21,6 +21,11 @@ noccomp_steps = [
          "{simulator}_{target}_elab",
          "{simulator}_{target}_sim",
 ]
+
+buildonly_steps = [
+         "{simulator}_{target}_build",
+]
+
 c_only_steps = ["{cc}_compile"]
 
 tpl_verilog_parameter = "VERILOG_PARAMETER += +{var_name_lc}={val}\n"
@@ -175,6 +180,10 @@ A simulation launcher for the Nanorv32 project
                         default=False,
                         help='Skip C compilation')
 
+    parser.add_argument('--buildonly', action='store_true', dest='buildonly',
+                        default=False,
+                        help='Only run the RTL build step')
+
     parser.add_argument('--rvc', action='store_true', dest='rvc',
                         default=False,
                         help='Allow usage  RVC (16-bits instructions) for the C compiler')
@@ -220,6 +229,7 @@ if __name__ == '__main__':
     global_args['logging'] = args.logging
     global_args['target_fpga'] = args.target_fpga
     global_args['noccomp'] = args.noccomp
+    global_args['buildonly'] = args.buildonly
 
     # process cdefines arguments
     cdefines_txt = ""
@@ -399,6 +409,8 @@ if __name__ == '__main__':
             current_steps = c_only_steps
         elif args.noccomp:
             current_steps = noccomp_steps
+        elif args.buildonly:
+            current_steps = buildonly_steps
         else:
             current_steps = steps
         final_step_list = [s.format(**global_args) for s in current_steps]
