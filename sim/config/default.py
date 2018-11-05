@@ -1,9 +1,12 @@
+import os
+
 define['application']['max_code_size_in_word'] = 'MAKE_VARIABLE'
 cfg['application']['max_code_size_in_word'] = 131072
 
 
+gcc_prefix = os.environ.get('RISCV_GCC_PREFIX', 'riscv32-unknown-elf-')
 define['c_compiler']['prefix'] = 'MAKE_VARIABLE'
-cfg['c_compiler']['prefix'] = 'riscv32-unknown-elf-'
+cfg['c_compiler']['prefix'] = gcc_prefix
 
 define['c_compiler']['cc'] = 'MAKE_VARIABLE'
 cfg['c_compiler']['cc'] = '$(C_COMPILER_PREFIX)gcc'
@@ -22,7 +25,7 @@ define['c_compiler']['arch_opt'] = 'MAKE_VARIABLE'
 if rvc:
     cfg['c_compiler']['arch_opt'] = '-march=rv32imc'
 else:
-    cfg['c_compiler']['arch_opt'] = '-march=rv32im   -Wl,--no-relax'
+    cfg['c_compiler']['arch_opt'] = '-march=rv32im  -mabi=ilp32  -Wl,--no-relax  '
 
 define['c_compiler']['warnings'] = 'MAKE_VARIABLE'
 cfg['c_compiler']['warnings'] = " -std=c99 -Wall -Wextra -Wshadow  -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings "
@@ -45,6 +48,7 @@ cfg['c_compiler']['linker_script_path'] = '$(TOP)/common/linker_scripts'
 
 define['c_compiler']['linker_script'] = 'MAKE_VARIABLE'
 cfg['c_compiler']['linker_script'] = '$(LINKER_SCRIPT_PATH)/nanorv32_rom_sram.ld'
+
 
 define['c_compiler']['startup_code'] = 'MAKE_VARIABLE'
 cfg['c_compiler']['startup_code'] = "$(TOP)/common/startup/startup.S"
