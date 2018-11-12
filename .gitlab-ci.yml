@@ -18,6 +18,8 @@ rtl_sim:
 
 
 fpga:
+  before_script:
+    - source /opt/Xilinx/Vivado/2018.2/settings64.sh
   stage: stage_fpga
   script:
     - make -C synt/fpga synt
