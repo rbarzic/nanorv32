@@ -12,6 +12,10 @@ rtl_sim:
     - export PATH=/usr/bin:$PATH
     - export PATH=/opt/iverilog/git/2018.11.09/bin:$PATH
     - export PATH=/opt/gnu-mcu-eclipse/riscv-none-gcc/8.1.0-2-20181019-0952/bin:$PATH
+    - mkdir -p `pwd`/tmp
+    - export TMP=`pwd`/tmp
+    - export TMPDIR=`pwd`/tmp
+    
   stage: stage_rtl
   script:
     - make -C ci run_gpio_toggle
