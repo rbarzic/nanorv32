@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2.7
 
 import argparse
 import AutoVivification as av
@@ -29,7 +29,7 @@ buildonly_steps = [
 c_only_steps = ["{cc}_compile"]
 
 tpl_verilog_parameter = "VERILOG_PARAMETER += +{var_name_lc}={val}\n"
-tpl_make_variable     = "{var_name_uc}={val}\n"
+tpl_make_variable     = "{var_name_uc}={val}\n"g
 tpl_c_define          = " -D{var_name_uc}={val}"
 tpl_verilog_define    = "VERILOG_DEFINES += -D{var_name_uc}={val}\n"
 
