@@ -9,6 +9,7 @@ stages:
 
 rtl_sim:
   before_script:
+    - export PATH=/usr/bin:$PATH
     - export PATH=/opt/iverilog/git/2018.11.09/bin:$PATH
     - export PATH=/opt/gnu-mcu-eclipse/riscv-none-gcc/8.1.0-2-20181019-0952/bin:$PATH
   stage: stage_rtl
