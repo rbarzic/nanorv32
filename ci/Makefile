@@ -1,2 +1,2 @@
 run_gpio_toggle:
-	cd ../sim && ./runtest.py ../ctests/gpio_toggle -v
+	export RISCV_GCC_PREFIX=riscv-none-embed- && cd ../sim && ./runtest.py ../ctests/gpio_toggle -v
