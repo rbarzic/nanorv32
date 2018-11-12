@@ -23,6 +23,9 @@ fpga:
   stage: stage_fpga
   script:
     - make -C synt/fpga synt
+  only:
+    - schedules
+    - web
   tags:
     - vivado
 
