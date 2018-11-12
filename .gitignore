@@ -119,3 +119,7 @@ ctests/*/*.map
 /ctests/uart_simple/trace.txt
 /ctests/uart_simple/uart_simple.bin
 /ctests/uart_simple/uart_simple.vmem32
+*~
+*.vcd
+/ctests/gpio_toggle/iverilog_file_list.txt
+/*.ihex

@@ -1,0 +1,23 @@
+
+variables:
+   GIT_SUBMODULE_STRATEGY: normal
+
+
+stages:
+  - stage_rtl
+  - stage_fpga
+
+rtl_sim:
+  stage: stage_rtl
+  script:
+    - make -C ci run_gpio_toggle
+
+
+fpga:
+  stage: stage_fpga
+  script:
+    - make -C synt/fpga synt
+  tags:
+    - vivado
+
+
