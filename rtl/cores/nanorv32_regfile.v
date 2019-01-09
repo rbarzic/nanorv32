@@ -168,10 +168,10 @@ wire  [31:0] x30;
 wire  [31:0] x31;
 
 
-   wire [31:0] ra ;
-   wire [31:0] s0 ;
-   wire [31:0] fp ;
-   wire [31:0] s1 ;
+   wire [31:0] ra;
+   wire [31:0] s0;
+   wire [31:0] fp;
+   wire [31:0] s1;
    wire [31:0] s2 ;
    wire [31:0] s3 ;
    wire [31:0] s4 ;
@@ -203,6 +203,40 @@ wire  [31:0] x31;
    wire [31:0] tp;
    wire [31:0] gp;
 
+   wire [31:0] ra_x1;
+   wire [31:0] s0_x8;
+   wire [31:0] fp_x8;
+   wire [31:0] s1_x9;
+   wire [31:0] s2_x18 ;
+   wire [31:0] s3_x19 ;
+   wire [31:0] s4_x20 ;
+   wire [31:0] s5_x21 ;
+   wire [31:0] s6_x22 ;
+   wire [31:0] s7_x23;
+   wire [31:0] s8_x24;
+   wire [31:0] s9_x25;
+   wire [31:0] s10_x26;
+   wire [31:0] s11_x27;
+   wire [31:0] sp_x2;
+   wire [31:0] a0_x10;
+   wire [31:0] a1_x11;
+   wire [31:0] a2_x12;
+   wire [31:0] a3_x13;
+   wire [31:0] a4_x14;
+   wire [31:0] a5_x15;
+   wire [31:0] a6_x16;
+   wire [31:0] a7_x17;
+   wire [31:0] t0_x5;
+   wire [31:0] t1_x6;
+   wire [31:0] t2_x7;
+   wire [31:0] t3_x28;
+   wire [31:0] t4_x29;
+   wire [31:0] t5_x30;
+   wire [31:0] t6_x31;
+   wire [31:0] tp_x4;
+   wire [31:0] gp_x3;
+
+   
 
 
 
@@ -277,6 +311,41 @@ assign     x31 = 	regfile[31];
    assign     t6 = 	regfile[31];
 
 
+   assign ra_x1 = regfile[1];
+   assign s0_x8 = regfile[8];
+   assign fp_x8 = regfile[8];
+   assign s1_x9 = regfile[9];
+   assign s2_x18  = regfile[18];
+   assign s3_x19  = regfile[19];
+   assign s4_x20  = regfile[20];
+   assign s5_x21  = regfile[21];
+   assign s6_x22  = regfile[22];
+   assign s7_x23 = regfile[23];
+   assign s8_x24 = regfile[24];
+   assign s9_x25 = regfile[25];
+   assign s10_x26 = regfile[26];
+   assign s11_x27 = regfile[27];
+   assign sp_x2 = regfile[2];
+   assign a0_x10 = regfile[10];
+   assign a1_x11 = regfile[11];
+   assign a2_x12 = regfile[12];
+   assign a3_x13 = regfile[13];
+   assign a4_x14 = regfile[14];
+   assign a5_x15 = regfile[15];
+   assign a6_x16 = regfile[16];
+   assign a7_x17 = regfile[17];
+   assign t0_x5 = regfile[5];
+   assign t1_x6 = regfile[6];
+   assign t2_x7 = regfile[7];
+   assign t3_x28 = regfile[28];
+   assign t4_x29 = regfile[29];
+   assign t5_x30 = regfile[30];
+   assign t6_x31 = regfile[31];
+   assign tp_x4 = regfile[4];
+   assign gp_x3 = regfile[3];
+
+
+   
    integer     jj;
    /* verilator lint_off STMTDLY */
    initial begin
