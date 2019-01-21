@@ -209,7 +209,7 @@ module nanorv32_prefetch (/*AUTOARG*/
              iq[i*2+1][15:0] <= NANORV32_J0_INSTRUCTION[31:16];
              /*AUTORESET*/
           end else begin
-            if (wr_pt_r[2:0] == i*2 & write_data & ~cancel_data)  begin
+            if (wr_pt_r[2:0] == i*2 & write_data & ~cancel_data & hreadyi)  begin
                 iq[i*2][15:0] <= hrdatai[15:0];
                 iq[i*2+1][15:0] <= hrdatai[31:16];
             end
@@ -287,6 +287,28 @@ module nanorv32_prefetch (/*AUTOARG*/
    assign hwdatai      = 32'h0;    // Write data is not supported on Iside
    wire   unused       = hrespi;
 
+
+
+   `ifndef SYNTHESIS
+   // synopsys off
+   // Just to help debugging
+   wire [15:0] iq_0;
+   wire [15:0] iq_1;
+   wire [15:0] iq_2;
+   wire [15:0] iq_3;
+   wire [15:0] iq_4;
+   wire [15:0] iq_5;
+   // Icarus does not support dumping 2-D array in VCD file
+   assign iq_0 = iq[0];
+   assign iq_1 = iq[1];
+   assign iq_2 = iq[2];
+   assign iq_3 = iq[3];
+   assign iq_4 = iq[4];
+   assign iq_5 = iq[5];
+
+
+   
+`endif
 
 
 endmodule // nanorv32_prefetch
