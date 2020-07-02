@@ -18,9 +18,3 @@
 [submodule "apb_bridge"]
 	path = apb_bridge
 	url = https://github.com/rbarzic/apb-bridge.git
-[submodule "pdks/imported/skywater-pdk/libs/sky130_fd_sc_lp"]
-	path = pdks/imported/skywater-pdk/libs/sky130_fd_sc_lp
-	url = https://foss-eda-tools.googlesource.com/skywater-pdk/libs/sky130_fd_sc_lp
-[submodule "pdks/imported/skywater-pdk/libs/sky130_ef_io"]
-	path = pdks/imported/skywater-pdk/libs/sky130_ef_io
-	url = https://foss-eda-tools.googlesource.com/skywater-pdk/libs/sky130_ef_io
