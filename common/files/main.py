@@ -56,26 +56,26 @@ context['top_ds'] = args.designstart
 l, d = nanorv32_fl.nanor32_fl(context)
 
 if args.iverilog != "":
-    print "-I- iverilog generation"""
+    print("-I- iverilog generation""")
     txt = iverilog.get_iverilog_file_list(l, d, context)
     with open(args.iverilog,'w')  as f:
         f.write(txt)
 
 if args.verilator != "":
-    print "-I- Verilator generation"""
+    print("-I- Verilator generation""")
     txt = verilator.get_verilator_file_list(l, d, context)
     with open(args.verilator,'w')  as f:
         f.write(txt)
 
 if args.vivado_sim != "":
-    print "-I- Vivado/Sim  generation"""
+    print("-I- Vivado/Sim  generation""")
     txt = xilinx.get_xvlog_file_list(l, d, context)
     with open(args.vivado_sim,'w')  as f:
         f.write(txt)
 
 if args.vivado_synt != "":
-    print "-I- Vivado/Synt  generation"""
+    print("-I- Vivado/Synt  generation""")
     txt = xilinx.get_vivado_synt_file_list(l, d, context)
     with open(args.vivado_synt,'w')  as f:
         f.write(txt)
-    print "Vivado/Sim  generation"""
+    print("Vivado/Sim  generation""")

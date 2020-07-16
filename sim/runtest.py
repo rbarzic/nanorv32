@@ -80,13 +80,13 @@ def color_print_result(res,txt):
 
 
     if res=='ok':
-        print bcolors.OKGREEN + "[OK]      " + bcolors.ENDC + txt
+        print(bcolors.OKGREEN + "[OK]      " + bcolors.ENDC + txt)
     if res=='failed':
-        print bcolors.FAIL    + "[FAILED]  " + bcolors.ENDC + txt
+        print(bcolors.FAIL    + "[FAILED]  " + bcolors.ENDC + txt)
     if res=='skipped':
-        print bcolors.WARNING + "[SKIPPED] " + bcolors.ENDC + txt
+        print(bcolors.WARNING + "[SKIPPED] " + bcolors.ENDC + txt)
     if res=='header':
-        print bcolors.HEADER + "==== {} ====".format(txt) + bcolors.ENDC
+        print(bcolors.HEADER + "==== {} ====".format(txt) + bcolors.ENDC)
 
 
 
@@ -116,7 +116,7 @@ def merge_dict2(a, b, path=None):
 def treeZip(t1,t2, path=[]):
     if isinstance(t1,Mapping) and isinstance(t2,Mapping):
         assert set(t1)==set(t2)
-        for k,v1 in t1.items():
+        for k,v1 in list(t1.items()):
             v2 = t2[k]
             for tuple in treeZip(v1,v2, path=path+[k]):
                 yield tuple
@@ -216,7 +216,7 @@ A simulation launcher for the Nanorv32 project
 if __name__ == '__main__':
     args = get_args()
     if args.verbosity:
-        print "Verbosity set to {}".format(args.verbosity)
+        print("Verbosity set to {}".format(args.verbosity))
 
     global_args = dict()
     global_args['trace'] =  args.trace
@@ -290,22 +290,22 @@ if __name__ == '__main__':
 
 
         # we parse the default configuration file
-        execfile("./config/default.py", global_args, {"cfg": default_opts, "define" : define_opts})
+        exec(compile(open("./config/default.py", "rb").read(), "./config/default.py", 'exec'), global_args, {"cfg": default_opts, "define" : define_opts})
 
         # and the override file
-        execfile("./config/override.py", global_args, {"cfg": override_opts})
+        exec(compile(open("./config/override.py", "rb").read(), "./config/override.py", 'exec'), global_args, {"cfg": override_opts})
 
         if args.verbosity>3:
-            print "Parsing override.py (using test_dir  {})".format(test_dir)
+            print("Parsing override.py (using test_dir  {})".format(test_dir))
             pp.pprint(override_opts)
 
 
         if args.verbosity>0:
-            print "Parsing options for test {}".format(test)
+            print("Parsing options for test {}".format(test))
         local_opts = av.AutoVivification()
 
         if os.path.isfile(opt_file):
-            execfile(opt_file, global_args, {"cfg": local_opts})
+            exec(compile(open(opt_file, "rb").read(), opt_file, 'exec'), global_args, {"cfg": local_opts})
 
         # We merge (with eventually override) all the definitions
         merge_dict2(default_opts, local_opts)
@@ -381,14 +381,14 @@ if __name__ == '__main__':
         top_rel_dir = os.path.relpath(topdir,test_dir)
 
         if args.verbosity>1:
-            print "Test name  : {}".format(test_name)
-            print "Current directory : {}".format(cwd)
-            print "Top directory : {}".format(topdir)
-            print "Test directory : {}".format(test_dir)
-            print "Test directory (relative to cwd): {}".format(test_dir_from_cwd)
-            print "Test directory (relative to top): {}".format(test_dir_from_top)
-            print "CWD directory (relative to test dir): {}".format(cwd_from_test_dir)
-            print "TOP directory (relative to test dir): {}".format(top_rel_dir)
+            print("Test name  : {}".format(test_name))
+            print("Current directory : {}".format(cwd))
+            print("Top directory : {}".format(topdir))
+            print("Test directory : {}".format(test_dir))
+            print("Test directory (relative to cwd): {}".format(test_dir_from_cwd))
+            print("Test directory (relative to top): {}".format(test_dir_from_top))
+            print("CWD directory (relative to test dir): {}".format(cwd_from_test_dir))
+            print("TOP directory (relative to test dir): {}".format(top_rel_dir))
 
         d = dict()
         d['config_rel_dir'] = config_rel_dir
@@ -423,7 +423,7 @@ if __name__ == '__main__':
             # make command - we get the error code of tee
             cmd = "make -C {} {}".format(test_dir, s)
             if args.verbosity >0:
-                print "-I- executing {}".format(cmd)
+                print("-I- executing {}".format(cmd))
             if not global_args['noexec']:
                 result = -1
                 out = ""
@@ -432,7 +432,7 @@ if __name__ == '__main__':
                     if result != 0:
                         sys.exit("-E- Error in step {}".format(s))
                     else:
-                        print "-I- return value for step {} : {}".format(s,result)
+                        print("-I- return value for step {} : {}".format(s,result))
                 else:
                     try:
                         output = subprocess.check_output(cmd,

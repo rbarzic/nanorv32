@@ -2,4 +2,4 @@ site_name: NanoRv32
 pages:
   - Home : index.md
 
-theme: cosmo
+theme: readthedocs
