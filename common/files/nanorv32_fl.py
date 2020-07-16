@@ -212,7 +212,7 @@ def nanor32_fl(context):
         'targets': 'synt,sim_rtl'
     })
     l.append({
-        'file': "{top}/rtl/ips/std_pad.v",
+        'file': "{top}/libraries/local/stdiocell/v/stdiocell.v",
         'targets': 'synt,sim_rtl'
     })
     l.append({

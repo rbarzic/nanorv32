@@ -43,10 +43,10 @@ module top_io (/*AUTOARG*/
 
 
 
-   output    [CHIP_PORT_A_WIDTH-1:0]     pad_pmux_din;          // To U_PA0 of std_pad.v, ...
-   input    [CHIP_PORT_A_WIDTH-1:0]      pmux_pad_ie;         // To U_PA0 of std_pad.v, ...
-   input    [CHIP_PORT_A_WIDTH-1:0]      pmux_pad_oe;         // To U_PA0 of std_pad.v, ...
-   input   [CHIP_PORT_A_WIDTH-1:0]       pmux_pad_dout;          // From U_PA0 of std_pad.v, ...
+   output    [CHIP_PORT_A_WIDTH-1:0]     pad_pmux_din;          // To U_PA0 of stdiocell.v, ...
+   input    [CHIP_PORT_A_WIDTH-1:0]      pmux_pad_ie;         // To U_PA0 of stdiocell.v, ...
+   input    [CHIP_PORT_A_WIDTH-1:0]      pmux_pad_oe;         // To U_PA0 of stdiocell.v, ...
+   input   [CHIP_PORT_A_WIDTH-1:0]       pmux_pad_dout;          // From U_PA0 of stdiocell.v, ...
 
    inout    [CHIP_PORT_A_WIDTH-1:0]      PA;
 
@@ -69,230 +69,271 @@ module top_io (/*AUTOARG*/
    /*AUTOWIRE*/
 
 
-   wire [CHIP_PORT_A_WIDTH-1:0] pad_pmux_din;          // To U_PA0 of std_pad.v, ...
-   wire [CHIP_PORT_A_WIDTH-1:0] pmux_pad_dout;          // To U_PA0 of std_pad.v, ...
-   wire [CHIP_PORT_A_WIDTH-1:0] pmux_pad_ie;         // To U_PA0 of std_pad.v, ...
-   wire [CHIP_PORT_A_WIDTH-1:0] pmux_pad_oe;         // To U_PA0 of std_pad.v, ...
-   wire [CHIP_PORT_A_WIDTH-1:0] PA;         // To U_PA0 of std_pad.v, ...
+   wire [CHIP_PORT_A_WIDTH-1:0] pad_pmux_din;          // To U_PA0 of stdiocell.v, ...
+   wire [CHIP_PORT_A_WIDTH-1:0] pmux_pad_dout;          // To U_PA0 of stdiocell.v, ...
+   wire [CHIP_PORT_A_WIDTH-1:0] pmux_pad_ie;         // To U_PA0 of stdiocell.v, ...
+   wire [CHIP_PORT_A_WIDTH-1:0] pmux_pad_oe;         // To U_PA0 of stdiocell.v, ...
+   wire [CHIP_PORT_A_WIDTH-1:0] PA;         // To U_PA0 of stdiocell.v, ...
 
    wire                         pad_tap_tck;
    wire                         pad_tap_tdi;
    wire                         pad_tap_tms;
 
+   wire 			pad_tap_tck_in;
+   
 
-
-    /* std_pad AUTO_TEMPLATE(
+    /* stdiocell AUTO_TEMPLATE(
      .dout                (pmux_pad_dout[@]),
-     .din                 (pad_pmux_din[@]),
-     .pad                 (PA[@]),
+     .di                 (pad_pmux_din[@]),
+     .PAD                 (PA[@]),
      .oe                (pmux_pad_oe[@]),
      .ie                (pmux_pad_ie[@]),
+     .puen		(1'b0),
+     .rst		(1'b0),
      ); */
-   std_pad U_PA0 (
+   stdiocell U_PA0 (
                            /*AUTOINST*/
-                  // Outputs
-                  .din                  (pad_pmux_din[0]),       // Templated
-                  // Inouts
-                  .pad                  (PA[0]),                 // Templated
-                  // Inputs
-                  .dout                 (pmux_pad_dout[0]),      // Templated
-                  .oe                   (pmux_pad_oe[0]),        // Templated
-                  .ie                   (pmux_pad_ie[0]));        // Templated
+		    // Outputs
+		    .di			(pad_pmux_din[0]),	 // Templated
+		    // Inouts
+		    .PAD		(PA[0]),		 // Templated
+		    // Inputs
+		    .dout		(pmux_pad_dout[0]),	 // Templated
+		    .oe			(pmux_pad_oe[0]),	 // Templated
+		    .ie			(pmux_pad_ie[0]),	 // Templated
+		    .puen		(1'b0),			 // Templated
+		    .rst		(1'b0));			 // Templated
 
 
 
-   std_pad U_PA1 (
+   stdiocell U_PA1 (
                            /*AUTOINST*/
-                  // Outputs
-                  .din                  (pad_pmux_din[1]),       // Templated
-                  // Inouts
-                  .pad                  (PA[1]),                 // Templated
-                  // Inputs
-                  .dout                 (pmux_pad_dout[1]),      // Templated
-                  .oe                   (pmux_pad_oe[1]),        // Templated
-                  .ie                   (pmux_pad_ie[1]));        // Templated
+		    // Outputs
+		    .di			(pad_pmux_din[1]),	 // Templated
+		    // Inouts
+		    .PAD		(PA[1]),		 // Templated
+		    // Inputs
+		    .dout		(pmux_pad_dout[1]),	 // Templated
+		    .oe			(pmux_pad_oe[1]),	 // Templated
+		    .ie			(pmux_pad_ie[1]),	 // Templated
+		    .puen		(1'b0),			 // Templated
+		    .rst		(1'b0));			 // Templated
 
-   std_pad U_PA2 (
+   stdiocell U_PA2 (
                   /*AUTOINST*/
-                  // Outputs
-                  .din                  (pad_pmux_din[2]),       // Templated
-                  // Inouts
-                  .pad                  (PA[2]),                 // Templated
-                  // Inputs
-                  .dout                 (pmux_pad_dout[2]),      // Templated
-                  .oe                   (pmux_pad_oe[2]),        // Templated
-                  .ie                   (pmux_pad_ie[2]));        // Templated
+		    // Outputs
+		    .di			(pad_pmux_din[2]),	 // Templated
+		    // Inouts
+		    .PAD		(PA[2]),		 // Templated
+		    // Inputs
+		    .dout		(pmux_pad_dout[2]),	 // Templated
+		    .oe			(pmux_pad_oe[2]),	 // Templated
+		    .ie			(pmux_pad_ie[2]),	 // Templated
+		    .puen		(1'b0),			 // Templated
+		    .rst		(1'b0));			 // Templated
 
-   std_pad U_PA3 (
+   stdiocell U_PA3 (
                   /*AUTOINST*/
-                  // Outputs
-                  .din                  (pad_pmux_din[3]),       // Templated
-                  // Inouts
-                  .pad                  (PA[3]),                 // Templated
-                  // Inputs
-                  .dout                 (pmux_pad_dout[3]),      // Templated
-                  .oe                   (pmux_pad_oe[3]),        // Templated
-                  .ie                   (pmux_pad_ie[3]));        // Templated
+		    // Outputs
+		    .di			(pad_pmux_din[3]),	 // Templated
+		    // Inouts
+		    .PAD		(PA[3]),		 // Templated
+		    // Inputs
+		    .dout		(pmux_pad_dout[3]),	 // Templated
+		    .oe			(pmux_pad_oe[3]),	 // Templated
+		    .ie			(pmux_pad_ie[3]),	 // Templated
+		    .puen		(1'b0),			 // Templated
+		    .rst		(1'b0));			 // Templated
 
 
-   std_pad U_PA4 (
+   stdiocell U_PA4 (
                   /*AUTOINST*/
-                  // Outputs
-                  .din                  (pad_pmux_din[4]),       // Templated
-                  // Inouts
-                  .pad                  (PA[4]),                 // Templated
-                  // Inputs
-                  .dout                 (pmux_pad_dout[4]),      // Templated
-                  .oe                   (pmux_pad_oe[4]),        // Templated
-                  .ie                   (pmux_pad_ie[4]));        // Templated
+		    // Outputs
+		    .di			(pad_pmux_din[4]),	 // Templated
+		    // Inouts
+		    .PAD		(PA[4]),		 // Templated
+		    // Inputs
+		    .dout		(pmux_pad_dout[4]),	 // Templated
+		    .oe			(pmux_pad_oe[4]),	 // Templated
+		    .ie			(pmux_pad_ie[4]),	 // Templated
+		    .puen		(1'b0),			 // Templated
+		    .rst		(1'b0));			 // Templated
 
 
-   std_pad U_PA5 (
+   stdiocell U_PA5 (
                   /*AUTOINST*/
-                  // Outputs
-                  .din                  (pad_pmux_din[5]),       // Templated
-                  // Inouts
-                  .pad                  (PA[5]),                 // Templated
-                  // Inputs
-                  .dout                 (pmux_pad_dout[5]),      // Templated
-                  .oe                   (pmux_pad_oe[5]),        // Templated
-                  .ie                   (pmux_pad_ie[5]));        // Templated
+		    // Outputs
+		    .di			(pad_pmux_din[5]),	 // Templated
+		    // Inouts
+		    .PAD		(PA[5]),		 // Templated
+		    // Inputs
+		    .dout		(pmux_pad_dout[5]),	 // Templated
+		    .oe			(pmux_pad_oe[5]),	 // Templated
+		    .ie			(pmux_pad_ie[5]),	 // Templated
+		    .puen		(1'b0),			 // Templated
+		    .rst		(1'b0));			 // Templated
 
 
-   std_pad U_PA6 (
+   stdiocell U_PA6 (
                   /*AUTOINST*/
-                  // Outputs
-                  .din                  (pad_pmux_din[6]),       // Templated
-                  // Inouts
-                  .pad                  (PA[6]),                 // Templated
-                  // Inputs
-                  .dout                 (pmux_pad_dout[6]),      // Templated
-                  .oe                   (pmux_pad_oe[6]),        // Templated
-                  .ie                   (pmux_pad_ie[6]));        // Templated
+		    // Outputs
+		    .di			(pad_pmux_din[6]),	 // Templated
+		    // Inouts
+		    .PAD		(PA[6]),		 // Templated
+		    // Inputs
+		    .dout		(pmux_pad_dout[6]),	 // Templated
+		    .oe			(pmux_pad_oe[6]),	 // Templated
+		    .ie			(pmux_pad_ie[6]),	 // Templated
+		    .puen		(1'b0),			 // Templated
+		    .rst		(1'b0));			 // Templated
 
 
-   std_pad U_PA7 (
+   stdiocell U_PA7 (
                   /*AUTOINST*/
-                  // Outputs
-                  .din                  (pad_pmux_din[7]),       // Templated
-                  // Inouts
-                  .pad                  (PA[7]),                 // Templated
-                  // Inputs
-                  .dout                 (pmux_pad_dout[7]),      // Templated
-                  .oe                   (pmux_pad_oe[7]),        // Templated
-                  .ie                   (pmux_pad_ie[7]));        // Templated
+		    // Outputs
+		    .di			(pad_pmux_din[7]),	 // Templated
+		    // Inouts
+		    .PAD		(PA[7]),		 // Templated
+		    // Inputs
+		    .dout		(pmux_pad_dout[7]),	 // Templated
+		    .oe			(pmux_pad_oe[7]),	 // Templated
+		    .ie			(pmux_pad_ie[7]),	 // Templated
+		    .puen		(1'b0),			 // Templated
+		    .rst		(1'b0));			 // Templated
 
-   std_pad U_PA8 (
+   stdiocell U_PA8 (
                   /*AUTOINST*/
-                  // Outputs
-                  .din                  (pad_pmux_din[8]),       // Templated
-                  // Inouts
-                  .pad                  (PA[8]),                 // Templated
-                  // Inputs
-                  .dout                 (pmux_pad_dout[8]),      // Templated
-                  .oe                   (pmux_pad_oe[8]),        // Templated
-                  .ie                   (pmux_pad_ie[8]));        // Templated
+		    // Outputs
+		    .di			(pad_pmux_din[8]),	 // Templated
+		    // Inouts
+		    .PAD		(PA[8]),		 // Templated
+		    // Inputs
+		    .dout		(pmux_pad_dout[8]),	 // Templated
+		    .oe			(pmux_pad_oe[8]),	 // Templated
+		    .ie			(pmux_pad_ie[8]),	 // Templated
+		    .puen		(1'b0),			 // Templated
+		    .rst		(1'b0));			 // Templated
 
-   std_pad U_PA9 (
+   stdiocell U_PA9 (
                   /*AUTOINST*/
-                  // Outputs
-                  .din                  (pad_pmux_din[9]),       // Templated
-                  // Inouts
-                  .pad                  (PA[9]),                 // Templated
-                  // Inputs
-                  .dout                 (pmux_pad_dout[9]),      // Templated
-                  .oe                   (pmux_pad_oe[9]),        // Templated
-                  .ie                   (pmux_pad_ie[9]));        // Templated
+		    // Outputs
+		    .di			(pad_pmux_din[9]),	 // Templated
+		    // Inouts
+		    .PAD		(PA[9]),		 // Templated
+		    // Inputs
+		    .dout		(pmux_pad_dout[9]),	 // Templated
+		    .oe			(pmux_pad_oe[9]),	 // Templated
+		    .ie			(pmux_pad_ie[9]),	 // Templated
+		    .puen		(1'b0),			 // Templated
+		    .rst		(1'b0));			 // Templated
 
-   std_pad U_PA10 (
+   stdiocell U_PA10 (
                   /*AUTOINST*/
-                   // Outputs
-                   .din                 (pad_pmux_din[10]),      // Templated
-                   // Inouts
-                   .pad                 (PA[10]),                // Templated
-                   // Inputs
-                   .dout                (pmux_pad_dout[10]),     // Templated
-                   .oe                  (pmux_pad_oe[10]),       // Templated
-                   .ie                  (pmux_pad_ie[10]));       // Templated
+		     // Outputs
+		     .di		(pad_pmux_din[10]),	 // Templated
+		     // Inouts
+		     .PAD		(PA[10]),		 // Templated
+		     // Inputs
+		     .dout		(pmux_pad_dout[10]),	 // Templated
+		     .oe		(pmux_pad_oe[10]),	 // Templated
+		     .ie		(pmux_pad_ie[10]),	 // Templated
+		     .puen		(1'b0),			 // Templated
+		     .rst		(1'b0));			 // Templated
 
-   std_pad U_PA11 (
+   stdiocell U_PA11 (
                   /*AUTOINST*/
-                   // Outputs
-                   .din                 (pad_pmux_din[11]),      // Templated
-                   // Inouts
-                   .pad                 (PA[11]),                // Templated
-                   // Inputs
-                   .dout                (pmux_pad_dout[11]),     // Templated
-                   .oe                  (pmux_pad_oe[11]),       // Templated
-                   .ie                  (pmux_pad_ie[11]));       // Templated
+		     // Outputs
+		     .di		(pad_pmux_din[11]),	 // Templated
+		     // Inouts
+		     .PAD		(PA[11]),		 // Templated
+		     // Inputs
+		     .dout		(pmux_pad_dout[11]),	 // Templated
+		     .oe		(pmux_pad_oe[11]),	 // Templated
+		     .ie		(pmux_pad_ie[11]),	 // Templated
+		     .puen		(1'b0),			 // Templated
+		     .rst		(1'b0));			 // Templated
 
-   std_pad U_PA12 (
+   stdiocell U_PA12 (
                   /*AUTOINST*/
-                   // Outputs
-                   .din                 (pad_pmux_din[12]),      // Templated
-                   // Inouts
-                   .pad                 (PA[12]),                // Templated
-                   // Inputs
-                   .dout                (pmux_pad_dout[12]),     // Templated
-                   .oe                  (pmux_pad_oe[12]),       // Templated
-                   .ie                  (pmux_pad_ie[12]));       // Templated
+		     // Outputs
+		     .di		(pad_pmux_din[12]),	 // Templated
+		     // Inouts
+		     .PAD		(PA[12]),		 // Templated
+		     // Inputs
+		     .dout		(pmux_pad_dout[12]),	 // Templated
+		     .oe		(pmux_pad_oe[12]),	 // Templated
+		     .ie		(pmux_pad_ie[12]),	 // Templated
+		     .puen		(1'b0),			 // Templated
+		     .rst		(1'b0));			 // Templated
 
-   std_pad U_PA13 (
+   stdiocell U_PA13 (
                   /*AUTOINST*/
-                   // Outputs
-                   .din                 (pad_pmux_din[13]),      // Templated
-                   // Inouts
-                   .pad                 (PA[13]),                // Templated
-                   // Inputs
-                   .dout                (pmux_pad_dout[13]),     // Templated
-                   .oe                  (pmux_pad_oe[13]),       // Templated
-                   .ie                  (pmux_pad_ie[13]));       // Templated
+		     // Outputs
+		     .di		(pad_pmux_din[13]),	 // Templated
+		     // Inouts
+		     .PAD		(PA[13]),		 // Templated
+		     // Inputs
+		     .dout		(pmux_pad_dout[13]),	 // Templated
+		     .oe		(pmux_pad_oe[13]),	 // Templated
+		     .ie		(pmux_pad_ie[13]),	 // Templated
+		     .puen		(1'b0),			 // Templated
+		     .rst		(1'b0));			 // Templated
 
-   std_pad U_PA14 (
+   stdiocell U_PA14 (
                   /*AUTOINST*/
-                   // Outputs
-                   .din                 (pad_pmux_din[14]),      // Templated
-                   // Inouts
-                   .pad                 (PA[14]),                // Templated
-                   // Inputs
-                   .dout                (pmux_pad_dout[14]),     // Templated
-                   .oe                  (pmux_pad_oe[14]),       // Templated
-                   .ie                  (pmux_pad_ie[14]));       // Templated
+		     // Outputs
+		     .di		(pad_pmux_din[14]),	 // Templated
+		     // Inouts
+		     .PAD		(PA[14]),		 // Templated
+		     // Inputs
+		     .dout		(pmux_pad_dout[14]),	 // Templated
+		     .oe		(pmux_pad_oe[14]),	 // Templated
+		     .ie		(pmux_pad_ie[14]),	 // Templated
+		     .puen		(1'b0),			 // Templated
+		     .rst		(1'b0));			 // Templated
 
-   std_pad U_PA15 (
+   stdiocell U_PA15 (
                   /*AUTOINST*/
-                   // Outputs
-                   .din                 (pad_pmux_din[15]),      // Templated
-                   // Inouts
-                   .pad                 (PA[15]),                // Templated
-                   // Inputs
-                   .dout                (pmux_pad_dout[15]),     // Templated
-                   .oe                  (pmux_pad_oe[15]),       // Templated
-                   .ie                  (pmux_pad_ie[15]));       // Templated
+		     // Outputs
+		     .di		(pad_pmux_din[15]),	 // Templated
+		     // Inouts
+		     .PAD		(PA[15]),		 // Templated
+		     // Inputs
+		     .dout		(pmux_pad_dout[15]),	 // Templated
+		     .oe		(pmux_pad_oe[15]),	 // Templated
+		     .ie		(pmux_pad_ie[15]),	 // Templated
+		     .puen		(1'b0),			 // Templated
+		     .rst		(1'b0));			 // Templated
 
    // Special pad
 
-   std_pad U_TDI (
+   stdiocell U_TDI (
                    .dout                (1'b0),
-                   .pad                 (TDI),                //
-                   .din                 (pad_tap_tdi),     //
+                   .PAD                 (TDI),                //
+                   .di                 (pad_tap_tdi),     //
                    .oe               (1'b0),    //
-                   .ie               (1'b1));    //
+                   .ie               (1'b1),
+		   .puen		(1'b0),			 // Templated
+		   .rst		(1'b0));    //
 
-   std_pad U_TDO (
+   stdiocell U_TDO (
                   .dout                (tap_pad_tdo),     //
-                  .pad                 (TDO),                //
-                  .din                 (),     //
+                  .PAD                 (TDO),                //
+                  .di                 (),     //
                   // .oe               (tap_pad_tdo_oe),    //
                   .oe               (1'b1),    //
-                  .ie               (1'b0));    //
-   std_pad U_TMS (
+                  .ie               (1'b0),
+                  .puen		(1'b0),			 // Templated
+		  .rst		(1'b0));    //
+   stdiocell U_TMS (
 
                   .dout                (1'b0),     //
-                  .pad                 (TMS),                //
-                  .din                 (pad_tap_tms),     //
+                  .PAD                 (TMS),                //
+                  .di                 (pad_tap_tms),     //
                   .oe               (1'b0),    //
-                  .ie               (1'b1));    //
+                  .ie               (1'b1),
+                  .puen		(1'b0),			 // Templated
+		  .rst		(1'b0));    //
 
            BUFG U_TCK_BUF(
                 .I(pad_tap_tck_in),
@@ -300,12 +341,14 @@ module top_io (/*AUTOARG*/
                 );
 
 
-   std_pad U_TCK (
+   stdiocell U_TCK (
                   .dout                (1'b0),     //
-                  .pad                 (TCK),                //
-                  .din                 (pad_tap_tck_in),     //
+                  .PAD                 (TCK),                //
+                  .di                 (pad_tap_tck_in),     //
                   .oe               (1'b0),    //
-                  .ie               (1'b1));    //
+                  .ie               (1'b1),
+		     .puen		(1'b0),			 // Templated
+		     .rst		(1'b0));    //
 
 
 
@@ -315,6 +358,7 @@ endmodule // top_io
  verilog-library-directories:(
  "."
  "../ips"
+ "../../libraries/local/stdiocell/v"
  )
  End:
  */

@@ -1,0 +1,2 @@
+The iocells.lef is coming from the YosysHQ/paring project (example directory)
+It has been modified to suit Andromeda & Magellan projects

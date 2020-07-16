@@ -34,3 +34,6 @@ compare:
 core_compare: TEST=../ctests/coremark2
 core_compare:
 	./diff_trace.py  --pysim=$(TEST)/trace.pysim.txt --rtlsim=$(TEST)/trace.iverilog.txt --rvc --skip_inst_comp | tee $(TEST)/compare.log
+
+check:
+	./runtest.py ../ctests/gpio_toggle -v
