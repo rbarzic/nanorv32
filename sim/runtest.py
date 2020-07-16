@@ -205,7 +205,11 @@ A simulation launcher for the Nanorv32 project
     parser.add_argument(dest='tests', metavar='tests', nargs='*',
                         help='Path(es) to the test')
 
-    parser.add_argument('-v', '--verbosity', action="count", help='Increase output verbosity')
+    parser.add_argument('-v', '--verbosity',
+                        action="count",
+                        help='Increase output verbosity',
+                        default=0,
+    )
 
 
 
@@ -439,7 +443,7 @@ if __name__ == '__main__':
                                                       stderr=subprocess.STDOUT,
                                                       shell=True)
                         with open(log_file,'w') as log:
-                            log.write(output)
+                            log.write(output.decode('utf-8'))
                         color_print_result('ok',s)
                     except subprocess.CalledProcessError as e:
                         with open(log_file,'w') as log:

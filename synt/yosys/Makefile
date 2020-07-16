@@ -6,7 +6,7 @@ sim_dir = $(TOP)/sim
 GIT_SHA1=$(shell git log -1 --pretty=format:"%h")
 SPEC2CFG?=$(TOP)/common/scripts/libspec2cfg.py
 
-CHIP=nanorv32
+CHIP=chip
 
 # Added when using OpenROAD-type script
 PROCESS?=nangate45

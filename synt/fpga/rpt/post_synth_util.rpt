@@ -1,10 +1,10 @@
 Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 ------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2019.1 (lin64) Build 2552052 Fri May 24 14:47:09 MDT 2019
-| Date         : Thu Jul 16 13:25:38 2020
+| Date         : Thu Jul 16 20:48:18 2020
 | Host         : icserver02 running 64-bit Ubuntu 18.04.4 LTS
 | Command      : report_utilization -file ./rpt/post_synth_util.rpt
-| Design       : nanorv32_simpleahb
+| Design       : chip
 | Device       : 7a35tcsg324-1
 | Design State : Synthesized
 ------------------------------------------------------------------------------------
@@ -30,12 +30,12 @@ Table of Contents
 +-------------------------+------+-------+-----------+-------+
 |        Site Type        | Used | Fixed | Available | Util% |
 +-------------------------+------+-------+-----------+-------+
-| Slice LUTs*             | 5899 |     0 |     20800 | 28.36 |
-|   LUT as Logic          | 5899 |     0 |     20800 | 28.36 |
+| Slice LUTs*             | 5908 |     0 |     20800 | 28.40 |
+|   LUT as Logic          | 5908 |     0 |     20800 | 28.40 |
 |   LUT as Memory         |    0 |     0 |      9600 |  0.00 |
-| Slice Registers         | 2915 |     0 |     41600 |  7.01 |
+| Slice Registers         | 2900 |     0 |     41600 |  6.97 |
 |   Register as Flip Flop | 2844 |     0 |     41600 |  6.84 |
-|   Register as Latch     |   71 |     0 |     41600 |  0.17 |
+|   Register as Latch     |   56 |     0 |     41600 |  0.13 |
 | F7 Muxes                |  326 |     0 |     16300 |  2.00 |
 | F8 Muxes                |   64 |     0 |      8150 |  0.79 |
 +-------------------------+------+-------+-----------+-------+
@@ -55,7 +55,7 @@ Table of Contents
 | 0     |            _ |       Reset |            - |
 | 0     |          Yes |           - |            - |
 | 150   |          Yes |           - |          Set |
-| 2326  |          Yes |           - |        Reset |
+| 2311  |          Yes |           - |        Reset |
 | 41    |          Yes |         Set |            - |
 | 398   |          Yes |       Reset |            - |
 +-------+--------------+-------------+--------------+
@@ -150,26 +150,26 @@ Table of Contents
 +------------+------+---------------------+
 |  Ref Name  | Used | Functional Category |
 +------------+------+---------------------+
-| LUT6       | 3397 |                 LUT |
+| LUT6       | 3407 |                 LUT |
 | FDCE       | 2255 |        Flop & Latch |
-| LUT2       |  925 |                 LUT |
+| LUT2       |  927 |                 LUT |
 | LUT4       |  906 |                 LUT |
-| LUT5       |  889 |                 LUT |
-| LUT3       |  639 |                 LUT |
+| LUT5       |  895 |                 LUT |
+| LUT3       |  630 |                 LUT |
 | FDRE       |  398 |        Flop & Latch |
 | MUXF7      |  326 |               MuxFx |
 | CARRY4     |  276 |          CarryLogic |
 | FDPE       |  150 |        Flop & Latch |
-| LUT1       |  108 |                 LUT |
-| LDCE       |   71 |        Flop & Latch |
+| LUT1       |  109 |                 LUT |
 | MUXF8      |   64 |               MuxFx |
+| LDCE       |   56 |        Flop & Latch |
 | FDSE       |   41 |        Flop & Latch |
 | RAMB36E1   |   32 |        Block Memory |
-| OBUF       |   19 |                  IO |
-| OBUFT      |    6 |                  IO |
-| IBUF       |    6 |                  IO |
+| IBUF       |   22 |                  IO |
+| OBUF       |    8 |                  IO |
 | DSP48E1    |    4 |    Block Arithmetic |
 | BUFG       |    4 |               Clock |
+| OBUFT      |    1 |                  IO |
 | MMCME2_ADV |    1 |               Clock |
 +------------+------+---------------------+
 

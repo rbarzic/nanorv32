@@ -47,7 +47,10 @@ read_verilog ../../rtl/ips/uart_wrapper.v
 read_verilog ../../rtl/ips/timer_wrapper.v
 read_verilog ../../rtl/ips/nanorv32_intc.v
 read_verilog ../../rtl/chips/nanorv32_irq_mapper.v
+read_verilog ../../rtl/chips/nanorv32_clkgen.v
 read_verilog ../../rtl/chips/port_mux.v
 read_verilog ../../rtl/ips/std_pad.v
+read_verilog ../../libraries/local/stdiocell/v/stdiocell.v
 read_verilog ../../rtl/chips/top_io.v
-read_verilog ../../rtl/chips/nanorv32_simpleahb.v
+read_verilog ../../rtl/chips/primitive_clock_start.v
+read_verilog ../../rtl/chips/chip.v

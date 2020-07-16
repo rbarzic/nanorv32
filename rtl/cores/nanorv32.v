@@ -438,6 +438,7 @@ module nanorv32 (/*AUTOARG*/
            regfile_portw = rvc_to_rv32_reg(dec_c_rs1_p);
         end
         default: begin
+	   regfile_portw = dec_rd;
         end
       endcase
    end
