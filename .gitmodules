@@ -24,3 +24,6 @@
 [submodule "libraries/imported/sky130-lite"]
 	path = libraries/imported/sky130-lite
 	url = git@github.com:rbarzic/sky130-lite.git
+[submodule "support/imported/soc-quick-fp-pnr"]
+	path = support/imported/soc-quick-fp-pnr
+	url = git@github.com:cura8/soc-quick-fp-pnr.git
