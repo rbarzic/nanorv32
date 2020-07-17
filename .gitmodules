@@ -21,3 +21,9 @@
 [submodule "libraries/imported/nangate45"]
 	path = libraries/imported/nangate45
 	url = git@github.com:rbarzic/platform_nangate45.git
+[submodule "libraries/imported/sky130-lite"]
+	path = libraries/imported/sky130-lite
+	url = git@github.com:rbarzic/sky130-lite.git
+[submodule "support/imported/soc-quick-fp"]
+	path = support/imported/soc-quick-fp
+	url = git@github.com:cura8/soc-quick-fp.git

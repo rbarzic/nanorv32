@@ -28,7 +28,6 @@ read_verilog ../../adv_debug_sys/Hardware/adv_dbg_if/rtl/verilog/adbg_jsp_module
 read_verilog ../../adv_debug_sys/Hardware/adv_dbg_if/rtl/verilog/adbg_crc32.v
 read_verilog ../../adv_debug_sys/Hardware/adv_dbg_if/rtl/verilog/syncreg.v
 read_verilog ../../wisbone_2_ahb/src/ahbmas_wbslv_top.v
-read_verilog ../../rtl/ips/bytewrite_ram_32bits.v
 read_verilog ../../rtl/ips/cmsdk_ahb_ram.v
 read_verilog ../../rtl/ips/ahb_to_ssram.v
 read_verilog ../../rtl/ips/HastiBus.v

@@ -101,7 +101,7 @@ def nanor32_fl(context):
     # Chip top levels
     l.append({
         'file': "{top}/rtl/ips/bytewrite_ram_32bits.v",
-        'targets': 'synt,sim_rtl'
+        'targets': 'synt_xilinx,sim_rtl'
     })
     l.append({
         'file': "{top}/rtl/ips/cmsdk_ahb_ram.v",

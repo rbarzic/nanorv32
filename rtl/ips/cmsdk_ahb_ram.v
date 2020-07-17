@@ -139,7 +139,9 @@ module cmsdk_ahb_ram(/*AUTOARG*/
      .clk(HCLK),
      ); */
    bytewrite_ram_32bits
+   `ifndef YOSYS // librairy module can't have parameters     
    #(.SIZE(1<<(AW-2)),.ADDR_WIDTH(AW-2))
+   `endif
    U_RAM (
                            /*AUTOINST*/
           // Outputs

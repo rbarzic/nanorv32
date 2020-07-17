@@ -352,7 +352,7 @@ module chip (/*AUTOARG*/
     .HREADY      (io_tcm@_hreadyin),
     ); */
 
-   cmsdk_ahb_ram u_tcm0(/*AUTOINST*/
+   cmsdk_ahb_ram U_TCM0(/*AUTOINST*/
 			// Outputs
 			.HREADYOUT	(io_tcm0_hreadyout),	 // Templated
 			.HRDATA		(io_tcm0_hrdata),	 // Templated
@@ -369,7 +369,7 @@ module chip (/*AUTOARG*/
 			.HREADY		(io_tcm0_hreadyin));	 // Templated
 
 
-   cmsdk_ahb_ram u_tcm1(/*AUTOINST*/
+   cmsdk_ahb_ram U_TCM1(/*AUTOINST*/
 			// Outputs
 			.HREADYOUT	(io_tcm1_hreadyout),	 // Templated
 			.HRDATA		(io_tcm1_hrdata),	 // Templated
@@ -402,7 +402,7 @@ module chip (/*AUTOARG*/
     .hready         (ahb_w2ahb_hready),
 
     ); */
-   Ahbmli   u_ahbmatrix(
+   Ahbmli   U_AHBMATRIX(
                         .clk         (clk),
                         .reset       (~rst_n),
                         .io_tcm0_hprot  (),

@@ -1,7 +1,7 @@
 Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 ------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2019.1 (lin64) Build 2552052 Fri May 24 14:47:09 MDT 2019
-| Date         : Thu Jul 16 20:48:18 2020
+| Date         : Fri Jul 17 09:24:52 2020
 | Host         : icserver02 running 64-bit Ubuntu 18.04.4 LTS
 | Command      : report_timing_summary -file ./rpt/post_synth_timing_summary.rpt
 | Design       : chip
