@@ -23,7 +23,7 @@ _ICARUS_SIM += $(SIMULATOR_ICARUS_VVP_OPT)
 _ICARUS_SIM += +program_memory=$(TEST_DIR)/$(TEST).vmem
 
 icarus_rtl_build:
-	@python $(TOP)/common/files/main.py --topdir=$(TOP)  --iverilog=$(TEST_DIR)/iverilog_file_list.txt
+	@python3 $(TOP)/common/files/main.py --topdir=$(TOP)  --iverilog=$(TEST_DIR)/iverilog_file_list.txt
 	cd $(TEST_DIR)  && iverilog $(_ICARUS_OPTS)  -o testbench.exe
 
 icarus_rtl_elab:
