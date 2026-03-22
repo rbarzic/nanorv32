@@ -122,4 +122,4 @@ ctests/*/*.map
 *~
 *.vcd
 /ctests/gpio_toggle/iverilog_file_list.txt
-/*.ihex
+ctests/*/*.ihex

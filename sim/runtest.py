@@ -6,7 +6,7 @@ import pprint as pp
 import os
 import sys
 import copy
-from collections import Mapping
+from collections.abc import Mapping
 import subprocess
 
 # The various steps - they will match the targets in the Makefile
