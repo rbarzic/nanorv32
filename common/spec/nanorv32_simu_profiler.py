@@ -44,16 +44,16 @@ def get_function_at(func_map,f_addr_a, f_addr_l, addr):
         elif addr == f_addr_a[idx]:
             return addr
         elif addr < f_addr_a[idx]:
-            rge = r/2
+            rge = r//2
             n_idx = idx - rge -1
             return get_base_address(n_idx, rge, addr)
         elif addr > f_addr_a[idx]:
-            rge = r/2
+            rge = r//2
             n_idx = idx + rge +1
             return get_base_address(n_idx, rge, addr)
         pass
 
-    return func_map[get_base_address(f_addr_l/2, f_addr_l/2 , addr)]
+    return func_map[get_base_address(f_addr_l//2, f_addr_l//2 , addr)]
 
 if __name__ == '__main__':
     func_map = read_objdump_map_file("../../../opus/opus.map")
@@ -61,9 +61,9 @@ if __name__ == '__main__':
     func_addr_array = func_map.keys()
     func_addr_array_l = len(func_addr_array)
     f1 = get_function_at(func_map, func_addr_array, func_addr_array_l, 600)
-    print "f1 = {}".format(f1)
-    print "f2 = {}".format(get_function_at(func_map, func_addr_array, func_addr_array_l,211180 ))
-    print "f3 = {}".format(get_function_at(func_map, func_addr_array, func_addr_array_l, 40000 ))
-    print "f4 = {}".format(get_function_at(func_map, func_addr_array, func_addr_array_l, 450 ))
-    print "f5 = {}".format(get_function_at(func_map, func_addr_array, func_addr_array_l, 333 ))
-    print "f6 = {}".format(get_function_at(func_map, func_addr_array, func_addr_array_l, 0 ))
+    print("f1 = {}".format(f1))
+    print("f2 = {}".format(get_function_at(func_map, func_addr_array, func_addr_array_l,211180 )))
+    print("f3 = {}".format(get_function_at(func_map, func_addr_array, func_addr_array_l, 40000 )))
+    print("f4 = {}".format(get_function_at(func_map, func_addr_array, func_addr_array_l, 450 )))
+    print("f5 = {}".format(get_function_at(func_map, func_addr_array, func_addr_array_l, 333 )))
+    print("f6 = {}".format(get_function_at(func_map, func_addr_array, func_addr_array_l, 0 )))
