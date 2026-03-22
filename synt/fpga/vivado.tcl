@@ -4,7 +4,6 @@ set top_ds [string trim $env(CORTEXM0_DS)]
 set xilinx_part [string trim $env(XILINX_PART)]
 set top ..
 
-# Cortex-M0 files
 
 set verilog_files []
 set include_dir []
@@ -26,7 +25,7 @@ read_xdc ./xilinx_constraints.xdc
 
 # synth_design -include_dirs $include_dir -top cmsdk_mcu -part $xilinx_part
 # for debugging timing loops
-synth_design -include_dirs $include_dir -top nanorv32_simpleahb  -part $xilinx_part -flatten_hierarchy none
+synth_design -include_dirs $include_dir -top chip  -part $xilinx_part -flatten_hierarchy none -verilog_define CHIP_PROCESS=\"LIB_XILINX7\"
 
 set outputDir ./rpt
 file mkdir $outputDir

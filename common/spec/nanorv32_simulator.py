@@ -106,7 +106,7 @@ class NanoRV32Core(object):
 
     def mem_write_word(self,addr,data):
         if(addr & 0x03):
-            print "addr" + hex(addr)
+            print("addr" + hex(addr))
             raise UnalignedAddressError("-E- Write word : " + hex(addr) + " bin : " + bin(addr))
         mem = self.decode_address(addr)
         addr_f = self.fix_address(addr)
@@ -319,9 +319,9 @@ class NanoRV32Core(object):
        i = 0
        while(i<nb_reg):
            for c in range(0,num_col):
-       	      sys.stdout.write("x{:02d}=0x{:08X} ".format(i,self.rf[i]))
-       	      i += 1
-              print
+               sys.stdout.write("x{:02d}=0x{:08X} ".format(i,self.rf[i]))
+               i += 1
+           print()
 
     def load_code_memory(self,hex2_file):
        with open(hex2_file) as f:
@@ -489,55 +489,55 @@ if __name__ == '__main__':
             func = "undefined"
 
         if compare:
-           line = compare_line[line_num]
-           extracted = line.split(':', 4)
-           rtl_pc = extracted[1].replace(" ","").replace("I","")
-           rtl_inst_tmp = extracted[2].replace(" ","").replace("0x","")
-           if (bitfield(inst,offset=0,size=2) != 3):
+            line = compare_line[line_num]
+            extracted = line.split(':', 4)
+            rtl_pc = extracted[1].replace(" ","").replace("I","")
+            rtl_inst_tmp = extracted[2].replace(" ","").replace("0x","")
+            if (bitfield(inst,offset=0,size=2) != 3):
               model_inst = '0x%08x' % bitfield(short_inst,offset=0,size=16)
               rtl_inst =  "0x0000" + rtl_inst_tmp[-4:]
-           else :
+            else :
               model_inst = '0x%08x' % short_inst
               rtl_inst = "0x" + rtl_inst_tmp
-           model_pc = '0x%08x' % nrv.pc
-           if rtl_pc != model_pc:
-                print "\n-I- TEST FAILED (pc compare fail) : RTL PC : ", rtl_pc, ", Model PC " ,model_pc,", line", line_num
-                print "\n"
-                if trace:
-                    trace.close()
-                if profiling:
-                    close_profiling(profile_info,prof_file)
+            model_pc = '0x%08x' % nrv.pc
+            if rtl_pc != model_pc:
+               print("\n-I- TEST FAILED (pc compare fail) : RTL PC : ", rtl_pc, ", Model PC " ,model_pc,", line", line_num)
+               print("\n")
+               if trace:
+                  trace.close()
+               if profiling:
+                  close_profiling(profile_info,prof_file)
 
-                sys.exit()
-           if model_inst != rtl_inst:
-                print "\n-I- TEST FAILED (inst compare fail) : RTL INSTR : 0x{:08x}, Model INSTR :0x{:08x}, line {} \n", rtl_inst,model_inst,line_num
-                if trace:
-                    trace.close()
-                if profiling:
-                    close_profiling(profile_info,prof_file)
-                sys.exit()
+               sys.exit()
+            if model_inst != rtl_inst:
+               print("\n-I- TEST FAILED (inst compare fail) : RTL INSTR : 0x{:08x}, Model INSTR :0x{:08x}, line {} \n".format(rtl_inst,model_inst,line_num))
+               if trace:
+                  trace.close()
+               if profiling:
+                  close_profiling(profile_info,prof_file)
+               sys.exit()
         if nrv.pc == 0x00000100:
             if nrv.rf[10] == 0xCAFFE000: #x10/a0
-                print
-                print "\n-I- TEST OK\n"
+                print()
+                print("\n-I- TEST OK\n")
                 if trace:
                     trace.close()
                 if profiling:
                     close_profiling(profile_info,prof_file)
                 sys.exit()
             elif nrv.rf[10] == 0xDEADD000: #x10/a0
-                print
+                print()
                 nrv.dump_regfile()
-                print "\n-I- TEST FAILED\n"
+                print("\n-I- TEST FAILED\n")
                 if trace:
                     trace.close()
                 if profiling:
                     close_profiling(profile_info,prof_file)
                 sys.exit()
             else:
-                print
+                print()
                 nrv.dump_regfile()
-                print "\n-I- TEST FAILED (unknown reason)\n"
+                print("\n-I- TEST FAILED (unknown reason)\n")
                 if trace:
                     trace.close()
                 if profiling:
@@ -548,7 +548,7 @@ if __name__ == '__main__':
             c = chr(nrv.rf[10] & 0x0FF)
             sys.stdout.write(c)
             if c == 10:
-                print
+                print()
 
         nrv.new_instruction(inst)
         inst_str =  nrv.match_instruction(inst)
@@ -607,20 +607,20 @@ if __name__ == '__main__':
            test3 = re.search(r"<= 0x(\S+) ", txt)
            test4 = re.search(r"<= 0x(\S+) ", line)
            if not test or not test2:
-             if test[1] != test2[1]:
-                 print "\n-I- TEST FAILED (reg_dest) : RTL RD :" + test[1] + ", Model RD : " + test2[1] + " line " + line_num, " \n"
+              if test[1] != test2[1]:
+                 print("\n-I- TEST FAILED (reg_dest) : RTL RD :" + test[1] + ", Model RD : " + test2[1] + " line " + str(line_num), " \n")
                  if trace:
-                     trace.close()
+                    trace.close()
                  if profiling:
-                     close_profiling(profile_info,prof_file)
+                    close_profiling(profile_info,prof_file)
 
                  sys.exit()
            if not test3 or not test4:
-             if test3 != test4:
-                 print "\n-I- TEST FAILED (reg_update) : RTL RD val : " + test3 + " Model RD val: " + test4 + " line " + line_num + ", \n"
+              if test3 != test4:
+                 print("\n-I- TEST FAILED (reg_update) : RTL RD val : " + str(test3) + " Model RD val: " + str(test4) + " line " + str(line_num) + ", \n")
                  if trace:
-                     trace.close()
+                    trace.close()
                  if profiling:
-                     close_profiling(profile_info,prof_file)
+                    close_profiling(profile_info,prof_file)
                  sys.exit()
            line_num = line_num +1

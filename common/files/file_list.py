@@ -56,7 +56,7 @@ def get_dir_list(ll, context, target):
 
 def glob_v_file(dir_string, context, exclude_list=[]):
     glob_string = dir_string.format(**context) + "/*.v"
-    print "Glob string : " + glob_string
+    print("Glob string : " + glob_string)
     filtered_list = [f for f in glob.glob(glob_string )
                      if os.path.basename(f)  not in exclude_list]
     return filtered_list

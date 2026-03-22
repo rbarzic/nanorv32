@@ -121,6 +121,12 @@ module nanorv32_decoder (/*AUTOARG*/
 
    always @* begin
       illegal_instruction = 0;
+      // Quick fix for bug21:  Latches found during FPGA synthesis 
+      regfile_portw_sel = NANORV32_MUX_SEL_REGFILE_PORTW_RD;
+      regfile_source_sel = NANORV32_MUX_SEL_REGFILE_SOURCE_ALU;
+      regfile_write_sel = NANORV32_MUX_SEL_REGFILE_WRITE_NO;
+      regfile_port1_sel = NANORV32_MUX_SEL_REGFILE_PORT1_RS1;
+      regfile_port2_sel = NANORV32_MUX_SEL_REGFILE_PORT2_RS2;
       casez(instruction_for_decode_unit[34:0])
         //@begin[instruction_decoder]
     NANORV32_DECODE_AND: begin
@@ -1445,6 +1451,10 @@ module nanorv32_decoder (/*AUTOARG*/
            regfile_write_sel = NANORV32_MUX_SEL_REGFILE_WRITE_NO;
            datamem_size_write_sel = NANORV32_MUX_SEL_DATAMEM_SIZE_WRITE_WORD;
            pc_branch_sel = NANORV32_MUX_SEL_PC_BRANCH_NO;
+
+	   regfile_portw_sel = NANORV32_MUX_SEL_REGFILE_PORTW_RD;
+           regfile_port1_sel = NANORV32_MUX_SEL_REGFILE_PORT1_RS1;
+           regfile_port2_sel = NANORV32_MUX_SEL_REGFILE_PORT2_RS2;
 
 
         end

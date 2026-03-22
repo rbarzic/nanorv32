@@ -101,7 +101,7 @@ def nanor32_fl(context):
     # Chip top levels
     l.append({
         'file': "{top}/rtl/ips/bytewrite_ram_32bits.v",
-        'targets': 'synt,sim_rtl'
+        'targets': 'synt_xilinx,sim_rtl'
     })
     l.append({
         'file': "{top}/rtl/ips/cmsdk_ahb_ram.v",
@@ -184,7 +184,7 @@ def nanor32_fl(context):
 
     l.append({
         'file': "{top}/rtl/chips/nanorv32_clkgen.v",
-        'targets': 'sim_rtl'
+        'targets': 'sim_rtl,synt_yosys'
     })
 
     l.append({
@@ -216,14 +216,28 @@ def nanor32_fl(context):
         'targets': 'synt,sim_rtl'
     })
     l.append({
+        'file': "{top}/libraries/local/stdiocell/v/stdiocell.v",
+        'targets': 'synt,sim_rtl'
+    })
+
+    l.append({
         'file': "{top}/rtl/chips/top_io.v",
         'targets': 'synt,sim_rtl'
     })
 
+    l.append({
+        'file': "{top}/rtl/chips/primitive_clock_start.v",
+        'targets': 'synt,sim_rtl'
+    })
+
+    l.append({
+        'file': "{top}/libraries/imported/nangate45/v/NangateOpenCellLibrary_cvc.v",
+        'targets': 'sim_rtl'
+    })
 
 
     l.append({
-        'file': "{top}/rtl/chips/nanorv32_simpleahb.v",
+        'file': "{top}/rtl/chips/chip.v",
         'targets': 'synt,sim_rtl'
     })
 

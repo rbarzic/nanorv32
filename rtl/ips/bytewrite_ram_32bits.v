@@ -14,7 +14,7 @@ module bytewrite_ram_32bits (clk, we, addr, din, dout);
 parameter SIZE = 1024;
 parameter ADDR_WIDTH = 12;
 
-parameter filename = "code.hex";
+parameter filename = "";
 
 localparam COL_WIDTH = 8;
 localparam NB_COL = 4;
@@ -36,7 +36,9 @@ reg	[NB_COL*COL_WIDTH-1:0] RAM [SIZE-1:0];
    reg  [NB_COL*COL_WIDTH-1:0] dout_int;
 initial begin
 `ifndef NO_RAM_INIT
-   $readmemh(filename,RAM);
+   if (filename != "") begin 
+      $readmemh(filename,RAM);
+   end
 `endif
 //   #10;
 //   // Just for debugging readmemh in case it does not work as expected

@@ -3,8 +3,8 @@
 
 
 `define TB tb_nanorv32
-`define CODE_RAM  U_DUT.u_tcm0.U_RAM
-`define DATA_RAM  U_DUT.u_tcm1.U_RAM
+`define CODE_RAM  U_DUT.U_TCM0.U_RAM
+`define DATA_RAM  U_DUT.U_TCM1.U_RAM
 `define CPU_PIL `TB.U_DUT.U_NANORV32_PIL
 `define CPU `TB.U_DUT.U_NANORV32_PIL.U_CPU
 `define RF `TB.U_DUT.U_NANORV32_PIL.U_CPU.U_REG_FILE

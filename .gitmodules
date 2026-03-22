@@ -18,3 +18,9 @@
 [submodule "apb_bridge"]
 	path = apb_bridge
 	url = https://github.com/rbarzic/apb-bridge.git
+[submodule "libraries/imported/nangate45"]
+	path = libraries/imported/nangate45
+	url = git@github.com:rbarzic/platform_nangate45.git
+[submodule "libraries/imported/sky130-lite"]
+	path = libraries/imported/sky130-lite
+	url = git@github.com:rbarzic/sky130-lite.git

@@ -1,0 +1,11 @@
+To rebuild the doc on http://rbarzic.github.io/nanorv32/ :
+
+mkdocs build --clean
+
+mkdocs gh-deploy
+
+
+
+To launch the WEB server (live rendering) :
+
+miniterm.py /dev/ttyUSB1 38400
