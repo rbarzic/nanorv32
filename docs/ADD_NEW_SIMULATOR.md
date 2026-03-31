@@ -125,7 +125,7 @@ Variables in `default.py` can have different types:
 Run your simulator with:
 
 ```bash
-./runtest.py --sim=yoursim ../ctests/gpio_toggle -v
+./runtest.py --sim=yoursim ../ctests/gpio_toggle -v -l
 ```
 
 ## Example: Minimal Non-Verilog Simulator

@@ -40,6 +40,7 @@ include {config_rel_dir}/icarus.mk
 include {config_rel_dir}/verilator.mk
 include {config_rel_dir}/xilinx.mk
 include {config_rel_dir}/pysim.mk
+include {config_rel_dir}/ovr.mk
 
 
 debug:
@@ -162,7 +163,7 @@ A simulation launcher for the Nanorv32 project
 
     parser.add_argument('-s', '--simulator', action='store', dest='simulator',
                         default='icarus',
-                        choices = ['icarus','xilinx','pysim','verilator'],
+                        choices = ['icarus','xilinx','pysim','verilator','ovr'],
 
                         help='Select simulator (iverilog, xilinx(xlog),...)')
 

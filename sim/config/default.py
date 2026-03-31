@@ -168,3 +168,27 @@ cfg['simulator']['pysim']['options'] = ' '
 
 if trace:
     cfg['simulator']['pysim']['options'] += ' --trace='+trace
+
+
+# OVR simulator
+
+define['simulator']['ovr']['options'] = 'MAKE_VARIABLE'
+cfg['simulator']['ovr']['options'] = '-DIVERILOG=1'
+
+define['simulator']['ovr']['warnings'] = 'MAKE_VARIABLE'
+cfg['simulator']['ovr']['warnings'] = ''
+
+define['simulator']['ovr']['gui'] = 'MAKE_VARIABLE'
+cfg['simulator']['ovr']['gui'] = ''
+
+define['simulator']['ovr']['vcd_opt'] = 'MAKE_VARIABLE'
+cfg['simulator']['ovr']['vcd_opt'] = ''
+
+if logging:
+    cfg['simulator']['ovr']['vcd_opt'] = '1'
+
+if trace:
+    cfg['simulator']['ovr']['options'] += ' -DTRACE='+trace
+
+if gui:
+    cfg['simulator']['ovr']['gui'] += 'cd $(TEST_DIR) && gtkwave ' + cfg['simulation']['testbench_name'] + '.vcd &'

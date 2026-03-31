@@ -1,5 +1,6 @@
 import nanorv32_fl
 import iverilog
+import ovr
 import xilinx
 import verilator
 import argparse
@@ -21,6 +22,14 @@ Put description of application here
         action="store",
         dest="iverilog",
         help="iverilog file list",
+        default="",
+    )
+
+    parser.add_argument(
+        "--ovr",
+        action="store",
+        dest="ovr",
+        help="OVR file list",
         default="",
     )
 
@@ -94,6 +103,12 @@ if args.iverilog != "":
     print("-I- iverilog generation")
     txt = iverilog.get_iverilog_file_list(l, d, context)
     with open(args.iverilog, "w") as f:
+        f.write(txt)
+
+if args.ovr != "":
+    print("-I- OVR generation")
+    txt = ovr.get_ovr_file_list(l, d, context)
+    with open(args.ovr, "w") as f:
         f.write(txt)
 
 if args.verilator != "":

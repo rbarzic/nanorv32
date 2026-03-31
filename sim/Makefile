@@ -37,3 +37,10 @@ core_compare:
 
 check:
 	./runtest.py ../ctests/gpio_toggle -v
+
+
+check_icarus:
+	./runtest.py --sim=icarus ../ctests/gpio_toggle -v -l
+
+check_ovr:
+	OVR_BIN=$(realpath ../../../target/release/ovr) ./runtest.py --sim=ovr ../ctests/gpio_toggle -v -l

@@ -1,0 +1,35 @@
+# OVR simulator specific makefile
+
+OVR_EXTRA_V_SRC=$(wildcard $(TEST_DIR)/*.v)
+
+# Path to OVR binary
+OVR_BIN ?= ovr
+
+# Build options (defines)
+_OVR_OPTS += $(VERILOG_DEFINES)
+_OVR_OPTS += $(SIMULATOR_OVR_OPTIONS)
+_OVR_OPTS += $(SIMULATOR_OVR_WARNINGS)
+_OVR_OPTS += -DTB=$(SIMULATION_TESTBENCH_NAME)
+
+# Convert VERILOG_PARAMETER (+key=val) to OVR --plusarg key=val
+_OVR_PLUSARGS = $(foreach p,$(VERILOG_PARAMETER),--plusarg $(patsubst +%,%,$(p)))
+_OVR_PLUSARGS += --plusarg program_memory=$(TEST_DIR)/$(TEST).vmem
+
+# VCD support
+ifneq ($(SIMULATOR_OVR_VCD_OPT),)
+_OVR_OPTS += --vcd $(TEST_DIR)/$(SIMULATION_TESTBENCH_NAME).vcd
+_OVR_PLUSARGS += --plusarg vcd=1
+endif
+
+# Read file list (one flag/file per line, collapsed by shell)
+_OVR_FILES = $(shell cat $(TEST_DIR)/ovr_file_list.txt) $(OVR_EXTRA_V_SRC)
+
+ovr_rtl_build:
+	@python3 $(TOP)/common/files/main.py --topdir=$(TOP) --ovr=$(TEST_DIR)/ovr_file_list.txt
+
+ovr_rtl_elab:
+	@echo "-I- Nothing to do here..."
+
+ovr_rtl_sim:
+	cd $(TEST_DIR) && $(OVR_BIN) -t sim -g 2005 $(_OVR_OPTS) $(_OVR_PLUSARGS) $(_OVR_FILES)
+	$(SIMULATOR_OVR_GUI)
