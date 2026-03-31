@@ -10,6 +10,7 @@ _OVR_OPTS += $(VERILOG_DEFINES)
 _OVR_OPTS += $(SIMULATOR_OVR_OPTIONS)
 _OVR_OPTS += $(SIMULATOR_OVR_WARNINGS)
 _OVR_OPTS += -DTB=$(SIMULATION_TESTBENCH_NAME)
+_OVR_OPTS += -DVCD_FILENAME=\"$(SIMULATION_TESTBENCH_NAME)_ovr.vcd\"
 
 # Convert VERILOG_PARAMETER (+key=val) to OVR --plusarg key=val
 _OVR_PLUSARGS = $(foreach p,$(VERILOG_PARAMETER),--plusarg $(patsubst +%,%,$(p)))
@@ -17,7 +18,6 @@ _OVR_PLUSARGS += --plusarg program_memory=$(TEST_DIR)/$(TEST).vmem
 
 # VCD support
 ifneq ($(SIMULATOR_OVR_VCD_OPT),)
-_OVR_OPTS += --vcd $(TEST_DIR)/$(SIMULATION_TESTBENCH_NAME).vcd
 _OVR_PLUSARGS += --plusarg vcd=1
 endif
 

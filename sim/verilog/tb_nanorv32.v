@@ -215,7 +215,11 @@ module tb_nanorv32;
       begin
          if ($test$plusargs("vcd")) begin
             $display("-I- VCD dump is enabled !");
+	    `ifdef VCD_FILENAME
+	    $dumpfile(`VCD_FILENAME);
+	    `else
 	    $dumpfile("tb_nanorv32.vcd");
+	    `endif
 	    $dumpvars(0, tb_nanorv32 `VCD_EXTRA_MODULE);
 	 end
       end
