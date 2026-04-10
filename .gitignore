@@ -123,3 +123,6 @@ ctests/*/*.map
 *.vcd
 /ctests/gpio_toggle/iverilog_file_list.txt
 ctests/*/*.ihex
+/ctests/printk/inspect.vvp
+/ctests/printk/iverilog_file_list.txt
+/ctests/printk/ovr_file_list.txt

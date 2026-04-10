@@ -138,6 +138,7 @@ module nanorv32_flow_ctrl (/*AUTOARG*/
 
       pstate_next =  NANORV32_PSTATE_CONT;
       force_stall_pstate = 0;
+      force_stall_pstate2 = 0;
       force_stall_reset = 0;
       output_new_pc = 0;
       valid_inst = 1;
