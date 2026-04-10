@@ -5,12 +5,22 @@ OVR_EXTRA_V_SRC=$(wildcard $(TEST_DIR)/*.v)
 # Path to OVR binary
 OVR_BIN ?= ovr
 
+# OVR backend target (sim/exe)
+OVR_TARGET ?= sim
+
+# Keep VCD outputs distinct per backend target to avoid stale-file confusion.
+ifeq ($(OVR_TARGET),exe)
+OVR_VCD_FILENAME := $(SIMULATION_TESTBENCH_NAME)_ovr_exe.vcd
+else
+OVR_VCD_FILENAME := $(SIMULATION_TESTBENCH_NAME)_ovr_sim.vcd
+endif
+
 # Build options (defines)
 _OVR_OPTS += $(VERILOG_DEFINES)
 _OVR_OPTS += $(SIMULATOR_OVR_OPTIONS)
 _OVR_OPTS += $(SIMULATOR_OVR_WARNINGS)
 _OVR_OPTS += -DTB=$(SIMULATION_TESTBENCH_NAME)
-_OVR_OPTS += -DVCD_FILENAME=\"$(SIMULATION_TESTBENCH_NAME)_ovr.vcd\"
+_OVR_OPTS += -DVCD_FILENAME=\"$(OVR_VCD_FILENAME)\"
 
 # Convert VERILOG_PARAMETER (+key=val) to OVR --plusarg key=val
 _OVR_PLUSARGS = $(foreach p,$(VERILOG_PARAMETER),--plusarg $(patsubst +%,%,$(p)))
@@ -31,5 +41,5 @@ ovr_rtl_elab:
 	@echo "-I- Nothing to do here..."
 
 ovr_rtl_sim:
-	cd $(TEST_DIR) && $(OVR_BIN) -t sim -g 2005 $(_OVR_OPTS) $(_OVR_PLUSARGS) $(_OVR_FILES)
+	cd $(TEST_DIR) && $(OVR_BIN) -t $(OVR_TARGET) -g 2005 $(_OVR_OPTS) $(_OVR_PLUSARGS) $(_OVR_FILES)
 	$(SIMULATOR_OVR_GUI)
